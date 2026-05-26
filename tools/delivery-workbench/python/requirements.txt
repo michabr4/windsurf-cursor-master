@@ -1,2 +1,4 @@
-# Stdlib-only for core workbench.
-# Optional (device_code auth only): pip install msal
+# Stdlib-only for core workbench server.
+# Optional:
+#   pip install msal          # device_code auth
+#   pip install PyYAML>=6.0   # orchestration workflow_loader

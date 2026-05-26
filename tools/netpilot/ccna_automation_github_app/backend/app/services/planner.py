@@ -1,13 +1,31 @@
+from app.db import get_connection, list_domain_titles
 from app.schemas import StudyPlanResponse, StudyPlanWeek, StudyProfile
+
+
+def _focus_domains_from_db() -> list[str]:
+    try:
+        with get_connection() as conn:
+            titles = list_domain_titles(conn)
+        if len(titles) >= 4:
+            return titles[:4]
+    except Exception:
+        pass
+    return [
+        "Python for Automation",
+        "REST APIs",
+        "JSON/Data Modeling",
+        "Cisco Controller Concepts",
+    ]
 
 
 def build_study_plan(profile: StudyProfile) -> StudyPlanResponse:
     hours = profile.hours_per_week
+    domains = _focus_domains_from_db()
 
     weekly_plan = [
         StudyPlanWeek(
             week=1,
-            focus_domains=["Python for Automation", "REST APIs"],
+            focus_domains=domains[:2],
             goals=[
                 f"Complete {max(2, hours // 3)} automation lessons",
                 "Build one API-driven network task",
@@ -15,7 +33,7 @@ def build_study_plan(profile: StudyProfile) -> StudyPlanResponse:
         ),
         StudyPlanWeek(
             week=2,
-            focus_domains=["JSON/Data Modeling", "Network Fundamentals"],
+            focus_domains=domains[2:4] if len(domains) >= 4 else ["JSON/Data Modeling", "Troubleshooting Workflows"],
             goals=[
                 "Practice payload parsing and validation",
                 "Run domain quiz and review weak areas",

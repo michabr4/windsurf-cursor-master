@@ -1,0 +1,23 @@
+# Repo-agent email triage (Flerken) — complements workbench-native email-morning-digest.yaml
+name: email-digest
+version: 1
+description: Triage primary inbox via agents/flerken DigestBuilder
+
+agent:
+  path: agents/flerken
+  entry: src.digest_builder.DigestBuilder
+
+inputs:
+  demo: true          # use mock inbox when true; set false for Graph + LLM
+  lookback_hours: 24
+
+output:
+  format: markdown
+  section: "## Email digest"
+
+error_handling:
+  retry:
+    max_attempts: 2
+    backoff_seconds: 5
+  fallback: placeholder_markdown
+  notify: false       # set true + SMTP in .env to alert on failure

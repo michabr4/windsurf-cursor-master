@@ -1,78 +1,87 @@
-# Automation Study Hub App Scaffold
+# Automation Study Hub (+ GitHub App hooks)
 
-Monorepo scaffold for an automation study app with:
+Monorepo for a **DEVASC-oriented automation study app** with optional **GitHub App** webhooks and a separate **MGM Webex daily report** script.
 
-- `frontend/` React (Vite) UI
-- `backend/` FastAPI service
-- `data_model/` schema and seed data
+| Area | Purpose |
+|------|---------|
+| `frontend/` | React (Vite) study UI |
+| `backend/` | FastAPI API, SQLite persistence, GitHub webhooks |
+| `data_model/` | SQL schema, seed JSON, domain map |
+| `send_reports.py` | Webex status bot (scheduled via GitHub Actions) |
 
-## One-command startup
+## Requirements
 
-From `ccna_automation_github_app/`:
+- **Python 3.10–3.13** (3.14 may fail to install `pydantic-core`; CI uses 3.11)
+- **Node.js 20+**
+
+## Quick start
 
 ```bash
-make dev
+cp .env.example .env
+# Edit .env (VITE_API_BASE, optional GitHub App vars)
+
+make install   # venv + npm
+make dev       # API :8000, UI :5173
 ```
 
-This will auto-install missing dependencies and start:
-
-- Backend on `http://127.0.0.1:8000`
-- Frontend (Vite) on its default local dev port
-
-Additional root commands:
-
-- `make stop` — stop backend/frontend dev processes
-- `make fmt` — run `ruff format` (backend) + `prettier` (frontend)
-- `make lint` — run `ruff` (backend) + `eslint` (frontend)
-- `make test` — run `pytest` (backend) + `vitest` (frontend)
-
-## Frontend
+Or separately:
 
 ```bash
-cd frontend
-npm install
-npm run dev
-```
-
-## Backend
-
-```bash
-cd backend
-python -m venv .venv
-source .venv/bin/activate
+cd backend && python3.11 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-uvicorn app.main:app --reload
+PYTHONPATH=. python -m app
+
+cd frontend && npm install && npm run dev
 ```
 
-## API Endpoints
+## API endpoints
 
-- `GET /health`
-- `POST /api/plan`
-- `GET /api/flashcards?domain=...`
-- `POST /api/weak-areas`
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/health` | Liveness |
+| GET | `/docs` | OpenAPI (Swagger) |
+| POST | `/api/plan` | Study plan from profile |
+| GET | `/api/flashcards` | Flashcards (`?domain=`) |
+| GET | `/api/practice-questions` | Practice questions |
+| POST | `/api/weak-areas` | Weak-area detection |
+| GET | `/api/source-package` | Optional HTML-derived content |
+| GET | `/api/domains` | Domain titles from DB |
+| POST | `/webhooks/github` | GitHub App webhooks |
+| GET | `/api/github/status` | GitHub App config status |
+| GET | `/api/github/installations` | Known installations |
+| GET | `/api/github/events` | Recent webhook events |
+| POST | `/api/github/installations/{id}/token` | Installation access token |
 
-## Notes
+## Data
 
-This is a starter scaffold focused on structure and initial flow for:
+SQLite file defaults to `data/ccna_study.db` (gitignored). On startup the API applies `data_model/schema.sql` and seeds from `seed.json`, `domain_map.yaml`, and built-in question banks.
 
-1. Learning plan generation
-2. Flashcard retrieval
-3. Weak-area detection
+## GitHub App setup
 
-## MGM Daily Status Report Workflow
+1. Create a GitHub App with webhook URL `https://<your-host>/webhooks/github`.
+2. Set webhook secret and note **App ID** + generate a **private key**.
+3. Configure `.env`: `GITHUB_APP_ID`, `GITHUB_WEBHOOK_SECRET`, `GITHUB_APP_PRIVATE_KEY` or `GITHUB_APP_PRIVATE_KEY_PATH`.
+4. Install the app on a repo; verify with `GET /api/github/events`.
 
-This repository includes a GitHub Actions workflow at
-`.github/workflows/mgm-daily-status-report.yml`.
+See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
-Required GitHub repository secrets:
+## MGM daily status (Webex)
 
-- `WEBEX_BOT_TOKEN` (required)
+Workflow: [.github/workflows/mgm-daily-status-report.yml](.github/workflows/mgm-daily-status-report.yml)
 
-Optional secrets (used only for recordings analysis step):
+Secrets: `WEBEX_BOT_TOKEN` (required), `WEBEX_ACCESS_TOKEN`, `OPENAI_API_KEY` (optional).
 
-- `WEBEX_ACCESS_TOKEN`
-- `OPENAI_API_KEY`
+```bash
+WEBEX_BOT_TOKEN=... python send_reports.py
+# or DRY_RUN=true python send_reports.py
+```
 
-Set secrets in GitHub at:
+## Commands
 
-`Settings` -> `Secrets and variables` -> `Actions` -> `New repository secret`
+- `make test` — pytest + vitest
+- `make lint` / `make fmt` — ruff + eslint/prettier
+
+## Security
+
+- Secrets only in `.env` (see `.env.example`).
+- Do not commit `data/*.db` or private keys.

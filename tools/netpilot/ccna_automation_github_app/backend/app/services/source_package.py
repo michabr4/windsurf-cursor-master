@@ -5,7 +5,7 @@ from html import unescape
 from pathlib import Path
 from typing import Any
 
-SOURCE_HTML_PATH = Path("/Users/michabr4/Downloads/CCNA-Automation-GitHub-Training-Hub.html")
+from app.config import get_settings
 
 
 def _strip_tags(value: str) -> str:
@@ -113,8 +113,16 @@ def _extract_risks(content: str) -> list[dict[str, str]]:
     return risks
 
 
+def _source_html_path() -> Path | None:
+    settings = get_settings()
+    if settings.source_html_path and settings.source_html_path.is_file():
+        return settings.source_html_path
+    return None
+
+
 def get_source_package() -> dict[str, Any]:
-    if not SOURCE_HTML_PATH.exists():
+    source_path = _source_html_path()
+    if source_path is None:
         return {
             "title": "Automation + GitHub Training Hub",
             "platform_vision": "",
@@ -125,7 +133,7 @@ def get_source_package() -> dict[str, Any]:
             "risks": [],
         }
 
-    content = SOURCE_HTML_PATH.read_text(encoding="utf-8")
+    content = source_path.read_text(encoding="utf-8")
 
     title_match = re.search(r"<title>([^<]+)</title>", content, re.IGNORECASE)
     platform_match = re.search(

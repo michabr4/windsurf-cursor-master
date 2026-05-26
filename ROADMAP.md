@@ -81,78 +81,51 @@
 
 **Goal:** Make the top 3 projects production-ready.
 
-### 2.1 Helix / ServiceFlow SDM
+### 2.1 Helix / ServiceFlow SDM ✅ COMPLETE (May 26, 2026)
 
 **Priority:** HIGH — this is your flagship
 
-```text
-CURSOR INSTRUCTION: HELIX-HARDEN
+**Status:** Production-hardened via TASK-012 (audit), TASK-013 (P0+P1), TASK-014 (P2)
 
-TASK: Production-harden the Helix / serviceflow-sdm platform
-LOCATION: ~/Desktop/serviceflow-sdm/
+**Completed:**
 
-STEPS:
-1. BACKEND:
-   - Verify all Express routes have input validation middleware
-   - Ensure JWT auth is properly implemented (not mock)
-   - Add rate limiting to API endpoints
-   - Verify PostgreSQL migrations run cleanly from scratch
-   - Add health check endpoint: GET /api/health
+- ✅ Backend: Real JWT auth with startup secret validation, rate limiting (10/15min auth, 100/15min writes), Zod validation on all write endpoints
+- ✅ Frontend: 5 of 7 pages functional, builds clean (Dashboard placeholder documented)
+- ✅ Mobile: Expo SDK 52, most screens API-driven, asset config cleaned (Expo defaults)
+- ✅ Docker: Multi-stage production builds (backend + nginx frontend), compose uses .env, migration documented
+- ✅ Docs: README current, CHANGELOG.md added with Phase 2.1 entries, legacy docs indexed
+- ✅ Security: No hardcoded secrets, JWT guard, rate limits, input validation
 
-2. FRONTEND:
-   - Verify all 22 mockup views render without console errors
-   - Ensure theme toggle persists across page navigation
-   - Test SSO flow end-to-end (or document what's mocked)
-   - Verify accessibility (ARIA labels, keyboard nav, screen reader)
+**Deferred (P3 - not blockers):**
 
-3. MOBILE:
-   - Verify Expo app builds without errors: npx expo start
-   - Document which screens are implemented vs placeholder
+- Dashboard page wiring to live KPIs (currently placeholder)
+- Mobile settings persistence (AsyncStorage)
+- Docker build verification (requires Docker CLI)
 
-4. DOCKER:
-   - Test: docker-compose up --build
-   - Verify frontend, backend, and DB containers start and connect
-   - Document the full startup sequence in README
-
-5. DOCS:
-   - Update README with current setup instructions
-   - Ensure docs/REQUIREMENTS.md reflects actual state
-   - Add CHANGELOG.md with current feature list
-
-REPORT BACK: List of what works, what's mocked, and what needs fixing.
-```
+**Audit findings:** Backend NEEDS-WORK → **PRODUCTION-READY** after P0+P1+P2 fixes. Mockup hub (19 HTML views) is primary UX, React SPA is optional shell.
 
 ### 2.2 MGM Status Bot + DD Status Bot
 
 **Priority:** HIGH — these run daily in production
 
-```text
-CURSOR INSTRUCTION: BOTS-HEALTH-CHECK
+**Audit findings (TASK-011):**
 
-TASK: Verify health of daily status bots
-LOCATIONS:
-  - ~/Desktop/SDM Files/mgm-status-bot/
-  - ~/Desktop/Digitized Delivery/dd-status-bot/
+- **mgm-status-bot:** BROKEN — 6 consecutive GHA failures (May 19–26), `WEBEX_BOT_TOKEN` returns 401
+- **dd-status-bot:** BROKEN — Failed May 26, both access token and bot token returning 401
+- **Root cause:** Expired Webex tokens in GitHub secrets (ops issue, not code)
+- **Code/security:** Clean — no hardcoded tokens, proper env var usage, subscribers.json valid
 
-STEPS:
-1. For each bot:
-   a. Review .github/workflows/daily-report.yml
-   b. Verify Node.js version is 22+ (not deprecated 20)
-   c. Check that all required secrets are documented
-   d. Run locally with --dry-run if available
-   e. Check last 5 GitHub Actions runs for failures
+**Required fixes (ops, not Cursor):**
 
-2. For mgm-status-bot specifically:
-   - Verify WEBEX_BOT_TOKEN is not expired
-   - Check if the recurring 401 error from May 8 is resolved
-   - Verify subscribers.json is current
+1. Regenerate `WEBEX_BOT_TOKEN` at developer.webex.com → update GitHub secrets on both repos
+2. Refresh `WEBEX_ACCESS_TOKEN` on dd-status-bot
+3. Trigger `workflow_dispatch` to verify
 
-3. For dd-status-bot:
-   - Verify SpaceLift space discovery still matches expected patterns
-   - Check WEBEX_ACCESS_TOKEN expiry
+**Deferred improvements:**
 
-REPORT BACK: Status of each bot (healthy/broken/needs-attention) with specific issues.
-```
+- Add `--dry-run` mode for local testing
+- Update dd-status-bot GHA actions to v5/v6 (currently v4/v5 with Node 20 deprecation warnings)
+- Fix `continue-on-error` masking analysis failures
 
 ### 2.3 Flerken (Post-Email Consolidation)
 

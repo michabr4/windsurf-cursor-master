@@ -41,7 +41,8 @@ Primary mailbox only, agent-orchestrated workflows:
 
 - [docs/email/OVERVIEW.md](docs/email/OVERVIEW.md)
 - [docs/email/IT_ADMIN_REQUEST.md](docs/email/IT_ADMIN_REQUEST.md) — send to IT for Graph consent
-- Orchestration: `orchestration/email-inbox-review.yaml`, `orchestration/email-morning-digest.yaml`
+- Orchestration: `orchestration/` — workbench email YAMLs plus repo-agent workflows (see [orchestration/README.md](orchestration/README.md))
+- **Morning briefing:** `python3 scripts/morning-briefing.py --dry-run` → `data/runs/morning-briefing/YYYY-MM-DD.md`
 
 **Minimal IT (live inbox):** use Microsoft Graph PowerShell — see [docs/email/MINIMAL_IT.md](docs/email/MINIMAL_IT.md) and `./scripts/email_fetch.sh`.
 

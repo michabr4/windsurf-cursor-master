@@ -247,6 +247,15 @@ PRACTICE_QUESTIONS = [
 
 
 def get_practice_questions(domain: str | None = None) -> list[PracticeQuestion]:
+    try:
+        from app.db import get_connection, list_practice_questions
+
+        with get_connection() as conn:
+            rows = list_practice_questions(conn, domain)
+        if rows:
+            return [PracticeQuestion(**row) for row in rows]
+    except Exception:
+        pass
     if not domain:
         return PRACTICE_QUESTIONS
     return [q for q in PRACTICE_QUESTIONS if q.domain.lower() == domain.lower()]
