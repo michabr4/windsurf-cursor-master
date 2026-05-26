@@ -35,4 +35,14 @@ describe("EnvSchema production secrets", () => {
     });
     expect(result.success).toBe(false);
   });
+
+  it("defaults rate limit env to audit values", () => {
+    const result = EnvSchema.safeParse({ NODE_ENV: "development" });
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.RATE_LIMIT_AUTH_MAX).toBe(10);
+      expect(result.data.RATE_LIMIT_WRITE_MAX).toBe(100);
+      expect(result.data.RATE_LIMIT_WINDOW_MS).toBe(900_000);
+    }
+  });
 });

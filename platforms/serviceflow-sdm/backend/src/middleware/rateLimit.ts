@@ -1,12 +1,20 @@
 import rateLimit from "express-rate-limit";
 import { env } from "../config.js";
 
-const isProd = env.NODE_ENV === "production";
+const windowMs = env.RATE_LIMIT_WINDOW_MS;
+const authMax =
+  env.NODE_ENV === "development"
+    ? Math.max(env.RATE_LIMIT_AUTH_MAX, 200)
+    : env.RATE_LIMIT_AUTH_MAX;
+const writeMax =
+  env.NODE_ENV === "development"
+    ? Math.max(env.RATE_LIMIT_WRITE_MAX, 2000)
+    : env.RATE_LIMIT_WRITE_MAX;
 
 /** Brute-force protection for credential exchange (login / refresh). */
 export const authCredentialRateLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: isProd ? 15 : 200,
+  windowMs,
+  max: authMax,
   standardHeaders: true,
   legacyHeaders: false,
   skip: (req) => req.method !== "POST" || !["/login", "/refresh"].includes(req.path),
@@ -15,8 +23,8 @@ export const authCredentialRateLimiter = rateLimit({
 
 /** Limits state-changing API calls (POST/PUT/PATCH/DELETE) under /api/v1. */
 export const apiWriteRateLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: isProd ? 300 : 2000,
+  windowMs,
+  max: writeMax,
   standardHeaders: true,
   legacyHeaders: false,
   skip: (req) => {

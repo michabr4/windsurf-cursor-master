@@ -27,6 +27,9 @@ export const EnvSchema = z
     JWT_REFRESH_SECRET: z.string().min(32).default(INSECURE_JWT_SECRET_DEFAULT),
     JWT_EXPIRE: z.string().default("24h"),
     JWT_REFRESH_EXPIRE: z.string().default("7d"),
+    RATE_LIMIT_WINDOW_MS: z.coerce.number().int().positive().default(15 * 60 * 1000),
+    RATE_LIMIT_AUTH_MAX: z.coerce.number().int().positive().default(10),
+    RATE_LIMIT_WRITE_MAX: z.coerce.number().int().positive().default(100),
     /** Comma-separated allowed browser origins (Vite + Operations on :3000 for local tools that call the API cross-origin). */
     CORS_ORIGIN: z.string().default("http://localhost:3001,http://localhost:3000"),
     TAC_BASE_URL: z.string().default("https://tools.cisco.com/tac/api/v2"),
@@ -161,3 +164,27 @@ if (!parsed.success) {
   process.exit(1);
 }
 export const env = parsed.data;
+
+/** Runtime guard after Zod parse (TASK-013 P0). Development may keep placeholder JWT secrets. */
+function assertJwtSecretsAtStartup(): void {
+  if (env.NODE_ENV === "development") return;
+
+  const fatal = (message: string) => {
+    console.error(JSON.stringify({ level: "fatal", message }));
+    process.exit(1);
+  };
+
+  for (const [name, value] of [
+    ["JWT_SECRET", env.JWT_SECRET],
+    ["JWT_REFRESH_SECRET", env.JWT_REFRESH_SECRET]
+  ] as const) {
+    if (value === INSECURE_JWT_SECRET_DEFAULT) {
+      fatal(`${name} must be set to a strong secret (not the development placeholder)`);
+    }
+    if (value.length < 32) {
+      fatal(`${name} must be at least 32 characters`);
+    }
+  }
+}
+
+assertJwtSecretsAtStartup();
