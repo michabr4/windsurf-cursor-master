@@ -1,0 +1,12 @@
+NetPilot 5.0 — Lesson Viewer
+
+Purpose:
+Displays lesson content including text, diagrams, videos, interactive elements, and embedded labs.
+
+Features:
+- Content navigation
+- Embedded quizzes
+- Embedded labs
+- Notes panel
+- Progress tracking
+- Skill mapping indicators

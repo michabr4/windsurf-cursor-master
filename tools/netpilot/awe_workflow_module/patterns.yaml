@@ -1,0 +1,9 @@
+patterns:
+  - id: "interface_onboarding_autonomous"
+    description: "Autonomous interface onboarding with validation and rollback"
+    steps:
+      - type: "validate_intent"
+      - type: "generate_config"
+      - type: "push_config"
+      - type: "verify_telemetry"
+      - type: "remediate_if_needed"

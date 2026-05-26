@@ -1,0 +1,22 @@
+NetPilot 5.0 — Recommendation Engine
+
+Purpose:
+Generates personalized recommendations for lessons, labs, quizzes, workflows, and study plans.
+
+Recommendation Types:
+- Skill Reinforcement
+- Weakness Repair
+- Mastery Boost
+- Exam Preparation
+- Performance Optimization
+
+Inputs:
+- ALE-X
+- Mastery Model
+- Weakness Engine
+- Readiness Engine
+
+Outputs:
+- recommended_content
+- recommended_labs
+- recommended_study_plan

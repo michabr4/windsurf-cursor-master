@@ -1,0 +1,74 @@
+name: Digitized Delivery Daily Status Report
+
+on:
+  # Run Monday-Friday at 8:00 AM EST (13:00 UTC)
+  schedule:
+    - cron: '0 13 * * 1-5'
+  
+  # Allow manual trigger
+  workflow_dispatch:
+    inputs:
+      send_now:
+        description: 'Send report immediately'
+        required: false
+        default: 'true'
+      days_back:
+        description: 'Days to look back for messages'
+        required: false
+        default: '7'
+
+jobs:
+  send-report:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install requests openai
+      
+      - name: Run SpaceLift analysis (DD spaces + personal space scan)
+        env:
+          WEBEX_ACCESS_TOKEN: ${{ secrets.WEBEX_ACCESS_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          DAYS=${{ github.event.inputs.days_back || '7' }}
+          if [ -n "$WEBEX_ACCESS_TOKEN" ]; then
+            echo "🚀 Running SpaceLift analysis (last ${DAYS} days)..."
+            python webex_spacelift.py --days $DAYS || echo "SpaceLift analysis skipped"
+          else
+            echo "⚠️ WEBEX_ACCESS_TOKEN not set, skipping SpaceLift"
+          fi
+        continue-on-error: true
+      
+      - name: Analyze recordings (if token available)
+        env:
+          WEBEX_ACCESS_TOKEN: ${{ secrets.WEBEX_ACCESS_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          if [ -n "$WEBEX_ACCESS_TOKEN" ]; then
+            python webex_recordings.py --days 7 || echo "Recordings analysis skipped"
+          fi
+        continue-on-error: true
+      
+      - name: Send status report to subscribers
+        env:
+          WEBEX_BOT_TOKEN: ${{ secrets.WEBEX_BOT_TOKEN }}
+          WEBEX_ACCESS_TOKEN: ${{ secrets.WEBEX_ACCESS_TOKEN }}
+        run: |
+          python send_reports.py
+      
+      - name: Log completion
+        run: |
+          echo "✅ Digitized Delivery Status Report sent at $(date)"
+          echo "Subscribers notified from subscribers.json"
+          if [ -f spacelift_analysis.json ]; then
+            echo "📊 SpaceLift analysis was included"
+          fi

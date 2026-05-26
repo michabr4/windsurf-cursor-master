@@ -1,0 +1,171 @@
+/* AI Factory Framework — Custom Styles */
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Hero gradient animation */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.hero-gradient {
+  background: linear-gradient(-45deg, #171f2d, #1a2332, #04314a, #06506e);
+  background-size: 400% 400%;
+  animation: gradientShift 12s ease infinite;
+}
+
+/* Pillar cards hover */
+.pillar-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.pillar-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Role card flip animation */
+.role-card {
+  perspective: 1000px;
+  cursor: pointer;
+}
+.role-card-inner {
+  transition: transform 0.6s ease;
+  transform-style: preserve-3d;
+  position: relative;
+}
+.role-card.flipped .role-card-inner {
+  transform: rotateY(180deg);
+}
+.role-card-front,
+.role-card-back {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.role-card-back {
+  transform: rotateY(180deg);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Lifecycle step connector */
+.lifecycle-step {
+  position: relative;
+}
+.lifecycle-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -1.5rem;
+  width: 1.5rem;
+  height: 2px;
+  background: linear-gradient(90deg, #049fd9, #00bceb);
+}
+
+/* Maturity level bar animation */
+.maturity-bar {
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Glow effect for active states */
+.glow-blue {
+  box-shadow: 0 0 20px rgba(4, 159, 217, 0.3);
+}
+.glow-cisco {
+  box-shadow: 0 0 20px rgba(0, 188, 235, 0.3);
+}
+
+/* Assessment radio buttons */
+.assessment-option {
+  transition: all 0.2s ease;
+}
+.assessment-option:hover {
+  background-color: rgba(4, 159, 217, 0.08);
+}
+.assessment-option.selected {
+  background-color: rgba(4, 159, 217, 0.12);
+  border-color: #049fd9;
+}
+
+/* Fade-in animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.fade-in-up {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+/* Section transitions */
+.section-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.section-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Nav active indicator */
+.nav-link {
+  position: relative;
+  transition: color 0.2s ease;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #049fd9, #00bceb);
+  transition: width 0.3s ease;
+}
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+/* KPI counter animation */
+@keyframes countUp {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+.kpi-number {
+  animation: countUp 0.5s ease forwards;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* Print styles */
+@media print {
+  .no-print { display: none !important; }
+  .hero-gradient { background: #171f2d !important; animation: none !important; }
+  .section-reveal { opacity: 1 !important; transform: none !important; }
+}

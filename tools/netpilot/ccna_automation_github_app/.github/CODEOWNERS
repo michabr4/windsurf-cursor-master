@@ -1,0 +1,7 @@
+# Default code owner for all files
+* @michabr4
+
+# Optional area-specific ownership
+/backend/ @michabr4
+/frontend/ @michabr4
+/data_model/ @michabr4

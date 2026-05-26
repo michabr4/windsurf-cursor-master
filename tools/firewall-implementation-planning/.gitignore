@@ -1,0 +1,23 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.idea/
+.vscode/
+*.swp
+*~
+
+# Local tool venvs (e.g. PDF text extraction)
+.venv-pdf/
+.venv-xlsx/
+.venv-docx/
+.venv-mpp/
+.venv/
+
+# Local secrets and env (example patterns — adjust as needed)
+.env
+.env.*
+*.pem
+*.key
+secrets/

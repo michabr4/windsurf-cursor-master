@@ -1,0 +1,11 @@
+NetPilot 5.0 — Exam Preparation Center
+
+Purpose:
+Provides learners with tools to prepare for certification exams.
+
+Components:
+- Practice exams
+- Exam readiness score
+- Weakness analysis
+- Study recommendations
+- Blueprint coverage map

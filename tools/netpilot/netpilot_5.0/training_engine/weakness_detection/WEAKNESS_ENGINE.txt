@@ -1,0 +1,18 @@
+NetPilot 5.0 — Weakness Detection Engine
+
+Purpose:
+Identifies learner weaknesses using mastery scores, error patterns, telemetry, and performance trends.
+
+Weakness Types:
+- Conceptual Weakness
+- Procedural Weakness
+- Behavioral Weakness
+- Retention Weakness
+- Speed Weakness
+
+Detection Signals:
+- Low mastery
+- High error frequency
+- Slow completion time
+- High hint usage
+- Repeated failures

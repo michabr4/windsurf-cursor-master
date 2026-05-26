@@ -1,0 +1,18 @@
+[
+  {
+    "id": "sample-001",
+    "subject": "Steering deck review — Friday",
+    "from": "colleague@example.com",
+    "receivedDateTime": "2026-05-25T14:00:00Z",
+    "bodyPreview": "Can you review slides 3-5 and confirm timeline?",
+    "isRead": false
+  },
+  {
+    "id": "sample-002",
+    "subject": "RE: Dependency on Platform team",
+    "from": "vendor@example.com",
+    "receivedDateTime": "2026-05-24T09:30:00Z",
+    "bodyPreview": "Still waiting on your sign-off for the change window.",
+    "isRead": true
+  }
+]

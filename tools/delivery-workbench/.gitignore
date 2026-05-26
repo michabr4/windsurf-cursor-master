@@ -1,0 +1,33 @@
+# Secrets and local config
+.env
+.env.local
+.env.*.local
+
+# Local drafts and exports (may contain sensitive content)
+data/*
+!data/.gitkeep
+data/runs/**/*
+!data/runs/.gitkeep
+projects/*/outputs/*
+!projects/_example/outputs/.gitkeep
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.Python
+
+# OS and editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*~
+
+# Logs
+*.log
+
+# Portable PowerShell (local install, large)
+.tools/

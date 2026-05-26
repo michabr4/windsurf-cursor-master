@@ -1,0 +1,17 @@
+# Example project config — copy folder to projects/<your-name>/
+# No API keys or secrets belong in this file.
+
+name: Example Engagement
+slug: _example
+cadence:
+  status_report: weekly
+  steering: biweekly
+stakeholders:
+  - role: Executive sponsor
+    name: "(fill in)"
+  - role: Delivery lead
+    name: "(fill in)"
+connectors:
+  enabled: []
+  # When you add connectors, list ids here, e.g. [atlassian]
+  # Each connector must be read_only: true unless you explicitly allow writes.

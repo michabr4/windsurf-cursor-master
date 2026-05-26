@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 20px; background: #f5f5f5; color: #1a1a1a; }
+  .container { max-width: 680px; margin: 0 auto; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  .header { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; padding: 28px 32px; }
+  .header h1 { margin: 0 0 6px 0; font-size: 24px; font-weight: 700; }
+  .header .subtitle { opacity: 0.85; font-size: 14px; }
+  .summary { padding: 24px 32px; background: #fafafa; border-bottom: 1px solid #eee; font-size: 15px; line-height: 1.6; color: #444; }
+  .stats { display: flex; gap: 16px; padding: 16px 32px; border-bottom: 1px solid #eee; }
+  .stat { flex: 1; text-align: center; padding: 12px 8px; border-radius: 8px; }
+  .stat-urgent { background: #fef2f2; color: #dc2626; }
+  .stat-action { background: #fff7ed; color: #ea580c; }
+  .stat-fyi { background: #eff6ff; color: #2563eb; }
+  .stat-low { background: #f0fdf4; color: #16a34a; }
+  .stat .num { font-size: 28px; font-weight: 700; }
+  .stat .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+  .section { padding: 20px 32px; }
+  .section h2 { font-size: 16px; font-weight: 600; margin: 0 0 16px 0; padding-bottom: 8px; border-bottom: 2px solid; }
+  .section-urgent h2 { color: #dc2626; border-color: #dc2626; }
+  .section-action h2 { color: #ea580c; border-color: #ea580c; }
+  .section-fyi h2 { color: #2563eb; border-color: #2563eb; }
+  .section-low h2 { color: #16a34a; border-color: #16a34a; }
+  .email-card { background: #fafafa; border-radius: 8px; padding: 14px 16px; margin-bottom: 12px; border-left: 4px solid #ddd; }
+  .section-urgent .email-card { border-left-color: #dc2626; }
+  .section-action .email-card { border-left-color: #ea580c; }
+  .section-fyi .email-card { border-left-color: #2563eb; }
+  .section-low .email-card { border-left-color: #16a34a; }
+  .email-subject { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+  .email-from { font-size: 12px; color: #888; margin-bottom: 6px; }
+  .email-summary { font-size: 13px; color: #555; line-height: 1.5; }
+  .email-actions { margin-top: 8px; font-size: 12px; }
+  .email-actions li { color: #6366f1; margin-bottom: 2px; }
+  .draft-reply { background: #f0f0ff; border-radius: 6px; padding: 10px 12px; margin-top: 8px; font-size: 13px; color: #444; border-left: 3px solid #6366f1; }
+  .draft-label { font-size: 11px; text-transform: uppercase; color: #6366f1; font-weight: 600; margin-bottom: 4px; }
+  .footer { text-align: center; padding: 20px 32px; font-size: 12px; color: #aaa; border-top: 1px solid #eee; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+  .badge-unread { background: #dbeafe; color: #1d4ed8; }
+  .badge-attachment { background: #fef3c7; color: #92400e; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>Flerken Daily Digest</h1>
+    <div class="subtitle">Saturday, May 23 2026 at 13:00 UTC &middot; 20 emails scanned &middot; 24h window</div>
+  </div>
+
+  <div class="summary">**Daily Digest Summary**<br><br>Today's email landscape is dominated by urgent messages related to MGM Resorts' SSO integration issues and Providence Health's telehealth deployment delays. Multiple follow-ups from Project X (Providence Health) highlight the need for immediate attention.<br><br>**Top 3 Things That Need Attention Today:**<br><br>1. **MGM Resorts SSO Integration**: Resolve the ongoing outage in production, which is causing 503 errors and impacting all properties.<br>2. **Providence Health Telehealth Deployment Delays**: Address the concerns raised by Dr. Sarah Nguyen, CIO of Providence Health, regarding Phase 2 delays, which threaten a $4.2M account.<br>3. **MGM Resorts License True-up Discussion**: Schedule a meeting with MGM Resorts to discuss license true-up and seat count adjustment before the August renewal.<br><br>**Patterns and Themes:**<br><br>* Multiple follow-ups from Project X (Providence Health) indicate ongoing issues that require immediate attention.<br>* Urgent messages related to MGM Resorts' SSO integration and Providence Health's telehealth deployment delays dominate today's email landscape.</div>
+
+  <div class="stats">
+    <div class="stat stat-urgent"><div class="num">14</div><div class="label">Urgent</div></div>
+    <div class="stat stat-action"><div class="num">1</div><div class="label">Action</div></div>
+    <div class="stat stat-fyi"><div class="num">2</div><div class="label">FYI</div></div>
+    <div class="stat stat-low"><div class="num">3</div><div class="label">Low</div></div>
+  </div>
+
+  
+  
+  <div class="section section-urgent">
+    <h2>Urgent (14)</h2>
+    
+    <div class="email-card">
+      <div class="email-subject">
+        URGENT: MGM Resorts — SSO integration down in production
+        <span class="badge badge-unread">UNREAD</span>
+        
+      </div>
+      <div class="email-from">From: SRE Alerts &middot; 2026-05-23T12:28</div>
+      <div class="email-summary">MGM Resorts SSO integration down in production, causing 503 errors and impacting all properties.</div>
+      
+      <ul class="email-actions">
+        
+        <li>Join triage call at 07:00 UTC to discuss resolution</li>
+        
+      </ul>
+      
+      
+    </div>
+    
+    <div class="email-card">
+      <div class="email-subject">
+        Re: MGM Q3 Quarterly Business Review — deck feedback needed by EOD
+        <span class="badge badge-unread">UNREAD</span>
+        <span class="badge badge-attachment">ATTACHMENT</span>
+      </div>
+      <div class="email-from">From: Sarah Chen &middot; 2026-05-23T10:58</div>
+      <div class="email-summary">Updated QBR deck requires review of slides 12-18 and comments by EOD for VP presentation tomorrow.</div>
+      
+      <ul class="email-actions">
+        
+        <li>Review slides 12-18, send comments to Sarah Chen</li>
+        
+      </ul>
+      
+      
+    </div>
+    
+    <div class="email-card">
+      <div class="email-subject">
+        Re: Re: MGM QBR — still waiting on your slides feedback
+        <span class="badge badge-unread">UNREAD</span>
+        
+      </div>
+      <div class="email-from">From: Sarah Chen &middot; 2026-05-23T11:58</div>
+      <div class="email-summary">Sarah Chen needs feedback on QBR deck slides by tomorrow's VP presentation, citing incorrect renewal rate numbers.</div>
+      
+      <ul class="email-actions">
+        
+        <li>Provide feedback on slides 12-18</li>
+        
+      </ul>
+      
+      
+      <div class="draft-reply">
+        <div class="draft-label">Draft Reply</div>
+        Hi Sarah, I apologize for the delay. I've reviewed the slides and will send my feedback to you shortly. Please confirm if the MGM renewal rate numbers are accurate in your data.
+      </div>
+      
+    </div>
+    
+    <div class="email-card">
+      <div class="email-subject">
+        UPDATE: MGM SSO outage — error rate still at 28%, RCA in progress
+        <span class="badge badge-unread">UNREAD</span>
+        
+      </div>
+      <div class="email-from">From: SRE Alerts &middot; 2026-05-23T12:46</div>
+      <div class="email-summary">MGM SSO outage update: error rate reduced to 28%, fix in staging, awaiting production approval.</div>
+      
+      <ul class="email-actions">
+        
+        <li>awaiting production approval</li>
+        
+      </ul>
+      
+      
+    </div>
+    
+    <div class="email-card">
+      <div class="email-subject">
+        MGM Resorts — license true-up discussion before renewal
+        <span class="badge badge-unread">UNREAD</span>
+        <span class="badge badge-attachment">ATTACHMENT</span>
+      </div>
+      <div class="email-from">From: David Martinez (MGM) &middot; 2026-05-23T07:58</div>
+      <div class="email-summary">MGM Resorts requests a meeting to discuss license true-up and seat count adjustment before August renewal.</div>
+      
+      <ul class="email-actions">
+        
+        <li>Schedule a call with MGM Resorts</li>
+        
+      </ul>
+      
+      
+      <div class="draft-reply">
+        <div class="draft-label">Draft Reply</div>
+        Hi David, thank you for reaching out. I've scheduled a call with our team for next week to discuss the license true-up. We'll review the current seat count and evaluate options for adjustment before the August renewal.
+      </div>
+      
+    </div>
+    
+    <div class="email-card">
+      <div class="email-subject">
+        Providence Health — HIPAA compliance audit findings for Cisco integration
+        <span class="badge badge-unread">UNREAD</span>
+        <span class="badge badge-attachment">ATTACHMENT</span>
+      </div>
+      <div class="email-from">From: Jennifer Wu (Providence) &middot; 2026-05-23T11:10</div>
+      <div class="email-summary">Providence Health's HIPAA audit flagged issues with Cisco Webex integration and requires remediation plans within two weeks.</div>
+      
+      <ul class="email-actions">
+        
+        <li>Review and address PHI data at rest encryption gaps</li>
+        
+        <li>Remediate access logging inconsistencies</li>
+        
+        <li>Update session timeout configuration</li>
+        
+      </ul>
+      
+      
+      <div class="draft-reply">
+        <div class="draft-label">Draft Reply</div>
+        Hi Jennifer, thank you for bringing this to our attention. We'll review the audit findings and provide a remediation plan by June 15 as requested. Let's schedule a call this week to discuss further.
+      </div>
+      
+    </div>
+    
+    <div class="email-card">
+      <div class="email-subject">
+        Re: Providence telehealth deployment — Phase 2 timeline slip
+        <span class="badge badge-unread">UNREAD</span>
+        
+      </div>
+      <div class="email-from">From: Mark Thompson &middot; 2026-05-23T09:28</div>
+      <div class="email-summary">Providence telehealth Phase 2 rollout delayed due to API integration issues with Epic EHR.</div>
+      
+      <ul class="email-actions">
+        
+        <li>Support SMART on FHIR implementation</li>
+        
+      </ul>
+      
+      
+      <div class="draft-reply">
+        <div class="draft-label">Draft Reply</div>
+        Hi Mark, sorry to hear about the delay. Can you provide more details on the authentication issues and estimated timeline for resolution? We'll work closely with Providence's IT team to support their SMART on FHIR implementation.
+      </div>
+      
+    </div>
+    
+    <div class="email-card">
+      <div class="email-subject">
+        ESCALATION: Providence CIO raising concerns about project delays
+        <span class="badge badge-unread">UNREAD</span>
+        
+      </div>
+      <div class="email-from">From: VP Customer Success &middot; 2026-05-23T12:16</div>
+      <div class="email-summary">Providence CIO Dr. Sarah Nguyen raised concerns about telehealth Phase 2 delays, threatening $4.2M account.</div>
+      
+      <ul class="email-actions">
+        
+        <li>Create recovery plan</li>
+        
+        <li>Schedule executive bridge call</li>
+        
+      </ul>
+      
+      
+    </div>
+    
+    <div class="email-card">
+      <div class="email-subject">
+        Providence Health — Q4 expansion opportunity (8 new hospitals)
+        
+        
+      </div>
+      <div class="email-from">From: Sarah Chen &middot; 2026-05-23T05:58</div>
+      <div class="email-summary">Providence Health wants to discuss expanding to 8 additional hospitals in Q4, contingent on resolving current deployment issues.</div>
+      
+      <ul class="email-actions">
+        
+        <li>Review and address current deployment issues</li>
+        
+        <li>Update QBR deck with expansion opportunity</li>
+        
+      </ul>
+      
+      
+      <div class="draft-reply">
+        <div class="draft-label">Draft Reply</div>
+        Hi Sarah, thank you for sharing this exciting opportunity. I'll review the current deployment issues and work on updating the QBR deck to include the expansion plan. Can we schedule a call to discuss further?
+      </div>
+      
+    </div>
+    
+    <div class="email-card">
+      <div class="email-subject">
+        Action Required: Complete mandatory security training by May 30
+        
+        
+      </div>
+      <div class="email-from">From: InfoSec Training &middot; 2026-05-23T06:58</div>
+      <div class="email-summary">Reminder to complete mandatory security training by May 30th, with consequences for non-compliance.</div>
+      
+      <ul class="email-actions">
+        
+        <li>Complete security awareness training in CiscoU</li>
+        
+      </ul>
+      
+      
+    </div>
+    
+    <div class="email-card">
+      <div class="email-subject">
+        REMINDER (3rd): Complete mandatory security training — deadline in 8 days
+        <span class="badge badge-unread">UNREAD</span>
+        
+      </div>
+      <div class="email-from">From: InfoSec Training &middot; 2026-05-23T11:28</div>
+      <div class="email-summary">Reminder to complete mandatory security training with deadline in 8 days, non-completion will suspend VPN access.</div>
+      
+      <ul class="email-actions">
+        
+        <li>Complete remaining modules by May 30</li>
+        
+      </ul>
+      
+      
+    </div>
+    
+    <div class="email-card">
+      <div class="email-subject">
+        Re: Agent Factory — Weekly Standup — action items from Tuesday
+        <span class="badge badge-unread">UNREAD</span>
+        
+      </div>
+      <div class="email-from">From: Raj Patel &middot; 2026-05-23T12:10</div>
+      <div class="email-summary">Weekly standup notes and follow-up questions from Raj Patel regarding Agent Factory demo and security review checklist.</div>
+      
+      <ul class="email-actions">
+        
+        <li>confirm demo slot</li>
+        
+        <li>respond to follow-up question</li>
+        
+      </ul>
+      
+      
+      <div class="draft-reply">
+        <div class="draft-label">Draft Reply</div>
+        Hi Raj, thanks for the update. I'm on it with the demo and will confirm my slot by EOD today. Everything's fine, just had a scheduling conflict.
+      </div>
+      
+    </div>
+    
+    <div class="email-card">
+      <div class="email-subject">
+        Re: Can we sync on the Airtable automation architecture?
+        <span class="badge badge-unread">UNREAD</span>
+        
+      </div>
+      <div class="email-from">From: Lisa Wong &middot; 2026-05-23T08:28</div>
+      <div class="email-summary">Lisa Wong suggests simplifying the Airtable automation for agent tracking dashboard using a single Airtable Automation with scripting.</div>
+      
+      <ul class="email-actions">
+        
+        <li>Discuss and simplify Airtable automation with Lisa</li>
+        
+      </ul>
+      
+      
+      <div class="draft-reply">
+        <div class="draft-label">Draft Reply</div>
+        Hi Lisa, thanks for taking a closer look at our Airtable setup. I'd love to discuss your idea of simplifying the automation using a single Airtable Automation with scripting. Would you like me to send over some initial thoughts or should we whiteboard tomorrow as planned?
+      </div>
+      
+    </div>
+    
+    <div class="email-card">
+      <div class="email-subject">
+        Re: Can we sync on the Airtable automation architecture? (bumping this)
+        <span class="badge badge-unread">UNREAD</span>
+        <span class="badge badge-attachment">ATTACHMENT</span>
+      </div>
+      <div class="email-from">From: Lisa Wong &middot; 2026-05-23T11:46</div>
+      <div class="email-summary">Lisa Wong requests a confirmation for an Airtable architecture whiteboard meeting scheduled for tomorrow at 2pm.</div>
+      
+      <ul class="email-actions">
+        
+        <li>confirm attendance</li>
+        
+      </ul>
+      
+      
+      <div class="draft-reply">
+        <div class="draft-label">Draft Reply</div>
+        Hi Lisa, thanks for organizing the meeting. I'll be there and look forward to reviewing the automation flow you've sketched out. Best, [Your Name]
+      </div>
+      
+    </div>
+    
+  </div>
+  
+  
+  
+  <div class="section section-action-required">
+    <h2>Action Required (1)</h2>
+    
+    <div class="email-card">
+      <div class="email-subject">
+        Meeting invite: Agent Factory — Weekly Standup
+        <span class="badge badge-unread">UNREAD</span>
+        
+      </div>
+      <div class="email-from">From: Raj Patel &middot; 2026-05-23T09:58</div>
+      <div class="email-summary">Weekly standup meeting invite for Agent Factory initiative</div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+  
+  <div class="section section-fyi">
+    <h2>FYI (2)</h2>
+    
+    <div class="email-card">
+      <div class="email-subject">
+        FYI: New AI Coding Assistant policy — effective June 1
+        
+        <span class="badge badge-attachment">ATTACHMENT</span>
+      </div>
+      <div class="email-from">From: IT Governance &middot; 2026-05-23T04:58</div>
+      <div class="email-summary">New AI Coding Assistant policy effective June 1st with key changes to proprietary code, approved tools, and code reviews.</div>
+      
+      
+    </div>
+    
+    <div class="email-card">
+      <div class="email-subject">
+        Expense report EXP-2847 approved
+        
+        
+      </div>
+      <div class="email-from">From: Concur &middot; 2026-05-22T18:58</div>
+      <div class="email-summary">Expense report EXP-2847 approved; expected deposit in 5 business days.</div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+  
+  <div class="section section-low-priority">
+    <h2>Low Priority (3)</h2>
+    
+    <div class="email-card">
+      <div class="email-subject">
+        Cisco Insider Newsletter — May Edition
+        
+        
+      </div>
+      <div class="email-from">From: Cisco Insider &middot; 2026-05-22T22:58</div>
+      <div class="email-summary">Cisco Insider Newsletter for May, featuring company updates and news.</div>
+      
+      
+    </div>
+    
+    <div class="email-card">
+      <div class="email-subject">
+        Your Amazon order has shipped!
+        
+        
+      </div>
+      <div class="email-from">From: Amazon.com &middot; 2026-05-23T02:58</div>
+      <div class="email-summary">Amazon order shipment confirmation with estimated delivery date.</div>
+      
+      
+    </div>
+    
+    <div class="email-card">
+      <div class="email-subject">
+        EXTERNAL: Exclusive offer — 70% off premium business tools!
+        <span class="badge badge-unread">UNREAD</span>
+        
+      </div>
+      <div class="email-from">From: Premium Business Tools &middot; 2026-05-23T00:58</div>
+      <div class="email-summary">Marketing email with a 70% off offer, likely phishing or spam.</div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+
+  <div class="footer">
+    Powered by Flerken &middot; Your Personal AI Assistant<br>
+    Triaged with llama3.1:8b &middot; Delivered via Microsoft Graph
+  </div>
+</div>
+</body>
+</html>

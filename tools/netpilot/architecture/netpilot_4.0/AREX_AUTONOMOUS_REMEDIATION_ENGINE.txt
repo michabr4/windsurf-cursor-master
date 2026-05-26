@@ -1,0 +1,23 @@
+NETPILOT 4.0 — AUTONOMOUS REMEDIATION ENGINE (ARE-X)
+
+Purpose:
+ARE-X executes autonomous remediation actions based on ANE decisions, PTE predictions, and CLAF triggers, with strict safety, rollback, and policy controls.
+
+Core Capabilities:
+- Autonomous remediation workflows
+- Policy-based rollback
+- Risk-aware execution
+- Multi-vendor remediation actions
+- Human-in-the-loop approval modes
+
+Key Components:
+- Remediation Workflow Library
+- Risk & Policy Gatekeeper
+- Execution Controller
+- Rollback Engine
+- Audit & Compliance Logger
+
+Execution Modes:
+- Fully autonomous
+- Approval-required
+- Suggest-only

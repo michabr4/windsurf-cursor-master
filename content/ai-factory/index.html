@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en" x-data="aiFactory()" x-init="init()">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>People AI Factory — Cisco CX Transformation Playbook</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+          colors: {
+            cisco: {
+              blue: '#049fd9',
+              dark: '#171f2d',
+              navy: '#1a2332',
+              teal: '#00bceb',
+              green: '#6cc04a',
+              sky: '#64bbe3',
+            },
+            splunk: {
+              teal: '#006D9C',
+              green: '#53A051',
+              sage: '#4FA484',
+              orange: '#F1813F',
+              coral: '#EC9960',
+              red: '#DC4E41',
+              yellow: '#F8BE34',
+              slate: '#3C444D',
+              navy: '#294E70',
+              mint: '#62B3B2',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-sans bg-slate-50 text-slate-800 antialiased">
+
+  <!-- ==================== NAVIGATION ==================== -->
+  <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md border-b border-slate-200 z-50 no-print">
+    <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <span class="font-bold text-lg tracking-tight text-cisco-dark">Cisco — People AI Factory</span>
+      </div>
+      <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-500">
+        <a href="#vision" class="nav-link hover:text-slate-900">Vision</a>
+        <a href="#pillars" class="nav-link hover:text-slate-900">Framework</a>
+        <a href="#roles" class="nav-link hover:text-slate-900">Role Explorer</a>
+        <a href="#lifecycle" class="nav-link hover:text-slate-900">Agent Lifecycle</a>
+        <a href="#maturity" class="nav-link hover:text-slate-900">Maturity Model</a>
+        <a href="#assessment" class="nav-link hover:text-slate-900">Assessment</a>
+      </div>
+      <button class="md:hidden" @click="mobileNav = !mobileNav" title="Toggle navigation menu" aria-label="Toggle navigation menu">
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+    </div>
+    <!-- Mobile nav -->
+    <div x-show="mobileNav" x-transition class="md:hidden bg-white border-t border-slate-200 px-6 py-4 space-y-3">
+      <a href="#vision" class="block text-sm font-medium text-slate-600" @click="mobileNav = false">Vision</a>
+      <a href="#pillars" class="block text-sm font-medium text-slate-600" @click="mobileNav = false">Framework</a>
+      <a href="#roles" class="block text-sm font-medium text-slate-600" @click="mobileNav = false">Role Explorer</a>
+      <a href="#lifecycle" class="block text-sm font-medium text-slate-600" @click="mobileNav = false">Agent Lifecycle</a>
+      <a href="#maturity" class="block text-sm font-medium text-slate-600" @click="mobileNav = false">Maturity Model</a>
+      <a href="#assessment" class="block text-sm font-medium text-slate-600" @click="mobileNav = false">Assessment</a>
+    </div>
+  </nav>
+
+  <!-- ==================== HERO ==================== -->
+  <section id="vision" class="hero-gradient min-h-screen flex items-center justify-center text-white pt-16">
+    <div class="max-w-5xl mx-auto px-6 text-center">
+      <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur rounded-full px-4 py-2 text-sm font-medium mb-8">
+        <i data-lucide="sparkles" class="w-4 h-4"></i>
+        Cisco CX Transformation Playbook
+      </div>
+      <h1 class="text-5xl md:text-7xl font-black tracking-tight leading-tight mb-6">
+        The People AI Factory<br>
+        <span class="bg-gradient-to-r from-cisco-teal to-cisco-sky bg-clip-text text-transparent">Framework</span>
+      </h1>
+      <p class="text-xl md:text-2xl text-cisco-sky/90 max-w-3xl mx-auto mb-8 leading-relaxed">
+        Every role evolves. Every process accelerates. Every customer wins.
+      </p>
+      <p class="text-lg text-cisco-sky/60 max-w-2xl mx-auto mb-12">
+        A comprehensive framework for transforming Cisco CX from manual operations 
+        into an agent-powered operating model — where people become the architects 
+        of AI agents that deliver customer outcomes at scale.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#pillars" class="inline-flex items-center justify-center gap-2 bg-white text-slate-900 font-semibold px-8 py-4 rounded-xl hover:bg-blue-50 transition">
+          Explore the Framework <i data-lucide="arrow-down" class="w-5 h-5"></i>
+        </a>
+        <a href="#assessment" class="inline-flex items-center justify-center gap-2 bg-white/10 backdrop-blur text-white font-semibold px-8 py-4 rounded-xl border border-white/20 hover:bg-white/20 transition">
+          Take the Assessment <i data-lucide="clipboard-check" class="w-5 h-5"></i>
+        </a>
+      </div>
+
+      <!-- Key stats -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-20 pt-12 border-t border-white/10">
+        <div>
+          <div class="text-3xl font-bold text-white">8</div>
+          <div class="text-cisco-sky/70 text-sm mt-1">CX Roles Mapped</div>
+        </div>
+        <div>
+          <div class="text-3xl font-bold text-white">32</div>
+          <div class="text-cisco-sky/70 text-sm mt-1">Agent Opportunities</div>
+        </div>
+        <div>
+          <div class="text-3xl font-bold text-white">5</div>
+          <div class="text-cisco-sky/70 text-sm mt-1">Lifecycle Stages</div>
+        </div>
+        <div>
+          <div class="text-3xl font-bold text-white">4</div>
+          <div class="text-cisco-sky/70 text-sm mt-1">Maturity Levels</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== THREE PILLARS ==================== -->
+  <section id="pillars" class="py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <div class="inline-flex items-center gap-2 bg-cisco-blue/10 text-cisco-blue rounded-full px-4 py-2 text-sm font-medium mb-4">
+          <i data-lucide="layers" class="w-4 h-4"></i>
+          The Foundation
+        </div>
+        <h2 class="text-4xl md:text-5xl font-black tracking-tight mb-4">Three Pillars of Transformation</h2>
+        <p class="text-lg text-slate-500 max-w-2xl mx-auto">The AI Factory rests on three interconnected pillars that together create a unified transformation narrative.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <template x-for="pillar in framework.pillars" :key="pillar.id">
+          <div class="pillar-card bg-white rounded-2xl border border-slate-200 p-8 hover:border-blue-300">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-6"
+                 :class="{
+                   'bg-blue-100 text-blue-600': pillar.color === 'blue',
+                   'bg-purple-100 text-purple-600': pillar.color === 'purple',
+                   'bg-emerald-100 text-emerald-600': pillar.color === 'emerald'
+                 }">
+              <i :data-lucide="pillar.icon" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2" x-text="pillar.title"></h3>
+            <p class="text-2xl font-black tracking-tight mb-4"
+               :class="{
+                 'text-blue-600': pillar.color === 'blue',
+                 'text-purple-600': pillar.color === 'purple',
+                 'text-emerald-600': pillar.color === 'emerald'
+               }"
+               x-text="pillar.headline"></p>
+            <p class="text-slate-600 mb-6" x-text="pillar.description"></p>
+            
+            <div class="bg-slate-50 rounded-xl p-4 mb-6">
+              <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Key Shift</div>
+              <div class="font-semibold text-slate-800" x-text="pillar.keyShift"></div>
+            </div>
+
+            <ul class="space-y-2">
+              <template x-for="outcome in pillar.outcomes" :key="outcome">
+                <li class="flex items-start gap-2 text-sm text-slate-600">
+                  <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0"></i>
+                  <span x-text="outcome"></span>
+                </li>
+              </template>
+            </ul>
+          </div>
+        </template>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ROLE EXPLORER ==================== -->
+  <section id="roles" class="py-24 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <div class="inline-flex items-center gap-2 bg-purple-50 text-purple-700 rounded-full px-4 py-2 text-sm font-medium mb-4">
+          <i data-lucide="users" class="w-4 h-4"></i>
+          Role Transformation Map
+        </div>
+        <h2 class="text-4xl md:text-5xl font-black tracking-tight mb-4">Explore Every CX Role</h2>
+        <p class="text-lg text-slate-500 max-w-2xl mx-auto">Click any role to see how it transforms in the AI Factory — from today's reality to tomorrow's agent-powered evolution.</p>
+      </div>
+
+      <!-- Role filter -->
+      <div class="flex flex-wrap gap-2 justify-center mb-12">
+        <button 
+          class="px-4 py-2 rounded-full text-sm font-medium transition"
+          :class="selectedRole === null ? 'bg-slate-900 text-white' : 'bg-white text-slate-600 border border-slate-200 hover:border-slate-400'"
+          @click="selectedRole = null">
+          All Roles
+        </button>
+        <template x-for="role in roles" :key="role.id">
+          <button 
+            class="px-4 py-2 rounded-full text-sm font-medium transition"
+            :class="selectedRole === role.id ? 'bg-slate-900 text-white' : 'bg-white text-slate-600 border border-slate-200 hover:border-slate-400'"
+            @click="selectedRole = selectedRole === role.id ? null : role.id"
+            x-text="role.abbrev">
+          </button>
+        </template>
+      </div>
+
+      <!-- Role cards -->
+      <div class="grid md:grid-cols-2 gap-6 items-start">
+        <template x-for="role in filteredRoles" :key="role.id">
+          <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-lg transition-shadow">
+            <!-- Header -->
+            <div class="p-6 border-b border-slate-100 cursor-pointer" @click="toggleRole(role.id)">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 rounded-xl flex items-center justify-center"
+                       :class="getRoleColorClasses(role.color)">
+                    <i :data-lucide="role.icon" class="w-6 h-6"></i>
+                  </div>
+                  <div>
+                    <h3 class="font-bold text-lg" x-text="role.title"></h3>
+                    <p class="text-sm text-slate-500" x-text="expandedRole === role.id ? role.currentState.summary : role.currentState.summary.substring(0, 80) + '...'"></p>
+                  </div>
+                </div>
+                <svg class="w-5 h-5 text-slate-400 transition-transform duration-200" :class="expandedRole === role.id ? 'rotate-180' : ''" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </div>
+            </div>
+
+            <!-- Expanded content -->
+            <div x-show="expandedRole === role.id" x-transition>
+              <!-- Current State -->
+              <div class="p-6 bg-splunk-red/5 border-b border-slate-100">
+                <div class="flex items-center gap-2 text-splunk-red font-semibold text-sm mb-3">
+                  <i data-lucide="alert-circle" class="w-4 h-4"></i>
+                  TODAY: Pain Points
+                </div>
+                <ul class="space-y-2">
+                  <template x-for="pain in role.currentState.painPoints" :key="pain">
+                    <li class="flex items-start gap-2 text-sm text-splunk-red/70">
+                      <i data-lucide="x-circle" class="w-4 h-4 text-splunk-red/50 mt-0.5 flex-shrink-0"></i>
+                      <span x-text="pain"></span>
+                    </li>
+                  </template>
+                </ul>
+              </div>
+
+              <!-- Factory State -->
+              <div class="p-6 bg-splunk-green/5 border-b border-slate-100">
+                <div class="flex items-center gap-2 text-splunk-green font-semibold text-sm mb-1">
+                  <i data-lucide="sparkles" class="w-4 h-4"></i>
+                  AI FACTORY: <span x-text="role.factoryState.newRole"></span>
+                </div>
+                <p class="text-sm text-splunk-green/70 mb-4" x-text="role.factoryState.summary"></p>
+                
+                <!-- Agents -->
+                <div class="text-xs font-semibold text-splunk-sage uppercase tracking-wider mb-3">Agent Opportunities</div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <template x-for="agent in role.factoryState.agents" :key="agent.name">
+                    <div class="bg-white rounded-lg p-3 border border-splunk-green/20">
+                      <div class="font-semibold text-sm text-slate-800" x-text="agent.name"></div>
+                      <div class="text-xs text-slate-500 mt-1" x-text="agent.desc"></div>
+                    </div>
+                  </template>
+                </div>
+              </div>
+
+              <!-- KPIs -->
+              <div class="p-6 bg-splunk-teal/5">
+                <div class="flex items-center gap-2 text-splunk-teal font-semibold text-sm mb-3">
+                  <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
+                  IMPACT METRICS
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                  <template x-for="kpi in role.factoryState.kpis" :key="kpi.metric">
+                    <div class="bg-white rounded-lg p-3 border border-splunk-teal/15">
+                      <div class="text-xs font-medium text-splunk-slate mb-2" x-text="kpi.metric"></div>
+                      <div class="flex items-center gap-2">
+                        <span class="text-xs font-medium text-splunk-red line-through" x-text="kpi.before"></span>
+                        <i data-lucide="arrow-right" class="w-3 h-3 text-slate-400"></i>
+                        <span class="text-sm font-bold text-splunk-green" x-text="kpi.after"></span>
+                      </div>
+                    </div>
+                  </template>
+                </div>
+                <!-- Maturity path -->
+                <div class="mt-4 bg-gradient-to-r from-cisco-blue/5 to-splunk-teal/10 rounded-lg p-4">
+                  <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Maturity Path</div>
+                  <div class="text-sm font-medium text-slate-700" x-text="role.maturityPath"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== AGENT LIFECYCLE ==================== -->
+  <section id="lifecycle" class="py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <div class="inline-flex items-center gap-2 bg-indigo-50 text-indigo-700 rounded-full px-4 py-2 text-sm font-medium mb-4">
+          <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+          Continuous Loop
+        </div>
+        <h2 class="text-4xl md:text-5xl font-black tracking-tight mb-4">The Agent Lifecycle</h2>
+        <p class="text-lg text-slate-500 max-w-2xl mx-auto">Every agent — from idea to impact — follows five stages. Every CX team member has a role in this loop.</p>
+      </div>
+
+      <!-- Lifecycle stages -->
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+        <template x-for="(stage, index) in framework.lifecycle" :key="stage.stage">
+          <div class="relative bg-white rounded-2xl border-2 p-6 transition cursor-pointer hover:shadow-lg"
+               :class="activeLifecycleStage === index ? 'border-blue-500 shadow-lg' : 'border-slate-200'"
+               @click="activeLifecycleStage = index">
+            <!-- Step number -->
+            <div class="absolute -top-3 left-6 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full"
+                 x-text="'Stage ' + (index + 1)"></div>
+            
+            <div class="mt-2">
+              <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4"
+                   :class="'bg-' + stage.color + '-100 text-' + stage.color + '-600'">
+                <i :data-lucide="stage.icon" class="w-5 h-5"></i>
+              </div>
+              <h3 class="text-lg font-bold mb-2" x-text="stage.stage"></h3>
+              <p class="text-sm text-slate-500 mb-4" x-text="stage.description"></p>
+            </div>
+
+            <!-- Expanded details -->
+            <div x-show="activeLifecycleStage === index" x-transition>
+              <ul class="space-y-2 mb-4">
+                <template x-for="activity in stage.activities" :key="activity">
+                  <li class="flex items-start gap-2 text-sm text-slate-600">
+                    <i data-lucide="circle-dot" class="w-3 h-3 mt-1 flex-shrink-0 text-blue-400"></i>
+                    <span x-text="activity"></span>
+                  </li>
+                </template>
+              </ul>
+              <div class="bg-blue-50 rounded-lg p-3">
+                <div class="text-xs font-semibold text-blue-600 uppercase tracking-wider">Who's Involved</div>
+                <div class="text-sm text-blue-800 mt-1" x-text="stage.who"></div>
+              </div>
+            </div>
+
+            <!-- Arrow connector (hidden on mobile) -->
+            <template x-if="index < framework.lifecycle.length - 1">
+              <div class="hidden md:block absolute -right-4 top-1/2 -translate-y-1/2 z-10">
+                <i data-lucide="chevron-right" class="w-6 h-6 text-blue-400"></i>
+              </div>
+            </template>
+          </div>
+        </template>
+      </div>
+
+      <!-- Loop back indicator -->
+      <div class="text-center mt-8">
+        <div class="inline-flex items-center gap-2 text-sm text-purple-600 font-medium bg-purple-50 rounded-full px-6 py-3">
+          <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+          Scale feeds back into Identify — the loop never stops
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== MATURITY MODEL ==================== -->
+  <section id="maturity" class="py-24 bg-gradient-to-br from-slate-900 to-slate-800 text-white">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <div class="inline-flex items-center gap-2 bg-white/10 text-blue-300 rounded-full px-4 py-2 text-sm font-medium mb-4">
+          <i data-lucide="trending-up" class="w-4 h-4"></i>
+          Transformation Journey
+        </div>
+        <h2 class="text-4xl md:text-5xl font-black tracking-tight mb-4">Maturity Model</h2>
+        <p class="text-lg text-slate-400 max-w-2xl mx-auto">Where is your team today? Where do you want to be? The journey from Manual to Autonomous is a spectrum — and every step creates value.</p>
+      </div>
+
+      <div class="grid md:grid-cols-4 gap-6">
+        <template x-for="level in framework.maturityLevels" :key="level.level">
+          <div class="bg-white/5 backdrop-blur rounded-2xl border border-white/10 p-6 hover:bg-white/10 transition cursor-pointer"
+               @click="activeMaturityLevel = level.level"
+               :class="activeMaturityLevel === level.level ? 'ring-2 ring-blue-400 bg-white/10' : ''">
+            
+            <!-- Level indicator -->
+            <div class="flex items-center gap-3 mb-4">
+              <div class="text-3xl font-black"
+                   :class="{
+                     'text-slate-400': level.color === 'slate',
+                     'text-blue-400': level.color === 'blue',
+                     'text-violet-400': level.color === 'violet',
+                     'text-emerald-400': level.color === 'emerald'
+                   }"
+                   x-text="'L' + level.level"></div>
+              <div>
+                <h3 class="font-bold text-lg" x-text="level.name"></h3>
+                <p class="text-sm text-slate-400" x-text="level.description"></p>
+              </div>
+            </div>
+
+            <!-- Progress bar -->
+            <div class="w-full bg-white/10 rounded-full h-2 mb-6">
+              <div class="h-2 rounded-full maturity-bar"
+                   :class="{
+                     'bg-slate-400': level.color === 'slate',
+                     'bg-blue-400': level.color === 'blue',
+                     'bg-violet-400': level.color === 'violet',
+                     'bg-emerald-400': level.color === 'emerald'
+                   }"
+                   :style="'width: ' + (level.level * 25) + '%'"></div>
+            </div>
+
+            <!-- Characteristics -->
+            <ul class="space-y-3">
+              <template x-for="char in level.characteristics" :key="char">
+                <li class="flex items-start gap-2 text-sm text-slate-300">
+                  <div class="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0"
+                       :class="{
+                         'bg-slate-400': level.color === 'slate',
+                         'bg-blue-400': level.color === 'blue',
+                         'bg-violet-400': level.color === 'violet',
+                         'bg-emerald-400': level.color === 'emerald'
+                       }"></div>
+                  <span x-text="char"></span>
+                </li>
+              </template>
+            </ul>
+          </div>
+        </template>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ASSESSMENT ==================== -->
+  <section id="assessment" class="py-24 bg-white">
+    <div class="max-w-3xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <div class="inline-flex items-center gap-2 bg-amber-50 text-amber-700 rounded-full px-4 py-2 text-sm font-medium mb-4">
+          <i data-lucide="clipboard-check" class="w-4 h-4"></i>
+          Interactive Assessment
+        </div>
+        <h2 class="text-4xl md:text-5xl font-black tracking-tight mb-4">Where Are You Today?</h2>
+        <p class="text-lg text-slate-500 max-w-2xl mx-auto">Answer 6 questions to discover your team's current AI Factory maturity level and get a personalized roadmap.</p>
+      </div>
+
+      <!-- Assessment form -->
+      <div x-show="!assessmentComplete">
+        <!-- Progress bar -->
+        <div class="mb-8">
+          <div class="flex justify-between text-sm text-slate-500 mb-2">
+            <span>Progress</span>
+            <span x-text="Object.keys(assessmentAnswers).length + ' of ' + assessmentQuestions.length + ' questions'"></span>
+          </div>
+          <div class="w-full bg-slate-100 rounded-full h-2">
+            <div class="bg-gradient-to-r from-blue-600 to-purple-600 h-2 rounded-full transition-all duration-500"
+                 :style="'width: ' + (Object.keys(assessmentAnswers).length / assessmentQuestions.length * 100) + '%'"></div>
+          </div>
+        </div>
+
+        <div class="space-y-8">
+          <template x-for="(q, index) in assessmentQuestions" :key="q.id">
+            <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-sm font-bold"
+                     x-text="index + 1"></div>
+                <h3 class="font-semibold text-lg" x-text="q.question"></h3>
+              </div>
+              <div class="space-y-2">
+                <template x-for="option in q.options" :key="option.value">
+                  <button 
+                    class="assessment-option w-full text-left p-4 rounded-xl border-2 transition"
+                    :class="assessmentAnswers[q.id] === option.value ? 'border-blue-500 bg-blue-50' : 'border-slate-200 bg-white hover:border-slate-300'"
+                    @click="assessmentAnswers[q.id] = option.value">
+                    <div class="flex items-center gap-3">
+                      <div class="w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0"
+                           :class="assessmentAnswers[q.id] === option.value ? 'border-blue-500 bg-blue-500' : 'border-slate-300'">
+                        <div class="w-2 h-2 rounded-full bg-white" x-show="assessmentAnswers[q.id] === option.value"></div>
+                      </div>
+                      <span class="text-sm" :class="assessmentAnswers[q.id] === option.value ? 'font-semibold text-blue-800' : 'text-slate-600'" x-text="option.label"></span>
+                    </div>
+                  </button>
+                </template>
+              </div>
+            </div>
+          </template>
+        </div>
+
+        <div class="mt-8 text-center">
+          <button 
+            class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold px-8 py-4 rounded-xl hover:shadow-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
+            :disabled="Object.keys(assessmentAnswers).length < assessmentQuestions.length"
+            @click="calculateAssessment()">
+            Get Your Results <i data-lucide="arrow-right" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Assessment results -->
+      <div x-show="assessmentComplete" x-transition class="fade-in-up">
+        <div class="bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl p-8 text-white text-center mb-8">
+          <div class="text-6xl font-black mb-2" x-text="'L' + assessmentResult.level"></div>
+          <div class="text-2xl font-bold mb-2" x-text="assessmentResult.name"></div>
+          <p class="text-blue-100" x-text="assessmentResult.description"></p>
+          <div class="mt-6 bg-white/10 rounded-xl p-4">
+            <div class="text-sm text-blue-200 mb-1">Your Score</div>
+            <div class="text-3xl font-bold" x-text="assessmentResult.score.toFixed(1) + ' / 4.0'"></div>
+          </div>
+        </div>
+
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 mb-8">
+          <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+            <i data-lucide="map" class="w-5 h-5 text-blue-600"></i>
+            Your Recommended Next Steps
+          </h3>
+          <div class="space-y-3" x-html="getRecommendations()"></div>
+        </div>
+
+        <div class="text-center">
+          <button class="inline-flex items-center gap-2 text-blue-600 font-semibold hover:text-blue-800 transition"
+                  @click="resetAssessment()">
+            <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+            Retake Assessment
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CTA / FOOTER ==================== -->
+  <section class="py-16 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <h2 class="text-3xl md:text-4xl font-black mb-4">Ready to Build Your AI Factory?</h2>
+      <p class="text-xl text-blue-100 mb-8">The transformation starts with one agent, one role, one process. Pick your first opportunity and start building.</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#roles" class="inline-flex items-center justify-center gap-2 bg-white text-blue-700 font-semibold px-8 py-4 rounded-xl hover:bg-blue-50 transition">
+          <i data-lucide="users" class="w-5 h-5"></i>
+          Find Your Role
+        </a>
+        <a href="#lifecycle" class="inline-flex items-center justify-center gap-2 bg-white/10 text-white font-semibold px-8 py-4 rounded-xl border border-white/20 hover:bg-white/20 transition">
+          <i data-lucide="rocket" class="w-5 h-5"></i>
+          Start the Lifecycle
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="bg-slate-900 text-slate-400 py-8">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <span class="text-sm">Cisco — People AI Factory — CX Transformation</span>
+      </div>
+      <div class="text-sm">Built with purpose. Powered by people + agents.</div>
+    </div>
+  </footer>
+
+  <!-- ==================== APP LOGIC ==================== -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

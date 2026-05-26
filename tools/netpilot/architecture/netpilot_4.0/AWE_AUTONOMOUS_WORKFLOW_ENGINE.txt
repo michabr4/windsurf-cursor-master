@@ -1,0 +1,18 @@
+NETPILOT 4.0 — AUTONOMOUS WORKFLOW ENGINE (AWE)
+
+Purpose:
+AWE generates and adapts automation workflows autonomously based on intent, policies, and observed outcomes.
+
+Core Capabilities:
+- Autonomous workflow generation
+- Multi-step reasoning
+- Vendor-aware branching
+- Telemetry-aware branching
+- Continuous workflow optimization
+
+Key Components:
+- Workflow Pattern Library
+- Reasoning Engine
+- Branching Engine
+- Outcome Analyzer
+- Optimization Engine

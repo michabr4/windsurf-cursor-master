@@ -1,0 +1,13 @@
+---
+description: Email assistant guardrails (M365 primary mailbox)
+alwaysApply: true
+---
+
+# Email agent
+
+- Mailbox scope: **primary UPN only** (`MS_MAILBOX_UPN` in `.env`). No shared mailboxes in v1.
+- Orchestration specs live in `orchestration/email-*.yaml`; specialists in `agents/specialists/email/`.
+- **Never send email** or apply mailbox moves without explicit user approval in the session.
+- Morning digest (`email-morning-digest.yaml`): read/analyze only—no organize, no mass draft.
+- Outputs go to `data/runs/email/` (gitignored); do not commit message bodies or tokens.
+- If Graph is not configured, use sample fixtures or pasted content; point user to `docs/email/IT_ADMIN_REQUEST.md`.

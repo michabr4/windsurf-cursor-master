@@ -1,0 +1,15 @@
+{
+  "name": "helix-sdm",
+  "private": true,
+  "description": "Root workspace script for documentation artifacts",
+  "scripts": {
+    "docs:mockup-pdf": "mkdir -p docs && md-to-pdf README.md --document-title \"Helix — Mockup hub guide\" --pdf-options '{\"format\":\"Letter\",\"printBackground\":true,\"margin\":{\"top\":\"18mm\",\"bottom\":\"18mm\",\"left\":\"16mm\",\"right\":\"16mm\"}}' && mv -f README.pdf docs/MOCKUP_HUB_USER_GUIDE.pdf",
+    "docs:helix-mockup-reference-pdf": "mkdir -p docs && md-to-pdf docs/HELIX_MOCKUP_REFERENCE.md --document-title \"Helix UI Mockup Hub — Reference & Playbook\" --pdf-options '{\"format\":\"Letter\",\"printBackground\":true,\"margin\":{\"top\":\"16mm\",\"bottom\":\"16mm\",\"left\":\"14mm\",\"right\":\"14mm\"}}'",
+    "docs:helix-mockup-reference-html": "node scripts/build-helix-reference-print-html.mjs",
+    "package:mockup": "node scripts/package-mockup-standalone.mjs"
+  },
+  "devDependencies": {
+    "marked": "^12.0.0",
+    "md-to-pdf": "5.2.4"
+  }
+}

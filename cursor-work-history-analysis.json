@@ -1,0 +1,876 @@
+{
+  "generated_at": "2026-05-26T09:53:41.482431",
+  "scope_note": "This report covers locally stored Agent transcripts (22 sessions) and workspace metadata on this Mac. Older Composer-only chats may live in Cursor cloud and are not fully represented here.",
+  "total_transcripts": 22,
+  "total_transcript_size_mb": 5.14,
+  "date_range": {
+    "earliest": "2026-03-31",
+    "latest": "2026-05-26"
+  },
+  "projects_with_transcripts": 11,
+  "workspaces_opened": [
+    "/Users/michabr4/.cursor/Outlook Agent",
+    "/Users/michabr4/Desktop/AgenticStarterKitv1_0",
+    "/Users/michabr4/Desktop/AgenticStarterKitv1_0/docs",
+    "/Users/michabr4/Desktop/Digitized Delivery - GES",
+    "/Users/michabr4/Desktop/Digitized Delivery - GES/Airtable Tracking",
+    "/Users/michabr4/Desktop/NetPilot",
+    "/Users/michabr4/Desktop/Python",
+    "/Users/michabr4/Desktop/Python/Test",
+    "/Users/michabr4/Desktop/SDM Files",
+    "/Users/michabr4/Desktop/SDM Files/ServiceFlow SDC_Windsurf",
+    "/Users/michabr4/Desktop/delivery-workbench",
+    "/Users/michabr4/Desktop/serviceflow-sdm",
+    "/Users/michabr4/Documents/GitHub/index",
+    "/Users/michabr4/New Master Folder - Windsurf and Cursor",
+    "/Users/michabr4/projects/Blue-Shield"
+  ],
+  "theme_frequency": {
+    "Git / CI": 152,
+    "Service delivery / SDM": 83,
+    "Code / dev": 63,
+    "Agent / automation": 38,
+    "Documentation": 36,
+    "Airtable / tracking": 22,
+    "Excel / data consolidation": 14,
+    "Infrastructure / network": 8
+  },
+  "global_tool_usage": {
+    "StrReplace": 1419,
+    "Read": 1191,
+    "Shell": 796,
+    "Grep": 629,
+    "Write": 284,
+    "Glob": 192,
+    "ApplyPatch": 69,
+    "TodoWrite": 64,
+    "ReadLints": 62,
+    "WebSearch": 44,
+    "Delete": 41,
+    "WebFetch": 31,
+    "ReadFile": 24,
+    "Task": 20,
+    "Await": 17,
+    "AskQuestion": 6,
+    "CallMcpTool": 4,
+    "CreatePlan": 3,
+    "call_mcp_tool": 3,
+    "rg": 3,
+    "SemanticSearch": 1
+  },
+  "by_project": {
+    "Desktop AgenticStarterKitv1 0": {
+      "session_count": 3,
+      "total_kb": 288.5,
+      "sessions": [
+        {
+          "id": "02c9076a",
+          "modified": "2026-05-26",
+          "size_kb": 57.6,
+          "queries": 4,
+          "first_query": "I am a Service Delivery Manager who has used AI in many ways before but want to start focusing more strategically. \n\nBegin to build a local IDE that will help me simplify my work effort in a very structured way. Guide me through the process and place security guardrails in place to reduce exposure a",
+          "themes": [
+            "Git / CI",
+            "Service delivery / SDM",
+            "Code / dev"
+          ],
+          "top_tools": [
+            "Write",
+            "Read",
+            "Shell",
+            "Glob",
+            "StrReplace",
+            "Grep"
+          ]
+        },
+        {
+          "id": "4813c946",
+          "modified": "2026-05-19",
+          "size_kb": 191.0,
+          "queries": 27,
+          "first_query": "I'd like to build an agent that reviews asana tasks",
+          "themes": [
+            "Git / CI",
+            "Code / dev",
+            "Agent / automation"
+          ],
+          "top_tools": [
+            "StrReplace",
+            "Shell",
+            "Read",
+            "Grep",
+            "Write",
+            "Glob"
+          ]
+        },
+        {
+          "id": "57480db1",
+          "modified": "2026-05-07",
+          "size_kb": 39.9,
+          "queries": 10,
+          "first_query": "Copy `.env.example` to `.env`",
+          "themes": [
+            "Documentation",
+            "Code / dev",
+            "Git / CI",
+            "Agent / automation"
+          ],
+          "top_tools": [
+            "Read",
+            "Shell",
+            "Glob",
+            "Grep",
+            "Write",
+            "StrReplace"
+          ]
+        }
+      ]
+    },
+    "Desktop AgenticStarterKitv1 0 docs": {
+      "session_count": 2,
+      "total_kb": 83.1,
+      "sessions": [
+        {
+          "id": "cb4a6cec",
+          "modified": "2026-05-07",
+          "size_kb": 47.1,
+          "queries": 15,
+          "first_query": "enable ollama",
+          "themes": [
+            "Documentation"
+          ],
+          "top_tools": [
+            "StrReplace",
+            "Read",
+            "Shell",
+            "Grep",
+            "WebFetch",
+            "Glob"
+          ]
+        },
+        {
+          "id": "07a783fa",
+          "modified": "2026-03-31",
+          "size_kb": 36.0,
+          "queries": 17,
+          "first_query": "Explain this codebase. Point me to the main entry points, key modules, and anything I should read before making changes.",
+          "themes": [
+            "Service delivery / SDM",
+            "Airtable / tracking",
+            "Code / dev",
+            "Agent / automation"
+          ],
+          "top_tools": []
+        }
+      ]
+    },
+    "Desktop Digitized Delivery GES": {
+      "session_count": 1,
+      "total_kb": 385.6,
+      "sessions": [
+        {
+          "id": "f25c9d55",
+          "modified": "2026-04-16",
+          "size_kb": 385.6,
+          "queries": 28,
+          "first_query": "compare @Customer NaC Parity Database.xlsx and @SaC-NaC Readiness Checklist v1.xlsx. suggest a consolidated file structure that is predominantly off the @SaC-NaC Readiness Checklist v1.xlsx file structure. Intent is to add parity data from @Customer NaC Parity Database.xlsx. Where there is not a cus",
+          "themes": [
+            "Service delivery / SDM",
+            "Airtable / tracking",
+            "Infrastructure / network",
+            "Git / CI",
+            "Documentation",
+            "Excel / data consolidation"
+          ],
+          "top_tools": [
+            "Shell",
+            "StrReplace",
+            "Read",
+            "Grep",
+            "ReadLints",
+            "Glob"
+          ]
+        }
+      ]
+    },
+    "Desktop Digitized Delivery GES Airtable Tracking": {
+      "session_count": 1,
+      "total_kb": 37.7,
+      "sessions": [
+        {
+          "id": "4758bf98",
+          "modified": "2026-05-08",
+          "size_kb": 37.7,
+          "queries": 10,
+          "first_query": "store this API token for Airtable for future use - [REDACTED_AIRTABLE_PAT]",
+          "themes": [
+            "Git / CI",
+            "Code / dev",
+            "Airtable / tracking",
+            "Service delivery / SDM"
+          ],
+          "top_tools": [
+            "Shell",
+            "Read",
+            "Glob",
+            "StrReplace",
+            "Grep",
+            "Write"
+          ]
+        }
+      ]
+    },
+    "Desktop SDM Files": {
+      "session_count": 1,
+      "total_kb": 3578.5,
+      "sessions": [
+        {
+          "id": "37d17db2",
+          "modified": "2026-05-18",
+          "size_kb": 3578.5,
+          "queries": 253,
+          "first_query": "Analyze the ServiceFlow SDC folder and subfiles and suggest next steps",
+          "themes": [
+            "Service delivery / SDM",
+            "Airtable / tracking",
+            "Infrastructure / network",
+            "Documentation",
+            "Git / CI",
+            "Code / dev",
+            "Excel / data consolidation",
+            "Agent / automation"
+          ],
+          "top_tools": [
+            "StrReplace",
+            "Read",
+            "Grep",
+            "Shell",
+            "Write",
+            "Glob"
+          ]
+        }
+      ]
+    },
+    "Desktop SDM Files ServiceFlow SDC Windsurf": {
+      "session_count": 1,
+      "total_kb": 63.7,
+      "sessions": [
+        {
+          "id": "715fc17d",
+          "modified": "2026-05-07",
+          "size_kb": 63.7,
+          "queries": 8,
+          "first_query": "open the helix app in a new browser",
+          "themes": [
+            "Git / CI",
+            "Code / dev"
+          ],
+          "top_tools": [
+            "Read",
+            "Shell",
+            "Grep",
+            "StrReplace",
+            "Glob",
+            "Write"
+          ]
+        }
+      ]
+    },
+    "Desktop delivery workbench": {
+      "session_count": 1,
+      "total_kb": 154.9,
+      "sessions": [
+        {
+          "id": "13a69fff",
+          "modified": "2026-05-26",
+          "size_kb": 154.9,
+          "queries": 16,
+          "first_query": "I am a Service Delivery Manager who has used AI in many ways before but want to start focusing more strategically. \n\nBegin to build a local IDE that will help me simplify my work effort in a very structured way. Guide me through the process and place security guardrails in place to reduce exposure a",
+          "themes": [
+            "Git / CI",
+            "Service delivery / SDM",
+            "Code / dev",
+            "Agent / automation"
+          ],
+          "top_tools": [
+            "Write",
+            "Shell",
+            "Read",
+            "StrReplace",
+            "Glob",
+            "Grep"
+          ]
+        }
+      ]
+    },
+    "Desktop serviceflow sdm": {
+      "session_count": 4,
+      "total_kb": 65.6,
+      "sessions": [
+        {
+          "id": "7cfc40f3",
+          "modified": "2026-04-15",
+          "size_kb": 1.9,
+          "queries": 2,
+          "first_query": "create a new parent folder named \"Digitized Delivery - GES\"",
+          "themes": [
+            "Git / CI",
+            "Service delivery / SDM"
+          ],
+          "top_tools": [
+            "Shell"
+          ]
+        },
+        {
+          "id": "039bfeb4",
+          "modified": "2026-04-14",
+          "size_kb": 40.1,
+          "queries": 5,
+          "first_query": "continue",
+          "themes": [
+            "Git / CI",
+            "Service delivery / SDM",
+            "Agent / automation"
+          ],
+          "top_tools": [
+            "Shell",
+            "StrReplace",
+            "Read",
+            "Glob",
+            "Write",
+            "Grep"
+          ]
+        },
+        {
+          "id": "131eb6f1",
+          "modified": "2026-04-13",
+          "size_kb": 17.8,
+          "queries": 1,
+          "first_query": "create a new folder labeled Personal Automation on my desktop. Scan my email from the last 7 days, group emails by subject, set priority of the email, and indicate actions needed and any associated due dates.",
+          "themes": [
+            "Git / CI",
+            "Agent / automation"
+          ],
+          "top_tools": [
+            "Shell",
+            "Read",
+            "Await",
+            "Write",
+            "Glob"
+          ]
+        },
+        {
+          "id": "434f98b9",
+          "modified": "2026-04-10",
+          "size_kb": 5.8,
+          "queries": 2,
+          "first_query": "open the local url for the app please",
+          "themes": [
+            "Git / CI",
+            "Documentation"
+          ],
+          "top_tools": [
+            "Read",
+            "Glob",
+            "Shell",
+            "Grep"
+          ]
+        }
+      ]
+    },
+    "Empty / untitled window": {
+      "session_count": 6,
+      "total_kb": 562.1,
+      "sessions": [
+        {
+          "id": "57480db1",
+          "modified": "2026-05-08",
+          "size_kb": 41.5,
+          "queries": 11,
+          "first_query": "Copy `.env.example` to `.env`",
+          "themes": [
+            "Documentation",
+            "Code / dev",
+            "Git / CI",
+            "Agent / automation"
+          ],
+          "top_tools": [
+            "Read",
+            "Shell",
+            "Glob",
+            "Grep",
+            "Write",
+            "StrReplace"
+          ]
+        },
+        {
+          "id": "7e7d20fb",
+          "modified": "2026-05-08",
+          "size_kb": 171.6,
+          "queries": 21,
+          "first_query": "I'm having trouble with the mgm daily status report generating with detail in Webex. It ran multiple times before. I previously chatted with you about this but I still cant seem to fix it",
+          "themes": [
+            "Git / CI",
+            "Code / dev",
+            "Service delivery / SDM",
+            "Documentation"
+          ],
+          "top_tools": [
+            "StrReplace",
+            "Read",
+            "Shell",
+            "Grep",
+            "Glob",
+            "ReadFile"
+          ]
+        },
+        {
+          "id": "fda32b6b",
+          "modified": "2026-04-23",
+          "size_kb": 310.0,
+          "queries": 18,
+          "first_query": "build a complete step by step plan to replace palo alto firewalls with Cisco firewalls. Build in standard PMO governance into the plan. Include a list of Cisco hardware and software",
+          "themes": [
+            "Git / CI",
+            "Code / dev",
+            "Documentation"
+          ],
+          "top_tools": [
+            "Shell",
+            "StrReplace",
+            "Write",
+            "Read",
+            "Grep",
+            "Glob"
+          ]
+        },
+        {
+          "id": "019d1805",
+          "modified": "2026-04-23",
+          "size_kb": 4.6,
+          "queries": 1,
+          "first_query": "i want to build a location of all customer data for my company's information where we can pull a status of all the customer information available",
+          "themes": [],
+          "top_tools": [
+            "Glob"
+          ]
+        },
+        {
+          "id": "8ce587bb",
+          "modified": "2026-04-20",
+          "size_kb": 2.4,
+          "queries": 2,
+          "first_query": "create new project labeled Blue Shield",
+          "themes": [
+            "Git / CI"
+          ],
+          "top_tools": [
+            "Read",
+            "Glob",
+            "Shell",
+            "call_mcp_tool"
+          ]
+        },
+        {
+          "id": "54877072",
+          "modified": "2026-04-17",
+          "size_kb": 32.0,
+          "queries": 4,
+          "first_query": "using SDM Files, locate the file with 40 agents identified tied to the Helix application",
+          "themes": [
+            "Git / CI",
+            "Service delivery / SDM",
+            "Code / dev",
+            "Agent / automation"
+          ],
+          "top_tools": [
+            "StrReplace",
+            "Read",
+            "Grep",
+            "Glob",
+            "Shell",
+            "TodoWrite"
+          ]
+        }
+      ]
+    },
+    "New Master Folder Windsurf and Cursor": {
+      "session_count": 1,
+      "total_kb": 0.9,
+      "sessions": [
+        {
+          "id": "2dc7395d",
+          "modified": "2026-05-26",
+          "size_kb": 0.9,
+          "queries": 1,
+          "first_query": "I'd like you to analyze all the work I have ever done in Cursor and create a report",
+          "themes": [
+            "Documentation"
+          ],
+          "top_tools": [
+            "Glob",
+            "Shell"
+          ]
+        }
+      ]
+    },
+    "projects Blue Shield": {
+      "session_count": 1,
+      "total_kb": 40.1,
+      "sessions": [
+        {
+          "id": "99e8ec97",
+          "modified": "2026-04-20",
+          "size_kb": 40.1,
+          "queries": 13,
+          "first_query": "create new project labeled Blue Shield",
+          "themes": [
+            "Git / CI",
+            "Service delivery / SDM",
+            "Documentation"
+          ],
+          "top_tools": [
+            "Read",
+            "Grep",
+            "call_mcp_tool",
+            "Glob",
+            "Shell"
+          ]
+        }
+      ]
+    }
+  },
+  "all_sessions_chronological": [
+    {
+      "date": "2026-03-31",
+      "project": "Desktop AgenticStarterKitv1 0 docs",
+      "id": "07a783fa",
+      "first_query": "Explain this codebase. Point me to the main entry points, key modules, and anything I should read before making changes.",
+      "themes": [
+        "Service delivery / SDM",
+        "Airtable / tracking",
+        "Code / dev",
+        "Agent / automation"
+      ],
+      "num_queries": 17
+    },
+    {
+      "date": "2026-04-10",
+      "project": "Desktop serviceflow sdm",
+      "id": "434f98b9",
+      "first_query": "open the local url for the app please",
+      "themes": [
+        "Git / CI",
+        "Documentation"
+      ],
+      "num_queries": 2
+    },
+    {
+      "date": "2026-04-13",
+      "project": "Desktop serviceflow sdm",
+      "id": "131eb6f1",
+      "first_query": "create a new folder labeled Personal Automation on my desktop. Scan my email from the last 7 days, group emails by subject, set priority of the email, and indicate actions needed and any associated due dates.",
+      "themes": [
+        "Git / CI",
+        "Agent / automation"
+      ],
+      "num_queries": 1
+    },
+    {
+      "date": "2026-04-14",
+      "project": "Desktop serviceflow sdm",
+      "id": "039bfeb4",
+      "first_query": "continue",
+      "themes": [
+        "Git / CI",
+        "Service delivery / SDM",
+        "Agent / automation"
+      ],
+      "num_queries": 5
+    },
+    {
+      "date": "2026-04-15",
+      "project": "Desktop serviceflow sdm",
+      "id": "7cfc40f3",
+      "first_query": "create a new parent folder named \"Digitized Delivery - GES\"",
+      "themes": [
+        "Git / CI",
+        "Service delivery / SDM"
+      ],
+      "num_queries": 2
+    },
+    {
+      "date": "2026-04-16",
+      "project": "Desktop Digitized Delivery GES",
+      "id": "f25c9d55",
+      "first_query": "compare @Customer NaC Parity Database.xlsx and @SaC-NaC Readiness Checklist v1.xlsx. suggest a consolidated file structure that is predominantly off the @SaC-NaC Readiness Checklist v1.xlsx file structure. Intent is to add parity data from @Customer ",
+      "themes": [
+        "Service delivery / SDM",
+        "Airtable / tracking",
+        "Infrastructure / network",
+        "Git / CI",
+        "Documentation",
+        "Excel / data consolidation"
+      ],
+      "num_queries": 28
+    },
+    {
+      "date": "2026-04-17",
+      "project": "Empty / untitled window",
+      "id": "54877072",
+      "first_query": "using SDM Files, locate the file with 40 agents identified tied to the Helix application",
+      "themes": [
+        "Git / CI",
+        "Service delivery / SDM",
+        "Code / dev",
+        "Agent / automation"
+      ],
+      "num_queries": 4
+    },
+    {
+      "date": "2026-04-20",
+      "project": "Empty / untitled window",
+      "id": "8ce587bb",
+      "first_query": "create new project labeled Blue Shield",
+      "themes": [
+        "Git / CI"
+      ],
+      "num_queries": 2
+    },
+    {
+      "date": "2026-04-20",
+      "project": "projects Blue Shield",
+      "id": "99e8ec97",
+      "first_query": "create new project labeled Blue Shield",
+      "themes": [
+        "Git / CI",
+        "Service delivery / SDM",
+        "Documentation"
+      ],
+      "num_queries": 13
+    },
+    {
+      "date": "2026-04-23",
+      "project": "Empty / untitled window",
+      "id": "019d1805",
+      "first_query": "i want to build a location of all customer data for my company's information where we can pull a status of all the customer information available",
+      "themes": [],
+      "num_queries": 1
+    },
+    {
+      "date": "2026-04-23",
+      "project": "Empty / untitled window",
+      "id": "fda32b6b",
+      "first_query": "build a complete step by step plan to replace palo alto firewalls with Cisco firewalls. Build in standard PMO governance into the plan. Include a list of Cisco hardware and software",
+      "themes": [
+        "Git / CI",
+        "Code / dev",
+        "Documentation"
+      ],
+      "num_queries": 18
+    },
+    {
+      "date": "2026-05-07",
+      "project": "Desktop AgenticStarterKitv1 0 docs",
+      "id": "cb4a6cec",
+      "first_query": "enable ollama",
+      "themes": [
+        "Documentation"
+      ],
+      "num_queries": 15
+    },
+    {
+      "date": "2026-05-07",
+      "project": "Desktop AgenticStarterKitv1 0",
+      "id": "57480db1",
+      "first_query": "Copy `.env.example` to `.env`",
+      "themes": [
+        "Documentation",
+        "Code / dev",
+        "Git / CI",
+        "Agent / automation"
+      ],
+      "num_queries": 10
+    },
+    {
+      "date": "2026-05-07",
+      "project": "Desktop SDM Files ServiceFlow SDC Windsurf",
+      "id": "715fc17d",
+      "first_query": "open the helix app in a new browser",
+      "themes": [
+        "Git / CI",
+        "Code / dev"
+      ],
+      "num_queries": 8
+    },
+    {
+      "date": "2026-05-08",
+      "project": "Desktop Digitized Delivery GES Airtable Tracking",
+      "id": "4758bf98",
+      "first_query": "store this API token for Airtable for future use - [REDACTED_AIRTABLE_PAT]",
+      "themes": [
+        "Git / CI",
+        "Code / dev",
+        "Airtable / tracking",
+        "Service delivery / SDM"
+      ],
+      "num_queries": 10
+    },
+    {
+      "date": "2026-05-08",
+      "project": "Empty / untitled window",
+      "id": "7e7d20fb",
+      "first_query": "I'm having trouble with the mgm daily status report generating with detail in Webex. It ran multiple times before. I previously chatted with you about this but I still cant seem to fix it",
+      "themes": [
+        "Git / CI",
+        "Code / dev",
+        "Service delivery / SDM",
+        "Documentation"
+      ],
+      "num_queries": 21
+    },
+    {
+      "date": "2026-05-08",
+      "project": "Empty / untitled window",
+      "id": "57480db1",
+      "first_query": "Copy `.env.example` to `.env`",
+      "themes": [
+        "Documentation",
+        "Code / dev",
+        "Git / CI",
+        "Agent / automation"
+      ],
+      "num_queries": 11
+    },
+    {
+      "date": "2026-05-18",
+      "project": "Desktop SDM Files",
+      "id": "37d17db2",
+      "first_query": "Analyze the ServiceFlow SDC folder and subfiles and suggest next steps",
+      "themes": [
+        "Service delivery / SDM",
+        "Airtable / tracking",
+        "Infrastructure / network",
+        "Documentation",
+        "Git / CI",
+        "Code / dev",
+        "Excel / data consolidation",
+        "Agent / automation"
+      ],
+      "num_queries": 253
+    },
+    {
+      "date": "2026-05-19",
+      "project": "Desktop AgenticStarterKitv1 0",
+      "id": "4813c946",
+      "first_query": "I'd like to build an agent that reviews asana tasks",
+      "themes": [
+        "Git / CI",
+        "Code / dev",
+        "Agent / automation"
+      ],
+      "num_queries": 27
+    },
+    {
+      "date": "2026-05-26",
+      "project": "Desktop AgenticStarterKitv1 0",
+      "id": "02c9076a",
+      "first_query": "I am a Service Delivery Manager who has used AI in many ways before but want to start focusing more strategically. \n\nBegin to build a local IDE that will help me simplify my work effort in a very structured way. Guide me through the process and place",
+      "themes": [
+        "Git / CI",
+        "Service delivery / SDM",
+        "Code / dev"
+      ],
+      "num_queries": 4
+    },
+    {
+      "date": "2026-05-26",
+      "project": "Desktop delivery workbench",
+      "id": "13a69fff",
+      "first_query": "I am a Service Delivery Manager who has used AI in many ways before but want to start focusing more strategically. \n\nBegin to build a local IDE that will help me simplify my work effort in a very structured way. Guide me through the process and place",
+      "themes": [
+        "Git / CI",
+        "Service delivery / SDM",
+        "Code / dev",
+        "Agent / automation"
+      ],
+      "num_queries": 16
+    },
+    {
+      "date": "2026-05-26",
+      "project": "New Master Folder Windsurf and Cursor",
+      "id": "2dc7395d",
+      "first_query": "I'd like you to analyze all the work I have ever done in Cursor and create a report",
+      "themes": [
+        "Documentation"
+      ],
+      "num_queries": 1
+    }
+  ],
+  "composer_db_hints": [
+    {
+      "key": "composer.composerHeaders",
+      "value_len": 40831
+    },
+    {
+      "key": "composer.planRegistry",
+      "value_len": 2311
+    },
+    {
+      "key": "workbench.panel.composerChatViewPane.dea02ad4-faba-4dd7-9c72-a6f0d1b71302.hidden",
+      "value_len": 456
+    },
+    {
+      "key": "workbench.panel.composerChatViewPane.77ea99f6-edc2-403c-8fa6-3a9977620dc4.hidden",
+      "value_len": 274
+    },
+    {
+      "key": "workbench.panel.composerChatViewPane.cb624d57-79cd-4aab-9891-af2ffc996ced.hidden",
+      "value_len": 92
+    },
+    {
+      "key": "workbench.panel.composerChatViewPane.dea02ad4-faba-4dd7-9c72-a6f0d1b71302.hidden",
+      "value_len": 456
+    },
+    {
+      "key": "workbench.panel.composerChatViewPane.77ea99f6-edc2-403c-8fa6-3a9977620dc4.hidden",
+      "value_len": 274
+    },
+    {
+      "key": "workbench.panel.composerChatViewPane.cb624d57-79cd-4aab-9891-af2ffc996ced.hidden",
+      "value_len": 92
+    },
+    {
+      "key": "workbench.panel.composerChatViewPane.f88407ca-6d2f-49f1-a723-0280326a5ef8.hidden",
+      "value_len": 92
+    },
+    {
+      "key": "workbench.panel.composerChatViewPane.13156092-ce26-41cb-9cde-88b01b23d5c5.hidden",
+      "value_len": 92
+    },
+    {
+      "key": "conversationClassificationScoredConversations",
+      "value_len": 2
+    },
+    {
+      "key": "agentData.cacheStorage.agentEnvironment.slashMenuItems.local.glass.50b268e20c383cfdc83a68d6b999653e",
+      "value_len": 38265
+    },
+    {
+      "key": "agentData.cacheStorage.agentEnvironment.slashMenuItems.local.glass.26de531a781dbac75164ca5f42422033",
+      "value_len": 37783
+    },
+    {
+      "key": "agentData.cacheStorage.agentEnvironment.slashMenuItems.local.glass.empty-window",
+      "value_len": 37540
+    },
+    {
+      "key": "agentData.cacheStorage.agentEnvironment.slashMenuItems.local.glass.be3374827ed7714d659745bf7772a383",
+      "value_len": 36182
+    },
+    {
+      "key": "agentData.cacheStorage.agentEnvironment.slashMenuItems.local.glass.0dc44b605e4ea931b939f9010a2ebb2c",
+      "value_len": 36182
+    }
+  ]
+}

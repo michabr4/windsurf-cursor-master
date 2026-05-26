@@ -1,0 +1,173 @@
+{
+  "dashboard": {
+    "title": "NetPilot 5.0 — Learner Dashboard",
+    "purpose": "Provides learners with a centralized interface for tracking progress, accessing content, and viewing personalized recommendations.",
+    "dashboard_components": [
+      "Skill mastery overview",
+      "Active learning path",
+      "Recommended lessons",
+      "Recommended labs",
+      "Study plan milestones",
+      "Exam readiness score",
+      "Recent activity",
+      "Gamification stats"
+    ]
+  },
+  "lesson": {
+    "title": "NetPilot 5.0 — Lesson Viewer",
+    "purpose": "Displays lesson content including text, diagrams, videos, interactive elements, and embedded labs.",
+    "features": [
+      "Content navigation",
+      "Embedded quizzes",
+      "Embedded labs",
+      "Notes panel",
+      "Progress tracking",
+      "Skill mapping indicators"
+    ]
+  },
+  "examPrep": {
+    "title": "NetPilot 5.0 — Exam Preparation Center",
+    "purpose": "Provides learners with tools to prepare for certification exams.",
+    "components": [
+      "Practice exams",
+      "Exam readiness score",
+      "Weakness analysis",
+      "Study recommendations",
+      "Blueprint coverage map"
+    ]
+  },
+  "recommendationEngine": {
+    "title": "NetPilot 5.0 — Recommendation Engine",
+    "purpose": "Generates personalized recommendations for lessons, labs, quizzes, workflows, and study plans.",
+    "recommendation_types": [
+      "Skill Reinforcement",
+      "Weakness Repair",
+      "Mastery Boost",
+      "Exam Preparation",
+      "Performance Optimization"
+    ],
+    "inputs": [
+      "ALE-X",
+      "Mastery Model",
+      "Weakness Engine",
+      "Readiness Engine"
+    ],
+    "outputs": [
+      "recommended_content",
+      "recommended_labs",
+      "recommended_study_plan"
+    ]
+  },
+  "readinessEngine": {
+    "title": "NetPilot 5.0 — Exam Readiness Engine",
+    "purpose": "Predicts exam readiness using mastery, performance, difficulty, and historical exam data.",
+    "readiness_score_range": "0–100",
+    "inputs": [
+      "Mastery Model",
+      "Performance Tracking",
+      "Weakness Engine",
+      "Exam Blueprint (from Exam Engine)"
+    ],
+    "outputs": [
+      "readiness_score",
+      "readiness_factors",
+      "recommended_exam_date"
+    ]
+  },
+  "architecturePackage": {
+    "title": "NetPilot 5.0 Architecture Package",
+    "platformVision": "NetPilot 5.0 is a modular, AI-driven network engineering training platform that combines virtual lab environments, adaptive certification exams, personalized learning paths, a developer ecosystem, and compliance-ready analytics into a unified SaaS product.",
+    "metrics": [
+      {
+        "value": "5",
+        "label": "Core Subsystems"
+      },
+      {
+        "value": "47",
+        "label": "Microservices"
+      },
+      {
+        "value": "18",
+        "label": "Month Timeline"
+      },
+      {
+        "value": "3",
+        "label": "Release Phases"
+      },
+      {
+        "value": "12",
+        "label": "Integration Points"
+      },
+      {
+        "value": "50K",
+        "label": "Concurrent Users"
+      }
+    ],
+    "integrationMatrix": [
+      {
+        "sourceTarget": "Training Engine → Exam Engine",
+        "protocol": "gRPC",
+        "format": "Protobuf",
+        "auth": "mTLS",
+        "latencySla": "<50ms",
+        "pattern": "Sync"
+      },
+      {
+        "sourceTarget": "Training Engine → Analytics",
+        "protocol": "Kafka",
+        "format": "Avro",
+        "auth": "SASL",
+        "latencySla": "<500ms",
+        "pattern": "Async"
+      },
+      {
+        "sourceTarget": "Exam Engine → Curriculum",
+        "protocol": "REST",
+        "format": "JSON",
+        "auth": "JWT",
+        "latencySla": "<100ms",
+        "pattern": "Sync"
+      },
+      {
+        "sourceTarget": "Exam Engine → Analytics",
+        "protocol": "Kafka",
+        "format": "Avro",
+        "auth": "SASL",
+        "latencySla": "<500ms",
+        "pattern": "Async"
+      },
+      {
+        "sourceTarget": "Curriculum → AI Tutor",
+        "protocol": "gRPC",
+        "format": "Protobuf",
+        "auth": "mTLS",
+        "latencySla": "<200ms",
+        "pattern": "Sync"
+      },
+      {
+        "sourceTarget": "AI Tutor → Training Engine",
+        "protocol": "REST",
+        "format": "JSON",
+        "auth": "JWT",
+        "latencySla": "<150ms",
+        "pattern": "Sync"
+      },
+      {
+        "sourceTarget": "SDK Gateway → All Services",
+        "protocol": "REST/GraphQL",
+        "format": "JSON",
+        "auth": "API Key + OAuth2",
+        "latencySla": "<100ms",
+        "pattern": "Sync"
+      },
+      {
+        "sourceTarget": "Plugin Framework → Marketplace",
+        "protocol": "REST",
+        "format": "JSON",
+        "auth": "JWT",
+        "latencySla": "<200ms",
+        "pattern": "Sync"
+      }
+    ]
+  }
+}

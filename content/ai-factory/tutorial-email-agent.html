@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tutorial: Build Your First Email Summary Agent</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          },
+          colors: {
+            cisco: { blue: '#049fd9', dark: '#171f2d', teal: '#00bceb', navy: '#1a2332' },
+            splunk: { teal: '#006D9C', green: '#53A051', red: '#DC4E41', orange: '#F1813F', yellow: '#F8BE34', slate: '#3C444D' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .code-block { background: #1e293b; border-radius: 0.75rem; overflow-x: auto; }
+    .code-block code { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; line-height: 1.7; }
+    .prompt-box { background: linear-gradient(135deg, #049fd910, #00bceb10); border-left: 4px solid #049fd9; }
+    .step-card { transition: all 0.2s; }
+    .step-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+    .warn { background: #F8BE3410; border-left: 4px solid #F8BE34; }
+    .danger { background: #DC4E4110; border-left: 4px solid #DC4E41; }
+    .success { background: #53A05110; border-left: 4px solid #53A051; }
+    @media print { .no-print { display: none !important; } }
+  </style>
+</head>
+<body class="font-sans bg-slate-50 text-slate-800 antialiased">
+
+  <!-- NAV -->
+  <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md border-b border-slate-200 z-50 no-print">
+    <div class="max-w-4xl mx-auto px-6 py-3 flex items-center justify-between">
+      <a href="index.html" class="text-sm text-slate-500 hover:text-cisco-blue transition">&larr; Back to AI Factory</a>
+      <span class="font-bold text-sm text-cisco-dark">Tutorial: Email Summary Agent</span>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="bg-gradient-to-br from-cisco-dark to-slate-900 text-white pt-24 pb-16">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="inline-flex items-center gap-2 bg-cisco-blue/20 rounded-full px-4 py-2 text-sm font-medium text-cisco-teal mb-6">
+        Your First Agent — Step by Step
+      </div>
+      <h1 class="text-4xl md:text-5xl font-black tracking-tight leading-tight mb-4">
+        Build an Email<br>
+        <span class="bg-gradient-to-r from-cisco-teal to-cisco-blue bg-clip-text text-transparent">Summary Agent</span>
+      </h1>
+      <p class="text-lg text-slate-400 max-w-2xl mb-8">
+        Read your Outlook inbox and get a plain-English summary of what matters — built entirely through vibe coding in about 30 minutes.
+      </p>
+      <div class="flex flex-wrap gap-4 text-sm">
+        <div class="bg-white/10 rounded-lg px-4 py-2">&#9201; ~30 minutes</div>
+        <div class="bg-white/10 rounded-lg px-4 py-2">&#128221; No coding experience needed</div>
+        <div class="bg-white/10 rounded-lg px-4 py-2">&#128231; Outlook / Microsoft 365</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-6 py-12">
+
+    <!-- WHAT YOU'LL BUILD -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-black tracking-tight mb-6">What You'll Build</h2>
+      <div class="bg-white rounded-2xl border border-slate-200 p-8">
+        <p class="text-lg text-slate-600 mb-6">A Python script that:</p>
+        <div class="grid md:grid-cols-3 gap-4">
+          <div class="bg-cisco-blue/5 rounded-xl p-5 border border-cisco-blue/10 text-center">
+            <div class="text-3xl mb-3">&#128231;</div>
+            <div class="font-bold mb-1">Connects to Outlook</div>
+            <div class="text-sm text-slate-500">Reads your latest emails via Microsoft Graph API</div>
+          </div>
+          <div class="bg-cisco-teal/5 rounded-xl p-5 border border-cisco-teal/10 text-center">
+            <div class="text-3xl mb-3">&#129302;</div>
+            <div class="font-bold mb-1">Summarizes with AI</div>
+            <div class="text-sm text-slate-500">Sends email content to an LLM for a concise summary</div>
+          </div>
+          <div class="bg-splunk-green/5 rounded-xl p-5 border border-splunk-green/10 text-center">
+            <div class="text-3xl mb-3">&#9989;</div>
+            <div class="font-bold mb-1">Shows You What Matters</div>
+            <div class="text-sm text-slate-500">Outputs a prioritized daily brief with action items</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BEFORE YOU START -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-black tracking-tight mb-6">Before You Start</h2>
+      <div class="space-y-4">
+        <div class="bg-white rounded-2xl border border-slate-200 p-6 flex gap-4 items-start step-card">
+          <div class="w-10 h-10 rounded-lg bg-cisco-blue/10 flex items-center justify-center flex-shrink-0">
+            <span class="font-bold text-cisco-blue">1</span>
+          </div>
+          <div>
+            <h3 class="font-bold mb-1">Windsurf (or Cursor) installed</h3>
+            <p class="text-sm text-slate-500">Your AI-powered code editor. Download at <a href="https://windsurf.com" target="_blank" rel="noopener noreferrer" class="text-cisco-blue underline">windsurf.com</a> if you haven't already.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl border border-slate-200 p-6 flex gap-4 items-start step-card">
+          <div class="w-10 h-10 rounded-lg bg-cisco-blue/10 flex items-center justify-center flex-shrink-0">
+            <span class="font-bold text-cisco-blue">2</span>
+          </div>
+          <div>
+            <h3 class="font-bold mb-1">Python installed</h3>
+            <p class="text-sm text-slate-500">Most Macs have it. Open Terminal and type <code class="bg-slate-100 px-2 py-0.5 rounded text-xs font-mono">python3 --version</code>. If you see a version number, you're good. If not, ask the AI to help you install it.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl border border-slate-200 p-6 flex gap-4 items-start step-card">
+          <div class="w-10 h-10 rounded-lg bg-cisco-blue/10 flex items-center justify-center flex-shrink-0">
+            <span class="font-bold text-cisco-blue">3</span>
+          </div>
+          <div>
+            <h3 class="font-bold mb-1">A Microsoft 365 work or personal account</h3>
+            <p class="text-sm text-slate-500">The one you use for Outlook email. You'll log in through a browser window during setup — no passwords stored in code.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl border border-slate-200 p-6 flex gap-4 items-start step-card">
+          <div class="w-10 h-10 rounded-lg bg-cisco-blue/10 flex items-center justify-center flex-shrink-0">
+            <span class="font-bold text-cisco-blue">4</span>
+          </div>
+          <div>
+            <h3 class="font-bold mb-1">An OpenAI API key (or alternative)</h3>
+            <p class="text-sm text-slate-500">Sign up at <a href="https://platform.openai.com" target="_blank" rel="noopener noreferrer" class="text-cisco-blue underline">platform.openai.com</a>. The first few dollars of usage are often free. Your key stays in a private <code class="bg-slate-100 px-2 py-0.5 rounded text-xs font-mono">.env</code> file — never in code.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 1 -->
+    <section class="mb-16">
+      <div class="flex items-center gap-4 mb-6">
+        <div class="w-12 h-12 rounded-full bg-cisco-blue text-white flex items-center justify-center font-black text-xl flex-shrink-0">1</div>
+        <h2 class="text-3xl font-black tracking-tight">Create Your Project</h2>
+      </div>
+
+      <p class="text-slate-600 mb-6">Open Windsurf and create a new folder for your agent. Then open the chat panel and give it your first prompt:</p>
+
+      <div class="prompt-box rounded-xl p-6 mb-6">
+        <div class="text-xs font-bold text-cisco-blue uppercase tracking-wider mb-2">Paste this into the AI chat</div>
+        <p class="text-slate-700 italic leading-relaxed">"Create a new Python project called email-summary-agent. Set up a virtual environment, a requirements.txt with the packages I'll need for reading Outlook email via Microsoft Graph and summarizing with OpenAI, and a .env file for my secrets. Also create a .gitignore that keeps the .env file and virtual environment out of version control."</p>
+      </div>
+
+      <div class="success rounded-xl p-5 mb-4">
+        <p class="text-sm text-slate-700"><strong>What the AI will do:</strong> Create a project folder, virtual environment, requirements.txt (with <code class="font-mono text-xs">msal</code>, <code class="font-mono text-xs">requests</code>, <code class="font-mono text-xs">openai</code>, <code class="font-mono text-xs">python-dotenv</code>), a blank <code class="font-mono text-xs">.env</code> template, and a <code class="font-mono text-xs">.gitignore</code>.</p>
+      </div>
+
+      <div class="danger rounded-xl p-5">
+        <p class="text-sm text-slate-700"><strong>Security note:</strong> Your <code class="font-mono text-xs">.env</code> file will hold your API keys. It should NEVER be committed to Git or shared. The <code class="font-mono text-xs">.gitignore</code> prevents this automatically.</p>
+      </div>
+    </section>
+
+    <!-- STEP 2 -->
+    <section class="mb-16">
+      <div class="flex items-center gap-4 mb-6">
+        <div class="w-12 h-12 rounded-full bg-cisco-blue text-white flex items-center justify-center font-black text-xl flex-shrink-0">2</div>
+        <h2 class="text-3xl font-black tracking-tight">Register an Azure App</h2>
+      </div>
+
+      <p class="text-slate-600 mb-6">To read your Outlook email, you need to tell Microsoft "this app is allowed to access my mail." This is a one-time setup.</p>
+
+      <div class="prompt-box rounded-xl p-6 mb-6">
+        <div class="text-xs font-bold text-cisco-blue uppercase tracking-wider mb-2">Paste this into the AI chat</div>
+        <p class="text-slate-700 italic leading-relaxed">"Walk me through registering an Azure AD app for Microsoft Graph with delegated permissions to read my email. I need Mail.Read permission. I want to use device code flow so I don't need a redirect URL. Give me step-by-step instructions with screenshots descriptions."</p>
+      </div>
+
+      <p class="text-slate-600 mb-4">The AI will guide you through these steps. Here's the summary:</p>
+
+      <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+        <div class="p-6 space-y-4">
+          <div class="flex gap-3 items-start">
+            <div class="w-7 h-7 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center text-xs font-bold flex-shrink-0">a</div>
+            <p class="text-sm text-slate-600">Go to <a href="https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade" target="_blank" rel="noopener noreferrer" class="text-cisco-blue underline">Azure Portal &rarr; App Registrations</a> and click <strong>"New registration"</strong></p>
+          </div>
+          <div class="flex gap-3 items-start">
+            <div class="w-7 h-7 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center text-xs font-bold flex-shrink-0">b</div>
+            <p class="text-sm text-slate-600">Name it <strong>"Email Summary Agent"</strong>, select <strong>"Accounts in this organizational directory only"</strong> (or personal if using personal Outlook), skip the redirect URI</p>
+          </div>
+          <div class="flex gap-3 items-start">
+            <div class="w-7 h-7 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center text-xs font-bold flex-shrink-0">c</div>
+            <p class="text-sm text-slate-600">After creation, copy the <strong>Application (client) ID</strong> and <strong>Directory (tenant) ID</strong> from the overview page</p>
+          </div>
+          <div class="flex gap-3 items-start">
+            <div class="w-7 h-7 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center text-xs font-bold flex-shrink-0">d</div>
+            <p class="text-sm text-slate-600">Go to <strong>API Permissions &rarr; Add a permission &rarr; Microsoft Graph &rarr; Delegated &rarr; Mail.Read</strong></p>
+          </div>
+          <div class="flex gap-3 items-start">
+            <div class="w-7 h-7 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center text-xs font-bold flex-shrink-0">e</div>
+            <p class="text-sm text-slate-600">Go to <strong>Authentication &rarr; Advanced settings &rarr; Allow public client flows &rarr; Yes</strong> (this enables device code flow)</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 warn rounded-xl p-5">
+        <p class="text-sm text-slate-700"><strong>What are these IDs?</strong> Think of them as your app's name tag. The Client ID says "I'm the Email Summary Agent" and the Tenant ID says "I belong to this organization." They're not secret, but your API keys are — those go in <code class="font-mono text-xs">.env</code> only.</p>
+      </div>
+
+      <p class="text-slate-600 mt-6">Now paste the IDs into your <code class="font-mono text-xs bg-slate-100 px-2 py-0.5 rounded">.env</code> file:</p>
+      <div class="code-block p-5 mt-3">
+        <code class="text-slate-300">
+          <span class="text-slate-500"># .env — NEVER commit this file</span><br>
+          <span class="text-splunk-green">AZURE_CLIENT_ID</span>=<span class="text-splunk-yellow">paste-your-client-id-here</span><br>
+          <span class="text-splunk-green">AZURE_TENANT_ID</span>=<span class="text-splunk-yellow">paste-your-tenant-id-here</span><br>
+          <span class="text-splunk-green">OPENAI_API_KEY</span>=<span class="text-splunk-yellow">paste-your-openai-key-here</span>
+        </code>
+      </div>
+    </section>
+
+    <!-- STEP 3 -->
+    <section class="mb-16">
+      <div class="flex items-center gap-4 mb-6">
+        <div class="w-12 h-12 rounded-full bg-cisco-blue text-white flex items-center justify-center font-black text-xl flex-shrink-0">3</div>
+        <h2 class="text-3xl font-black tracking-tight">Build the Email Reader</h2>
+      </div>
+
+      <p class="text-slate-600 mb-6">Now you'll ask the AI to write the code that connects to Outlook and pulls your emails.</p>
+
+      <div class="prompt-box rounded-xl p-6 mb-6">
+        <div class="text-xs font-bold text-cisco-blue uppercase tracking-wider mb-2">Paste this into the AI chat</div>
+        <p class="text-slate-700 italic leading-relaxed">"Create a Python file called email_reader.py that: 1) Loads my Azure credentials from .env, 2) Uses MSAL with device code flow to authenticate me — I'll approve via browser, 3) Calls Microsoft Graph API to get my 20 most recent emails from today, 4) Returns a clean list with sender name, subject, date, and a preview of the body text (first 500 characters, stripped of HTML). Make sure no credentials are hardcoded."</p>
+      </div>
+
+      <div class="success rounded-xl p-5 mb-6">
+        <p class="text-sm text-slate-700"><strong>What happens when you run it:</strong> A URL and a code appear in your terminal. Open the URL in your browser, paste the code, and sign in with your Microsoft account. After that, the script can read your email. This is called "device code flow" — it's the same way you sign into a streaming app on a TV.</p>
+      </div>
+
+      <div class="prompt-box rounded-xl p-6 mb-6">
+        <div class="text-xs font-bold text-cisco-blue uppercase tracking-wider mb-2">Then test it</div>
+        <p class="text-slate-700 italic leading-relaxed">"Run email_reader.py and show me the output. If there are any errors, fix them."</p>
+      </div>
+
+      <div class="warn rounded-xl p-5">
+        <p class="text-sm text-slate-700"><strong>Expect iteration here.</strong> Authentication can be finicky — you might hit a permissions error or a tenant issue. Just paste the error message back to the AI and say "fix this." This is normal vibe coding workflow.</p>
+      </div>
+    </section>
+
+    <!-- STEP 4 -->
+    <section class="mb-16">
+      <div class="flex items-center gap-4 mb-6">
+        <div class="w-12 h-12 rounded-full bg-cisco-blue text-white flex items-center justify-center font-black text-xl flex-shrink-0">4</div>
+        <h2 class="text-3xl font-black tracking-tight">Add the AI Summarizer</h2>
+      </div>
+
+      <p class="text-slate-600 mb-6">Now you'll connect an LLM to turn raw email data into a useful daily brief.</p>
+
+      <div class="prompt-box rounded-xl p-6 mb-6">
+        <div class="text-xs font-bold text-cisco-blue uppercase tracking-wider mb-2">Paste this into the AI chat</div>
+        <p class="text-slate-700 italic leading-relaxed">"Create a Python file called summarizer.py that: 1) Takes the list of emails from email_reader.py, 2) Sends them to the OpenAI API (use gpt-4o-mini to keep costs low) with a prompt that asks for: a) A 3-sentence overview of my inbox today, b) A prioritized list of emails that need my attention with why, c) Any action items or deadlines mentioned, d) Emails I can probably ignore. 3) Load the OpenAI key from .env, never hardcode it. 4) Print the summary in a clean, readable format to the terminal."</p>
+      </div>
+
+      <p class="text-slate-600 mb-4">Here's roughly what the AI's system prompt to the LLM will look like (the AI will write this for you):</p>
+
+      <div class="code-block p-5 mb-6">
+        <code class="text-slate-300 text-sm leading-relaxed">
+          <span class="text-slate-500"># The AI will craft something like this:</span><br><br>
+          <span class="text-splunk-yellow">system_prompt</span> = <span class="text-splunk-green">"""<br>
+          You are an executive email assistant. Analyze the following<br>
+          emails and provide:<br><br>
+          1. INBOX OVERVIEW — 3 sentences summarizing today's email<br>
+          2. NEEDS ATTENTION — Emails requiring action, ranked by<br>
+          &nbsp;&nbsp;&nbsp;urgency, with a one-line reason for each<br>
+          3. ACTION ITEMS — Specific tasks or deadlines mentioned<br>
+          4. LOW PRIORITY — Emails that are informational only<br><br>
+          Be concise. Use the sender's name, not their email address.<br>
+          Flag anything with a deadline in the next 48 hours.<br>
+          """</span>
+        </code>
+      </div>
+
+      <div class="prompt-box rounded-xl p-6 mb-6">
+        <div class="text-xs font-bold text-cisco-blue uppercase tracking-wider mb-2">Then wire it together</div>
+        <p class="text-slate-700 italic leading-relaxed">"Now create a main.py that imports email_reader and summarizer, fetches my emails, summarizes them, and prints the result. Add a nice header with today's date and the number of emails processed."</p>
+      </div>
+    </section>
+
+    <!-- STEP 5 -->
+    <section class="mb-16">
+      <div class="flex items-center gap-4 mb-6">
+        <div class="w-12 h-12 rounded-full bg-cisco-blue text-white flex items-center justify-center font-black text-xl flex-shrink-0">5</div>
+        <h2 class="text-3xl font-black tracking-tight">Run It</h2>
+      </div>
+
+      <div class="prompt-box rounded-xl p-6 mb-6">
+        <div class="text-xs font-bold text-cisco-blue uppercase tracking-wider mb-2">Paste this into the AI chat</div>
+        <p class="text-slate-700 italic leading-relaxed">"Run main.py for me"</p>
+      </div>
+
+      <p class="text-slate-600 mb-6">You should see something like this in your terminal:</p>
+
+      <div class="code-block p-6 mb-6">
+        <code class="text-slate-300 text-sm leading-relaxed">
+          <span class="text-cisco-teal font-bold">&#9776; EMAIL DAILY BRIEF — Wed May 21, 2025</span><br>
+          <span class="text-slate-500">  20 emails processed</span><br>
+          <span class="text-slate-500">  ──────────────────────────────────────</span><br><br>
+          <span class="text-splunk-yellow font-bold">&#128204; INBOX OVERVIEW</span><br>
+          <span class="text-slate-400">  Your inbox today is dominated by follow-ups from the<br>
+          &nbsp;&nbsp;quarterly planning meeting and two urgent vendor requests.<br>
+          &nbsp;&nbsp;Three team members are waiting on your input for the<br>
+          &nbsp;&nbsp;AI Factory proposal. No critical incidents reported.</span><br><br>
+          <span class="text-splunk-red font-bold">&#9888; NEEDS ATTENTION</span><br>
+          <span class="text-slate-400">  1. Sarah Chen — "Budget approval needed by EOD"<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8594; She needs sign-off on the Q3 tooling budget<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8594; Deadline: Today 5:00 PM<br><br>
+          &nbsp;&nbsp;2. James Rivera — "RE: Agent prototype review"<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8594; Asking for your feedback on the demo<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8594; Meeting scheduled tomorrow 10 AM<br></span><br>
+          <span class="text-splunk-green font-bold">&#9745; ACTION ITEMS</span><br>
+          <span class="text-slate-400">  &bull; Reply to Sarah with budget approval (today)<br>
+          &nbsp;&nbsp;&bull; Review agent prototype before tomorrow's meeting<br>
+          &nbsp;&nbsp;&bull; Send updated timeline to PMO (requested by Friday)</span><br><br>
+          <span class="text-slate-500 font-bold">&#128172; LOW PRIORITY</span><br>
+          <span class="text-slate-500">  &bull; 3 newsletters, 2 automated notifications<br>
+          &nbsp;&nbsp;&bull; IT maintenance notice for Saturday<br>
+          &nbsp;&nbsp;&bull; Team lunch poll for next week</span>
+        </code>
+      </div>
+
+      <div class="success rounded-xl p-5">
+        <p class="text-sm text-slate-700"><strong>That's it.</strong> You just built an AI agent. It reads your real email, understands context and urgency, and tells you what matters — all without writing a single line of code yourself.</p>
+      </div>
+    </section>
+
+    <!-- STEP 6 -->
+    <section class="mb-16">
+      <div class="flex items-center gap-4 mb-6">
+        <div class="w-12 h-12 rounded-full bg-splunk-green text-white flex items-center justify-center font-black text-xl flex-shrink-0">6</div>
+        <h2 class="text-3xl font-black tracking-tight">Make It Better</h2>
+      </div>
+
+      <p class="text-slate-600 mb-6">Once the basic version works, here are enhancements you can ask for — one at a time:</p>
+
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="bg-white rounded-xl border border-slate-200 p-5 step-card">
+          <div class="text-sm font-bold text-splunk-teal uppercase tracking-wider mb-2">Cache Login</div>
+          <p class="text-sm text-slate-500 mb-3">So you don't re-authenticate every time</p>
+          <div class="bg-slate-50 rounded-lg p-3">
+            <p class="text-xs text-slate-600 italic">"Add MSAL token caching so I only need to sign in once, and it refreshes automatically."</p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl border border-slate-200 p-5 step-card">
+          <div class="text-sm font-bold text-splunk-teal uppercase tracking-wider mb-2">Filter Timeframe</div>
+          <p class="text-sm text-slate-500 mb-3">Summarize last hour, today, or this week</p>
+          <div class="bg-slate-50 rounded-lg p-3">
+            <p class="text-xs text-slate-600 italic">"Add a command-line flag so I can run: python main.py --hours 4 to only summarize the last 4 hours of email."</p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl border border-slate-200 p-5 step-card">
+          <div class="text-sm font-bold text-splunk-teal uppercase tracking-wider mb-2">Save to File</div>
+          <p class="text-sm text-slate-500 mb-3">Keep a daily log you can reference</p>
+          <div class="bg-slate-50 rounded-lg p-3">
+            <p class="text-xs text-slate-600 italic">"Save each summary to a markdown file in a /summaries folder, named by date like 2025-05-21.md."</p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl border border-slate-200 p-5 step-card">
+          <div class="text-sm font-bold text-splunk-teal uppercase tracking-wider mb-2">Schedule It</div>
+          <p class="text-sm text-slate-500 mb-3">Run automatically every morning</p>
+          <div class="bg-slate-50 rounded-lg p-3">
+            <p class="text-xs text-slate-600 italic">"Help me set up a cron job on my Mac to run this every weekday at 7:30 AM and save the summary."</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TROUBLESHOOTING -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-black tracking-tight mb-6">Common Issues & Fixes</h2>
+
+      <div class="space-y-4">
+        <div class="bg-white rounded-xl border border-slate-200 p-6">
+          <h3 class="font-bold text-splunk-red mb-2">"AADSTS700016: Application not found"</h3>
+          <p class="text-sm text-slate-600">Your Client ID in <code class="font-mono text-xs bg-slate-100 px-1 rounded">.env</code> doesn't match your Azure app. Double-check you copied it correctly from the Azure Portal overview page.</p>
+        </div>
+
+        <div class="bg-white rounded-xl border border-slate-200 p-6">
+          <h3 class="font-bold text-splunk-red mb-2">"Insufficient privileges" or "403 Forbidden"</h3>
+          <p class="text-sm text-slate-600">You need to add the <strong>Mail.Read</strong> permission in Azure Portal &rarr; API Permissions. If your org requires admin consent, ask your IT admin to approve it.</p>
+        </div>
+
+        <div class="bg-white rounded-xl border border-slate-200 p-6">
+          <h3 class="font-bold text-splunk-red mb-2">"RateLimitError" from OpenAI</h3>
+          <p class="text-sm text-slate-600">You've hit your usage limit. Either wait a minute and retry, or add billing at <a href="https://platform.openai.com/account/billing" target="_blank" rel="noopener noreferrer" class="text-cisco-blue underline">platform.openai.com/account/billing</a>.</p>
+        </div>
+
+        <div class="bg-white rounded-xl border border-slate-200 p-6">
+          <h3 class="font-bold text-splunk-orange mb-2">Emails return but summary is weird</h3>
+          <p class="text-sm text-slate-600">The HTML in your emails may be cluttering the LLM input. Tell the AI: <em>"Strip all HTML tags from the email body before sending to OpenAI. Only send plain text."</em></p>
+        </div>
+      </div>
+
+      <div class="mt-6 prompt-box rounded-xl p-5">
+        <p class="text-sm text-slate-700"><strong>Universal fix:</strong> When something breaks, copy the full error message, paste it into the AI chat, and say <em>"I got this error, fix it."</em> That's the vibe coding way.</p>
+      </div>
+    </section>
+
+    <!-- WHAT YOU LEARNED -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-black tracking-tight mb-6">What You Just Learned</h2>
+      <div class="bg-gradient-to-br from-cisco-dark to-slate-900 text-white rounded-2xl p-8">
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <div class="text-sm font-bold text-cisco-teal uppercase tracking-wider mb-3">Concepts</div>
+            <ul class="space-y-2 text-sm text-slate-300">
+              <li class="flex items-start gap-2"><span class="text-cisco-teal">&#x2713;</span> API authentication (OAuth device code flow)</li>
+              <li class="flex items-start gap-2"><span class="text-cisco-teal">&#x2713;</span> Reading data from an external service (Microsoft Graph)</li>
+              <li class="flex items-start gap-2"><span class="text-cisco-teal">&#x2713;</span> Passing data to an LLM with a structured prompt</li>
+              <li class="flex items-start gap-2"><span class="text-cisco-teal">&#x2713;</span> Keeping secrets secure with environment variables</li>
+            </ul>
+          </div>
+          <div>
+            <div class="text-sm font-bold text-cisco-teal uppercase tracking-wider mb-3">Skills</div>
+            <ul class="space-y-2 text-sm text-slate-300">
+              <li class="flex items-start gap-2"><span class="text-cisco-teal">&#x2713;</span> Describing what you want to an AI assistant</li>
+              <li class="flex items-start gap-2"><span class="text-cisco-teal">&#x2713;</span> Iterating on errors conversationally</li>
+              <li class="flex items-start gap-2"><span class="text-cisco-teal">&#x2713;</span> Testing and refining in small steps</li>
+              <li class="flex items-start gap-2"><span class="text-cisco-teal">&#x2713;</span> Extending a working prototype incrementally</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="mb-16 text-center">
+      <div class="bg-white rounded-2xl border border-slate-200 p-10">
+        <h2 class="text-2xl font-black tracking-tight mb-4">You just built your first agent.</h2>
+        <p class="text-slate-500 max-w-lg mx-auto mb-6">This same pattern — connect to a data source, process with AI, present results — is the foundation of every agent in the <a href="https://michabr4.github.io/ai-factory/" target="_blank" rel="noopener noreferrer" class="text-cisco-blue underline">People AI Factory</a>.</p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="vibe-coding-101.html" class="inline-flex items-center gap-2 bg-cisco-blue text-white font-semibold px-6 py-3 rounded-xl hover:bg-cisco-teal transition">
+            Vibe Coding 101
+          </a>
+          <a href="index.html" class="inline-flex items-center gap-2 bg-slate-100 text-slate-700 font-semibold px-6 py-3 rounded-xl hover:bg-slate-200 transition">
+            Explore the AI Factory
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-slate-900 text-slate-400 py-8">
+    <div class="max-w-4xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <span class="text-sm">Cisco &mdash; People AI Factory &mdash; Tutorial Series</span>
+      <span class="text-sm">Built with purpose. Powered by people + agents.</span>
+    </div>
+  </footer>
+
+</body>
+</html>

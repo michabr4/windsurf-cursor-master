@@ -1,0 +1,21 @@
+NetPilot 5.0 — Learner Model Core
+
+Purpose:
+The Learner Model represents the evolving knowledge, skills, performance, and behavioral patterns of each learner. It is the foundation for adaptive learning, personalized recommendations, and exam readiness scoring.
+
+Core Components:
+- Skill Graph
+- Topic Mastery Model
+- Performance History
+- Behavioral Signals
+- Learning Preferences
+- Time-Based Progression
+- Weakness & Strength Indicators
+
+Data Structures:
+- learner_profile
+- skill_nodes
+- mastery_scores
+- performance_records
+- learning_preferences
+- telemetry_events

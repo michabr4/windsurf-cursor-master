@@ -1,0 +1,16 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "demo_user",
+      "exam_date": "2026-09-01",
+      "hours_per_week": 8,
+      "current_level": "beginner"
+    }
+  ],
+  "quiz_results": [
+    { "user_id": 1, "domain": "REST APIs", "score_percent": 62, "attempts": 2 },
+    { "user_id": 1, "domain": "Python for Automation", "score_percent": 48, "attempts": 3 },
+    { "user_id": 1, "domain": "JSON/Data Modeling", "score_percent": 81, "attempts": 1 }
+  ]
+}

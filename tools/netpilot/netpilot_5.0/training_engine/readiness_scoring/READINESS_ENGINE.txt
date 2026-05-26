@@ -1,0 +1,18 @@
+NetPilot 5.0 — Exam Readiness Engine
+
+Purpose:
+Predicts exam readiness using mastery, performance, difficulty, and historical exam data.
+
+Readiness Score Range:
+0–100
+
+Inputs:
+- Mastery Model
+- Performance Tracking
+- Weakness Engine
+- Exam Blueprint (from Exam Engine)
+
+Outputs:
+- readiness_score
+- readiness_factors
+- recommended_exam_date

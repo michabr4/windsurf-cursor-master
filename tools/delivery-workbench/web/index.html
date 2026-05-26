@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Delivery Workbench</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <header class="hero">
+      <p class="eyebrow">Local only</p>
+      <h1>Delivery Workbench</h1>
+      <p class="lede">
+        Structured playbooks and templates for service delivery work.
+        This page is served from <strong>127.0.0.1</strong> only; open playbooks in Cursor from the paths below.
+      </p>
+    </header>
+
+    <main class="grid" id="cards">
+      <section class="card">
+        <h2>Getting started</h2>
+        <p>First-time setup and daily habits.</p>
+        <ul>
+          <li><code>GETTING_STARTED.md</code></li>
+          <li><code>SECURITY.md</code></li>
+          <li><code>README.md</code></li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>CLI</h2>
+        <p>Scaffold dated drafts without APIs.</p>
+        <p class="muted"><code>python3 -m workbench new-status-draft --project _example</code></p>
+      </section>
+    </main>
+
+    <footer>
+      Server binds to localhost. No secrets in the browser.
+    </footer>
+
+    <script>
+      const playbooks = [
+        { id: "weekly-rhythm", path: "playbooks/weekly-rhythm.md", desc: "Start the week with priorities and RAG." },
+        { id: "meeting-follow-up", path: "playbooks/meeting-follow-up.md", desc: "Notes to actions and follow-up drafts." },
+        { id: "status-report", path: "playbooks/status-report.md", desc: "Steering-ready status structure." },
+        { id: "raid-log", path: "playbooks/raid-log.md", desc: "Risks, assumptions, issues, dependencies." },
+        { id: "stakeholder-update", path: "playbooks/stakeholder-update.md", desc: "Short sponsor-facing updates." }
+      ];
+
+      const templates = [
+        { path: "templates/status-report.md", title: "Status report template" },
+        { path: "templates/meeting-notes.md", title: "Meeting notes template" },
+        { path: "templates/raid-entry.md", title: "RAID entry template" }
+      ];
+
+      const main = document.getElementById("cards");
+
+      const pbSection = document.createElement("section");
+      pbSection.className = "card";
+      pbSection.innerHTML = "<h2>Playbooks</h2><p>Open these files in Cursor and ask the agent to walk you through them.</p>";
+      const pbList = document.createElement("ul");
+      for (const p of playbooks) {
+        const li = document.createElement("li");
+        li.innerHTML = "<strong>" + p.id.replace(/-/g, " ") + "</strong> — " + p.desc + " (<code>" + p.path + "</code>)";
+        pbList.appendChild(li);
+      }
+      pbSection.appendChild(pbList);
+      main.appendChild(pbSection);
+
+      const tplSection = document.createElement("section");
+      tplSection.className = "card";
+      tplSection.innerHTML = "<h2>Templates</h2><p>Copy-ready markdown starters.</p>";
+      const tplList = document.createElement("ul");
+      for (const t of templates) {
+        const li = document.createElement("li");
+        li.textContent = t.title + " — ";
+        const code = document.createElement("code");
+        code.textContent = t.path;
+        li.appendChild(code);
+        tplList.appendChild(li);
+      }
+      tplSection.appendChild(tplList);
+      main.appendChild(tplSection);
+    </script>
+  </body>
+</html>

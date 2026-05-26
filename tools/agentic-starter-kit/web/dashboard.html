@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en" data-layout="6" data-color="7">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Starter dashboard</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <div class="hero" style="max-width: var(--page-max); margin: 0 auto 1.5rem;">
+      <p class="eyebrow">Local dev</p>
+      <h1>Integration dashboard</h1>
+      <p class="lede">
+        This page talks only to your <strong>local Python server</strong>. Tokens and API keys stay in <code>.env</code> on the server.
+        Run: <code>python python/examples/dashboard_server.py</code>
+      </p>
+    </div>
+
+    <div class="cards" style="max-width: var(--page-max); margin: 0 auto;">
+      <section class="card" aria-labelledby="webex-title">
+        <h2 id="webex-title">Webex</h2>
+        <p class="muted">Lists spaces via the starter <code>WebexClient</code>. No token is sent to the browser.</p>
+        <button class="wiz-btn wiz-btn-primary" type="button" id="btn-webex">Load spaces</button>
+        <p class="muted" id="webex-status" aria-live="polite"></p>
+        <ul class="message-list" id="webex-list"></ul>
+      </section>
+
+      <section class="card" aria-labelledby="circuit-title">
+        <h2 id="circuit-title">CIRCUIT</h2>
+        <p class="muted">Bridge token and chat use <code>CircuitApiClient</code>. Responses are trimmed for the UI.</p>
+        <button class="wiz-btn wiz-btn-primary" type="button" id="btn-bridge">Test Bridge token</button>
+        <button class="wiz-btn" type="button" id="btn-chat">Send sample chat</button>
+        <p class="muted" id="circuit-status" aria-live="polite"></p>
+        <pre class="panel" id="circuit-out" style="white-space: pre-wrap; font-size: 0.9rem; margin-top: 0.75rem;"></pre>
+      </section>
+    </div>
+
+    <script>
+      const $ = (id) => document.getElementById(id);
+
+      function clearList(el) {
+        while (el.firstChild) el.removeChild(el.firstChild);
+      }
+
+      function setText(id, text) {
+        const n = $(id);
+        n.textContent = text;
+      }
+
+      async function getJson(path) {
+        const res = await fetch(path, { headers: { Accept: "application/json" } });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          const msg = data.error || res.statusText || "Request failed";
+          throw new Error(msg);
+        }
+        return data;
+      }
+
+      $("btn-webex").addEventListener("click", async () => {
+        setText("webex-status", "Loading…");
+        clearList($("webex-list"));
+        try {
+          const data = await getJson("/api/webex/spaces");
+          if (data.ok === false) throw new Error(data.error || "Webex request failed");
+          setText("webex-status", data.spaces.length ? `${data.spaces.length} spaces` : "No spaces returned");
+          for (const s of data.spaces) {
+            const li = document.createElement("li");
+            li.textContent = (s.title && s.title.trim()) || s.id || "(unnamed)";
+            $("webex-list").appendChild(li);
+          }
+        } catch (e) {
+          setText("webex-status", e.message);
+        }
+      });
+
+      $("btn-bridge").addEventListener("click", async () => {
+        setText("circuit-status", "Checking Bridge…");
+        $("circuit-out").textContent = "";
+        try {
+          const data = await getJson("/api/circuit/bridge");
+          setText("circuit-status", data.ok ? "Bridge token OK" : "Bridge token failed");
+          $("circuit-out").textContent = data.detail ? String(data.detail) : "";
+        } catch (e) {
+          setText("circuit-status", e.message);
+        }
+      });
+
+      $("btn-chat").addEventListener("click", async () => {
+        setText("circuit-status", "Sending chat…");
+        $("circuit-out").textContent = "";
+        try {
+          const res = await fetch("/api/circuit/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Accept: "application/json" },
+            body: JSON.stringify({ prompt: "Reply with one short friendly sentence." })
+          });
+          const data = await res.json().catch(() => ({}));
+          if (!res.ok) throw new Error(data.error || res.statusText);
+          if (!data.ok) throw new Error(data.error || "Chat failed");
+          setText("circuit-status", "Chat OK");
+          $("circuit-out").textContent = data.reply || "";
+        } catch (e) {
+          setText("circuit-status", e.message);
+        }
+      });
+    </script>
+  </body>
+</html>

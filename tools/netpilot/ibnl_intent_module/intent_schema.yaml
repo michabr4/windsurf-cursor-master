@@ -1,0 +1,17 @@
+intent_type: connectivity
+version: 1.0.0
+fields:
+  - name: source
+    type: cidr
+    required: true
+  - name: destination
+    type: cidr
+    required: true
+  - name: latency_sla_ms
+    type: integer
+    required: false
+  - name: bandwidth_mbps
+    type: integer
+    required: false
+constraints:
+  - "source != destination"

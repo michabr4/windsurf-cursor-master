@@ -1,0 +1,25 @@
+NETPILOT 4.0 — INTENT-BASED NETWORKING LAYER (IBNL)
+
+Purpose:
+The Intent-Based Networking Layer ingests human-readable intent, validates it, and compiles it into policies and vendor-agnostic models that can be executed by ANE and downstream engines.
+
+Core Capabilities:
+- Intent ingestion (UI, API, templates)
+- Intent validation and conflict detection
+- Intent-to-policy compilation
+- Policy-to-config translation (via UNAL)
+- Intent versioning and audit
+
+Key Components:
+- Intent Schema Registry
+- Intent Validator
+- Intent Compiler
+- Policy Generator
+- Intent History Store
+
+Intent Types:
+- Connectivity intent
+- Security intent
+- Performance intent
+- Compliance intent
+- Application-centric intent

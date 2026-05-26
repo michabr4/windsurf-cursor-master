@@ -1,0 +1,12 @@
+---
+description: Human approval before external impact
+alwaysApply: true
+---
+
+# Human approval
+
+- **Draft first:** Produce markdown drafts for the user to review. Default is no external side effects.
+- **Ask before:** Posting to Jira/Confluence/email/chat, sending messages, creating tickets, bulk file deletes, or `git push`.
+- **Connectors:** Only use `python/connectors/` when enabled in `projects/<slug>/project.yaml`. Respect `read_only` unless writes are explicitly allowed and the user confirmed the final text.
+- **No autonomous publish:** Do not implement "auto-post on schedule" without explicit user request and a documented review step in the playbook.
+- If the user says "post it," still show the final content once more before executing a write connector.

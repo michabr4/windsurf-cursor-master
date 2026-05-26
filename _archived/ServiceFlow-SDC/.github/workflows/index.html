@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Service Delivery Manager Platform</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 20px; background: #0b1220; color: #e5e7eb; }
+      h1, h2 { margin-bottom: 8px; }
+      section { border: 1px solid #334155; border-radius: 8px; padding: 12px; margin: 12px 0; background: #111827; }
+      input, select, button, textarea { margin: 4px 0; padding: 8px; border-radius: 6px; border: 1px solid #475569; background: #0f172a; color: #e5e7eb; }
+      button { cursor: pointer; background: #1d4ed8; border: none; }
+      button:hover { background: #1e40af; }
+      .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 10px; }
+      .card { border: 1px solid #475569; border-radius: 6px; padding: 8px; background: #0f172a; }
+      .ok { color: #34d399; }
+      .err { color: #f87171; }
+      code { color: #93c5fd; }
+    </style>
+  </head>
+  <body>
+    <h1>Service Delivery Manager - End-to-End HTML Platform</h1>
+    <p>Backend API: <code>/api/v1/*</code> | This UI is plain HTML + JS.</p>
+
+    <section>
+      <h2>Auth</h2>
+      <div class="grid">
+        <div>
+          <input id="email" placeholder="Email" value="admin@serviceflow.local" />
+          <input id="password" type="password" placeholder="Password" value="ChangeMe123!" />
+          <button onclick="login()">Login</button>
+          <button onclick="logout()">Logout</button>
+        </div>
+        <div>
+          <div id="authStatus">Status: not logged in</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Create Incident</h2>
+      <div class="grid">
+        <div>
+          <input id="incidentTitle" placeholder="Incident title" value="WAN jitter spike" />
+          <textarea id="incidentDesc" placeholder="Description">Packet loss and latency observed.</textarea>
+          <select id="incidentPriority">
+            <option>P1</option><option selected>P2</option><option>P3</option><option>P4</option>
+          </select>
+          <button onclick="createIncident()">Create Incident</button>
+        </div>
+        <div>
+          <div id="createIncidentResult"></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Data Views</h2>
+      <button onclick="loadAll()">Refresh All</button>
+      <div class="grid">
+        <div>
+          <h3>Properties</h3>
+          <div id="properties"></div>
+        </div>
+        <div>
+          <h3>Devices</h3>
+          <div id="devices"></div>
+        </div>
+        <div>
+          <h3>Incidents</h3>
+          <div id="incidents"></div>
+        </div>
+        <div>
+          <h3>TAC Cases</h3>
+          <div id="tacCases"></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Integration Triggers</h2>
+      <button onclick="sync('dna-center')">Sync DNA Center</button>
+      <button onclick="sync('tac')">Sync TAC</button>
+      <button onclick="sync('smart-licensing')">Sync Smart Licensing</button>
+      <div id="syncStatus"></div>
+    </section>
+
+    <script>
+      const state = { token: localStorage.getItem("accessToken") || "" };
+
+      function renderAuth() {
+        const el = document.getElementById("authStatus");
+        el.className = state.token ? "ok" : "err";
+        el.textContent = state.token ? "Status: logged in" : "Status: not logged in";
+      }
+
+      async function request(path, options = {}) {
+        const headers = { "Content-Type": "application/json", ...(options.headers || {}) };
+        if (state.token) headers.Authorization = `Bearer ${state.token}`;
+        const res = await fetch(path, { ...options, headers });
+        if (!res.ok) {
+          const text = await res.text();
+          throw new Error(`${res.status} ${text}`);
+        }
+        if (res.status === 204) return null;
+        return res.json();
+      }
+
+      async function login() {
+        try {
+          const email = document.getElementById("email").value;
+          const password = document.getElementById("password").value;
+          const data = await request("/api/v1/auth/login", {
+            method: "POST",
+            body: JSON.stringify({ email, password })
+          });
+          state.token = data.accessToken;
+          localStorage.setItem("accessToken", state.token);
+          renderAuth();
+          await loadAll();
+        } catch (e) {
+          alert("Login failed: " + e.message);
+        }
+      }
+
+      function logout() {
+        state.token = "";
+        localStorage.removeItem("accessToken");
+        renderAuth();
+      }
+
+      function listToCards(items, fields) {
+        if (!items || !items.length) return "<div class='card'>No records</div>";
+        return items.map((it) => {
+          const body = fields.map((f) => `<div><strong>${f}:</strong> ${it[f] ?? ""}</div>`).join("");
+          return `<div class="card">${body}</div>`;
+        }).join("");
+      }
+
+      async function loadAll() {
+        try {
+          const [properties, devices, incidents, tacCases] = await Promise.all([
+            request("/api/v1/properties"),
+            request("/api/v1/devices"),
+            request("/api/v1/incidents"),
+            request("/api/v1/tac-cases")
+          ]);
+          document.getElementById("properties").innerHTML = listToCards(properties, ["property_id", "name", "property_type"]);
+          document.getElementById("devices").innerHTML = listToCards(devices, ["device_id", "hostname", "status"]);
+          document.getElementById("incidents").innerHTML = listToCards(incidents, ["incident_number", "title", "priority", "status"]);
+          document.getElementById("tacCases").innerHTML = listToCards(tacCases, ["case_number", "severity", "status"]);
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      async function createIncident() {
+        try {
+          const properties = await request("/api/v1/properties");
+          const devices = await request("/api/v1/devices");
+          if (!properties.length) throw new Error("No properties found");
+
+          const body = {
+            propertyId: properties[0].property_id,
+            deviceId: devices[0]?.device_id,
+            title: document.getElementById("incidentTitle").value,
+            description: document.getElementById("incidentDesc").value,
+            priority: document.getElementById("incidentPriority").value
+          };
+          const created = await request("/api/v1/incidents", { method: "POST", body: JSON.stringify(body) });
+          document.getElementById("createIncidentResult").innerHTML =
+            `<span class='ok'>Created ${created.incident_number}</span>`;
+          await loadAll();
+        } catch (e) {
+          document.getElementById("createIncidentResult").innerHTML =
+            `<span class='err'>Failed: ${e.message}</span>`;
+        }
+      }
+
+      async function sync(source) {
+        try {
+          const data = await request(`/api/v1/integrations/sync/${source}`, { method: "POST" });
+          document.getElementById("syncStatus").innerHTML =
+            `<span class='ok'>${source} sync processed: ${data.processed}</span>`;
+          await loadAll();
+        } catch (e) {
+          document.getElementById("syncStatus").innerHTML =
+            `<span class='err'>${source} sync failed: ${e.message}</span>`;
+        }
+      }
+
+      renderAuth();
+      if (state.token) loadAll();
+    </script>
+  </body>
+  </html>

@@ -1,0 +1,2 @@
+# Stdlib-only for core workbench.
+# Optional (device_code auth only): pip install msal

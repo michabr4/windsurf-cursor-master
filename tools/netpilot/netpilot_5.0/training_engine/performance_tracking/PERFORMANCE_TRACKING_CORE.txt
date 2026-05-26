@@ -1,0 +1,20 @@
+NetPilot 5.0 — Performance Tracking Core
+
+Purpose:
+Tracks learner performance across lessons, labs, quizzes, workflows, and scenarios.
+
+Tracked Metrics:
+- Accuracy
+- Completion Time
+- Attempts
+- Error Types
+- Hint Usage
+- Telemetry-Based Behavior
+- Confidence Indicators
+
+Performance Events:
+- lesson_completed
+- lab_completed
+- quiz_attempted
+- workflow_executed
+- remediation_triggered
