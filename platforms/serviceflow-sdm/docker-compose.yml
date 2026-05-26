@@ -1,3 +1,7 @@
+# Local / dev stack. Run migrations before the API is healthy:
+#   cp .env.example .env && edit secrets
+#   cd backend && npm run migrate
+#   docker compose up --build
 services:
   postgres:
     image: postgres:15-alpine
@@ -5,6 +9,7 @@ services:
     environment:
       POSTGRES_DB: helix_sdm
       POSTGRES_USER: serviceflow_admin
+      # Dev default only — set DB_PASSWORD in .env for non-local deployments.
       POSTGRES_PASSWORD: ${DB_PASSWORD:-change_me}
     ports:
       - "5432:5432"
@@ -30,7 +35,9 @@ services:
   backend:
     build:
       context: ./backend
+      target: runtime
     container_name: serviceflow-backend
+    # .env is gitignored — copy from .env.example before first compose up.
     env_file:
       - .env
     ports:
@@ -44,11 +51,12 @@ services:
   frontend:
     build:
       context: ./frontend
+      target: runtime
+      args:
+        VITE_API_BASE_URL: http://localhost:3000/api/v1
     container_name: serviceflow-frontend
-    environment:
-      VITE_API_BASE_URL: http://localhost:3000/api/v1
     ports:
-      - "3001:3001"
+      - "3001:80"
     depends_on:
       - backend
 

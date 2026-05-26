@@ -99,8 +99,8 @@ docker compose up --build
 | --- | --- | --- |
 | postgres | 5432 | Default password in compose is `change_me` — change for anything beyond local dev |
 | redis | 6379 | |
-| backend | 3000 | Image runs **`npm run dev`** (not a hardened production image) |
-| frontend | 3001 | Same — dev server |
+| backend | 3000 | Production image (`npm run start`); run **`npm run migrate`** on the host first |
+| frontend | 3001 | nginx serving Vite **`dist/`** (maps container port 80) |
 
 **Caveats:**
 

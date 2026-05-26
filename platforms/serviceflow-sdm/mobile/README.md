@@ -35,9 +35,11 @@ Cross-platform mobile client for iOS and Android built with **Expo** (React Nati
 4. On callback, tokens are exchanged and stored in `expo-secure-store` (backed by iOS Keychain / Android Keystore).
 5. If SSO is not configured, users fall back to email + password local login against `/api/v1/auth/login`.
 
-## Assets (required for native builds)
+## Assets (required before store / production build)
 
-Expo expects PNGs under `assets/` (`icon.png`, `splash.png`, `adaptive-icon.png`). See [`assets/README.md`](assets/README.md). Add or replace brand images before `expo run` / EAS store builds.
+`app.json` uses **Expo default icon and splash** (solid `#0a0f1a` splash background only). That is enough for **Expo Go** and local dev.
+
+Before **App Store / Play Store** or branded `expo run` releases, add PNGs under `assets/` and restore `icon`, `splash.image`, and `android.adaptiveIcon.foregroundImage` in `app.json`. See [`assets/README.md`](assets/README.md). Optional 48×48 dev placeholders may be present in `assets/` for early testing.
 
 **Settings screen:** theme and accessibility toggles are UI-only today (local React state); they do not persist across navigation or app restarts yet.
 
