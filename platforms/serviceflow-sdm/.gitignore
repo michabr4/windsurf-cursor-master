@@ -8,3 +8,23 @@ coverage/
 *.log
 tmp/
 *.tsbuildinfo
+
+# Per-package build output
+backend/dist/
+frontend/dist/
+
+# Expo / React Native
+mobile/.expo/
+mobile/dist/
+mobile/web-build/
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+Thumbs.db

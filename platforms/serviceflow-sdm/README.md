@@ -6,11 +6,17 @@
 
 1. [Repository layout](#repository-layout)
 2. [Quick start](#quick-start)
-3. [UI mockup hub — page-by-page guide](#ui-mockup-hub--page-by-page-guide)
-4. [Production vs mock](#production-vs-mock)
-5. [Accessing the mockup](#accessing-the-mockup)
-6. [Appendix: GitHub Pages troubleshooting](#appendix-github-pages-troubleshooting)
-7. [Database configuration](#database-configuration)
+3. [API health and operations](#api-health-and-operations)
+4. [Optional React frontend (port 3001)](#optional-react-frontend-port-3001)
+5. [Docker Compose (local dev)](#docker-compose-local-dev)
+6. [Production secrets](#production-secrets)
+7. [UI mockup hub — page-by-page guide](#ui-mockup-hub--page-by-page-guide)
+8. [Production vs mock](#production-vs-mock)
+9. [Accessing the mockup](#accessing-the-mockup)
+10. [Appendix: GitHub Pages troubleshooting](#appendix-github-pages-troubleshooting)
+11. [Database configuration](#database-configuration)
+
+See also [CHANGELOG.md](CHANGELOG.md) for release history.
 
 ## Consolidated From (May 2026)
 
@@ -52,6 +58,67 @@ npm start
 If login returns **401** / “Invalid username or password”: the database may still have an old hash. Run **`npm run seed-passwords`** from `backend/` (updates seed users with a fresh bcrypt hash for `ChangeMe123!`), or run **`npm run migrate`** again. Migrations automatically apply the same password fix after SQL seeds.
 
 Default UI: [http://localhost:3000/](http://localhost:3000/) · Source admin (live app): [http://localhost:3000/admin/sources.html](http://localhost:3000/admin/sources.html) · **UI mockup hub:** [http://localhost:3000/mockup/](http://localhost:3000/mockup/)
+
+## API health and operations
+
+| Check | URL / command |
+| --- | --- |
+| **Liveness + DB** | `GET http://localhost:3000/api/v1/health/` → `{ "status": "ok" }` (runs `SELECT 1` on PostgreSQL) |
+| **Auth** | `POST /api/v1/auth/login` with JSON `{ "email", "password" }` |
+| **Migrations** | From `backend/`: `npm run migrate` (applies `infra/migrations/` + `infra/seeds/`) |
+
+There is no `/api/health` route; use **`/api/v1/health/`** for load balancers and probes.
+
+Rate limiting is not enabled on the API yet; plan gateway or `express-rate-limit` before public exposure.
+
+## Optional React frontend (port 3001)
+
+The **primary MVP UI** is the backend-hosted HTML (Operations + mockup hub on port **3000**). The `frontend/` package is an optional React + MUI shell:
+
+```bash
+cd frontend
+npm ci
+npm run build    # or npm run dev
+```
+
+- Dev server: [http://localhost:3001/](http://localhost:3001/) (`VITE_API_BASE_URL` defaults to `http://localhost:3000/api/v1`).
+- JWT in `localStorage` is **not** shared with the mockup hub on port 3000 — sign in separately on each origin.
+- **Dashboard** in the React app still uses static KPI placeholders; use the mockup hub or Operations HTML for full demos.
+
+## Docker Compose (local dev)
+
+From the repo root (requires Docker):
+
+```bash
+cp .env.example .env    # edit DB_* and secrets; do not commit .env
+cd backend && npm run migrate   # run once against the compose Postgres port
+docker compose up --build
+```
+
+| Service | Port | Notes |
+| --- | --- | --- |
+| postgres | 5432 | Default password in compose is `change_me` — change for anything beyond local dev |
+| redis | 6379 | |
+| backend | 3000 | Image runs **`npm run dev`** (not a hardened production image) |
+| frontend | 3001 | Same — dev server |
+
+**Caveats:**
+
+- `docker-compose.yml` sets `env_file: .env.example` on the backend service — copy to **`.env`** and point compose at it for real secrets, or export variables another way.
+- Compose does **not** run migrations automatically; run `npm run migrate` from `backend/` after Postgres is up.
+- For production, use separate images (`npm run build` + `npm start`), strong secrets, and TLS termination — see [Production secrets](#production-secrets).
+
+## Production secrets
+
+Copy [`.env.example`](.env.example) to `.env` (gitignored) and replace every `replace_me` / placeholder value.
+
+| Variable | Requirement |
+| --- | --- |
+| `JWT_SECRET`, `JWT_REFRESH_SECRET` | Unique random strings, **≥ 32 characters** each. Never ship with defaults from `backend/src/config.ts`. |
+| `DB_PASSWORD` | Strong password; not `change_me` from compose samples |
+| Integration `*_SECRET` / tokens | From vault or secret manager; optional until that integration is enabled |
+
+See `infra/docs/SECURITY_HARDENING_CHECKLIST.md` for a fuller hardening list.
 
 ### OpenID Connect SSO (Cisco / Azure AD / Okta / etc.)
 

@@ -35,10 +35,16 @@ Cross-platform mobile client for iOS and Android built with **Expo** (React Nati
 4. On callback, tokens are exchanged and stored in `expo-secure-store` (backed by iOS Keychain / Android Keystore).
 5. If SSO is not configured, users fall back to email + password local login against `/api/v1/auth/login`.
 
+## Assets (required for native builds)
+
+Expo expects PNGs under `assets/` (`icon.png`, `splash.png`, `adaptive-icon.png`). See [`assets/README.md`](assets/README.md). Add or replace brand images before `expo run` / EAS store builds.
+
+**Settings screen:** theme and accessibility toggles are UI-only today (local React state); they do not persist across navigation or app restarts yet.
+
 ## Quick Start
 
 ```bash
-cd helix-sdm/mobile
+cd mobile
 cp .env.example .env          # set API_BASE_URL
 npm install
 npx expo start                # opens Expo DevTools
