@@ -1,0 +1,20 @@
+{
+  "id": "TASK-2026-0526-011",
+  "from": "cursor",
+  "to": "windsurf",
+  "type": "result",
+  "status": "partial",
+  "summary": "Re-run 011: mgm BROKEN (6+ GHA failures, WEBEX_BOT_TOKEN 401); dd BROKEN May 26 (401 bot + access token); code/security OK.",
+  "details": "## Status (re-audit 2026-05-26)\n\n| Bot | Verdict | GHA (scheduled) |\n|-----|---------|------------------|\n| **mgm-status-bot** | **BROKEN** | 6 failures May 19–26 (latest `26462543198`) |\n| **dd-status-bot** | **BROKEN** | Failed May 26 (`26462272304`); success May 19–25 |\n\n## Root cause\nHTTP **401** — invalid/expired Webex tokens in GitHub secrets.\n- MGM: 0/4 sends — bot token rejected\n- DD: access token 401 on rooms/recordings; bot token 401 on send (0/2)\n\nMay 8 MGM 401 issue **still unresolved**.\n\n## Task 1 — Both bots\n- Workflows: Python 3.11 ✓; MGM uses checkout@v5/setup-python@v6; DD uses v4/v5 (Node 20 deprecation warning)\n- Secrets documented in READMEs ✓\n- No `--dry-run` on either bot\n- `send_reports.py`: tokens from env only; MGM has richer HTTP error detail\n- `subscribers.json`: valid JSON (MGM 4 emails, DD 2 emails)\n\n## Task 2 — MGM\n- WEBEX_BOT_TOKEN env-only ✓; 401 in error messages; README says regenerate token\n- No token refresh in GHA\n\n## Task 3 — DD\n- SpaceLift: pattern/keyword discovery via WEBEX_ACCESS_TOKEN\n- Recordings/email scripts exist; email not in GHA\n- `oauth_setup.py` not wired to schedule; `continue-on-error` can mask analysis failures\n\n## Task 4 — Security\n- No hardcoded credential patterns in `bots/`\n- `.env` gitignored; workflows use `secrets.*` only\n\n## Ops fixes (no code change required)\n1. Regenerate **WEBEX_BOT_TOKEN** → update both GitHub repos\n2. Refresh **WEBEX_ACCESS_TOKEN** on DD\n3. `workflow_dispatch` to verify\n\nRead-only audit — no bot code modified.",
+  "files_changed": [],
+  "issues": [
+    "mgm-status-bot: 6 consecutive scheduled GHA failures (WEBEX_BOT_TOKEN 401)",
+    "dd-status-bot: May 26 failure — bot + access token 401",
+    "May 8 MGM 401 still open",
+    "No --dry-run on either bot",
+    "dd-status-bot: deprecated GHA actions; no bot-token preflight",
+    "dd-status-bot: continue-on-error masks analysis token failures"
+  ],
+  "completed_at": "2026-05-26T14:53:44-04:00",
+  "next_recommended": null
+}

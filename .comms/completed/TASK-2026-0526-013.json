@@ -1,0 +1,21 @@
+{
+  "id": "TASK-2026-0526-013",
+  "from": "windsurf",
+  "to": "cursor",
+  "priority": "high",
+  "type": "instruction",
+  "phase": "2",
+  "title": "Phase 2.1a — HELIX P0+P1 Fixes: JWT guard, rate limiting, Zod validation",
+  "spec": "PHASE 2.1a: HELIX-HARDEN — P0 + P1 fixes\n\nApply the critical and high-priority fixes identified in the TASK-012 audit. These are scoped, safe changes that don't alter business logic.\n\nLOCATION: platforms/serviceflow-sdm/\n\n---\n\nFIX 1 (P0): Fail boot if JWT secrets are default placeholders\n- File: backend/src/config.ts (or wherever JWT_SECRET / JWT_REFRESH_SECRET are defined)\n- Current behavior: Zod defaults to placeholder strings if env vars unset\n- Required: At application startup, check if JWT_SECRET or JWT_REFRESH_SECRET equal their default/placeholder values. If so, log a FATAL error and exit the process (process.exit(1)).\n- Do NOT remove the Zod defaults — just add a runtime guard after config loads.\n- Example:\n  ```typescript\n  if (config.JWT_SECRET === 'change_me' || config.JWT_SECRET.length < 32) {\n    console.error('FATAL: JWT_SECRET must be set to a strong secret in production');\n    process.exit(1);\n  }\n  ```\n- Allow bypass with NODE_ENV=development (so dev still works with defaults).\n\n---\n\nFIX 2 (P1): Add express-rate-limit\n- Install: npm install express-rate-limit\n- Apply rate limiting middleware to:\n  a. /api/v1/auth/* — strict: 10 requests per 15 min per IP (login/refresh)\n  b. All other write endpoints (POST/PATCH/PUT) — moderate: 100 requests per 15 min per IP\n- Add as middleware in the main Express app setup (before route mounting).\n- Configuration should be via environment variables with sensible defaults.\n\n---\n\nFIX 3 (P1): Add Zod validation to unvalidated write endpoints\n- Salesforce POST /cases and PATCH /cases/:id — add Zod schema for request body\n- Integration POST /webex/war-room — add Zod schema for the body (currently only manual trim)\n- Follow the same pattern used in existing validated routes (incidents, properties, devices)\n- Return 400 with clear error messages on validation failure\n\n---\n\nCONSTRAINTS:\n- Do NOT change existing route behavior or business logic\n- Do NOT modify database schema or migrations\n- Do NOT touch frontend, mobile, or Docker\n- Run `npm run build` in backend/ after changes to verify TypeScript compiles\n- List all files changed in the result\n\nTESTING:\n- After all fixes: cd backend && npm run build\n- If build succeeds, report success\n- If build fails, fix the error before reporting",
+  "depends_on": null,
+  "files_to_read": [
+    "platforms/serviceflow-sdm/backend/src/config.ts",
+    "platforms/serviceflow-sdm/backend/src/index.ts",
+    "platforms/serviceflow-sdm/backend/src/routes/auth.ts",
+    "platforms/serviceflow-sdm/backend/src/routes/integrations.ts",
+    "platforms/serviceflow-sdm/backend/src/routes/salesforce.ts",
+    "platforms/serviceflow-sdm/backend/package.json"
+  ],
+  "created_at": "2026-05-26T16:10:06-04:00",
+  "status": "in_progress"
+}

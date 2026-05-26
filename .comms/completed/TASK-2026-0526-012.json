@@ -1,0 +1,19 @@
+{
+  "id": "TASK-2026-0526-012",
+  "from": "windsurf",
+  "to": "cursor",
+  "priority": "high",
+  "type": "instruction",
+  "phase": "2",
+  "title": "Phase 2.1 — HELIX-HARDEN: Production-harden ServiceFlow SDM platform",
+  "spec": "PHASE 2.1: HELIX-HARDEN\n\nProduction-harden the Helix / ServiceFlow SDM platform — the flagship project.\n\nLOCATION: platforms/serviceflow-sdm/\n\nThis is a READ-FIRST, REPORT-BACK task. Audit the current state before making changes.\n\nTASK 1: BACKEND AUDIT (Express/TypeScript)\n  - List all Express routes and whether they have input validation\n  - Check JWT auth implementation — is it real or mocked?\n  - Check for rate limiting on API endpoints\n  - Verify PostgreSQL migration files — do they run cleanly?\n  - Check if GET /api/health endpoint exists\n  - Report: what works, what's mocked, what's missing\n\nTASK 2: FRONTEND AUDIT (React/Vite)\n  - Run: npm install && npm run build (report any errors)\n  - List all page/view components and their status (functional/placeholder/broken)\n  - Check theme toggle — does it persist across navigation?\n  - Check for console errors in component code\n  - Report: how many views work vs placeholder\n\nTASK 3: MOBILE AUDIT (React Native/Expo)\n  - Check package.json for outdated dependencies\n  - List implemented screens vs placeholder\n  - Check if Expo config is valid\n  - Report: build-readiness assessment\n\nTASK 4: DOCKER AUDIT\n  - Review docker-compose.yml — are all services defined?\n  - Check Dockerfiles for frontend and backend\n  - Verify environment variable handling (no hardcoded secrets)\n  - Report: can docker-compose up --build succeed?\n\nTASK 5: DOCS AUDIT\n  - Is README current with actual setup instructions?\n  - Does docs/REQUIREMENTS.md reflect actual state?\n  - Is there a CHANGELOG?\n  - Check docs/legacy/ — are the ported files from Phase 1 indexed?\n\nTASK 6: Security check\n  - grep for hardcoded credentials in source\n  - Verify .env.example exists with placeholder values\n  - Check .gitignore coverage\n  - Report any findings\n\nREPORT FORMAT:\nFor each task area, provide:\n  - Status: PRODUCTION-READY / NEEDS-WORK / PLACEHOLDER\n  - Specific issues found\n  - Recommended fixes (prioritized)\n\nCONSTRAINTS:\n  - Audit first — do NOT make code changes without reporting findings\n  - OK to fix: README gaps, missing .gitignore entries, broken imports\n  - NOT OK to fix without approval: route changes, auth changes, schema changes",
+  "depends_on": "TASK-2026-0526-011",
+  "files_to_read": [
+    "ROADMAP.md",
+    "platforms/serviceflow-sdm/README.md",
+    "platforms/serviceflow-sdm/package.json",
+    "platforms/serviceflow-sdm/docker-compose.yml"
+  ],
+  "created_at": "2026-05-26T14:35:19-04:00",
+  "status": "in_progress"
+}
