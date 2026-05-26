@@ -636,34 +636,155 @@ THEN: STOP and report back to Windsurf.
 
 ---
 
-## After Migration: Cleanup Original Locations
-
-**DO NOT execute this section until ALL verifications pass and user explicitly approves.**
+## Section 14: Cleanup Original Locations (APPROVED by Windsurf)
 
 ```text
-TASK: Remove original project folders after verified migration
-WARNING: DESTRUCTIVE — requires explicit user approval for EACH deletion
+CURSOR INSTRUCTION: CLEANUP-ORIGINALS
 
-After user confirms migration is verified:
-1. Ask user to confirm deletion of EACH original folder individually
-2. Move (not delete) originals to Trash: mv ~/Desktop/[project] ~/.Trash/
-3. This allows recovery from Trash if anything was missed
+STATUS: APPROVED by Windsurf Architect on 2026-05-26
+VERIFICATION: Migration verified — all 14 projects confirmed in master folder.
+METHOD: Move to Trash (recoverable). NOT permanent deletion.
 
-FOLDERS TO CLEAN (only after user approval per folder):
-- ~/Desktop/serviceflow-sdm/
-- ~/Desktop/SDM Files/ (after confirming all contents migrated)
-- ~/Desktop/Flerken - Personal AI Assistant/
-- ~/Desktop/email-summary-agent/
-- ~/Desktop/Personal Automation/
-- ~/Desktop/NetPilot/
-- ~/firewall-implementation-planning/
-- ~/Desktop/delivery-workbench/
-- ~/Desktop/AgenticStarterKitv1_0/
-- ~/Desktop/AI Factory/
-- ~/Desktop/Digitized Delivery - GES/
-- ~/Desktop/Digitized Delivery/ (dd-status-bot)
-- ~/projects/Blue-Shield/
-- ~/Desktop/Python/
+TASK 14.1: Move all original project folders to Trash
+Execute each command. If any command fails, log the error and continue.
+
+mv ~/Desktop/serviceflow-sdm ~/.Trash/serviceflow-sdm
+mv ~/Desktop/"SDM Files" ~/.Trash/"SDM Files"
+mv ~/Desktop/"Flerken - Personal AI Assistant" ~/.Trash/"Flerken - Personal AI Assistant"
+mv ~/Desktop/email-summary-agent ~/.Trash/email-summary-agent
+mv ~/Desktop/"Personal Automation" ~/.Trash/"Personal Automation"
+mv ~/Desktop/NetPilot ~/.Trash/NetPilot
+mv ~/firewall-implementation-planning ~/.Trash/firewall-implementation-planning
+mv ~/Desktop/delivery-workbench ~/.Trash/delivery-workbench
+mv ~/Desktop/AgenticStarterKitv1_0 ~/.Trash/AgenticStarterKitv1_0
+mv ~/Desktop/"AI Factory" ~/.Trash/"AI Factory"
+mv ~/Desktop/"Digitized Delivery - GES" ~/.Trash/"Digitized Delivery - GES"
+mv ~/Desktop/"Digitized Delivery" ~/.Trash/"Digitized Delivery"
+mv ~/projects/Blue-Shield ~/.Trash/Blue-Shield
+mv ~/Desktop/Python ~/.Trash/Python
+
+NOTE: If a Trash name collision occurs (folder already in Trash),
+append a timestamp: mv ~/Desktop/[folder] ~/.Trash/[folder]-$(date +%s)
+
+TASK 14.2: Verify cleanup
+Run this check — all should say GONE:
+
+for d in ~/Desktop/serviceflow-sdm ~/Desktop/"SDM Files" \
+  ~/Desktop/"Flerken - Personal AI Assistant" ~/Desktop/email-summary-agent \
+  ~/Desktop/"Personal Automation" ~/Desktop/NetPilot \
+  ~/firewall-implementation-planning ~/Desktop/delivery-workbench \
+  ~/Desktop/AgenticStarterKitv1_0 ~/Desktop/"AI Factory" \
+  ~/Desktop/"Digitized Delivery - GES" ~/Desktop/"Digitized Delivery" \
+  ~/projects/Blue-Shield ~/Desktop/Python; do
+  test -d "$d" && echo "STILL EXISTS: $d" || echo "GONE: $d"
+done
+
+TASK 14.3: Log cleanup in MIGRATION_LOG.md
+Append:
+
+## Section 14: Cleanup Original Locations
+**Completed:** [timestamp]
+**Status:** [SUCCESS or PARTIAL]
+**Approved by:** Windsurf Architect
+
+### Actions Taken
+- Moved 14 original project folders to ~/.Trash/
+- [list any that failed with error]
+
+### Recovery
+- All originals are in macOS Trash and can be restored if needed.
+- Recommend emptying Trash only after 7 days of working with the master folder.
+
+### Issues Found
+- [list any or "None"]
+
+THEN: STOP and report back to Windsurf.
+```
+
+---
+
+## Section 15: Restore Originals from Master Folder (URGENT)
+
+```text
+CURSOR INSTRUCTION: RESTORE-ORIGINALS
+
+STATUS: URGENT — User needs original folders restored to their previous locations.
+SOURCE: Master folder contains copies of all projects from the migration.
+METHOD: cp -R from master folder back to original locations.
+
+TASK 15.1: Restore all original project folders
+Execute each command in order. Do NOT use mv — we need to KEEP the master folder copies intact.
+
+cp -R ~/New\ Master\ Folder\ -\ Windsurf\ and\ Cursor/platforms/serviceflow-sdm ~/Desktop/serviceflow-sdm
+cp -R ~/New\ Master\ Folder\ -\ Windsurf\ and\ Cursor/sdm-files ~/Desktop/"SDM Files"
+cp -R ~/New\ Master\ Folder\ -\ Windsurf\ and\ Cursor/agents/flerken ~/Desktop/"Flerken - Personal AI Assistant"
+cp -R ~/New\ Master\ Folder\ -\ Windsurf\ and\ Cursor/agents/email-summary-agent ~/Desktop/email-summary-agent
+cp -R ~/New\ Master\ Folder\ -\ Windsurf\ and\ Cursor/tools/personal-automation ~/Desktop/"Personal Automation"
+cp -R ~/New\ Master\ Folder\ -\ Windsurf\ and\ Cursor/tools/netpilot ~/Desktop/NetPilot
+cp -R ~/New\ Master\ Folder\ -\ Windsurf\ and\ Cursor/tools/firewall-implementation-planning ~/firewall-implementation-planning
+cp -R ~/New\ Master\ Folder\ -\ Windsurf\ and\ Cursor/tools/delivery-workbench ~/Desktop/delivery-workbench
+cp -R ~/New\ Master\ Folder\ -\ Windsurf\ and\ Cursor/tools/agentic-starter-kit ~/Desktop/AgenticStarterKitv1_0
+cp -R ~/New\ Master\ Folder\ -\ Windsurf\ and\ Cursor/content/ai-factory ~/Desktop/"AI Factory"
+cp -R ~/New\ Master\ Folder\ -\ Windsurf\ and\ Cursor/data/digitized-delivery-ges ~/Desktop/"Digitized Delivery - GES"
+cp -R ~/New\ Master\ Folder\ -\ Windsurf\ and\ Cursor/data/blue-shield ~/projects/Blue-Shield
+cp -R ~/New\ Master\ Folder\ -\ Windsurf\ and\ Cursor/_archived/python-empty/Python ~/Desktop/Python
+
+SPECIAL CASES — these need sub-folders restored from SDM Files:
+mkdir -p ~/Desktop/"Digitized Delivery"
+cp -R ~/New\ Master\ Folder\ -\ Windsurf\ and\ Cursor/bots/dd-status-bot ~/Desktop/"Digitized Delivery"/dd-status-bot
+
+NOTE on SDM Files: The original ~/Desktop/SDM Files/ contained sub-projects that
+were split during migration. Restore requires reassembling:
+- The sdm-files/ folder has the utility scripts and framework
+- agents/status-report-agent was originally under SDM Files/
+- agents/communication-agent was originally under SDM Files/
+- bots/mgm-status-bot was originally under SDM Files/
+- _archived/ServiceFlow-SDC was originally under SDM Files/
+- _archived/ServiceFlow-SDC-Windsurf was originally under SDM Files/
+
+To fully restore SDM Files:
+cp -R ~/New\ Master\ Folder\ -\ Windsurf\ and\ Cursor/agents/status-report-agent ~/Desktop/"SDM Files"/status-report-agent
+cp -R ~/New\ Master\ Folder\ -\ Windsurf\ and\ Cursor/agents/communication-agent ~/Desktop/"SDM Files"/communication-agent
+cp -R ~/New\ Master\ Folder\ -\ Windsurf\ and\ Cursor/bots/mgm-status-bot ~/Desktop/"SDM Files"/mgm-status-bot
+cp -R ~/New\ Master\ Folder\ -\ Windsurf\ and\ Cursor/_archived/ServiceFlow-SDC ~/Desktop/"SDM Files"/"ServiceFlow SDC"
+cp -R ~/New\ Master\ Folder\ -\ Windsurf\ and\ Cursor/_archived/ServiceFlow-SDC-Windsurf ~/Desktop/"SDM Files"/"ServiceFlow SDC_Windsurf"
+cp -R ~/New\ Master\ Folder\ -\ Windsurf\ and\ Cursor/sdm-files/sdm-agentic-framework ~/Desktop/"SDM Files"/"Service Delivery Manager Agentic Framework"
+
+TASK 15.2: Verify restoration
+for d in ~/Desktop/serviceflow-sdm ~/Desktop/"SDM Files" \
+  ~/Desktop/"Flerken - Personal AI Assistant" ~/Desktop/email-summary-agent \
+  ~/Desktop/"Personal Automation" ~/Desktop/NetPilot \
+  ~/firewall-implementation-planning ~/Desktop/delivery-workbench \
+  ~/Desktop/AgenticStarterKitv1_0 ~/Desktop/"AI Factory" \
+  ~/Desktop/"Digitized Delivery - GES" ~/Desktop/"Digitized Delivery" \
+  ~/projects/Blue-Shield ~/Desktop/Python; do
+  test -d "$d" && echo "RESTORED: $d" || echo "FAILED:   $d"
+done
+
+TASK 15.3: Log in MIGRATION_LOG.md
+Append:
+
+## Section 15: Restore Originals
+**Completed:** [timestamp]
+**Status:** [SUCCESS or PARTIAL]
+**Reason:** User requested originals be restored to original locations.
+
+### Actions Taken
+- Copied all 14 project folders from master folder back to original locations
+- Master folder copies remain intact (used cp -R, not mv)
+
+### Known Differences from Pre-Migration State
+- .git directories were excluded during migration (rsync --exclude .git)
+  so restored copies will NOT have git history. Git remotes for bots
+  (mgm-status-bot, dd-status-bot) should still work via GitHub.
+- venv/node_modules were cleaned during migration — will need reinstall.
+- Hardcoded paths in sdm-files/ scripts were updated to relative paths
+  during Section 10 fixups — restored copies have the fixed versions.
+
+### Issues Found
+- [list any or "None"]
+
+THEN: STOP and report back to Windsurf.
 ```
 
 ---

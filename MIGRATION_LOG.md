@@ -344,3 +344,63 @@
 
 ### Awaiting Windsurf Review
 - None for Section 13. **Do not run “After Migration: Cleanup Original Locations”** until user explicitly approves per-folder deletion.
+
+---
+
+## Section 14: Cleanup Original Locations
+**Completed:** 2026-05-26  
+**Status:** SUCCESS  
+**Approved by:** Windsurf Architect
+
+### Actions Taken
+- Moved 14 original project folders to `~/.Trash/` (recoverable; not permanent delete):
+  - `~/Desktop/serviceflow-sdm` → `~/.Trash/serviceflow-sdm`
+  - `~/Desktop/SDM Files` → `~/.Trash/SDM Files`
+  - `~/Desktop/Flerken - Personal AI Assistant` → `~/.Trash/Flerken - Personal AI Assistant`
+  - `~/Desktop/email-summary-agent` → `~/.Trash/email-summary-agent`
+  - `~/Desktop/Personal Automation` → `~/.Trash/Personal Automation`
+  - `~/Desktop/NetPilot` → `~/.Trash/NetPilot`
+  - `~/firewall-implementation-planning` → `~/.Trash/firewall-implementation-planning`
+  - `~/Desktop/delivery-workbench` → `~/.Trash/delivery-workbench`
+  - `~/Desktop/AgenticStarterKitv1_0` → `~/.Trash/AgenticStarterKitv1_0`
+  - `~/Desktop/AI Factory` → `~/.Trash/AI Factory`
+  - `~/Desktop/Digitized Delivery - GES` → `~/.Trash/Digitized Delivery - GES`
+  - `~/Desktop/Digitized Delivery` → `~/.Trash/Digitized Delivery`
+  - `~/projects/Blue-Shield` → `~/.Trash/Blue-Shield`
+  - `~/Desktop/Python` → `~/.Trash/Python`
+- Verification: all 14 source paths report **GONE** (none remain at original locations).
+- No Trash name collisions; no moves failed.
+
+### Recovery
+- All originals are in macOS Trash and can be restored via Finder if needed.
+- Recommend emptying Trash only after 7+ days of stable use of the master folder at `~/New Master Folder - Windsurf and Cursor/`.
+
+### Issues Found
+- None.
+
+---
+
+## Section 15: Restore Originals
+**Completed:** 2026-05-26  
+**Status:** SUCCESS  
+**Reason:** User requested originals be restored to original locations (urgent).
+
+### Actions Taken
+- Copied all 14 top-level project locations from master folder back to original paths using `cp -R` (master folder unchanged).
+- Reassembled `~/Desktop/SDM Files/` with split migration pieces:
+  - Base: `sdm-files/` → `~/Desktop/SDM Files`
+  - `status-report-agent`, `communication-agent`, `mgm-status-bot`
+  - `ServiceFlow SDC`, `ServiceFlow SDC_Windsurf`
+  - `Service Delivery Manager Agentic Framework` (from `sdm-files/sdm-agentic-framework`)
+- Restored `~/Desktop/Digitized Delivery/dd-status-bot` from `bots/dd-status-bot`.
+- Verification: all 14 primary paths **RESTORED**; all SDM subfolders and `dd-status-bot` **RESTORED** (0 failures).
+
+### Known Differences from Pre-Migration State
+- **No `.git` in restored copies** — migration used `rsync --exclude '.git'`. Re-clone or `git init` + add remotes if local history is needed (bots: `michabr4/mgm-status-bot`, `michabr4/dd-status-bot`; serviceflow: `michabr4/helix`).
+- **No venv/node_modules** — reinstall per project (`pip install -r requirements.txt`, `npm install`, etc.).
+- **Section 10 path fixes** — restored `sdm-files` scripts use relative paths (not old Desktop hardcodes).
+- **Section 13** — bundled `.xlsx_venv` / `.venv` under GES data were removed in master before restore; restored GES copy matches master (no those venvs).
+- **Trash copies** — Section 14 originals may still exist in `~/.Trash/`; safe to delete from Trash after confirming restored folders work.
+
+### Issues Found
+- None.

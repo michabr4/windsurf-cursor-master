@@ -40,3 +40,8 @@ sdm-files/subscribers.json
 
 # Optional: large local archives (uncomment if repo should stay smaller)
 # _archived/
+
+# Comms queue (transient — keep completed/ for audit)
+.comms/inbox/
+.comms/outbox/
+.comms/active/

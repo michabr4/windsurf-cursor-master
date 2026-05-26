@@ -1,0 +1,14 @@
+{
+  "id": "TASK-2026-0526-004",
+  "from": "windsurf",
+  "to": "cursor",
+  "priority": "high",
+  "type": "instruction",
+  "phase": "comms",
+  "title": "Deploy Comms Bridge MCP Server to Cursor",
+  "spec": "DEPLOY THE COMMS BRIDGE MCP SERVER\n\nWindsurf has reviewed and approved server.py. Now register it in Cursor's MCP config.\n\nTASK 1: Add comms-bridge to ~/.cursor/mcp.json\n\nAdd this entry to the mcpServers object:\n\n\"comms-bridge\": {\n  \"command\": \"python3\",\n  \"args\": [\n    \"/Users/michabr4/New Master Folder - Windsurf and Cursor/tools/agentic-starter-kit/mcp-servers/comms-bridge-mcp/server.py\"\n  ],\n  \"env\": {\n    \"COMMS_DIR\": \"/Users/michabr4/New Master Folder - Windsurf and Cursor/.comms\"\n  }\n}\n\nTASK 2: Ensure dependencies are installed\n\ncd ~/New\\ Master\\ Folder\\ -\\ Windsurf\\ and\\ Cursor/tools/agentic-starter-kit/mcp-servers/comms-bridge-mcp\nIf a .venv already exists from the build, verify mcp is installed:\n  .venv/bin/pip list | grep mcp\nIf not, create one:\n  python3 -m venv .venv && .venv/bin/pip install -r requirements.txt\n\nIMPORTANT: Update the mcp.json command to use the venv python:\n\"command\": \"/Users/michabr4/New Master Folder - Windsurf and Cursor/tools/agentic-starter-kit/mcp-servers/comms-bridge-mcp/.venv/bin/python3\"\n\nThis ensures the MCP SDK is available when Cursor spawns the server.\n\nTASK 3: Restart Cursor to reload MCP config\n\nAfter updating mcp.json, Cursor needs to reload. Either:\n- Restart Cursor entirely, OR\n- Use Cmd+Shift+P → 'Reload Window'\n\nTASK 4: Verify the MCP server is running\n\nAfter restart, open a new chat and ask:\n- 'Use the comms-bridge MCP to call get_pipeline_status'\n\nExpected result: {\"inbox\": 0, \"active\": 0, \"outbox\": 0, \"completed\": N}\n(where N is the number of completed tasks)\n\nIf it fails, check:\n- Is the .venv python path correct in mcp.json?\n- Does .venv/bin/pip list show mcp?\n- Check Cursor's MCP logs for errors\n\nTASK 5: Update .comms/transcript.md\nAppend: **[TIMESTAMP — CURSOR]** Comms Bridge MCP server deployed and verified. get_pipeline_status returned: [paste result]\n\nDo NOT modify Windsurf's MCP config — Windsurf will handle its own deployment.",
+  "depends_on": "TASK-2026-0526-003",
+  "files_to_read": ["tools/agentic-starter-kit/mcp-servers/comms-bridge-mcp/README.md"],
+  "created_at": "2026-05-26T12:56:00-04:00",
+  "status": "completed"
+}
