@@ -404,3 +404,97 @@
 
 ### Issues Found
 - None.
+
+---
+
+## TASK-2026-0526-006: Starter Kit / Workbench Split
+**Completed:** 2026-05-26  
+**Status:** SUCCESS  
+**Builder:** Cursor (via comms-bridge MCP)
+
+### Actions Taken
+- Audited `tools/agentic-starter-kit/` vs `tools/delivery-workbench/`; moved operational assets to workbench (cp then removed from starter kit).
+- Genericized `comms-bridge-mcp` (required `COMMS_DIR`, placeholder README paths, `.gitignore` for `.venv`).
+- Added README cross-links; updated `MASTER_INDEX.md` entries 12–13 and overlap map.
+- Updated starter `docs/OUTLOOK_API_ACCESS_GUIDE.md` to target the sample only.
+
+### Files Moved (starter → workbench)
+- `docs/ServiceFlow SDC/` → `docs/reference/serviceflow-sdc/`
+- `out/asana-reviews/*.{json,md}` → `data/asana-reviews/`
+- `python/src/agt001_email_chief_of_staff.py` → `python/integrations/agt001/email_chief_of_staff.py`
+- `python/src/outlook_action_items.py` → `python/integrations/agt001/outlook_action_items.py`
+- `python/examples/agt001_daily_digest_demo.py` → `scripts/integrations/agt001_daily_digest_demo.py`
+- Agent factory docs → `docs/reference/agent-factory/`
+- Outlook guide copy → `docs/email/OUTLOOK_AGT001_SETUP.md`
+
+### Ambiguous (kept in starter kit)
+- Asana review sample code; only output artifacts moved.
+- `dashboard_server.py` demo; `setup_teamspace_mcp.sh` (generic placeholders).
+
+### Issues Found
+- None blocking. MCP `COMMS_DIR` must remain set in IDE config (no personal default in server).
+
+---
+
+## TASK-2026-0526-007: EMAIL-CONSOLIDATE → Flerken
+**Completed:** 2026-05-26  
+**Status:** SUCCESS  
+**Builder:** Cursor (via comms-bridge MCP)
+
+### Audit
+- **email-summary-agent:** Graph + gpt-4o-mini brief — subset of Flerken; no code port.
+- **personal-automation:** Unique offline Apple Mail regex digest — ported to `agents/flerken/src/optional/offline_mail_digest.py`.
+- **delivery-workbench email:** YAML orchestration + human gates — reference copies in `agents/flerken/docs/orchestration_reference/`; workbench unchanged.
+
+### Actions
+- Archived `agents/email-summary-agent` → `_archived/email-summary-agent/`
+- Archived `tools/personal-automation` → `_archived/personal-automation/`
+- Added `run.py --offline-mail`; updated Flerken README, `.gitignore`, `MASTER_INDEX.md`, `_archived/ARCHIVE_LOG.md`
+- Security grep: no AKIA/ghp_/sk_live in source; `.env` gitignored (not tracked)
+
+---
+
+## TASK-2026-0526-008: ARCHIVE-STALE
+**Completed:** 2026-05-26  
+**Status:** SUCCESS
+
+### Actions
+- Inventoried `_archived/`; moved `~/Desktop/Python/` → `_archived/desktop-python-2026/`.
+- Protected `data/blue-shield/`, `data/digitized-delivery-ges/`.
+- Added `_archived/email-summary-agent/README.md`; updated `ARCHIVE_LOG.md` and `MASTER_INDEX.md`.
+
+---
+
+## TASK-2026-0526-009: AGENT-EXTRACTION (verify)
+**Completed:** 2026-05-26  
+**Status:** SUCCESS
+
+### Self-containment (all Y)
+| Agent | README | requirements | Entry |
+| --- | --- | --- | --- |
+| agents/status-report-agent | Y | Y | main.py |
+| agents/communication-agent | Y | Y | main.py |
+| bots/mgm-status-bot | Y | Y | send_reports.py |
+| bots/dd-status-bot | Y | Y (added) | send_reports.py |
+
+### Fix
+- Created `bots/dd-status-bot/requirements.txt`.
+
+### sdm-files utilities (not agents)
+`webex_bot.py`, `webex_bot_server.py`, `webex_bot_scheduler.py`, `generate_mgm_pptx.py`, `send_subscription_card.py`, `sdm-agentic-framework/`.
+
+---
+
+## TASK-2026-0526-010: PLATFORM-CONSOLIDATE
+**Completed:** 2026-05-26  
+**Status:** SUCCESS
+
+### Audit
+- SDC / SDC_Windsurf already in `_archived/` from migration; SDC_Windsurf is largely a subset of `platforms/serviceflow-sdm`.
+- Unique: planning docs (CISCO_DATA_SOURCES, MVP_SCOPE_FREEZE, DATA_PREREQUISITES, PHASES_4_8, INSTRUCTIONS_LOG, _extracted_guide). Mockup HTML already in canonical `backend/public/mockup/`.
+
+### Actions
+- Ported docs → `platforms/serviceflow-sdm/docs/legacy/from-serviceflow-sdc/`.
+- Moved Desktop `SDM Files/ServiceFlow SDC*` → `_archived/desktop-sdm-files-*`.
+- Updated serviceflow-sdm README, MASTER_INDEX, ARCHIVE_LOG. No application code changes.
+- Security grep: no real credentials in source (node_modules noise only).

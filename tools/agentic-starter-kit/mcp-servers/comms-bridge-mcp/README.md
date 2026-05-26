@@ -23,7 +23,7 @@ Copy `.env.example` to your environment or MCP config and set `COMMS_DIR` if you
 ## Run locally (stdio)
 
 ```bash
-export COMMS_DIR="$HOME/New Master Folder - Windsurf and Cursor/.comms"
+export COMMS_DIR="/absolute/path/to/your-workspace/.comms"
 python server.py
 ```
 
@@ -51,11 +51,9 @@ Add to `~/.cursor/mcp.json` (after review):
   "mcpServers": {
     "comms-bridge": {
       "command": "python3",
-      "args": [
-        "/Users/michabr4/New Master Folder - Windsurf and Cursor/tools/agentic-starter-kit/mcp-servers/comms-bridge-mcp/server.py"
-      ],
+      "args": ["/absolute/path/to/agentic-starter-kit/mcp-servers/comms-bridge-mcp/server.py"],
       "env": {
-        "COMMS_DIR": "/Users/michabr4/New Master Folder - Windsurf and Cursor/.comms"
+        "COMMS_DIR": "/absolute/path/to/your-workspace/.comms"
       }
     }
   }
@@ -92,7 +90,7 @@ Use absolute paths for `args` and `COMMS_DIR` in production configs.
 
 | Variable | Default | Purpose |
 |----------|---------|---------|
-| `COMMS_DIR` | `~/New Master Folder - Windsurf and Cursor/.comms` | Root comms directory |
+| `COMMS_DIR` | *(required)* | Absolute path to workspace `.comms` directory |
 
 ## Protocol reference
 

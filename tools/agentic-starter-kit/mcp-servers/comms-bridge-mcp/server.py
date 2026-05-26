@@ -16,8 +16,6 @@ from mcp.server.fastmcp import FastMCP
 logger = logging.getLogger("comms-bridge")
 logging.basicConfig(level=logging.INFO, stream=os.sys.stderr)
 
-DEFAULT_COMMS_DIR = Path.home() / "New Master Folder - Windsurf and Cursor" / ".comms"
-
 PRIORITIES = ("critical", "high", "medium", "low")
 PRIORITY_RANK = {name: index for index, name in enumerate(PRIORITIES)}
 
@@ -61,7 +59,12 @@ mcp = FastMCP("comms-bridge")
 
 
 def _comms_root() -> Path:
-    raw = os.environ.get("COMMS_DIR", str(DEFAULT_COMMS_DIR))
+    raw = os.environ.get("COMMS_DIR", "").strip()
+    if not raw:
+        raise RuntimeError(
+            "COMMS_DIR is not set. Point it at your workspace .comms folder "
+            "(see mcp-servers/comms-bridge-mcp/.env.example)."
+        )
     return Path(raw).expanduser().resolve()
 
 

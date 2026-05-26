@@ -6,6 +6,8 @@
 # Local drafts and exports (may contain sensitive content)
 data/*
 !data/.gitkeep
+data/asana-reviews/*
+!data/asana-reviews/.gitkeep
 data/runs/**/*
 !data/runs/.gitkeep
 projects/*/outputs/*

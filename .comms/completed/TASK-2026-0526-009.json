@@ -1,0 +1,17 @@
+{
+  "id": "TASK-2026-0526-009",
+  "from": "windsurf",
+  "to": "cursor",
+  "priority": "medium",
+  "type": "instruction",
+  "phase": "1",
+  "title": "Phase 1 Consolidation — AGENT-EXTRACTION: Promote agents from SDM Files to standalone",
+  "spec": "CONSOLIDATION ACTION: AGENT-EXTRACTION\n\nAgents that are functional should be standalone projects. SDM Files utility scripts stay.\n\nTASK 1: Verify agent self-containment\nCheck these agents in the master folder and confirm each has README, requirements.txt, and can run independently:\n- agents/status-report-agent/\n- agents/communication-agent/\n- bots/mgm-status-bot/\n- bots/dd-status-bot/\n\nFor each, report:\n- Has README? Y/N\n- Has requirements.txt or package.json? Y/N\n- Has entry point script? Y/N\n- Self-contained (no imports from parent SDM Files)? Y/N\n\nTASK 2: Fix any gaps\nFor agents missing README or requirements.txt:\n- Create a minimal README.md with: purpose, setup instructions, usage\n- Create requirements.txt from imports if missing\n- Do NOT change working code\n\nTASK 3: Verify SDM Files utilities\nCheck sdm-files/ for remaining utility scripts:\n- webex_bot.py, webex_bot_server.py\n- generate_mgm_pptx.py\n- subscribers.json handling\n- Service Delivery Manager Agentic Framework docs\n\nConfirm these are correctly categorized as utilities (not standalone agents).\n\nTASK 4: Update MASTER_INDEX.md\n- Ensure all agents have accurate status and descriptions\n- Add missing README paths if created in Task 2\n\nTASK 5: Report\n- List each agent with self-containment status\n- List any fixes applied\n- Confirm sdm-files/ utility classification\n\nCONSTRAINTS:\n- Do NOT move files between directories — just verify and fix gaps\n- Create only README.md and requirements.txt where missing\n- No code changes to working scripts",
+  "depends_on": null,
+  "files_to_read": [
+    "CONSOLIDATION_PLAN.md",
+    "MASTER_INDEX.md"
+  ],
+  "created_at": "2026-05-26T13:51:22-04:00",
+  "status": "in_progress"
+}

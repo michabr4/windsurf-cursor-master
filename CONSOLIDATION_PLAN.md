@@ -239,15 +239,25 @@ CONSTRAINTS:
 
 ---
 
-## Execution Order
+## Execution Status
 
-| Priority | Consolidation | Risk | Effort |
-| --- | --- | --- | --- |
-| 1 | Archive Stale (C5) | LOW | 10 min |
-| 2 | Starter/Workbench Split (C3) | LOW | 15 min |
-| 3 | Agent Extraction (C4) | LOW | 20 min |
-| 4 | Email Consolidation (C1) | MEDIUM | 30 min |
-| 5 | Platform Consolidation (C2) | MEDIUM | 45 min |
+| Priority | Consolidation | Risk | Effort | Status |
+| --- | --- | --- | --- | --- |
+| 1 | Archive Stale (C5) | LOW | 10 min | DONE (TASK-008) |
+| 2 | Starter/Workbench Split (C3) | LOW | 15 min | DONE (TASK-006) |
+| 3 | Agent Extraction (C4) | LOW | 20 min | DONE (TASK-009) |
+| 4 | Email Consolidation (C1) | MEDIUM | 30 min | DONE (TASK-007) |
+| 5 | Platform Consolidation (C2) | MEDIUM | 45 min | DONE (TASK-010) |
+
+---
+
+## Post-Consolidation Actions
+
+| # | Action | Owner | Status | Notes |
+|---|--------|-------|--------|-------|
+| 1 | Register Azure AD app for Flerken (Graph API) | User / IT Admin | BLOCKED — no Azure Portal access | Need app registration with Mail.Read, Mail.Send, User.Read delegated permissions. Public client, device-code flow. Once obtained, update `agents/flerken/.env` with AZURE_CLIENT_ID, AZURE_TENANT_ID, MY_EMAIL. |
+| 2 | Verify Flerken live email pipeline | Windsurf | WAITING on #1 | Run `python3 run.py` with real credentials, confirm device-code auth + email fetch + LLM triage + digest send. |
+| 3 | Verify Ollama LLM is running | User | PENDING | `ollama serve` + `ollama pull llama3.1:8b` required before Flerken runs. |
 
 ---
 

@@ -1,0 +1,17 @@
+{
+  "id": "TASK-2026-0526-009",
+  "from": "cursor",
+  "to": "windsurf",
+  "type": "result",
+  "status": "success",
+  "summary": "AGENT-EXTRACTION verify complete: all four agents self-contained; added dd-status-bot requirements.txt; MASTER_INDEX updated.",
+  "details": "## Task 1 — Self-containment\n| Path | README | requirements | Entry | Self-contained |\n|------|--------|--------------|-------|----------------|\n| agents/status-report-agent | Y | Y | main.py | Y |\n| agents/communication-agent | Y | Y | main.py | Y |\n| bots/mgm-status-bot | Y | Y | send_reports.py | Y |\n| bots/dd-status-bot | Y | Y | send_reports.py | Y |\n\nNo imports from parent SDM Files — local packages only.\n\n## Task 2 — Fix\n- Created `bots/dd-status-bot/requirements.txt` (`requests`, `openai`).\n\n## Task 3 — sdm-files utilities\nClassified as utilities (not standalone agents):\n- Webex: `webex_bot.py`, `webex_bot_server.py`, `webex_bot_scheduler.py`, `start_bot_server.sh`, `setup_daily_schedule.sh`, `send_subscription_card.py`\n- Reports: `generate_mgm_pptx.py`, `MGM_Status_Report_20260410.md`\n- Framework: `sdm-agentic-framework/` (README + docs + shortcuts)\n- Subscriber JSON lives under `bots/*/subscribers.json` (not sdm-files)\n\n## Task 4 — MASTER_INDEX\nUpdated #2–6 with `agents/` and `bots/` canonical paths and self-containment notes.\n\n## Constraints\nNo file moves; no working code changes.",
+  "files_changed": [
+    "bots/dd-status-bot/requirements.txt",
+    "MASTER_INDEX.md",
+    "MIGRATION_LOG.md"
+  ],
+  "issues": [],
+  "completed_at": "2026-05-26T13:58:05-04:00",
+  "next_recommended": null
+}

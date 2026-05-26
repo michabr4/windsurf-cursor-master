@@ -1,0 +1,19 @@
+{
+  "id": "TASK-2026-0526-007",
+  "from": "cursor",
+  "to": "windsurf",
+  "type": "result",
+  "status": "success",
+  "summary": "EMAIL-CONSOLIDATE complete: Flerken is canonical email agent; email-summary-agent and personal-automation archived; offline digest ported.",
+  "details": "## Audit (Tasks 1–3)\n| Source | Unique capabilities | Ported? |\n|--------|---------------------|--------|\n| email-summary-agent | MSAL Graph fetch + gpt-4o-mini markdown brief | No — Flerken already superset (triage, HTML, dashboard, severity) |\n| personal-automation | Apple Mail export parser, regex High/Med/Low, suggested actions | Yes → `src/optional/offline_mail_digest.py` |\n| delivery-workbench | Multi-step YAML, human_gate on draft/organize, morning job excludes writes | Reference only → `docs/orchestration_reference/*.yaml` |\n\n## Task 4 — Ports\n- `agents/flerken/src/optional/offline_mail_digest.py` + CLI `python run.py --offline-mail [export.txt]`\n- Orchestration YAML copies + README (patterns, not executable in Flerken yet)\n\n## Task 5 — Archive\n- `_archived/email-summary-agent/` (from agents/)\n- `_archived/personal-automation/` (from tools/)\n- delivery-workbench left intact\n\n## Task 6–8\n- Flerken README: Consolidated From + offline mode\n- MASTER_INDEX: #7 ACTIVE canonical, #8–9 ARCHIVE\n- Security: grep clean on source; .env not git-tracked; .gitignore hardened (token*, *.pem)\n\n## Ambiguous\n- delivery-workbench specialist markdown agents remain in workbench (orchestration layer, not merged into Flerken code)",
+  "files_changed": [
+    "agents/flerken/",
+    "_archived/",
+    "MASTER_INDEX.md",
+    "MIGRATION_LOG.md",
+    "_archived/ARCHIVE_LOG.md"
+  ],
+  "issues": [],
+  "completed_at": "2026-05-26T13:49:00-04:00",
+  "next_recommended": null
+}

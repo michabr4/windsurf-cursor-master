@@ -33,14 +33,13 @@
 
 | Field | Value |
 | --- | --- |
-| **Location** | `~/Desktop/serviceflow-sdm/` |
-| **Status** | ACTIVE |
-| **Primary IDE** | Both (Cursor: mockup/UI, Windsurf: full-stack architecture) |
-| **Stack** | Express/TypeScript, React/Vite, React Native/Expo, PostgreSQL |
-| **Key Assets** | 22+ UI views, Docker deploy, SSO, Salesforce/ServiceNow/Cisco API integrations |
-| **Related Folders** | `~/Desktop/SDM Files/ServiceFlow SDC/`, `~/Desktop/SDM Files/ServiceFlow SDC_Windsurf/` |
-| **Overlap Risk** | HIGH — ServiceFlow SDC, SDC_Windsurf, and serviceflow-sdm are 3 variants of the same concept |
-| **Next Action** | Consolidate into single repo; see CONSOLIDATION_PLAN.md |
+| **Location** | `platforms/serviceflow-sdm/` (also `~/Desktop/serviceflow-sdm/`) |
+| **Status** | ACTIVE — **canonical platform** |
+| **Primary IDE** | Both |
+| **Stack** | Express/TypeScript, React/Vite, React Native/Expo, PostgreSQL, Docker |
+| **Key Assets** | Mockup hub, SSO, Salesforce/ServiceNow/Cisco integrations, legacy docs in `docs/legacy/` |
+| **Archived variants** | `_archived/ServiceFlow-SDC/`, `_archived/ServiceFlow-SDC-Windsurf/` |
+| **Overlap Risk** | LOW — consolidation complete (May 26 PLATFORM-CONSOLIDATE) |
 
 ### 2. SDM Files — Workspace & Agent Hub
 
@@ -51,80 +50,79 @@
 | **Primary IDE** | Both |
 | **Contents** | status-report-agent, communication-agent, mgm-status-bot, SDM Agentic Framework, ServiceFlow SDC variants, Webex bot scripts, PPTX generator |
 | **Key Concern** | Sprawling folder with mixed agents, scripts, and platform variants |
-| **Next Action** | Extract agents to standalone repos; archive SDC variants |
+| **Next Action** | Utilities remain here; canonical agents live under `agents/` and `bots/` |
 
 ### 3. Status Report Agent
 
 | Field | Value |
 | --- | --- |
-| **Location** | `~/Desktop/SDM Files/status-report-agent/` |
+| **Location** | `agents/status-report-agent/` (also `~/Desktop/SDM Files/status-report-agent/`) |
 | **Status** | STABLE |
 | **Primary IDE** | Windsurf |
 | **Stack** | Python, Pydantic, Azure OpenAI, Salesforce, ServiceNow |
 | **Delivery** | GitHub Actions weekly cron |
-| **Next Action** | Promote to standalone repo |
+| **Self-contained** | README, `requirements.txt`, `main.py` — verified May 26 |
 
 ### 4. Communication Intelligence Agent
 
 | Field | Value |
 | --- | --- |
-| **Location** | `~/Desktop/SDM Files/communication-agent/` |
+| **Location** | `agents/communication-agent/` (also `~/Desktop/SDM Files/communication-agent/`) |
 | **Status** | STABLE |
 | **Primary IDE** | Windsurf |
 | **Stack** | Python, Pydantic, OpenAI/Anthropic, Webex API, Microsoft Graph |
-| **Next Action** | Promote to standalone repo |
+| **Self-contained** | README, `requirements.txt`, `main.py` — verified May 26 |
 
 ### 5. MGM Status Bot
 
 | Field | Value |
 | --- | --- |
-| **Location** | `~/Desktop/SDM Files/mgm-status-bot/` |
+| **Location** | `bots/mgm-status-bot/` (also `~/Desktop/SDM Files/mgm-status-bot/`) |
 | **Status** | ACTIVE (runs daily via GitHub Actions) |
-| **Primary IDE** | Both (Cursor for debugging, Windsurf for core build) |
+| **Primary IDE** | Both |
 | **Stack** | Python, Webex Bot API, OpenAI, GitHub Actions |
-| **Next Action** | Keep as standalone; verify GitHub Actions health |
+| **Self-contained** | README, `requirements.txt`, `send_reports.py` — verified May 26 |
 
 ### 6. Digitized Delivery Status Bot
 
 | Field | Value |
 | --- | --- |
-| **Location** | `~/Desktop/Digitized Delivery/dd-status-bot/` |
+| **Location** | `bots/dd-status-bot/` (also `~/Desktop/Digitized Delivery/dd-status-bot/`) |
 | **Status** | ACTIVE (runs daily via GitHub Actions) |
 | **Primary IDE** | Windsurf |
 | **Stack** | Python, Webex SpaceLift, OpenAI, GitHub Actions |
-| **Next Action** | Keep as standalone |
+| **Self-contained** | README, `requirements.txt` (added May 26), `send_reports.py` |
 
 ### 7. Flerken — Personal AI Assistant
 
 | Field | Value |
 | --- | --- |
-| **Location** | `~/Desktop/Flerken - Personal AI Assistant/` |
-| **Status** | STABLE |
-| **Primary IDE** | Windsurf |
-| **Stack** | Python, OpenAI GPT-4o, Microsoft Graph (device-code flow) |
-| **Next Action** | Evaluate merge with delivery-workbench email capabilities |
+| **Location** | `agents/flerken/` (also `~/Desktop/Flerken - Personal AI Assistant/`) |
+| **Status** | ACTIVE — canonical email agent |
+| **Primary IDE** | Both |
+| **Stack** | Python, LLM (OpenAI/Ollama), Microsoft Graph (device-code flow), HTML digest |
+| **Consolidated** | email-summary-agent, personal-automation (offline digest); workbench YAML reference in `docs/orchestration_reference/` |
+| **Next Action** | Optional: wire morning-readonly mode from orchestration reference |
 
 ### 8. Email Summary Agent
 
 | Field | Value |
 | --- | --- |
-| **Location** | `~/Desktop/email-summary-agent/` |
-| **Status** | STALE |
-| **Primary IDE** | Windsurf |
+| **Location** | `_archived/email-summary-agent/` |
+| **Status** | ARCHIVE |
+| **Primary IDE** | — |
 | **Stack** | Python, OpenAI, Microsoft Graph |
-| **Overlap Risk** | Overlaps with Flerken and delivery-workbench email assistant |
-| **Next Action** | Archive or merge into Flerken |
+| **Next Action** | None — superseded by Flerken (May 26 EMAIL-CONSOLIDATE) |
 
 ### 9. Personal Automation — Email Digest
 
 | Field | Value |
 | --- | --- |
-| **Location** | `~/Desktop/Personal Automation/` |
-| **Status** | STALE |
-| **Primary IDE** | Cursor (created in Apr 2026 session) |
-| **Stack** | Python, Apple Mail parsing |
-| **Overlap Risk** | Overlaps with Flerken, email-summary-agent |
-| **Next Action** | Archive — superseded by Flerken |
+| **Location** | `_archived/personal-automation/` |
+| **Status** | ARCHIVE |
+| **Primary IDE** | — |
+| **Stack** | Python, Apple Mail export parsing |
+| **Next Action** | Use Flerken `run.py --offline-mail` for offline digest |
 
 ### 10. NetPilot — Network Automation Platform
 
@@ -152,25 +150,27 @@
 
 | Field | Value |
 | --- | --- |
-| **Location** | `~/Desktop/AgenticStarterKitv1_0/` |
+| **Location** | `tools/agentic-starter-kit/` (also `~/Desktop/AgenticStarterKitv1_0/`) |
 | **Status** | ACTIVE |
 | **Primary IDE** | Both |
 | **Stack** | Python, Node.js, HTML, multi-editor support |
-| **Key Assets** | Starter templates, Webex/CIRCUIT/Asana samples, CodeGuard rules, docs |
-| **Overlap Risk** | MEDIUM — overlaps with delivery-workbench in purpose |
-| **Next Action** | See CONSOLIDATION_PLAN.md — pick north star |
+| **Purpose** | **Shareable template** — samples, CodeGuard rules, docs, comms-bridge MCP scaffold |
+| **Key Assets** | Starter templates, Webex/CIRCUIT/Asana samples, CodeGuard rules, `mcp-servers/comms-bridge-mcp/` |
+| **Overlap Risk** | LOW — boundaries clarified with delivery-workbench (May 26 split) |
+| **Next Action** | Keep generic; avoid project-specific data in this tree |
 
 ### 13. Delivery Workbench
 
 | Field | Value |
 | --- | --- |
-| **Location** | `~/Desktop/delivery-workbench/` |
-| **Status** | ACTIVE (greenfield, May 26) |
-| **Primary IDE** | Both (started in Cursor, continued in Windsurf) |
+| **Location** | `tools/delivery-workbench/` (also `~/Desktop/delivery-workbench/`) |
+| **Status** | ACTIVE |
+| **Primary IDE** | Both |
 | **Stack** | Python, HTML, YAML orchestration |
-| **Key Assets** | Playbooks, templates, email assistant, orchestration YAML |
-| **Overlap Risk** | HIGH — overlaps AgenticStarterKit in intent |
-| **Next Action** | See CONSOLIDATION_PLAN.md — pick north star |
+| **Purpose** | **Operational daily-driver** — playbooks, email assistant, AGT-001 integrations, project outputs |
+| **Key Assets** | Playbooks, templates, email orchestration, `python/integrations/agt001/`, `docs/reference/` |
+| **Overlap Risk** | LOW — uses starter kit as template source, not duplicate scaffold |
+| **Next Action** | Continue SDM workflows; operational data stays under `data/` |
 
 ### 14. Firewall Implementation Planning
 
@@ -187,7 +187,7 @@
 
 | Field | Value |
 | --- | --- |
-| **Location** | `~/projects/Blue-Shield/` |
+| **Location** | `data/blue-shield/` (reference; also `~/projects/Blue-Shield/` if present) |
 | **Status** | STALE |
 | **Primary IDE** | Cursor only |
 | **Stack** | Analysis/investigation (SpaceLift export parsing) |
@@ -198,7 +198,7 @@
 
 | Field | Value |
 | --- | --- |
-| **Location** | `~/Desktop/Digitized Delivery - GES/` |
+| **Location** | `data/digitized-delivery-ges/` (also `~/Desktop/Digitized Delivery - GES/`) |
 | **Status** | STABLE |
 | **Primary IDE** | Cursor |
 | **Stack** | Python (openpyxl), Excel, Airtable |
@@ -209,10 +209,10 @@
 
 | Field | Value |
 | --- | --- |
-| **Location** | `~/.cursor/Outlook Agent/` |
-| **Status** | STALE |
-| **Primary IDE** | Cursor only |
-| **Next Action** | Evaluate — merge into Flerken or delivery-workbench |
+| **Location** | `_archived/outlook-agent/` (empty shell; was `~/.cursor/Outlook Agent/`) |
+| **Status** | ARCHIVE |
+| **Primary IDE** | — |
+| **Next Action** | None — superseded by Flerken (May 26 ARCHIVE-STALE) |
 
 ---
 
@@ -220,31 +220,33 @@
 
 ```text
 Email Automation Cluster:
-  Flerken ←→ email-summary-agent ←→ Personal Automation ←→ delivery-workbench (email) ←→ Outlook Agent
-  RECOMMENDATION: Consolidate into Flerken as the single email agent
+  Flerken (canonical) ← delivery-workbench (orchestration YAML, kept)
+  ARCHIVED: email-summary-agent, personal-automation → _archived/
+  ARCHIVED: Outlook Agent → _archived/outlook-agent/
 
 Platform Cluster:
-  serviceflow-sdm ←→ ServiceFlow SDC ←→ ServiceFlow SDC_Windsurf
-  RECOMMENDATION: Consolidate into serviceflow-sdm; archive SDC variants
+  serviceflow-sdm (canonical) ← archived: ServiceFlow-SDC, ServiceFlow-SDC-Windsurf in _archived/
+  RESOLVED (May 26): Legacy docs in platforms/serviceflow-sdm/docs/legacy/
 
 Starter/Workbench Cluster:
-  AgenticStarterKitv1_0 ←→ delivery-workbench
-  RECOMMENDATION: Pick one as north star; the other becomes a template library
+  agentic-starter-kit (template) ←→ delivery-workbench (operational)
+  RESOLVED (May 26): Starter kit = shareable template; workbench = personal SDM workspace
 ```
 
 ---
 
 ## Security Action Items
 
-| Item | Priority | Status |
-| --- | --- | --- |
-| Rotate Airtable PAT (exposed in Cursor chat May 8) | CRITICAL | PENDING |
-| Sanitize cursor-work-history-queries-appendix.json (contains Airtable PAT, Webex token, Entra IDs in plaintext) | CRITICAL | PENDING |
-| Sanitize cursor-work-history-analysis.json (contains Airtable PAT in session query) | CRITICAL | PENDING |
-| Verify no secrets in any git-tracked files | HIGH | PENDING |
-| Confirm .env files are gitignored across all repos | MEDIUM | PENDING |
-| Review ~/Documents/GitHub/index workspace (untracked, found in Cursor metadata) | LOW | PENDING |
-| Check ~/Desktop/Python/Test for content before archiving | LOW | PENDING |
+| Item | Priority | Status | Audited |
+| --- | --- | --- | --- |
+| Rotate Airtable PAT (exposed in Cursor chat May 8) | CRITICAL | ACCEPTED RISK — live PAT in `data/digitized-delivery-ges/Airtable Tracking/.env`, gitignored | May 26 |
+| Sanitize cursor-work-history-queries-appendix.json | CRITICAL | RESOLVED — secrets already redacted by Cursor (`[REDACTED_AIRTABLE_PAT]`, `[REDACTED — Webex bot token]`, `[REDACTED — MS Entra Client ID]`). Remaining UUIDs are public session/app IDs. | May 26 |
+| Sanitize cursor-work-history-analysis.json | CRITICAL | RESOLVED — no live secrets found; Airtable mentions are category labels only | May 26 |
+| Verify no secrets in any git-tracked files | HIGH | RESOLVED — grep audit clean; .env files not tracked; history files pre-redacted | May 26 |
+| Confirm .env files are gitignored across all repos | MEDIUM | RESOLVED — `.gitignore` covers `.env`, `.env.*`, `!.env.example` | May 26 |
+| Asana client secret + webhook secret in `tools/agentic-starter-kit/.env` | HIGH | ACCEPTED RISK — live values on disk, gitignored | May 26 |
+| Review ~/Documents/GitHub/index workspace (untracked, found in Cursor metadata) | LOW | PENDING | — |
+| Check ~/Desktop/Python/Test for content before archiving | LOW | RESOLVED — archived as `_archived/desktop-python-2026/` | May 26 |
 
 ---
 

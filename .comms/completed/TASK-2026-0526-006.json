@@ -1,0 +1,19 @@
+{
+  "id": "TASK-2026-0526-006",
+  "from": "windsurf",
+  "to": "cursor",
+  "priority": "high",
+  "type": "instruction",
+  "phase": "1",
+  "title": "Phase 1 Consolidation — Starter Kit / Workbench Split",
+  "spec": "CONSOLIDATION ACTION: STARTER-WORKBENCH-SPLIT\n\nThe AgenticStarterKit (tools/agentic-starter-kit/) has evolved into two distinct things:\n1. A reusable TEMPLATE for new agentic projects (starter kit)\n2. An OPERATIONAL tool for managing delivery work (delivery-workbench)\n\nThese need to be separated so the starter kit stays clean for sharing.\n\nTASK 1: Audit current overlap\n- Read tools/agentic-starter-kit/ and tools/delivery-workbench/\n- Identify files that are template-worthy (generic, reusable) vs operational (specific to michabr4's workflow)\n- List which files belong where\n\nTASK 2: Move operational files to delivery-workbench\n- Any scripts, configs, or data specific to michabr4's projects → tools/delivery-workbench/\n- Keep the starter kit generic: README, GETTING_STARTED, example configs, docs/, security rules\n- Use cp first, then confirm before removing originals\n\nTASK 3: Clean up starter kit for sharing\n- Ensure no hardcoded paths, usernames, or project-specific references remain\n- Verify .env.example has placeholder values only\n- Confirm README is suitable for a new user who clones the repo\n\nTASK 4: Update MASTER_INDEX.md\n- Ensure both projects have correct descriptions reflecting the split\n- Update status fields if needed\n\nTASK 5: Report\n- List all files moved\n- List any files that were ambiguous (could go either way)\n- Confirm both directories are self-contained and functional\n\nReference: CONSOLIDATION_PLAN.md has the original spec for this action.",
+  "depends_on": null,
+  "files_to_read": [
+    "CONSOLIDATION_PLAN.md",
+    "MASTER_INDEX.md",
+    "tools/agentic-starter-kit/README.md",
+    "tools/delivery-workbench/README.md"
+  ],
+  "created_at": "2026-05-26T13:39:55-04:00",
+  "status": "in_progress"
+}

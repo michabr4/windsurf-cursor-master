@@ -1,0 +1,17 @@
+{
+  "id": "TASK-2026-0526-008",
+  "from": "cursor",
+  "to": "windsurf",
+  "type": "result",
+  "status": "success",
+  "summary": "ARCHIVE-STALE complete: inventoried _archived/, moved Desktop/Python, protected active data, updated logs and MASTER_INDEX.",
+  "details": "## Task 1 — Inventory\n- `_archived/python-empty/` — Email App/Asana shells (already from migration)\n- `_archived/outlook-agent/` — empty shell\n- Prior: ServiceFlow variants, email-summary-agent, personal-automation\n\n## Task 2 — New archive\n- `~/Desktop/Python/` → `_archived/desktop-python-2026/` (stale shells + .vscode)\n\n## Task 3 — Protected (not archived)\n- `data/blue-shield/`, `data/digitized-delivery-ges/`\n- All ACTIVE projects per MASTER_INDEX\n\n## Task 4 — ARCHIVE_LOG\n- Appended desktop-python-2026 entry\n- Added README to `_archived/email-summary-agent/`\n\n## Task 5 — Security\n- grep on archived projects: no AKIA/ghp_/sk_live in non-.env source\n\n## Task 6 — MASTER_INDEX\n- #17 Outlook Agent → ARCHIVED\n- #15–16 paths note master `data/` copies\n- Email overlap map updated",
+  "files_changed": [
+    "_archived/",
+    "MASTER_INDEX.md",
+    "MIGRATION_LOG.md"
+  ],
+  "issues": [],
+  "completed_at": "2026-05-26T13:55:42-04:00",
+  "next_recommended": null
+}

@@ -90,7 +90,7 @@ That's it! The device-code flow handles the rest securely — no client secret n
 ## Project Structure
 
 ```
-Flerken - Personal AI Assistant/
+agents/flerken/
 ├── run.py                  # Entry point — run this
 ├── requirements.txt        # Python dependencies
 ├── .env.example            # Config template (copy to .env)
@@ -98,14 +98,36 @@ Flerken - Personal AI Assistant/
 ├── README.md
 ├── out/                    # Generated digests saved here
 │   └── latest_digest.html
+├── docs/orchestration_reference/  # YAML patterns from delivery-workbench
 └── src/
-    ├── __init__.py
     ├── config.py           # Environment & settings loader
     ├── outlook_client.py   # Microsoft Graph API (email fetch/send)
-    ├── llm_client.py       # OpenAI GPT-4o (triage & summarization)
+    ├── llm_client.py       # LLM triage & summarization
     ├── digest_builder.py   # Pipeline orchestrator + HTML template
+    ├── severity.py         # Tone/recurrence escalation
+    ├── optional/
+    │   └── offline_mail_digest.py  # Apple Mail export (no API)
     └── main.py             # CLI entry point with Rich formatting
 ```
+
+## Consolidated From (May 2026)
+
+| Source | Disposition |
+| --- | --- |
+| `email-summary-agent` | **Archived** → `_archived/email-summary-agent/` — functionality superseded by Flerken Graph + LLM pipeline |
+| `personal-automation` | **Archived** → `_archived/personal-automation/` — unique regex/offline digest ported to `src/optional/offline_mail_digest.py` |
+| `delivery-workbench` (email) | **Kept in place** — orchestration YAML copied to `docs/orchestration_reference/` for human-gate patterns |
+
+### Offline mode (no Graph)
+
+If you have a Mail.app unit-delimited export instead of live Outlook:
+
+```bash
+python run.py --offline-mail /path/to/export.txt
+# or: cat export.txt | python run.py --offline-mail
+```
+
+Output: `out/offline_mail_digest.md`
 
 ---
 

@@ -1,10 +1,12 @@
 # Outlook API Access Guide (Microsoft Graph)
 
-This guide walks you through getting Microsoft Graph API access for AGT-001 (Outlook Email Chief-of-Staff Agent).
+This guide walks you through getting Microsoft Graph API access for the **Outlook action-items sample** (`python/examples/outlook_action_items_demo.py`).
+
+For the operational AGT-001 chief-of-staff agent, see `delivery-workbench` (`docs/email/OUTLOOK_AGT001_SETUP.md`).
 
 ## What You Need
 
-AGT-001 uses **Microsoft Graph API** with **delegated permissions** (device code flow). This means:
+The sample uses **Microsoft Graph API** with **delegated permissions** (device code flow). This means:
 
 - The agent acts as YOU, not as a service account.
 - You sign in once via browser, and the agent reads your mailbox on your behalf.
@@ -108,7 +110,7 @@ This will:
 1. You paste the code into a browser and sign in.
 1. The agent reads your inbox and outputs prioritized action items.
 
-If this works, your API access is confirmed and AGT-001 can build on top of it.
+If this works, your API access is confirmed and the starter samples can use Graph.
 
 ## Permission Upgrade Path (Future)
 
@@ -156,7 +158,6 @@ Each upgrade requires a new admin consent grant. Plan for 1–3 business days pe
 
 ## Related Documents
 
-- `docs/AGENT_FACTORY_CONSOLIDATED_REQUIREMENTS.md` — Section 6.1 (AGT-001 requirements)
-- `docs/AGENT_OF_AGENTS_ARCHITECTURE.md` — Chains using AGT-001
+- `delivery-workbench/docs/reference/agent-factory/` — AGT-001 and agent-chain architecture (operational)
 - `docs/SECURITY_APPROVAL_CHEAT_SHEET.md` — Green approval for read-only
 - `docs/ENV_VARS.md` — Outlook variable reference

@@ -50,3 +50,9 @@ Without any login, use **sample mode**: `./scripts/email_fetch.sh --sample`
 ## Security
 
 See [SECURITY.md](SECURITY.md). Summary: secrets in `.env` only; nothing sensitive in git; local server on `127.0.0.1` only; you review before any external publish.
+
+## Relationship to agentic-starter-kit
+
+This workbench is your **daily-driver** for service delivery work: playbooks, templates, email assistant, and local integrations.
+
+[../agentic-starter-kit](../agentic-starter-kit) is the **reusable template** for new projects (generic samples, CodeGuard rules, multi-editor setup). When starting a greenfield repo, copy from the starter kit; keep operational scripts and personal data here in the workbench only.

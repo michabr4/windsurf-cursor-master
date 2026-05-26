@@ -1,6 +1,10 @@
 # Environment
 .env
 *.env.local
+token_cache.json
+*.pem
+*.key
+token*
 
 # Python
 __pycache__/

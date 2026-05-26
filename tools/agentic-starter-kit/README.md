@@ -121,6 +121,12 @@ See [SECURITY.md](SECURITY.md) for practical safety rules.
 
 Project CodeGuard details are in [docs/CODEGUARD.md](docs/CODEGUARD.md).
 
+## Relationship to delivery-workbench
+
+This repository is a **shareable template**: starter code, CodeGuard rules, docs, and sample MCP servers for new agentic projects.
+
+For a **personal SDM operational workspace** (playbooks, email orchestration, project outputs, AGT-001 integrations), use [../delivery-workbench](../delivery-workbench) in this monorepo—or your own fork of that workbench. CodeGuard rules in this kit are the canonical source; copy or symlink them into other repos as needed.
+
 ## Recommended First Prompt
 
 Try this with your coding assistant after reading the docs:

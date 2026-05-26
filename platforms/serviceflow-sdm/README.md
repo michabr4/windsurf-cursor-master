@@ -12,13 +12,23 @@
 6. [Appendix: GitHub Pages troubleshooting](#appendix-github-pages-troubleshooting)
 7. [Database configuration](#database-configuration)
 
+## Consolidated From (May 2026)
+
+| Source | Disposition |
+| --- | --- |
+| ServiceFlow SDC (HTML mockup) | Archived → `_archived/ServiceFlow-SDC/`; unique docs in [`docs/legacy/from-serviceflow-sdc/`](docs/legacy/from-serviceflow-sdc/) |
+| ServiceFlow SDC_Windsurf | Archived → `_archived/ServiceFlow-SDC-Windsurf/` (subset of this repo) |
+| **Canonical platform** | This repository (`platforms/serviceflow-sdm/`) |
+
+Legacy mockup HTML/CSS already lives in `backend/public/mockup/`; no working application code was changed during consolidation.
+
 ## Repository layout
 
 - `backend/` — Express + TypeScript API, plain HTML UI under `backend/public/`
 - `frontend/` — React shell (optional; HTML UI is primary for MVP)
 - `mobile/` — **React Native / Expo** cross-platform mobile app (iOS + Android) with SSO support — see [`mobile/README.md`](mobile/README.md)
 - `infra/` — PostgreSQL migrations and seeds
-- `docs/` — Supplemental documentation ([HELIX_MOCKUP_REFERENCE.md](docs/HELIX_MOCKUP_REFERENCE.md) companion, [HELIX_MOCKUP_REFERENCE_PRINT.html](docs/HELIX_MOCKUP_REFERENCE_PRINT.html) for PDF export, [POWERBI_GLOBAL_PM.md](docs/POWERBI_GLOBAL_PM.md); optional [MOCKUP_HUB_USER_GUIDE.pdf](docs/MOCKUP_HUB_USER_GUIDE.pdf) from `npm run docs:mockup-pdf`)
+- `docs/` — Supplemental documentation ([HELIX_MOCKUP_REFERENCE.md](docs/HELIX_MOCKUP_REFERENCE.md) companion, [HELIX_MOCKUP_REFERENCE_PRINT.html](docs/HELIX_MOCKUP_REFERENCE_PRINT.html) for PDF export, [POWERBI_GLOBAL_PM.md](docs/POWERBI_GLOBAL_PM.md); optional [MOCKUP_HUB_USER_GUIDE.pdf](docs/MOCKUP_HUB_USER_GUIDE.pdf) from `npm run docs:mockup-pdf`); archived planning docs in [`docs/legacy/`](docs/legacy/)
 
 ## Quick start
 

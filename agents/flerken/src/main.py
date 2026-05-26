@@ -97,7 +97,23 @@ def run_digest(demo: bool = False) -> None:
             console.print("[dim]The HTML digest was saved locally — you can open it in a browser.[/dim]\n")
 
 
+def run_offline_mail_export() -> None:
+    """Parse Apple Mail unit-delimited export (no Graph/OpenAI)."""
+    from .optional.offline_mail_digest import run_offline_digest
+
+    args = [a for a in sys.argv[1:] if a != "--offline-mail"]
+    export = Path(args[0]) if args else None
+    out_dir = Path(__file__).resolve().parent.parent / "out"
+    out_path = run_offline_digest(export, out_dir)
+    console.print(f"[bold green]Offline digest written:[/bold green] {out_path}\n")
+
+
 def main() -> None:
+    if "--offline-mail" in sys.argv:
+        print_banner(demo=False)
+        run_offline_mail_export()
+        return
+
     demo = "--demo" in sys.argv
     print_banner(demo=demo)
 
