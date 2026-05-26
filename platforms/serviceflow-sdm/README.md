@@ -69,7 +69,7 @@ Default UI: [http://localhost:3000/](http://localhost:3000/) · Source admin (li
 
 There is no `/api/health` route; use **`/api/v1/health/`** for load balancers and probes.
 
-Rate limiting is not enabled on the API yet; plan gateway or `express-rate-limit` before public exposure.
+Rate limiting: credential endpoints (`POST /auth/login`, `/auth/refresh`) and other write verbs under `/api/v1` are limited via `express-rate-limit` (stricter in production).
 
 ## Optional React frontend (port 3001)
 
@@ -90,7 +90,7 @@ npm run build    # or npm run dev
 From the repo root (requires Docker):
 
 ```bash
-cp .env.example .env    # edit DB_* and secrets; do not commit .env
+cp .env.example .env    # required — compose loads .env (not .env.example); set DB_PASSWORD, JWT_*, etc.
 cd backend && npm run migrate   # run once against the compose Postgres port
 docker compose up --build
 ```
@@ -104,7 +104,7 @@ docker compose up --build
 
 **Caveats:**
 
-- `docker-compose.yml` sets `env_file: .env.example` on the backend service — copy to **`.env`** and point compose at it for real secrets, or export variables another way.
+- `docker-compose.yml` loads **`env_file: .env`** on the backend and `${DB_PASSWORD}` for Postgres — create `.env` from `.env.example` before `docker compose up`.
 - Compose does **not** run migrations automatically; run `npm run migrate` from `backend/` after Postgres is up.
 - For production, use separate images (`npm run build` + `npm start`), strong secrets, and TLS termination — see [Production secrets](#production-secrets).
 

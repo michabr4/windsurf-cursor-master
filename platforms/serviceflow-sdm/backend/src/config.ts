@@ -1,12 +1,16 @@
 import "dotenv/config";
 import { z } from "zod";
 
+/** Zod defaults for local dev only — rejected when NODE_ENV is not development. */
+export const INSECURE_JWT_SECRET_DEFAULT = "replace_with_32_plus_chars_replace";
+const INSECURE_DB_PASSWORD_DEFAULT = "change_me";
+
 const boolish = z.preprocess(
   (v) => v === true || v === "true" || v === "1" || v === "yes",
   z.boolean()
 );
 
-const EnvSchema = z
+export const EnvSchema = z
   .object({
     NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
     PORT: z.coerce.number().default(3000),
@@ -16,11 +20,11 @@ const EnvSchema = z
     DB_PORT: z.coerce.number().default(5432),
     DB_NAME: z.string().default("helix_sdm"),
     DB_USER: z.string().default("serviceflow_admin"),
-    DB_PASSWORD: z.string().default("change_me"),
+    DB_PASSWORD: z.string().default(INSECURE_DB_PASSWORD_DEFAULT),
     REDIS_HOST: z.string().default("localhost"),
     REDIS_PORT: z.coerce.number().default(6379),
-    JWT_SECRET: z.string().min(32).default("replace_with_32_plus_chars_replace"),
-    JWT_REFRESH_SECRET: z.string().min(32).default("replace_with_32_plus_chars_replace"),
+    JWT_SECRET: z.string().min(32).default(INSECURE_JWT_SECRET_DEFAULT),
+    JWT_REFRESH_SECRET: z.string().min(32).default(INSECURE_JWT_SECRET_DEFAULT),
     JWT_EXPIRE: z.string().default("24h"),
     JWT_REFRESH_EXPIRE: z.string().default("7d"),
     /** Comma-separated allowed browser origins (Vite + Operations on :3000 for local tools that call the API cross-origin). */
@@ -110,6 +114,29 @@ const EnvSchema = z
     }
   })
   .superRefine((data, ctx) => {
+    if (data.NODE_ENV === "development") return;
+
+    const rejectDefaultSecret = (path: "JWT_SECRET" | "JWT_REFRESH_SECRET", value: string) => {
+      if (value === INSECURE_JWT_SECRET_DEFAULT) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: `${path} must be set to a unique value (not the development default) when NODE_ENV is ${data.NODE_ENV}`,
+          path: [path]
+        });
+      }
+    };
+    rejectDefaultSecret("JWT_SECRET", data.JWT_SECRET);
+    rejectDefaultSecret("JWT_REFRESH_SECRET", data.JWT_REFRESH_SECRET);
+
+    if (data.NODE_ENV === "production" && data.DB_PASSWORD === INSECURE_DB_PASSWORD_DEFAULT) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "DB_PASSWORD must not be the development default when NODE_ENV is production",
+        path: ["DB_PASSWORD"]
+      });
+    }
+  })
+  .superRefine((data, ctx) => {
     if (!data.SALESFORCE_ENABLED) return;
     const need: [keyof typeof data, string][] = [
       ["SALESFORCE_CLIENT_ID", "SALESFORCE_CLIENT_ID"],
@@ -128,4 +155,9 @@ const EnvSchema = z
     }
   });
 
-export const env = EnvSchema.parse(process.env);
+const parsed = EnvSchema.safeParse(process.env);
+if (!parsed.success) {
+  console.error(JSON.stringify({ level: "error", message: "invalid_environment", issues: parsed.error.flatten() }));
+  process.exit(1);
+}
+export const env = parsed.data;

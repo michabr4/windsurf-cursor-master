@@ -4,6 +4,7 @@ import { WebexClient } from "../integrations/webexClient.js";
 import { SalesforceClient } from "../integrations/salesforceClient.js";
 import { requireAuth, requireRoles } from "../middleware/auth.js";
 import { runDnaSync, runSmartLicensingSync, runTacSync } from "../jobs/syncService.js";
+import { SyncSourceParamSchema, WarRoomBodySchema } from "../schemas/integrations.js";
 
 export const integrationsRouter = Router();
 
@@ -14,6 +15,12 @@ integrationsRouter.post(
   requireAuth,
   requireRoles([...WAR_ROOM_ROLES]),
   async (req, res) => {
+    const parsed = WarRoomBodySchema.safeParse(req.body ?? {});
+    if (!parsed.success) {
+      res.status(400).json({ message: "Invalid request", issues: parsed.error.issues });
+      return;
+    }
+
     const token = env.WEBEX_BOT_TOKEN.trim();
     if (!token) {
       res.status(503).json({
@@ -23,9 +30,9 @@ integrationsRouter.post(
       return;
     }
     try {
-      const raw = req.body && typeof req.body.title === "string" ? req.body.title.trim() : "";
+      const raw = parsed.data.title?.trim() ?? "";
       const title =
-        raw.slice(0, 200) ||
+        raw ||
         `Helix war room · ${new Date().toISOString().replace(/\.\d{3}Z$/, "Z")}`;
       const client = new WebexClient(token);
       const result = await client.createRoom(title);
@@ -51,7 +58,12 @@ integrationsRouter.post(
   requireAuth,
   requireRoles(["admin", "sdm", "tam", "manager"]),
   async (req, res) => {
-    const source = req.params.source;
+    const sourceParsed = SyncSourceParamSchema.safeParse(req.params.source);
+    if (!sourceParsed.success) {
+      res.status(400).json({ message: "Unsupported source" });
+      return;
+    }
+    const source = sourceParsed.data;
     try {
       if (source === "dna-center") {
         const count = await runDnaSync();
@@ -73,7 +85,6 @@ integrationsRouter.post(
         res.json({ source, processed: 0, status: result.ok ? "connected" : "error", message: result.message });
         return;
       }
-      res.status(400).json({ message: "Unsupported source" });
     } catch {
       res.status(502).json({ message: `Sync failed for source: ${source}` });
     }

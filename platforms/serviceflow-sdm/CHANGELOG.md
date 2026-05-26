@@ -8,6 +8,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+- **P0 security:** reject default JWT secrets outside `development`; reject default `DB_PASSWORD` in production; `express-rate-limit` on auth login/refresh and API writes; Zod validation for Salesforce case mutations and Webex war-room; Docker Compose uses `.env` and `${DB_PASSWORD}`.
 - `CHANGELOG.md` and README sections for API health, optional React app, Docker dev notes, and production secret guidance (HELIX-HARDEN doc pass, May 2026).
 - Expanded `.gitignore` for build artifacts and Expo local state.
 - Dev placeholder PNGs in `mobile/assets/` (48×48; replace before store release).

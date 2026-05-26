@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { requireAuth, requireRoles } from "../middleware/auth.js";
 import { SalesforceClient } from "../integrations/salesforceClient.js";
+import { CreateCaseSchema, PatchCaseSchema, SF_ID_PATTERN } from "../schemas/salesforce.js";
 
 export const salesforceRouter = Router();
 
@@ -193,35 +194,21 @@ salesforceRouter.get("/console-summary", requireAuth, requireRoles([...SF_ROLES]
   }
 });
 
-const SF_ID_PATTERN = /^[a-zA-Z0-9]{15,18}$/;
-const VALID_PRIORITIES = ["High", "Medium", "Low", "Critical"];
-
 salesforceRouter.post("/cases", requireAuth, requireRoles([...SF_WRITE_ROLES]), async (req, res) => {
   if (!SalesforceClient.isConfigured()) {
     res.status(503).json({ message: "Salesforce not configured" });
     return;
   }
+  const parsed = CreateCaseSchema.safeParse(req.body ?? {});
+  if (!parsed.success) {
+    res.status(400).json({ message: "Invalid request", issues: parsed.error.issues });
+    return;
+  }
   try {
-    const { subject, description, priority, accountId, contactId } = req.body;
-    if (!subject || typeof subject !== "string" || subject.trim().length === 0) {
-      res.status(400).json({ message: "subject is required" });
-      return;
-    }
-    if (accountId && !SF_ID_PATTERN.test(accountId)) {
-      res.status(400).json({ message: "Invalid accountId format" });
-      return;
-    }
-    if (contactId && !SF_ID_PATTERN.test(contactId)) {
-      res.status(400).json({ message: "Invalid contactId format" });
-      return;
-    }
-    if (priority && !VALID_PRIORITIES.includes(priority)) {
-      res.status(400).json({ message: `Invalid priority. Must be one of: ${VALID_PRIORITIES.join(", ")}` });
-      return;
-    }
+    const { subject, description, priority, accountId, contactId } = parsed.data;
     const result = await SalesforceClient.createRecord("Case", {
-      Subject: subject.trim().slice(0, 500),
-      Description: typeof description === "string" ? description.slice(0, 5000) : "",
+      Subject: subject,
+      Description: description ?? "",
       Priority: priority || "Medium",
       AccountId: accountId || null,
       ContactId: contactId || null,
@@ -243,27 +230,13 @@ salesforceRouter.patch("/cases/:caseId", requireAuth, requireRoles([...SF_WRITE_
     res.status(400).json({ message: "Invalid caseId format" });
     return;
   }
+  const parsed = PatchCaseSchema.safeParse(req.body ?? {});
+  if (!parsed.success) {
+    res.status(400).json({ message: "Invalid request", issues: parsed.error.issues });
+    return;
+  }
   try {
-    const allowed = ["Status", "Priority", "Description", "Subject"] as const;
-    const updates: Record<string, unknown> = {};
-    for (const key of allowed) {
-      if (req.body[key] !== undefined) {
-        if (typeof req.body[key] !== "string") {
-          res.status(400).json({ message: `${key} must be a string` });
-          return;
-        }
-        updates[key] = (req.body[key] as string).slice(0, key === "Description" ? 5000 : 500);
-      }
-    }
-    if (Object.keys(updates).length === 0) {
-      res.status(400).json({ message: "No valid fields to update" });
-      return;
-    }
-    if (updates.Priority && !VALID_PRIORITIES.includes(updates.Priority as string)) {
-      res.status(400).json({ message: `Invalid priority. Must be one of: ${VALID_PRIORITIES.join(", ")}` });
-      return;
-    }
-    await SalesforceClient.updateRecord("Case", caseId, updates);
+    await SalesforceClient.updateRecord("Case", caseId, parsed.data);
     res.json({ id: caseId, updated: true });
   } catch (e) {
     res.status(502).json({ message: e instanceof Error ? e.message : "Salesforce API error" });

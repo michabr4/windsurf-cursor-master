@@ -3,6 +3,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { env } from "./config.js";
 import { helmetByPath } from "./middleware/helmetByPath.js";
+import { apiWriteRateLimiter, authCredentialRateLimiter } from "./middleware/rateLimit.js";
 import { healthRouter } from "./routes/health.js";
 import { authRouter } from "./routes/auth.js";
 import { propertiesRouter } from "./routes/properties.js";
@@ -28,7 +29,8 @@ export function createApp() {
   app.use("/", express.static("public"));
 
   app.use("/api/v1/health", healthRouter);
-  app.use("/api/v1/auth", authRouter);
+  app.use("/api/v1/auth", authCredentialRateLimiter, authRouter);
+  app.use("/api/v1", apiWriteRateLimiter);
   app.use("/api/v1/properties", propertiesRouter);
   app.use("/api/v1/devices", devicesRouter);
   app.use("/api/v1/incidents", incidentsRouter);
