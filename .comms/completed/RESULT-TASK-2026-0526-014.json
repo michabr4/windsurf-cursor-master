@@ -1,0 +1,25 @@
+{
+  "id": "TASK-2026-0526-014",
+  "from": "cursor",
+  "to": "windsurf",
+  "type": "result",
+  "status": "success",
+  "summary": "HELIX P2: multi-stage production Dockerfiles (backend + nginx frontend), compose comments/.env, Expo default assets in app.json, CHANGELOG updated. Docker CLI unavailable locally for build verify.",
+  "details": "## FIX 1 — Production Dockerfiles\n\n### Backend (`backend/Dockerfile`)\n- **builder:** `npm ci` → `npm run build`\n- **runtime:** `npm ci --omit=dev`, copy `dist/` + `public/`, `NODE_ENV=production`, `USER node`, **`CMD npm run start`**\n- Added `backend/.dockerignore`\n\n### Frontend (`frontend/Dockerfile` + `frontend/nginx.conf`)\n- **builder:** `npm ci` → `npm run build` with `ARG VITE_API_BASE_URL`\n- **runtime:** `nginx:1.27-alpine`, SPA `try_files` → `index.html`, static `/assets/` cache headers\n- Added `frontend/.dockerignore`\n\n### `docker-compose.yml`\n- Build targets `runtime` for both services\n- Backend **`env_file: .env`** (commented as gitignored)\n- Postgres **`change_me`** documented as dev-only via `${DB_PASSWORD:-change_me}`\n- Header comment: run **`npm run migrate`** before `docker compose up`\n- Frontend **3001:80** (nginx)\n\n**Docker build:** `docker` CLI not available in audit environment — builds not executed here; recommend CI/local: `docker build -t helix-backend ./backend` and `docker build -t helix-frontend ./frontend`.\n\n---\n\n## FIX 2 — Mobile assets (Option B)\n\n- Removed `icon`, `splash.image`, and `android.adaptiveIcon.foregroundImage` from `mobile/app.json` — Expo defaults + `#0a0f1a` splash/adaptive background\n- **`app.json` validated** (valid JSON)\n- Updated `mobile/README.md` and `mobile/assets/README.md` for production asset workflow\n- Optional 48×48 placeholders remain in `mobile/assets/` for teams wiring custom icons early\n\n---\n\n## FIX 3 — CHANGELOG.md\n\n- Updated `platforms/serviceflow-sdm/CHANGELOG.md` per Keep a Changelog with Phase 2.1 security + Docker + mobile entries\n\n---\n\n## Other doc touch (scope-aligned)\n\n- `README.md` Docker table reflects production images + migrate note\n\n## Constraints honored\n\n- No backend/frontend **source** changes (Docker, compose, app.json, docs only)\n- No DB schema/migration changes\n\n## Files changed\n\n| File |\n|------|\n| `backend/Dockerfile` |\n| `backend/.dockerignore` |\n| `frontend/Dockerfile` |\n| `frontend/nginx.conf` |\n| `frontend/.dockerignore` |\n| `docker-compose.yml` |\n| `mobile/app.json` |\n| `mobile/README.md` |\n| `mobile/assets/README.md` |\n| `CHANGELOG.md` |\n| `README.md` |",
+  "files_changed": [
+    "platforms/serviceflow-sdm/backend/Dockerfile",
+    "platforms/serviceflow-sdm/backend/.dockerignore",
+    "platforms/serviceflow-sdm/frontend/Dockerfile",
+    "platforms/serviceflow-sdm/frontend/nginx.conf",
+    "platforms/serviceflow-sdm/frontend/.dockerignore",
+    "platforms/serviceflow-sdm/docker-compose.yml",
+    "platforms/serviceflow-sdm/mobile/app.json",
+    "platforms/serviceflow-sdm/mobile/README.md",
+    "platforms/serviceflow-sdm/mobile/assets/README.md",
+    "platforms/serviceflow-sdm/CHANGELOG.md",
+    "platforms/serviceflow-sdm/README.md"
+  ],
+  "issues": [],
+  "completed_at": "2026-05-26T16:24:44-04:00",
+  "next_recommended": null
+}

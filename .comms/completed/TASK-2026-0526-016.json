@@ -1,0 +1,19 @@
+{
+  "id": "TASK-2026-0526-016",
+  "from": "windsurf",
+  "to": "cursor",
+  "priority": "high",
+  "type": "instruction",
+  "phase": "3",
+  "title": "Phase 3.2 — NETPILOT-CCNA-APP: Audit and verify CCNA Automation GitHub App",
+  "spec": "PHASE 3.2: NETPILOT-CCNA-APP\n\nComplete the CCNA Automation GitHub App — audit current state and identify what needs building.\n\nLOCATION: tools/netpilot/ccna_automation_github_app/\n\nThis is an AUDIT-FIRST task — understand what exists before making changes.\n\n---\n\nTASK 1: BACKEND AUDIT (FastAPI)\n- Check directory structure: `backend/app/`\n- Review `backend/requirements.txt` — list dependencies and versions\n- Check if `backend/app/main.py` exists and what it does\n- Try to run: `cd backend && pip install -r requirements.txt && python -m app.main`\n  - If it fails, document the error (don't fix yet)\n  - If it succeeds, check what endpoints are available\n- Check for tests: `pytest tests/` or `python -m pytest`\n  - Report test count and pass/fail status\n- Document API endpoints (if any exist)\n- Check for OpenAPI/Swagger docs at /docs or /redoc\n\n---\n\nTASK 2: FRONTEND AUDIT (React)\n- Check directory structure: `frontend/src/`\n- Review `frontend/package.json` — list dependencies\n- Try to run: `cd frontend && npm install && npm run dev`\n  - If it fails, document the error (don't fix yet)\n  - If it succeeds, check what port it runs on\n- List all components in `frontend/src/components/`\n- Check which views/pages exist\n- Document which components render vs throw errors\n- Check for tests: `npm test` (report status)\n\n---\n\nTASK 3: DATA MODEL AUDIT\n- Check for `schema.sql` or database migration files\n- Check for `seed.json` or seed data\n- Check for `domain_map.yaml` — verify it exists and is well-formed\n- Document the data model:\n  - What tables/collections exist\n  - What entities are defined (labs, topics, questions, etc.)\n  - How complete is the domain map\n\n---\n\nTASK 4: DOCUMENTATION AUDIT\n- Check for README.md at repo root\n- Check for docs/ directory\n- Document what's explained vs missing\n- Check for architecture diagrams or design docs\n\n---\n\nTASK 5: SECURITY CHECK\n- grep for hardcoded credentials in source\n- Verify .env.example exists with placeholders\n- Check .gitignore coverage\n- Report any findings\n\n---\n\nTASK 6: INTEGRATION CHECK\n- Check if there's GitHub App integration code\n- Check for webhook handlers\n- Check for GitHub API client usage\n- Document what's implemented vs placeholder\n\n---\n\nREPORT FORMAT:\nFor each task area, provide:\n- Status: FUNCTIONAL / PLACEHOLDER / BROKEN / MISSING\n- What exists\n- What's missing or broken\n- Recommended next sprint (prioritized list of what to build)\n\nCONSTRAINTS:\n- Read-only audit — do NOT fix errors or install dependencies globally\n- OK to run `npm install` and `pip install` in local project directories\n- Document all findings before recommending changes\n- If something is broken, explain WHY (missing deps, config, etc.)\n\nVERIFICATION:\n- List all key files found\n- Provide directory tree of the project structure\n- Report on build/run status for backend and frontend",
+  "depends_on": null,
+  "files_to_read": [
+    "ROADMAP.md",
+    "tools/netpilot/ccna_automation_github_app/README.md",
+    "tools/netpilot/ccna_automation_github_app/backend/requirements.txt",
+    "tools/netpilot/ccna_automation_github_app/frontend/package.json"
+  ],
+  "created_at": "2026-05-26T16:47:10-04:00",
+  "status": "in_progress"
+}

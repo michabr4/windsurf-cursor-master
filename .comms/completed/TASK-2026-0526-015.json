@@ -1,0 +1,20 @@
+{
+  "id": "TASK-2026-0526-015",
+  "from": "windsurf",
+  "to": "cursor",
+  "priority": "high",
+  "type": "instruction",
+  "phase": "3",
+  "title": "Phase 3.1 — WORKBENCH-BUILD-V2: Delivery Workbench orchestration layer",
+  "spec": "PHASE 3.1: WORKBENCH-BUILD-V2\n\nEvolve delivery-workbench into the primary SDM daily-driver with agent orchestration.\n\nLOCATION: tools/delivery-workbench/\n\nThis is a BUILD task — implement new features based on the existing structure.\n\n---\n\nTASK 1: Audit current state\n- Review existing directory structure\n- Check what's already in place (playbooks, templates, email orchestration YAML)\n- List existing integrations (AGT-001, M365, etc.)\n- Report current capabilities before adding new features\n\n---\n\nTASK 2: Create orchestration layer\n- Create `orchestration/` directory with YAML-based workflow definitions\n- Implement 3 initial workflows:\n  a. `email-digest.yaml` — calls Flerken agent for email triage\n  b. `status-report.yaml` — calls status-report-agent for weekly reports\n  c. `communication-scan.yaml` — calls communication-agent for Webex/email analysis\n- Each workflow should define:\n  - Agent to call (path to agent directory)\n  - Input parameters (env vars, config files)\n  - Output format (markdown, JSON, HTML)\n  - Error handling (retry, fallback, notify)\n- Create `orchestration/README.md` documenting the workflow format\n\n---\n\nTASK 3: Build morning briefing pipeline\n- Create `scripts/morning-briefing.py` that sequences:\n  1. Fetch email → call Flerken for triage\n  2. Fetch calendar → parse for today's meetings (placeholder if no calendar integration)\n  3. Generate briefing → combine email digest + calendar + optional Webex mentions\n  4. Output: Markdown file to `data/runs/morning-briefing/YYYY-MM-DD.md`\n  5. Optional: HTML email to self (if SMTP configured)\n- Use existing agents as libraries (import from agents/flerken, agents/communication-agent)\n- Add CLI: `python scripts/morning-briefing.py [--email] [--dry-run]`\n\n---\n\nTASK 4: Add Webex integration (optional)\n- If time permits, add Webex DM/mention fetching to morning briefing\n- Use existing Webex client patterns from communication-agent\n- Classify as action-required vs FYI\n- If not implemented, add TODO comment and document in orchestration/README.md\n\n---\n\nTASK 5: Security\n- All secrets in .env only (no hardcoded credentials)\n- No external API calls without explicit user approval (add --confirm flag if needed)\n- Apply CodeGuard rules from agentic-starter-kit\n- Verify .gitignore covers .env, data/runs/*, and any temp files\n\n---\n\nTASK 6: Documentation\n- Update tools/delivery-workbench/README.md with:\n  - Orchestration layer overview\n  - Morning briefing usage\n  - Workflow format reference\n- Add examples to orchestration/README.md\n- Document which agents are called and how\n\n---\n\nCONSTRAINTS:\n- Use existing agents as libraries — don't rebuild functionality\n- Each feature should be independently testable\n- Keep workflows simple (YAML definitions, not complex logic)\n- Morning briefing should work with minimal config (graceful degradation if services unavailable)\n\nTESTING:\n- Run: `python scripts/morning-briefing.py --dry-run`\n- Verify it completes without errors\n- Check output markdown file is created\n\nREPORT BACK:\n- What was built\n- What's working vs placeholder\n- Recommended next features",
+  "depends_on": null,
+  "files_to_read": [
+    "ROADMAP.md",
+    "tools/delivery-workbench/README.md",
+    "tools/delivery-workbench/docs/orchestration_reference/email-morning-digest.yaml",
+    "agents/flerken/src/main.py",
+    "agents/communication-agent/main.py"
+  ],
+  "created_at": "2026-05-26T16:40:10-04:00",
+  "status": "in_progress"
+}

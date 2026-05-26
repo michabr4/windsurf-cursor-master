@@ -1,0 +1,26 @@
+{
+  "id": "TASK-2026-0526-013",
+  "from": "cursor",
+  "to": "windsurf",
+  "type": "result",
+  "status": "success",
+  "summary": "HELIX P0+P1 complete: JWT startup guard, env-configurable rate limits (10/100), Zod on SF + Webex writes. npm run build + npm test pass.",
+  "details": "## Status: SUCCESS\n\nAll three fixes from TASK-013 are implemented (P0 largely landed in commit `e587fe1`; this pass aligned limits with spec + env vars).\n\n### FIX 1 (P0) — JWT secret guard\n- **Zod** rejects placeholder `JWT_SECRET` / `JWT_REFRESH_SECRET` when `NODE_ENV` is not `development` (and `DB_PASSWORD=change_me` in production).\n- **Runtime** `assertJwtSecretsAtStartup()` after config parse: non-development exits with fatal log if secrets are placeholder or &lt; 32 chars.\n- **Development** unchanged — Zod defaults still work locally.\n\n### FIX 2 (P1) — express-rate-limit\n- Dependency: `express-rate-limit` in `backend/package.json`.\n- **Auth:** `POST /login`, `/refresh` — default **10** / 15 min (`RATE_LIMIT_AUTH_MAX`, `RATE_LIMIT_WINDOW_MS=900000`).\n- **Writes:** POST/PATCH/PUT/DELETE under `/api/v1` (except health) — default **100** / 15 min (`RATE_LIMIT_WRITE_MAX`).\n- Higher floors in `development` (200 / 2000) so local testing is not blocked.\n- Mounted in `backend/src/app.ts`.\n\n### FIX 3 (P1) — Zod validation\n- `backend/src/schemas/salesforce.ts` — `CreateCaseSchema`, `PatchCaseSchema` on POST/PATCH cases.\n- `backend/src/schemas/integrations.ts` — `WarRoomBodySchema`, `SyncSourceParamSchema` on war-room + sync.\n- 400 responses include `issues` array on validation failure.\n\n### Verification\n```\ncd platforms/serviceflow-sdm/backend && npm run build && npm test\n```\n- **build:** pass\n- **test:** 5 passed\n\n### Files changed (backend + env template only)\n| File |\n|------|\n| `backend/src/config.ts` |\n| `backend/src/middleware/rateLimit.ts` |\n| `backend/src/app.ts` |\n| `backend/src/routes/salesforce.ts` |\n| `backend/src/routes/integrations.ts` |\n| `backend/src/schemas/salesforce.ts` |\n| `backend/src/schemas/integrations.ts` |\n| `backend/src/tests/config.secrets.test.ts` |\n| `backend/vitest.config.ts` |\n| `backend/package.json` |\n| `backend/package-lock.json` |\n| `.env.example` |\n\n### Constraints honored\n- No route business-logic changes beyond validation/rate-limit wrappers.\n- No DB migrations, frontend, mobile, or Docker changes in this task scope.\n\n### Git\nPrior commit on branch: `e587fe1` (P0 bundle). Uncommitted delta from spec alignment: `config.ts`, `rateLimit.ts`, `config.secrets.test.ts`, `.env.example`.",
+  "files_changed": [
+    "platforms/serviceflow-sdm/backend/src/config.ts",
+    "platforms/serviceflow-sdm/backend/src/middleware/rateLimit.ts",
+    "platforms/serviceflow-sdm/backend/src/app.ts",
+    "platforms/serviceflow-sdm/backend/src/routes/salesforce.ts",
+    "platforms/serviceflow-sdm/backend/src/routes/integrations.ts",
+    "platforms/serviceflow-sdm/backend/src/schemas/salesforce.ts",
+    "platforms/serviceflow-sdm/backend/src/schemas/integrations.ts",
+    "platforms/serviceflow-sdm/backend/src/tests/config.secrets.test.ts",
+    "platforms/serviceflow-sdm/backend/vitest.config.ts",
+    "platforms/serviceflow-sdm/backend/package.json",
+    "platforms/serviceflow-sdm/backend/package-lock.json",
+    "platforms/serviceflow-sdm/.env.example"
+  ],
+  "issues": [],
+  "completed_at": "2026-05-26T16:11:20-04:00",
+  "next_recommended": null
+}

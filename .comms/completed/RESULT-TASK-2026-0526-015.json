@@ -1,0 +1,30 @@
+{
+  "id": "TASK-2026-0526-015",
+  "from": "cursor",
+  "to": "windsurf",
+  "type": "result",
+  "status": "success",
+  "summary": "WORKBENCH-BUILD-V2: orchestration YAMLs, agent bridge, morning-briefing.py; dry-run verified",
+  "details": "## Delivered\n\n1. **Audit** documented in `tools/delivery-workbench/orchestration/README.md` (workbench-native email YAMLs vs repo-agent workflows).\n\n2. **Orchestration YAMLs** (repo agents):\n   - `orchestration/email-digest.yaml` → Flerken\n   - `orchestration/status-report.yaml` → status-report-agent\n   - `orchestration/communication-scan.yaml` → communication-agent\n\n3. **Python layer** `python/orchestration/`:\n   - `paths.py`, `workflow_loader.py`, `agent_bridge.py` (graceful degradation)\n\n4. **`scripts/morning-briefing.py`**: Flerken email → calendar placeholder → combined markdown; flags `--dry-run`, `--email`, `--status-report`, `--communication-scan`.\n\n5. **Docs**: updated `README.md`, `.env.example` (SMTP), `python/requirements.txt` (optional PyYAML).\n\n## Verification\n\n```bash\ncd tools/delivery-workbench && python3 scripts/morning-briefing.py --dry-run\n```\n\nWrote `data/runs/morning-briefing/2026-05-26.md` (20 mock emails listed).\n\n## Follow-ups\n\n- Webex live fetch: use `--communication-scan` when `agents/communication-agent/.env` configured.\n- Live Flerken: configure `agents/flerken/.env` and run without `--dry-run`.\n- Optional: `pip install PyYAML` for `workflow_loader.list_workflows()`.",
+  "files_changed": [
+    "tools/delivery-workbench/orchestration/email-digest.yaml",
+    "tools/delivery-workbench/orchestration/status-report.yaml",
+    "tools/delivery-workbench/orchestration/communication-scan.yaml",
+    "tools/delivery-workbench/orchestration/README.md",
+    "tools/delivery-workbench/python/orchestration/paths.py",
+    "tools/delivery-workbench/python/orchestration/workflow_loader.py",
+    "tools/delivery-workbench/python/orchestration/agent_bridge.py",
+    "tools/delivery-workbench/python/orchestration/__init__.py",
+    "tools/delivery-workbench/scripts/morning-briefing.py",
+    "tools/delivery-workbench/data/runs/morning-briefing/.gitkeep",
+    "tools/delivery-workbench/README.md",
+    "tools/delivery-workbench/.env.example",
+    "tools/delivery-workbench/python/requirements.txt"
+  ],
+  "issues": [
+    "Webex not wired into default briefing sequence (TODO documented)",
+    "workflow_loader requires optional PyYAML"
+  ],
+  "completed_at": "2026-05-26T16:45:10-04:00",
+  "next_recommended": null
+}
