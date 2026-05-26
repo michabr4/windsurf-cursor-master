@@ -24,7 +24,7 @@ app = Flask(__name__)
 # Configuration
 BOT_TOKEN = os.environ.get("WEBEX_BOT_TOKEN", "")
 WEBHOOK_SECRET = os.environ.get("WEBHOOK_SECRET", "mgm-status-bot-secret")
-SUBSCRIBERS_FILE = "os.path.join(os.path.dirname(os.path.abspath(__file__)), "subscribers.json")"
+SUBSCRIBERS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "subscribers.json")
 BASE_URL = "https://webexapis.com/v1"
 
 # Load/Save subscribers

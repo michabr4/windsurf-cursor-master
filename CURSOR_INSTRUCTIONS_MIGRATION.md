@@ -567,6 +567,75 @@ THEN:
 
 ---
 
+## Section 13: Post-Migration Fixes (Windsurf Reviewed)
+
+```text
+CURSOR INSTRUCTION: POST-MIGRATION-FIXES
+
+CONTEXT: Windsurf has reviewed ALL migration sections (3–12). The following
+fixes are approved. Execute them in order.
+
+TASK 13.1: Fix netpilot .gitignore
+- File: tools/netpilot/.gitignore
+- If the file exists, append these lines (if not already present):
+    .env
+    .env.*
+    !.env.example
+- If the file does not exist, create it with:
+    .env
+    .env.*
+    !.env.example
+    node_modules/
+    .venv/
+    __pycache__/
+    .DS_Store
+
+TASK 13.2: Remove bundled virtual environments (scan noise reduction)
+- Remove these directories if they exist:
+    rm -rf data/digitized-delivery-ges/.xlsx_venv
+    rm -rf data/digitized-delivery-ges/Airtable\ Tracking/.venv
+- Verify removal:
+    find data/ -name ".xlsx_venv" -o -name ".venv" | head -5
+    (should return nothing)
+
+TASK 13.3: Verify all .env files are gitignored
+- Run this check for each .env file in the workspace:
+    find . -name ".env" -not -path "./.git/*" -not -path "*node_modules*" | while read f; do
+      dir=$(dirname "$f")
+      if [ -f "$dir/.gitignore" ]; then
+        grep -q "^\.env" "$dir/.gitignore" && echo "OK: $f" || echo "WARN: $f NOT in $dir/.gitignore"
+      else
+        echo "WARN: $f has no local .gitignore"
+      fi
+    done
+- For any WARN results in active (non-archived) directories, add .env to the local .gitignore
+
+TASK 13.4: Close open issues in MIGRATION_LOG.md
+- Append a new section to MIGRATION_LOG.md:
+
+## Section 13: Post-Migration Fixes
+**Completed:** [timestamp]
+**Status:** [SUCCESS or PARTIAL]
+
+### Decisions from Windsurf Review
+- email-summary-agent missing README: ACCEPTED — will be absorbed into Flerken (Phase 1)
+- personal-automation missing README: ACCEPTED — will be absorbed into Flerken (Phase 1)
+- data/blue-shield empty: ACCEPTED — empty repo placeholder, content expected later
+- serviceflow-sdm no .git: ACCEPTED — intentional exclude during rsync, remote is michabr4/helix
+- Archived backend .env unprotected: ACCEPTED — not active code
+- Airtable PAT rotation: PENDING — requires manual action by user at airtable.com
+
+### Actions Taken
+- [list each fix performed with file paths]
+
+### Issues Found
+- [list any new issues or "None"]
+
+THEN: STOP and report back to Windsurf.
+```
+
+---
+
 ## After Migration: Cleanup Original Locations
 
 **DO NOT execute this section until ALL verifications pass and user explicitly approves.**

@@ -18,6 +18,11 @@ dist/
 .pytest_cache/
 .mypy_cache/
 
+# Secrets
+.env
+.env.*
+!.env.example
+
 # OS/editor
 .DS_Store
 .vscode/

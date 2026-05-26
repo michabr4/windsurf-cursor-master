@@ -308,3 +308,39 @@
 - Optional cleanup candidate: bundled `.venv` / `.xlsx_venv` trees producing security-scan noise.
 
 **STOPPED after Section 12 as requested. No cleanup/destructive actions executed.**
+
+---
+
+## Section 13: Post-Migration Fixes
+**Completed:** 2026-05-26 (Windsurf-reviewed batch)  
+**Status:** SUCCESS
+
+### Decisions from Windsurf Review
+- **email-summary-agent missing README:** ACCEPTED — will be absorbed into Flerken (Phase 1)
+- **personal-automation missing README:** ACCEPTED — will be absorbed into Flerken (Phase 1)
+- **data/blue-shield empty:** ACCEPTED — empty repo placeholder, content expected later
+- **serviceflow-sdm no .git:** ACCEPTED — intentional exclude during rsync; remote is `michabr4/helix`
+- **Archived backend `.env` unprotected (local check):** ACCEPTED — not active code; workspace root `.gitignore` also excludes `.env` globally
+- **Airtable PAT rotation:** PENDING — requires manual action at https://airtable.com/create/tokens if the old PAT was ever exposed outside local `.env`
+
+### Actions Taken
+- **13.1 — `tools/netpilot/.gitignore`:** Added `.env`, `.env.*`, and `!.env.example` under a Secrets section (venv/node_modules rules were already present).
+- **13.2 — Removed bundled venvs under `data/`:**
+  - Deleted `data/digitized-delivery-ges/.xlsx_venv/`
+  - Deleted `data/digitized-delivery-ges/Airtable Tracking/.venv/`
+  - Verified: `find data/ -name ".xlsx_venv" -o -name ".venv"` returns no matches.
+- **13.3 — `.env` gitignore audit:** All active `.env` files confirmed covered by local `.gitignore`:
+  - `tools/netpilot/.env` — OK (after 13.1)
+  - `tools/agentic-starter-kit/.env` — OK
+  - `tools/delivery-workbench/.env` — OK
+  - `agents/flerken/.env` — OK
+  - `agents/email-summary-agent/.env` — OK
+  - `sdm-files/.env` — OK
+  - `data/digitized-delivery-ges/Airtable Tracking/.env` — OK
+- **13.4 — Closed open issues from Sections 3, 5, 7, 10, and Migration Complete summary** via decisions above; NetPilot and venv scan-noise items resolved in this section.
+
+### Issues Found
+- None new. **Airtable PAT rotation** remains a manual user action if not already done at the provider.
+
+### Awaiting Windsurf Review
+- None for Section 13. **Do not run “After Migration: Cleanup Original Locations”** until user explicitly approves per-folder deletion.

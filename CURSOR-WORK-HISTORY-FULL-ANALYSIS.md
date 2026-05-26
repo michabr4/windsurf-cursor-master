@@ -566,8 +566,8 @@ Every user prompt extracted from Agent transcripts, grouped by session. Secrets 
 10. I get an error message 401 when trying to access microsoft entra id
 11. I get the same error message for both https URLs
 12. how do i request elevated access with entra
-13. add to tenant id 5ae1af62-9505-4097-a69a-c1553ef7840e
-14. client id d32dd3c4-3571-41db-9626-7b7f30004a97
+13. add to tenant id [REDACTED — MS Entra Tenant ID]
+14. client id [REDACTED — MS Entra Client ID]
 15. python3 python/examples/outlook_action_items_demo.py
 16. quick startup check
 17. python3 python/examples/outlook_action_items_demo.py
@@ -689,7 +689,7 @@ Every user prompt extracted from Agent transcripts, grouped by session. Secrets 
 6. new chat
 7. the mgm status report is not running
 8. the mgm daily status report bot is not working in webex
-9. YzJmMDcyYjctMzQ2Zi00MmMwLWIzMDktNjU4YWY0ZDIwYmMxMDc4YmY5NjMtZTFj_PF84_1eb65fdf-9643-417f-9974-ad72cae0e10f
+9. [REDACTED — Webex bot token]
 10. it is stored
 11. confirm
 12. what should I do next

@@ -103,7 +103,7 @@ class WebexBot:
         print(f"✅ Status report sent to room!")
         
         # Also send the PowerPoint file if it exists
-        pptx_path = "os.path.join(os.path.dirname(os.path.abspath(__file__)), "MGM_Status_Report_20260410.pptx")"
+        pptx_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "MGM_Status_Report_20260410.pptx")
         if os.path.exists(pptx_path):
             self.send_file(room_id, pptx_path, "📊 Full PowerPoint report attached")
             print(f"✅ PowerPoint file sent!")
@@ -205,7 +205,7 @@ May 1   ⚪ Phase 1 Migration Start (Target)
         print(f"✅ Status report sent to {email}!")
         
         # Also send the PowerPoint file
-        pptx_path = "os.path.join(os.path.dirname(os.path.abspath(__file__)), "MGM_Status_Report_20260410.pptx")"
+        pptx_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "MGM_Status_Report_20260410.pptx")
         if os.path.exists(pptx_path):
             headers = {"Authorization": f"Bearer {self.access_token}"}
             with open(pptx_path, "rb") as f:

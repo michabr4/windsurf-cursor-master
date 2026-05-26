@@ -274,7 +274,7 @@ def create_mgm_status_pptx():
     p.font.color.rgb = RgbColor(150, 150, 150)
     
     # Save
-    output_path = "os.path.join(os.path.dirname(os.path.abspath(__file__)), "MGM_Status_Report_20260410.pptx")"
+    output_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "MGM_Status_Report_20260410.pptx")
     prs.save(output_path)
     print(f"PowerPoint saved to: {output_path}")
     return output_path
