@@ -1,7 +1,7 @@
 # Strategic Roadmap
 
 **Owner:** Windsurf (Architect)  
-**Last Updated:** May 26, 2026  
+**Last Updated:** May 27, 2026  
 **Purpose:** Prioritized plan for what to work on next, with Cursor-ready instruction packets
 
 ---
@@ -154,6 +154,41 @@ STEPS:
 
 REPORT BACK: Current working state + recommended next feature to build.
 ```
+
+---
+
+## AI Factory: Phase 0 — Foundation (Active — May 27, 2026)
+
+**Goal:** Governance infrastructure, baseline measurement, integration readiness, and agent cards signed before any code is written.
+
+**Status:** 🟡 Week 1 In Progress
+
+### Week 1 Deliverables (2026-05-27) — ✅ Complete
+
+| Artifact | Location | Status |
+| --- | --- | --- |
+| Agent Registry (34 agents) | `AI_FACTORY_AGENT_REGISTRY.md` | ✅ Done |
+| Governance Log | `AI_FACTORY_GOVERNANCE_LOG.md` | ✅ Done |
+| Cycle Time Baselines tracker | `AI_FACTORY_CYCLE_TIME_BASELINES.md` | ✅ Done |
+| Integration Readiness matrix | `AI_FACTORY_INTEGRATION_READINESS.md` | ✅ Done |
+| Agent Card: Delivery Tracker (T1) | `agents/delivery-tracker/AGENT_CARD.md` | ✅ Done |
+| Agent Card: Risk Sentinel (T2) | `agents/risk-escalation-sentinel/AGENT_CARD.md` | ✅ Done |
+| Agent Card: Business Review Generator (T2) | `agents/business-review-generator/AGENT_CARD.md` | ✅ Done |
+
+### Remaining Phase 0 Actions (Ops — You Must Do These)
+
+1. **👤 Rotate Webex bot token** — `WEBEX_BOT_TOKEN` is expired (also blocks Phase 2 bots). Update at developer.webex.com → GitHub secrets.
+2. **👤 Confirm Salesforce MCP delegated read access** — needed before Business Review Generator HITL pilot.
+3. **👤 Confirm ServiceNow MCP access** — needed before Risk Sentinel HITL pilot.
+4. **👤 Fill in `AI_FACTORY_CYCLE_TIME_BASELINES.md`** — measure the 5 workflows over the next 2 weeks before Sprint 1 starts.
+
+### Phase 0 Exit Gate (Day 21 target: ~2026-06-17)
+
+- [ ] All 5 baselines measured (≥ 5 data points each)
+- [ ] Webex token rotated
+- [ ] Salesforce + ServiceNow access confirmed
+- [ ] 3 agent cards reviewed and signed by domain expert
+- [ ] Governance log entry written confirming Phase 0 complete
 
 ---
 

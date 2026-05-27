@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.py[cod]
+.env
+
+# OS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+webex_tokens.txt
+
+# Generated at runtime
+spacelift_analysis.json
