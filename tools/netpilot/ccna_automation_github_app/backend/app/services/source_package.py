@@ -113,27 +113,34 @@ def _extract_risks(content: str) -> list[dict[str, str]]:
     return risks
 
 
-def _source_html_path() -> Path | None:
-    settings = get_settings()
-    if settings.source_html_path and settings.source_html_path.is_file():
-        return settings.source_html_path
-    return None
+def _empty_package(**extra: Any) -> dict[str, Any]:
+    return {
+        "title": "Automation + GitHub Training Hub",
+        "platform_vision": "",
+        "metrics": [],
+        "integration_matrix": [],
+        "subsystems": [],
+        "launch_phases": [],
+        "risks": [],
+        **extra,
+    }
 
 
 def get_source_package() -> dict[str, Any]:
-    source_path = _source_html_path()
-    if source_path is None:
-        return {
-            "title": "Automation + GitHub Training Hub",
-            "platform_vision": "",
-            "metrics": [],
-            "integration_matrix": [],
-            "subsystems": [],
-            "launch_phases": [],
-            "risks": [],
-        }
+    settings = get_settings()
+    configured = settings.source_html_path
 
-    content = source_path.read_text(encoding="utf-8")
+    if configured is None:
+        return _empty_package(
+            message="Source package not configured. Set SOURCE_HTML_PATH env var.",
+        )
+
+    if not configured.is_file():
+        return _empty_package(
+            error=f"Source file not found: {configured}",
+        )
+
+    content = configured.read_text(encoding="utf-8")
 
     title_match = re.search(r"<title>([^<]+)</title>", content, re.IGNORECASE)
     platform_match = re.search(

@@ -1,87 +1,91 @@
-# Automation Study Hub (+ GitHub App hooks)
+# CCNA Automation Study Hub
 
-Monorepo for a **DEVASC-oriented automation study app** with optional **GitHub App** webhooks and a separate **MGM Webex daily report** script.
+**Primary purpose:** DEVASC-oriented study tool — flashcards, practice quiz, study planner, and weak-area detection.
 
-| Area | Purpose |
-|------|---------|
-| `frontend/` | React (Vite) study UI |
-| `backend/` | FastAPI API, SQLite persistence, GitHub webhooks |
-| `data_model/` | SQL schema, seed JSON, domain map |
-| `send_reports.py` | Webex status bot (scheduled via GitHub Actions) |
+| Feature | Description |
+|---------|-------------|
+| **Study hub** | React UI + FastAPI API (core product) |
+| **Data** | SQLite with seeded domains, flashcards, and questions (`data/ccna_study.db`) |
+| **Extended landscape** | Optional HTML import via `SOURCE_HTML_PATH` |
+| **MGM Webex reports** | Separate script (`send_reports.py`) + [mgm-daily-status-report.yml](.github/workflows/mgm-daily-status-report.yml) — not part of the study UI |
+
+Optional GitHub App webhook endpoints exist for future automation workflows; they are **not required** to run the study hub. See [docs/GITHUB_APP.md](docs/GITHUB_APP.md) only if you need that integration.
 
 ## Requirements
 
-- **Python 3.10–3.13** (3.14 may fail to install `pydantic-core`; CI uses 3.11)
+- **Python 3.11 recommended** (3.10–3.13 supported; **3.14** often fails to build `pydantic-core`)
 - **Node.js 20+**
 
-## Quick start
+## Quick Start
+
+### Backend
+
+```bash
+cd backend
+python3.11 -m venv .venv
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+uvicorn app.main:app --reload --app-dir .
+# Or from backend/: PYTHONPATH=. python -m app
+```
+
+API: http://127.0.0.1:8000 — OpenAPI docs at http://127.0.0.1:8000/docs
+
+### Frontend
+
+```bash
+cd frontend
+cp ../.env.example .env.local   # optional: set VITE_API_BASE
+npm install
+npm run dev
+```
+
+Visit http://localhost:5173
+
+### One-command (repo root)
 
 ```bash
 cp .env.example .env
-# Edit .env (VITE_API_BASE, optional GitHub App vars)
-
-make install   # venv + npm
-make dev       # API :8000, UI :5173
+make install && make dev
 ```
 
-Or separately:
+## Configuration
 
-```bash
-cd backend && python3.11 -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-PYTHONPATH=. python -m app
+- **Backend:** [backend/.env.example](backend/.env.example) — `SOURCE_HTML_PATH`, `DATABASE_PATH`
+- **Repo root:** [.env.example](.env.example) — frontend API URL, optional GitHub/Webex vars
 
-cd frontend && npm install && npm run dev
-```
-
-## API endpoints
+## API endpoints (study hub)
 
 | Method | Path | Description |
 |--------|------|-------------|
 | GET | `/health` | Liveness |
-| GET | `/docs` | OpenAPI (Swagger) |
-| POST | `/api/plan` | Study plan from profile |
-| GET | `/api/flashcards` | Flashcards (`?domain=`) |
+| GET | `/api/flashcards` | Flashcards |
 | GET | `/api/practice-questions` | Practice questions |
+| POST | `/api/plan` | Study plan |
 | POST | `/api/weak-areas` | Weak-area detection |
-| GET | `/api/source-package` | Optional HTML-derived content |
-| GET | `/api/domains` | Domain titles from DB |
-| POST | `/webhooks/github` | GitHub App webhooks |
-| GET | `/api/github/status` | GitHub App config status |
-| GET | `/api/github/installations` | Known installations |
-| GET | `/api/github/events` | Recent webhook events |
-| POST | `/api/github/installations/{id}/token` | Installation access token |
-
-## Data
-
-SQLite file defaults to `data/ccna_study.db` (gitignored). On startup the API applies `data_model/schema.sql` and seeds from `seed.json`, `domain_map.yaml`, and built-in question banks.
-
-## GitHub App setup
-
-1. Create a GitHub App with webhook URL `https://<your-host>/webhooks/github`.
-2. Set webhook secret and note **App ID** + generate a **private key**.
-3. Configure `.env`: `GITHUB_APP_ID`, `GITHUB_WEBHOOK_SECRET`, `GITHUB_APP_PRIVATE_KEY` or `GITHUB_APP_PRIVATE_KEY_PATH`.
-4. Install the app on a repo; verify with `GET /api/github/events`.
-
-See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+| GET | `/api/source-package` | Optional HTML landscape (needs `SOURCE_HTML_PATH`) |
+| GET | `/api/domains` | Domain list |
 
 ## MGM daily status (Webex)
 
-Workflow: [.github/workflows/mgm-daily-status-report.yml](.github/workflows/mgm-daily-status-report.yml)
-
-Secrets: `WEBEX_BOT_TOKEN` (required), `WEBEX_ACCESS_TOKEN`, `OPENAI_API_KEY` (optional).
+Unrelated to the study app — posts to Webex rooms from `subscribers.json`.
 
 ```bash
 WEBEX_BOT_TOKEN=... python send_reports.py
-# or DRY_RUN=true python send_reports.py
+# DRY_RUN=true python send_reports.py
 ```
+
+GitHub Actions: [.github/workflows/mgm-daily-status-report.yml](.github/workflows/mgm-daily-status-report.yml)  
+CI for the study app: [.github/workflows/ci.yml](.github/workflows/ci.yml)
 
 ## Commands
 
-- `make test` — pytest + vitest
-- `make lint` / `make fmt` — ruff + eslint/prettier
+```bash
+make test    # pytest + vitest
+make lint    # ruff + eslint
+```
 
 ## Security
 
-- Secrets only in `.env` (see `.env.example`).
+- Keep secrets in `.env` only (gitignored at app root).
 - Do not commit `data/*.db` or private keys.
