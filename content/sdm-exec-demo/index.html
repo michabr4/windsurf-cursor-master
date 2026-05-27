@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en" x-data="sdmDemo()" x-init="init()">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SDM AI Transformation — Cisco CX</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script
+    defer
+    src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"
+    integrity="sha384-X9kJyAubVxnP0hcA+AMMs21U445qsnqhnUF8EBlEpP3a42Kh/JwWjlv2ZcvGfphb"
+    crossorigin="anonymous"></script>
+  <script
+    src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"
+    integrity="sha384-uTYyvsSSUZeaPhb5RbKlQa0zY/WpX/QHfvg2mczXyBQOpkWPEDy9lczyp+w7SKXu"
+    crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+          colors: {
+            cisco: {
+              blue: '#049fd9',
+              dark: '#171f2d',
+              navy: '#1a2332',
+              teal: '#00bceb',
+              green: '#6cc04a',
+              sky: '#64bbe3',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .hero-gradient {
+      background: linear-gradient(-45deg, #171f2d, #1a2332, #04314a, #06506e);
+      background-size: 400% 400%;
+      animation: gradientShift 12s ease infinite;
+    }
+    @keyframes statFade {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .stat-card {
+      animation: statFade 0.7s ease forwards;
+      animation-delay: var(--delay, 0s);
+      opacity: 0;
+    }
+    .nav-link.active { color: #049fd9; font-weight: 600; }
+    .section-reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .section-reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .phase-node { transition: all 0.25s ease; cursor: pointer; }
+    .phase-node.active { transform: scale(1.05); }
+    .hitl-flow .hitl-step { position: relative; }
+    .hitl-flow .hitl-arrow::after {
+      content: '→';
+      color: #049fd9;
+      font-size: 1.25rem;
+      margin: 0 0.5rem;
+    }
+    @media (min-width: 768px) {
+      .timeline-h::before {
+        content: '';
+        position: absolute;
+        top: 2rem;
+        left: 5%;
+        right: 5%;
+        height: 3px;
+        background: linear-gradient(90deg, #049fd9, #00bceb, #6cc04a);
+        z-index: 0;
+      }
+    }
+  </style>
+</head>
+<body class="font-sans bg-slate-50 text-slate-800 antialiased">
+
+  <!-- NAV -->
+  <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md border-b border-slate-200 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+      <span class="font-bold text-lg tracking-tight text-cisco-dark">SDM AI Transformation</span>
+      <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-500">
+        <a href="#vision" class="nav-link" :class="{ 'active': activeSection === 'vision' }">Vision</a>
+        <a href="#live-work" class="nav-link" :class="{ 'active': activeSection === 'live-work' }">Live Work</a>
+        <a href="#roadmap" class="nav-link" :class="{ 'active': activeSection === 'roadmap' }">Roadmap</a>
+        <a href="#governance" class="nav-link" :class="{ 'active': activeSection === 'governance' }">Governance</a>
+      </div>
+      <button class="md:hidden" @click="mobileNav = !mobileNav" title="Toggle menu" aria-label="Toggle menu">
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+    </div>
+    <div x-show="mobileNav" x-transition class="md:hidden bg-white border-t border-slate-200 px-6 py-4 space-y-3">
+      <a href="#vision" class="block text-sm font-medium" @click="mobileNav = false">Vision</a>
+      <a href="#live-work" class="block text-sm font-medium" @click="mobileNav = false">Live Work</a>
+      <a href="#roadmap" class="block text-sm font-medium" @click="mobileNav = false">Roadmap</a>
+      <a href="#governance" class="block text-sm font-medium" @click="mobileNav = false">Governance</a>
+    </div>
+  </nav>
+
+  <!-- SECTION 1: HERO -->
+  <section id="vision" class="hero-gradient min-h-screen flex items-center justify-center text-white pt-20">
+    <div class="max-w-5xl mx-auto px-6 text-center">
+      <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur rounded-full px-4 py-2 text-sm font-medium mb-8">
+        <i data-lucide="sparkles" class="w-4 h-4"></i>
+        Cisco CX · AI Factory
+      </div>
+      <h1 class="text-4xl md:text-6xl font-black tracking-tight leading-tight mb-6">
+        From Manual Manager to<br>
+        <span class="bg-gradient-to-r from-cisco-teal to-cisco-sky bg-clip-text text-transparent">AI-Augmented Leader</span>
+      </h1>
+      <p class="text-xl md:text-2xl text-cisco-sky/90 max-w-3xl mx-auto mb-12 leading-relaxed">
+        34 agents. 8 CX roles. Transforming how service delivery works — starting now.
+      </p>
+      <div class="grid md:grid-cols-3 gap-6 mb-12">
+        <template x-for="(stat, i) in heroStats" :key="stat.label">
+          <div class="stat-card bg-white/10 backdrop-blur rounded-2xl p-6 border border-white/20"
+               :style="'--delay:' + (i * 0.15) + 's'">
+            <div class="text-2xl md:text-3xl font-black text-white mb-2" x-text="stat.value"></div>
+            <div class="text-cisco-sky/80 text-sm font-medium" x-text="stat.label"></div>
+          </div>
+        </template>
+      </div>
+      <a href="#live-work" class="inline-flex items-center gap-2 bg-white text-cisco-dark font-semibold px-8 py-4 rounded-xl hover:bg-cisco-sky/20 transition">
+        See What's Live ↓ <i data-lucide="arrow-down" class="w-5 h-5"></i>
+      </a>
+    </div>
+  </section>
+
+  <!-- SECTION 2: LIVE WORK -->
+  <section id="live-work" class="py-24 bg-white section-reveal">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <div class="inline-flex items-center gap-2 bg-cisco-blue/10 text-cisco-blue rounded-full px-4 py-2 text-sm font-medium mb-4">
+          <i data-lucide="activity" class="w-4 h-4"></i>
+          Phase 1 Pilots (Active)
+        </div>
+        <h2 class="text-4xl md:text-5xl font-black tracking-tight mb-4">What's Running Today</h2>
+        <p class="text-lg text-slate-500 max-w-2xl mx-auto">Three SDM agents in design — proving the model before scale.</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8">
+        <template x-for="agent in agents" :key="agent.id">
+          <div class="rounded-2xl border border-slate-200 bg-slate-50 overflow-hidden hover:border-cisco-blue/40 transition cursor-pointer"
+               @click="toggleAgent(agent.id)">
+            <div class="p-6">
+              <div class="flex items-start justify-between gap-2 mb-3">
+                <h3 class="text-lg font-bold text-cisco-dark" x-text="agent.name"></h3>
+                <span class="text-xs font-semibold px-2 py-1 rounded-full bg-cisco-blue/10 text-cisco-blue shrink-0" x-text="agent.role"></span>
+              </div>
+              <span class="inline-block text-xs font-medium px-2 py-1 rounded-full bg-amber-100 text-amber-800 mb-3">🟡 In Design</span>
+              <p class="text-sm text-slate-600" x-text="agent.summary"></p>
+              <div class="mt-4 flex items-center text-cisco-blue text-sm font-medium">
+                <span x-text="expandedAgent === agent.id ? 'Hide details' : 'View details'"></span>
+                <i data-lucide="chevron-down" class="w-4 h-4 ml-1 transition-transform"
+                   :class="{ 'rotate-180': expandedAgent === agent.id }"></i>
+              </div>
+            </div>
+            <div x-show="expandedAgent === agent.id" x-transition class="px-6 pb-6 border-t border-slate-200 bg-white">
+              <dl class="mt-4 space-y-3 text-sm">
+                <div><dt class="font-semibold text-slate-500">Trigger</dt><dd x-text="agent.trigger"></dd></div>
+                <div><dt class="font-semibold text-slate-500">Reads / Detects</dt><dd x-text="agent.reads"></dd></div>
+                <div><dt class="font-semibold text-slate-500">Output</dt><dd x-text="agent.output"></dd></div>
+                <div><dt class="font-semibold text-slate-500">Time saved</dt><dd x-text="agent.timeSaved"></dd></div>
+                <div><dt class="font-semibold text-slate-500">Trust tier</dt><dd class="text-cisco-blue font-medium" x-text="agent.trust"></dd></div>
+              </dl>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: ROADMAP -->
+  <section id="roadmap" class="py-24 bg-slate-100 section-reveal">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <div class="inline-flex items-center gap-2 bg-cisco-teal/10 text-cisco-teal rounded-full px-4 py-2 text-sm font-medium mb-4">
+          <i data-lucide="factory" class="w-4 h-4"></i>
+          The Factory
+        </div>
+        <h2 class="text-4xl md:text-5xl font-black tracking-tight mb-4">6-Phase Roadmap</h2>
+        <p class="text-lg text-slate-500 max-w-2xl mx-auto">From foundation to orchestrated agent chains across every CX role.</p>
+      </div>
+
+      <!-- Timeline -->
+      <div class="relative timeline-h mb-12">
+        <div class="grid grid-cols-2 md:grid-cols-7 gap-4 relative z-10">
+          <template x-for="phase in phases" :key="phase.id">
+            <div class="phase-node flex flex-col items-center text-center p-3 rounded-xl"
+                 :class="activePhase === phase.id ? 'active bg-white shadow-lg ring-2 ring-cisco-blue' : 'bg-white/60 hover:bg-white'"
+                 @click="selectPhase(phase.id)">
+              <span class="text-2xl mb-2" x-text="phase.icon"></span>
+              <span class="text-xs font-bold text-cisco-dark" x-text="'Phase ' + phase.id"></span>
+              <span class="text-xs text-slate-600 mt-1 leading-tight" x-text="phase.title"></span>
+            </div>
+          </template>
+        </div>
+      </div>
+
+      <!-- Phase detail -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-8 mb-12 section-reveal">
+        <template x-for="phase in phases" :key="'detail-' + phase.id">
+          <div x-show="activePhase === phase.id">
+            <h3 class="text-2xl font-bold text-cisco-dark mb-2" x-text="phase.title"></h3>
+            <p class="text-slate-600 mb-4" x-text="phase.description"></p>
+            <p class="text-sm font-medium text-cisco-blue" x-text="phase.agents"></p>
+          </div>
+        </template>
+      </div>
+
+      <!-- End state -->
+      <div class="bg-gradient-to-r from-cisco-dark to-cisco-navy rounded-2xl p-8 text-white text-center mb-12">
+        <p class="text-2xl md:text-3xl font-black">34 agents · 8 roles · 40–80% cycle-time reduction per workflow</p>
+      </div>
+
+      <!-- Agent chains -->
+      <h3 class="text-2xl font-bold text-cisco-dark mb-6">Example Agent Chains</h3>
+      <div class="space-y-4">
+        <template x-for="chain in chains" :key="chain.id">
+          <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+            <button type="button" class="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-slate-50"
+                    @click="toggleChain(chain.id)">
+              <span class="font-semibold text-cisco-dark" x-text="chain.name"></span>
+              <i data-lucide="chevron-down" class="w-5 h-5 transition-transform"
+                 :class="{ 'rotate-180': expandedChain === chain.id }"></i>
+            </button>
+            <div x-show="expandedChain === chain.id" x-transition class="px-6 pb-4 border-t border-slate-100">
+              <p class="text-cisco-blue font-mono text-sm mt-4 mb-2" x-text="chain.flow"></p>
+              <p class="text-sm text-slate-600" x-text="chain.outcome"></p>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: GOVERNANCE -->
+  <section id="governance" class="py-24 bg-white section-reveal">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <div class="inline-flex items-center gap-2 bg-cisco-green/10 text-cisco-green rounded-full px-4 py-2 text-sm font-medium mb-4">
+          <i data-lucide="shield-check" class="w-4 h-4"></i>
+          Built to Be Trusted
+        </div>
+        <h2 class="text-4xl md:text-5xl font-black tracking-tight mb-4">Human Control Is the Architecture, Not an Afterthought</h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8 mb-16">
+        <template x-for="tier in trustTiers" :key="tier.id">
+          <div class="rounded-2xl border p-8"
+               :class="{
+                 'border-cisco-blue/30 bg-blue-50/50': tier.id === 'T1',
+                 'border-cisco-teal/30 bg-teal-50/50': tier.id === 'T2',
+                 'border-slate-300 bg-slate-50': tier.id === 'T3'
+               }">
+            <span class="text-xs font-bold uppercase tracking-wider text-cisco-blue" x-text="tier.id"></span>
+            <h3 class="text-xl font-bold mt-2 mb-3 text-cisco-dark" x-text="tier.title"></h3>
+            <p class="text-sm text-slate-600 leading-relaxed" x-text="tier.description"></p>
+          </div>
+        </template>
+      </div>
+
+      <!-- HITL flow -->
+      <div class="bg-slate-50 rounded-2xl p-8 mb-16 border border-slate-200">
+        <h3 class="text-lg font-bold text-cisco-dark mb-6 text-center">Human-in-the-Loop Flow</h3>
+        <div class="hitl-flow flex flex-wrap items-center justify-center gap-2 md:gap-0 text-sm font-medium text-slate-700">
+          <span class="hitl-step bg-white px-4 py-2 rounded-lg border shadow-sm">Agent generates</span>
+          <span class="hitl-arrow hidden md:inline"></span>
+          <span class="hitl-step bg-white px-4 py-2 rounded-lg border shadow-sm">Webex card</span>
+          <span class="hitl-arrow hidden md:inline"></span>
+          <span class="hitl-step bg-white px-4 py-2 rounded-lg border shadow-sm">Human reviews</span>
+          <span class="hitl-arrow hidden md:inline"></span>
+          <span class="hitl-step bg-cisco-blue/10 text-cisco-blue px-4 py-2 rounded-lg border border-cisco-blue/30">Approve · Edit · Dismiss · Snooze</span>
+          <span class="hitl-arrow hidden md:inline"></span>
+          <span class="hitl-step bg-white px-4 py-2 rounded-lg border shadow-sm">All decisions logged</span>
+        </div>
+      </div>
+
+      <!-- Principles -->
+      <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+        <template x-for="p in principles" :key="p.title">
+          <div class="text-center p-6 rounded-xl bg-slate-50 border border-slate-100">
+            <div class="w-12 h-12 mx-auto mb-4 rounded-xl bg-cisco-blue/10 flex items-center justify-center text-cisco-blue">
+              <i :data-lucide="p.icon" class="w-6 h-6"></i>
+            </div>
+            <p class="font-semibold text-cisco-dark text-sm" x-text="p.title"></p>
+          </div>
+        </template>
+      </div>
+
+      <footer class="text-center text-sm text-slate-500 border-t border-slate-200 pt-8">
+        Governance log maintained in <code class="text-cisco-blue">AI_FACTORY_GOVERNANCE_LOG.md</code> · Phase gate reviews every sprint
+      </footer>
+    </div>
+  </section>
+
+  <script>
+    function sdmDemo() {
+      return {
+        mobileNav: false,
+        activeSection: 'vision',
+        expandedAgent: null,
+        activePhase: 1,
+        expandedChain: null,
+
+        heroStats: [
+          { value: '45 min → 5 min', label: 'Weekly Status Report' },
+          { value: '8 hrs → 30 min', label: 'QBR Preparation' },
+          { value: 'Reactive → 5 Days Ahead', label: 'Risk Detection' }
+        ],
+
+        agents: [
+          {
+            id: 'delivery-tracker',
+            name: 'Delivery Tracker',
+            role: 'SDM · T1',
+            summary: 'Daily ranked account health from Helix milestones, cases, and entitlements.',
+            trigger: 'Daily 7am',
+            reads: 'Helix API — milestones, cases, entitlements',
+            output: 'Ranked account health dashboard',
+            timeSaved: '45 min manual pull → 5 min review',
+            trust: 'T1 — read-only, no approval needed'
+          },
+          {
+            id: 'risk-sentinel',
+            name: 'Risk & Escalation Sentinel',
+            role: 'SDM · T2',
+            summary: 'Predictive risk flags with Webex approval cards before any action.',
+            trigger: 'Daily 8am (after Delivery Tracker)',
+            reads: 'P1/P2 open >48h, SLA breach predicted <5 days, health drop >15pts',
+            output: 'Webex card: Escalate · Schedule Call · Snooze · Dismiss — human approves',
+            timeSaved: 'Reactive detection → 5–10 days predictive lead time',
+            trust: 'T2 — HITL gate, human approves before any action'
+          },
+          {
+            id: 'business-review',
+            name: 'Business Review Generator',
+            role: 'SDM/CXM · T2',
+            summary: 'Full QBR draft from Salesforce, ServiceNow, Helix, and delivery data.',
+            trigger: 'On-demand CLI per account',
+            reads: 'Salesforce, ServiceNow, Helix, Delivery Tracker',
+            output: 'QBR draft: exec summary, delivery narrative, risks, next-quarter priorities',
+            timeSaved: '8–12 hrs QBR prep → 30 min review + edit',
+            trust: 'T2 — SDM reviews all sections; agent never sends autonomously'
+          }
+        ],
+
+        phases: [
+          { id: 0, icon: '✅', title: 'Foundation', description: 'Governance framework, cycle-time baselines, agent card template, comms bridge.', agents: 'Infrastructure — agent cards, baselines, Webex HITL tested', status: 'complete' },
+          { id: 1, icon: '🟡', title: 'SDM Pilots', description: 'Weeks 5–12 · Proof of model with three SDM agents.', agents: 'Agents #1–3: Delivery Tracker, Risk Sentinel, Business Review Generator', status: 'active' },
+          { id: 2, icon: '⬜', title: 'CXM + PM', description: 'Months 4–6 · Customer health and plan management.', agents: 'Agents #4–10: Health Pulse, Outreach Drafter, Living Plan, and more', status: 'planned' },
+          { id: 3, icon: '⬜', title: 'CE + CDA', description: 'Months 7–9 · Config and architecture acceleration.', agents: 'Agents #11–18: Pattern Matcher, Compatibility Validator, Design Doc Generator', status: 'planned' },
+          { id: 4, icon: '⬜', title: 'HTOM + SDM Ops', description: 'Months 10–12 · SLA, resources, entitlements.', agents: 'Agents #19–26: SLA Sentinel, Resource Optimizer, Entitlement Monitor', status: 'planned' },
+          { id: 5, icon: '⬜', title: 'CPM + CXL', description: 'Year 2 Q1 · Program intelligence and exec reporting.', agents: 'Agents #27–34: Program Pulse, Executive Report Generator, Org Dashboard', status: 'planned' },
+          { id: 6, icon: '⬜', title: 'Orchestration', description: 'Year 2 Q2+ · End-to-end agent chains across roles.', agents: 'YAML workflows in delivery-workbench/orchestration/', status: 'planned' }
+        ],
+
+        chains: [
+          { id: 1, name: 'Account Risk-to-Action', flow: 'Customer Health Pulse → Risk Sentinel → Proactive Outreach Drafter', outcome: 'Cycle time: customer-risk-to-outreach — weeks → 24 hours' },
+          { id: 2, name: 'QBR Factory', flow: 'Delivery Tracker → Entitlement Monitor → Business Review Generator → Executive Report Generator', outcome: 'Cycle time: end-to-end QBR — 1–2 days → 30 min review' },
+          { id: 3, name: 'Technical Delivery Accelerator', flow: 'Architecture Pattern Matcher → Compatibility Validator → Design Doc Generator', outcome: 'Cycle time: design to ready-for-CE — 2–4 weeks → 2–3 days' },
+          { id: 4, name: 'Operations Intelligence Loop', flow: 'Delivery Risk Radar → SLA Sentinel → Resource Optimizer → Org Performance Dashboard', outcome: 'Continuous ops intelligence: reactive weekly → proactive real-time' }
+        ],
+
+        trustTiers: [
+          { id: 'T1', title: 'Read & Summarize', description: 'Reads data, surfaces insights. No approval needed. Agent displays; human decides.' },
+          { id: 'T2', title: 'Draft + Human Gate', description: 'Agent drafts action. Webex card. Human approves before anything happens. 45-day monitored window.' },
+          { id: 'T3', title: 'Autonomous', description: 'Only after 45-day HITL evidence, false positive rate <20%, GRC sign-off. Not used yet.' }
+        ],
+
+        principles: [
+          { icon: 'search', title: 'Audit Before Build' },
+          { icon: 'pen-line', title: 'Draft First' },
+          { icon: 'puzzle', title: 'Extend What Exists' },
+          { icon: 'bar-chart-2', title: 'One Chain, One Metric' }
+        ],
+
+        init() {
+          this.$nextTick(() => {
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+          });
+          this.$watch('expandedAgent', () => {
+            this.$nextTick(() => { if (typeof lucide !== 'undefined') lucide.createIcons(); });
+          });
+          this.$watch('expandedChain', () => {
+            this.$nextTick(() => { if (typeof lucide !== 'undefined') lucide.createIcons(); });
+          });
+          this.$watch('activePhase', () => {
+            this.$nextTick(() => { if (typeof lucide !== 'undefined') lucide.createIcons(); });
+          });
+
+          const sections = ['vision', 'live-work', 'roadmap', 'governance'];
+          const navObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                this.activeSection = entry.target.id;
+              }
+            });
+          }, { rootMargin: '-40% 0px -50% 0px', threshold: 0 });
+
+          sections.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) navObserver.observe(el);
+          });
+
+          const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+          }, { threshold: 0.1 });
+          document.querySelectorAll('.section-reveal').forEach(el => revealObserver.observe(el));
+        },
+
+        toggleAgent(id) {
+          this.expandedAgent = this.expandedAgent === id ? null : id;
+        },
+        selectPhase(id) {
+          this.activePhase = id;
+        },
+        toggleChain(id) {
+          this.expandedChain = this.expandedChain === id ? null : id;
+        }
+      };
+    }
+  </script>
+</body>
+</html>
+
+<!--
+DEPLOYMENT:
+1. git add content/sdm-exec-demo/index.html
+2. git commit -m "Add SDM exec demo page"
+3. git push origin main
+4. In GitHub repo Settings > Pages > Source: Deploy from branch > main > /root
+5. URL will be: https://michabr4.github.io/windsurf-cursor-master/content/sdm-exec-demo/
+-->
