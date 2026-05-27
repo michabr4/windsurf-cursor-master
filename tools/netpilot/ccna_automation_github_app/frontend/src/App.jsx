@@ -1,24 +1,18 @@
 import * as React from 'react';
 import {
-  fetchFlashcards,
-  fetchPracticeQuestions,
-  fetchSourcePackage,
-  fetchStudyPlan,
-  fetchWeakAreas,
-} from './api/client';
-import {
+  CCNA_AUTOMATION_RESOURCES,
   CCNA_COMPONENT_MAP,
   EXAM_DURATION_SECONDS,
   EXAM_QUESTION_COUNT,
   FLASH_HELP_VIDEOS,
-  SESSION_KEY,
   SHOW_EXTENDED_LANDSCAPE,
   STUDY_TABS,
   githubWorkflow,
   labMissions,
   navItems,
 } from './constants';
-import { readSessionState } from './utils/session';
+import { usePersistedStudyState } from './hooks/usePersistedStudyState';
+import { useStudyHubBootstrap } from './hooks/useStudyHubBootstrap';
 import {
   buildClue,
   buildDevascWeightedSession,
@@ -29,171 +23,63 @@ import {
   hashString,
 } from './utils/studyUtils';
 
-const { useEffect, useMemo, useRef, useState } = React;
+const { useEffect, useMemo, useRef } = React;
 
 export default function App() {
-  const persisted = useMemo(() => readSessionState(), []);
-  const [sourcePackage, setSourcePackage] = useState(null);
-  const [plan, setPlan] = useState(null);
-  const [cards, setCards] = useState([]);
-  const [practiceQuestions, setPracticeQuestions] = useState([]);
-  const [weakAreas, setWeakAreas] = useState([]);
-  const [activeStudyTab, setActiveStudyTab] = useState(
-    STUDY_TABS.some((tab) => tab.id === persisted.activeStudyTab) ? persisted.activeStudyTab : 'mission'
-  );
-  const [flashIndex, setFlashIndex] = useState(persisted.flashIndex || 0);
-  const [flashSelections, setFlashSelections] = useState(persisted.flashSelections || {});
-  const [flashChecked, setFlashChecked] = useState(persisted.flashChecked || {});
-  const [flashWrongCounts, setFlashWrongCounts] = useState(persisted.flashWrongCounts || {});
-  const [confidenceLog, setConfidenceLog] = useState(persisted.confidenceLog || {});
-  const [quizAnswers, setQuizAnswers] = useState(persisted.quizAnswers || {});
-  const [quizSubmitted, setQuizSubmitted] = useState(Boolean(persisted.quizSubmitted));
-  const [quizReviewMode, setQuizReviewMode] = useState(Boolean(persisted.quizReviewMode));
-  const [quizIndex, setQuizIndex] = useState(persisted.quizIndex || 0);
-  const [examMode, setExamMode] = useState(Boolean(persisted.examMode));
-  const [examActive, setExamActive] = useState(Boolean(persisted.examActive));
-  const [examSecondsLeft, setExamSecondsLeft] = useState(
-    persisted.examSecondsLeft || EXAM_DURATION_SECONDS
-  );
-  const [difficultyLevel, setDifficultyLevel] = useState(persisted.difficultyLevel || 'foundation');
-  const [workflowStep] = useState(persisted.workflowStep || 0);
-  const [workflowScore] = useState(persisted.workflowScore || 0);
-  const [completedMissions, setCompletedMissions] = useState(persisted.completedMissions || {});
-  const [dailyStreak, setDailyStreak] = useState(persisted.dailyStreak || 1);
-  const [lastActiveDate, setLastActiveDate] = useState(persisted.lastActiveDate || getTodayKey());
-  const [streakFreeze, setStreakFreeze] = useState(persisted.streakFreeze || 1);
-  const [streakHistory, setStreakHistory] = useState(persisted.streakHistory || {});
-  const [achievementHistory, setAchievementHistory] = useState(persisted.achievementHistory || []);
-  const [error, setError] = useState('');
+  const {
+    sourcePackage,
+    plan,
+    cards,
+    practiceQuestions,
+    weakAreas,
+    error,
+    loading,
+    ready,
+  } = useStudyHubBootstrap();
 
-  const flashTouchStartRef = useRef(null);
-  const quizTouchStartRef = useRef(null);
-
-  useEffect(() => {
-    async function bootstrap() {
-      try {
-        const profile = {
-          exam_date: '2026-09-01',
-          hours_per_week: 8,
-          current_level: 'beginner',
-        };
-
-        const sampleResults = [
-          { domain: 'REST APIs', score_percent: 62, attempts: 2 },
-          { domain: 'Python for Automation', score_percent: 48, attempts: 3 },
-          { domain: 'JSON/Data Modeling', score_percent: 81, attempts: 1 },
-        ];
-
-        const [pkg, planData, cardData, questionData, weakData] = await Promise.all([
-          fetchSourcePackage(),
-          fetchStudyPlan(profile),
-          fetchFlashcards(),
-          fetchPracticeQuestions(),
-          fetchWeakAreas(sampleResults),
-        ]);
-
-        setSourcePackage(pkg);
-        setPlan(planData);
-        setCards(cardData);
-        setPracticeQuestions(questionData);
-        setWeakAreas(weakData);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to load application data.');
-      }
-    }
-
-    bootstrap();
-  }, []);
-
-  useEffect(() => {
-    if (STUDY_TABS.some((tab) => tab.id === activeStudyTab)) return;
-    setActiveStudyTab('mission');
-  }, [activeStudyTab]);
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const stateToPersist = {
-      activeStudyTab,
-      flashIndex,
-      flashSelections,
-      flashChecked,
-      flashWrongCounts,
-      confidenceLog,
-      quizAnswers,
-      quizSubmitted,
-      quizReviewMode,
-      quizIndex,
-      examMode,
-      examActive,
-      examSecondsLeft,
-      difficultyLevel,
-      workflowStep,
-      workflowScore,
-      completedMissions,
-      dailyStreak,
-      lastActiveDate,
-      streakFreeze,
-      streakHistory,
-      achievementHistory,
-    };
-    try {
-      window.localStorage.setItem(SESSION_KEY, JSON.stringify(stateToPersist));
-    } catch {
-      // Ignore persistence failures so UI never crashes.
-    }
-  }, [
+  const {
     activeStudyTab,
+    setActiveStudyTab,
     flashIndex,
+    setFlashIndex,
     flashSelections,
+    setFlashSelections,
     flashChecked,
+    setFlashChecked,
     flashWrongCounts,
+    setFlashWrongCounts,
     confidenceLog,
+    setConfidenceLog,
     quizAnswers,
+    setQuizAnswers,
     quizSubmitted,
+    setQuizSubmitted,
     quizReviewMode,
+    setQuizReviewMode,
     quizIndex,
+    setQuizIndex,
     examMode,
+    setExamMode,
     examActive,
+    setExamActive,
     examSecondsLeft,
+    setExamSecondsLeft,
     difficultyLevel,
+    setDifficultyLevel,
     workflowStep,
     workflowScore,
     completedMissions,
+    setCompletedMissions,
     dailyStreak,
-    lastActiveDate,
     streakFreeze,
+    setStreakFreeze,
     streakHistory,
     achievementHistory,
-  ]);
+    setAchievementHistory,
+  } = usePersistedStudyState();
 
-  useEffect(() => {
-    const today = getTodayKey();
-    if (today === lastActiveDate) return;
-
-    const prev = new Date(lastActiveDate);
-    const cur = new Date(today);
-    const dayDiff = Math.round((cur.getTime() - prev.getTime()) / (1000 * 60 * 60 * 24));
-
-    if (dayDiff === 1) {
-      setDailyStreak((prevStreak) => prevStreak + 1);
-    } else if (dayDiff > 1) {
-      if (streakFreeze > 0) {
-        setStreakFreeze((prevFreeze) => prevFreeze - 1);
-      } else {
-        setDailyStreak(1);
-      }
-    }
-
-    setLastActiveDate(today);
-  }, [lastActiveDate, streakFreeze]);
-
-  useEffect(() => {
-    const today = getTodayKey();
-    setStreakHistory((prevHistory) => {
-      if (prevHistory[today]) return prevHistory;
-      return { ...prevHistory, [today]: 1 };
-    });
-  }, []);
+  const flashTouchStartRef = useRef(null);
+  const quizTouchStartRef = useRef(null);
 
   const adaptiveQuestions = useMemo(() => {
     if (!practiceQuestions.length) return [];
@@ -544,7 +430,7 @@ export default function App() {
     return <main className="app-shell error">{error}</main>;
   }
 
-  if (!sourcePackage || !plan) {
+  if (loading || !ready) {
     return (
       <main className="app-shell loading">Loading Automation + GitHub Training Hub...</main>
     );

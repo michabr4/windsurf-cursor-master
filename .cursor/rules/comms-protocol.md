@@ -42,3 +42,11 @@ If `.comms/` exists and you complete a significant piece of work:
 ## Message Formats
 
 See `.comms/schema.md` for full JSON schema definitions.
+
+## Restructure policy (Architect)
+
+Before scheduling refactor/restructure tasks, read:
+
+`tools/netpilot/ccna_automation_github_app/docs/RESTRUCTURE_GUIDANCE.md`
+
+Do not issue weekly refactors by default; use the trigger table in that doc (god file >800 lines, duplicate logic, phase-gate audit P1+, etc.).
