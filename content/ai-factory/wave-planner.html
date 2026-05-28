@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en" x-data="wavePlanner()" x-init="init()">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Factory — Wave Planner | Cisco CX</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+          colors: {
+            cisco: {
+              blue: '#049fd9', dark: '#171f2d', navy: '#1a2332',
+              teal: '#00bceb', green: '#6cc04a', sky: '#64bbe3'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .cisco-header {
+      background: linear-gradient(135deg, #171f2d 0%, #1a2332 50%, #0d1a2e 100%);
+    }
+    .agent-card {
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .agent-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(4, 159, 217, 0.13);
+    }
+    .ease-easy   { border-left-color: #6cc04a; }
+    .ease-medium { border-left-color: #049fd9; }
+    .ease-complex { border-left-color: #f97316; }
+    [x-cloak] { display: none !important; }
+  </style>
+</head>
+<body class="font-sans bg-slate-50 text-slate-800 antialiased">
+
+  <!-- ===== HEADER ===== -->
+  <header class="cisco-header text-white px-6 py-6 shadow-lg">
+    <div class="max-w-screen-2xl mx-auto">
+      <a href="index.html"
+         class="inline-flex items-center gap-1.5 text-xs font-semibold tracking-widest uppercase text-cisco-sky/70 hover:text-cisco-sky transition mb-3">
+        <i data-lucide="arrow-left" class="w-3 h-3"></i> Cisco CX · AI People Factory
+      </a>
+      <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
+        <div>
+          <h1 class="text-2xl font-bold tracking-tight">Wave Planner</h1>
+          <p class="text-cisco-sky/60 text-sm mt-1">34 agents · 5 implementation waves · sequenced by ease of build</p>
+        </div>
+        <div class="flex items-center gap-5 text-xs text-cisco-sky/60">
+          <span class="flex items-center gap-1.5">
+            <span class="w-2.5 h-2.5 rounded-full bg-[#6cc04a]"></span> Easy ≤1 wk
+          </span>
+          <span class="flex items-center gap-1.5">
+            <span class="w-2.5 h-2.5 rounded-full bg-[#049fd9]"></span> Medium 1–3 wks
+          </span>
+          <span class="flex items-center gap-1.5">
+            <span class="w-2.5 h-2.5 rounded-full bg-orange-400"></span> Complex 3+ wks
+          </span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-screen-2xl mx-auto px-6 py-6 space-y-5 fade-in-up">
+
+    <!-- ===== KPI BAR ===== -->
+    <div class="grid grid-cols-4 sm:grid-cols-4 lg:grid-cols-9 gap-3">
+      <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm col-span-2 lg:col-span-2">
+        <div class="text-3xl font-black text-slate-800" x-text="filteredAgents.length"></div>
+        <div class="text-xs text-slate-500 mt-0.5 font-medium">Agents shown</div>
+      </div>
+      <div class="bg-white rounded-xl border border-slate-200 border-t-2 border-t-[#6cc04a] p-4 shadow-sm col-span-2 lg:col-span-1">
+        <div class="text-2xl font-bold text-[#6cc04a]" x-text="filteredAgents.filter(a=>a.ease==='easy').length"></div>
+        <div class="text-xs text-slate-500 mt-0.5">Easy</div>
+      </div>
+      <div class="bg-white rounded-xl border border-slate-200 border-t-2 border-t-[#049fd9] p-4 shadow-sm col-span-2 lg:col-span-1">
+        <div class="text-2xl font-bold text-[#049fd9]" x-text="filteredAgents.filter(a=>a.ease==='medium').length"></div>
+        <div class="text-xs text-slate-500 mt-0.5">Medium</div>
+      </div>
+      <div class="bg-white rounded-xl border border-slate-200 border-t-2 border-t-orange-400 p-4 shadow-sm col-span-2 lg:col-span-1">
+        <div class="text-2xl font-bold text-orange-400" x-text="filteredAgents.filter(a=>a.ease==='complex').length"></div>
+        <div class="text-xs text-slate-500 mt-0.5">Complex</div>
+      </div>
+      <template x-for="w in waves" :key="w.id">
+        <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm col-span-2 lg:col-span-1">
+          <div class="text-2xl font-bold text-slate-700" x-text="filteredAgents.filter(a=>a.wave===w.id).length"></div>
+          <div class="text-xs text-slate-500 mt-0.5" x-text="`Wave ${w.id}`"></div>
+        </div>
+      </template>
+    </div>
+
+    <!-- ===== FILTER + VIEW BAR ===== -->
+    <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm flex flex-wrap items-center gap-4">
+      <div class="flex items-center gap-2">
+        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Role</span>
+        <select x-model="filterRole" title="Filter by role"
+          class="text-sm border border-slate-200 rounded-lg px-3 py-1.5 bg-white focus:outline-none focus:ring-2 focus:ring-[#049fd9]">
+          <option value="">All Roles</option>
+          <template x-for="r in allRoles" :key="r">
+            <option :value="r" x-text="r"></option>
+          </template>
+        </select>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Ease</span>
+        <select x-model="filterEase" title="Filter by ease of implementation"
+          class="text-sm border border-slate-200 rounded-lg px-3 py-1.5 bg-white focus:outline-none focus:ring-2 focus:ring-[#049fd9]">
+          <option value="">All Ease</option>
+          <option value="easy">Easy (≤1 week)</option>
+          <option value="medium">Medium (1–3 weeks)</option>
+          <option value="complex">Complex (3+ weeks)</option>
+        </select>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Trust</span>
+        <select x-model="filterTier" title="Filter by trust tier"
+          class="text-sm border border-slate-200 rounded-lg px-3 py-1.5 bg-white focus:outline-none focus:ring-2 focus:ring-[#049fd9]">
+          <option value="">All Tiers</option>
+          <option value="T1">T1 — Read only</option>
+          <option value="T2">T2 — Draft + HITL</option>
+        </select>
+      </div>
+      <button x-show="filterRole || filterEase || filterTier" x-cloak
+        @click="filterRole=''; filterEase=''; filterTier=''"
+        class="text-xs text-slate-400 hover:text-slate-700 flex items-center gap-1 transition">
+        <i data-lucide="x" class="w-3 h-3"></i> Clear filters
+      </button>
+
+      <!-- View toggle -->
+      <div class="ml-auto flex items-center gap-1 bg-slate-100 rounded-lg p-1">
+        <button @click="view='swim'"
+          :class="view==='swim' ? 'bg-[#049fd9] text-white shadow-sm' : 'text-slate-500 hover:text-slate-700'"
+          class="text-xs font-medium px-3 py-1.5 rounded-md transition flex items-center gap-1.5">
+          <i data-lucide="layout-list" class="w-3 h-3"></i> Swim Lanes
+        </button>
+        <button @click="view='matrix'"
+          :class="view==='matrix' ? 'bg-[#049fd9] text-white shadow-sm' : 'text-slate-500 hover:text-slate-700'"
+          class="text-xs font-medium px-3 py-1.5 rounded-md transition flex items-center gap-1.5">
+          <i data-lucide="table-2" class="w-3 h-3"></i> Matrix
+        </button>
+      </div>
+    </div>
+
+    <!-- ===== SWIM LANE VIEW ===== -->
+    <div x-show="view === 'swim'" class="space-y-5">
+      <template x-for="w in waves" :key="w.id">
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+
+          <!-- Wave header bar -->
+          <div class="px-6 py-4 bg-gradient-to-r from-slate-800 to-slate-700 flex items-center justify-between gap-4">
+            <div class="min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-[10px] font-black uppercase tracking-widest text-[#049fd9]"
+                  x-text="`Wave ${w.id}`"></span>
+                <span class="text-slate-600 text-xs">·</span>
+                <span class="text-xs text-slate-400" x-text="w.timeline"></span>
+              </div>
+              <h2 class="text-base font-bold text-white truncate" x-text="w.name"></h2>
+              <p class="text-xs text-slate-400 mt-0.5" x-text="w.subtitle"></p>
+            </div>
+            <div class="shrink-0 flex items-center gap-5">
+              <div class="hidden sm:flex flex-col gap-1 text-right text-xs">
+                <span class="flex items-center justify-end gap-1.5 text-[#6cc04a]">
+                  <span x-text="`${waveEaseAgents(w.id,'easy').length} easy`"></span>
+                  <span class="w-2 h-2 rounded-full bg-[#6cc04a]"></span>
+                </span>
+                <span class="flex items-center justify-end gap-1.5 text-[#049fd9]">
+                  <span x-text="`${waveEaseAgents(w.id,'medium').length} medium`"></span>
+                  <span class="w-2 h-2 rounded-full bg-[#049fd9]"></span>
+                </span>
+                <span class="flex items-center justify-end gap-1.5 text-orange-400">
+                  <span x-text="`${waveEaseAgents(w.id,'complex').length} complex`"></span>
+                  <span class="w-2 h-2 rounded-full bg-orange-400"></span>
+                </span>
+              </div>
+              <div class="text-center">
+                <div class="text-2xl font-black text-white"
+                  x-text="waveEaseAgents(w.id,'easy').length + waveEaseAgents(w.id,'medium').length + waveEaseAgents(w.id,'complex').length"></div>
+                <div class="text-[10px] text-slate-400 uppercase tracking-wide">agents</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3-column ease layout -->
+          <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-100">
+
+            <!-- EASY -->
+            <div class="p-4">
+              <div class="flex items-center gap-2 mb-3 pb-2 border-b border-slate-100">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#6cc04a] shrink-0"></span>
+                <span class="text-xs font-bold text-[#6cc04a] uppercase tracking-wide">Easy</span>
+                <span class="text-xs text-slate-400">≤ 1 week</span>
+                <span class="ml-auto text-xs font-semibold text-[#6cc04a] bg-[#6cc04a]/10 px-2 py-0.5 rounded-full"
+                  x-text="waveEaseAgents(w.id,'easy').length"></span>
+              </div>
+              <div class="space-y-2.5">
+                <template x-for="a in waveEaseAgents(w.id,'easy')" :key="a.id">
+                  <div class="agent-card bg-white rounded-xl border border-slate-200 border-l-4 ease-easy p-3 shadow-sm">
+                    <div class="flex items-start justify-between gap-2 mb-1.5">
+                      <span class="font-semibold text-sm text-slate-800 leading-snug" x-text="a.name"></span>
+                      <span class="shrink-0 text-[10px] font-bold px-1.5 py-0.5 rounded-full leading-none"
+                        :class="a.tier==='T1' ? 'bg-slate-100 text-slate-500' : 'bg-[#049fd9]/10 text-[#049fd9]'"
+                        x-text="a.tier"></span>
+                    </div>
+                    <div class="flex items-center gap-1.5 mb-2">
+                      <span class="text-[10px] font-semibold px-1.5 py-0.5 rounded-md bg-slate-100 text-slate-600"
+                        x-text="a.role"></span>
+                      <span class="text-[10px] text-slate-400" x-text="a.status"></span>
+                    </div>
+                    <p class="text-xs text-slate-500 leading-relaxed" x-text="a.desc"></p>
+                  </div>
+                </template>
+                <div x-show="waveEaseAgents(w.id,'easy').length === 0"
+                  class="text-xs text-slate-300 italic py-4 text-center">—</div>
+              </div>
+            </div>
+
+            <!-- MEDIUM -->
+            <div class="p-4">
+              <div class="flex items-center gap-2 mb-3 pb-2 border-b border-slate-100">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#049fd9] shrink-0"></span>
+                <span class="text-xs font-bold text-[#049fd9] uppercase tracking-wide">Medium</span>
+                <span class="text-xs text-slate-400">1–3 weeks</span>
+                <span class="ml-auto text-xs font-semibold text-[#049fd9] bg-[#049fd9]/10 px-2 py-0.5 rounded-full"
+                  x-text="waveEaseAgents(w.id,'medium').length"></span>
+              </div>
+              <div class="space-y-2.5">
+                <template x-for="a in waveEaseAgents(w.id,'medium')" :key="a.id">
+                  <div class="agent-card bg-white rounded-xl border border-slate-200 border-l-4 ease-medium p-3 shadow-sm">
+                    <div class="flex items-start justify-between gap-2 mb-1.5">
+                      <span class="font-semibold text-sm text-slate-800 leading-snug" x-text="a.name"></span>
+                      <span class="shrink-0 text-[10px] font-bold px-1.5 py-0.5 rounded-full leading-none"
+                        :class="a.tier==='T1' ? 'bg-slate-100 text-slate-500' : 'bg-[#049fd9]/10 text-[#049fd9]'"
+                        x-text="a.tier"></span>
+                    </div>
+                    <div class="flex items-center gap-1.5 mb-2">
+                      <span class="text-[10px] font-semibold px-1.5 py-0.5 rounded-md bg-slate-100 text-slate-600"
+                        x-text="a.role"></span>
+                      <span class="text-[10px] text-slate-400" x-text="a.status"></span>
+                    </div>
+                    <p class="text-xs text-slate-500 leading-relaxed" x-text="a.desc"></p>
+                  </div>
+                </template>
+                <div x-show="waveEaseAgents(w.id,'medium').length === 0"
+                  class="text-xs text-slate-300 italic py-4 text-center">—</div>
+              </div>
+            </div>
+
+            <!-- COMPLEX -->
+            <div class="p-4">
+              <div class="flex items-center gap-2 mb-3 pb-2 border-b border-slate-100">
+                <span class="w-2.5 h-2.5 rounded-full bg-orange-400 shrink-0"></span>
+                <span class="text-xs font-bold text-orange-400 uppercase tracking-wide">Complex</span>
+                <span class="text-xs text-slate-400">3+ weeks</span>
+                <span class="ml-auto text-xs font-semibold text-orange-400 bg-orange-400/10 px-2 py-0.5 rounded-full"
+                  x-text="waveEaseAgents(w.id,'complex').length"></span>
+              </div>
+              <div class="space-y-2.5">
+                <template x-for="a in waveEaseAgents(w.id,'complex')" :key="a.id">
+                  <div class="agent-card bg-white rounded-xl border border-slate-200 border-l-4 ease-complex p-3 shadow-sm">
+                    <div class="flex items-start justify-between gap-2 mb-1.5">
+                      <span class="font-semibold text-sm text-slate-800 leading-snug" x-text="a.name"></span>
+                      <span class="shrink-0 text-[10px] font-bold px-1.5 py-0.5 rounded-full leading-none"
+                        :class="a.tier==='T1' ? 'bg-slate-100 text-slate-500' : 'bg-[#049fd9]/10 text-[#049fd9]'"
+                        x-text="a.tier"></span>
+                    </div>
+                    <div class="flex items-center gap-1.5 mb-2">
+                      <span class="text-[10px] font-semibold px-1.5 py-0.5 rounded-md bg-slate-100 text-slate-600"
+                        x-text="a.role"></span>
+                      <span class="text-[10px] text-slate-400" x-text="a.status"></span>
+                    </div>
+                    <p class="text-xs text-slate-500 leading-relaxed" x-text="a.desc"></p>
+                  </div>
+                </template>
+                <div x-show="waveEaseAgents(w.id,'complex').length === 0"
+                  class="text-xs text-slate-300 italic py-4 text-center">—</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </template>
+    </div>
+
+    <!-- ===== MATRIX VIEW ===== -->
+    <div x-show="view === 'matrix'" class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+      <div class="px-6 py-4 border-b border-slate-100">
+        <h2 class="font-semibold text-slate-800">Wave × Ease Matrix</h2>
+        <p class="text-xs text-slate-500 mt-0.5">All agents plotted by implementation wave and build complexity</p>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="bg-slate-50 border-b border-slate-100">
+              <th class="text-left px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide w-44">Wave</th>
+              <th class="text-left px-5 py-3">
+                <span class="flex items-center gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-[#6cc04a]"></span>
+                  <span class="text-xs font-bold text-[#6cc04a] uppercase tracking-wide">Easy</span>
+                  <span class="text-xs text-slate-400 font-normal">≤ 1 week</span>
+                </span>
+              </th>
+              <th class="text-left px-5 py-3">
+                <span class="flex items-center gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-[#049fd9]"></span>
+                  <span class="text-xs font-bold text-[#049fd9] uppercase tracking-wide">Medium</span>
+                  <span class="text-xs text-slate-400 font-normal">1–3 weeks</span>
+                </span>
+              </th>
+              <th class="text-left px-5 py-3">
+                <span class="flex items-center gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-orange-400"></span>
+                  <span class="text-xs font-bold text-orange-400 uppercase tracking-wide">Complex</span>
+                  <span class="text-xs text-slate-400 font-normal">3+ weeks</span>
+                </span>
+              </th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-50">
+            <template x-for="w in waves" :key="w.id">
+              <tr class="hover:bg-slate-50/60 align-top">
+                <td class="px-5 py-4">
+                  <div class="text-[10px] font-black uppercase tracking-widest text-[#049fd9]"
+                    x-text="`Wave ${w.id}`"></div>
+                  <div class="font-semibold text-slate-700 text-sm mt-0.5 leading-snug" x-text="w.name"></div>
+                  <div class="text-[10px] text-slate-400 mt-1" x-text="w.timeline"></div>
+                </td>
+                <td class="px-5 py-4 align-top">
+                  <div class="flex flex-wrap gap-1.5">
+                    <template x-for="a in waveEaseAgents(w.id,'easy')" :key="a.id">
+                      <span class="inline-block text-xs font-medium px-2 py-1 rounded-lg bg-[#6cc04a]/10 text-[#3a7a1e] border border-[#6cc04a]/25"
+                        x-text="a.name"></span>
+                    </template>
+                    <span x-show="waveEaseAgents(w.id,'easy').length === 0"
+                      class="text-xs text-slate-300 italic">—</span>
+                  </div>
+                </td>
+                <td class="px-5 py-4 align-top">
+                  <div class="flex flex-wrap gap-1.5">
+                    <template x-for="a in waveEaseAgents(w.id,'medium')" :key="a.id">
+                      <span class="inline-block text-xs font-medium px-2 py-1 rounded-lg bg-[#049fd9]/10 text-[#0369a1] border border-[#049fd9]/20"
+                        x-text="a.name"></span>
+                    </template>
+                    <span x-show="waveEaseAgents(w.id,'medium').length === 0"
+                      class="text-xs text-slate-300 italic">—</span>
+                  </div>
+                </td>
+                <td class="px-5 py-4 align-top">
+                  <div class="flex flex-wrap gap-1.5">
+                    <template x-for="a in waveEaseAgents(w.id,'complex')" :key="a.id">
+                      <span class="inline-block text-xs font-medium px-2 py-1 rounded-lg bg-orange-50 text-orange-700 border border-orange-200"
+                        x-text="a.name"></span>
+                    </template>
+                    <span x-show="waveEaseAgents(w.id,'complex').length === 0"
+                      class="text-xs text-slate-300 italic">—</span>
+                  </div>
+                </td>
+              </tr>
+            </template>
+          </tbody>
+          <!-- Totals row -->
+          <tfoot>
+            <tr class="bg-slate-50 border-t-2 border-slate-200">
+              <td class="px-5 py-3 text-xs font-bold text-slate-600 uppercase tracking-wide">Totals</td>
+              <td class="px-5 py-3">
+                <span class="text-sm font-bold text-[#6cc04a]"
+                  x-text="filteredAgents.filter(a=>a.ease==='easy').length"></span>
+                <span class="text-xs text-slate-400 ml-1">agents</span>
+              </td>
+              <td class="px-5 py-3">
+                <span class="text-sm font-bold text-[#049fd9]"
+                  x-text="filteredAgents.filter(a=>a.ease==='medium').length"></span>
+                <span class="text-xs text-slate-400 ml-1">agents</span>
+              </td>
+              <td class="px-5 py-3">
+                <span class="text-sm font-bold text-orange-400"
+                  x-text="filteredAgents.filter(a=>a.ease==='complex').length"></span>
+                <span class="text-xs text-slate-400 ml-1">agents</span>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="text-center text-xs text-slate-400 pb-6">
+      AI Factory Wave Planner · 34 agents · 5 waves · Cisco CX Transformation
+      <span class="mx-2">·</span>
+      <a href="index.html" class="hover:text-[#049fd9] transition">Back to Framework</a>
+    </div>
+
+  </main>
+
+  <!-- ===== ALPINE DATA ===== -->
+  <script>
+    function wavePlanner() {
+      return {
+        view: 'swim',
+        filterRole: '',
+        filterEase: '',
+        filterTier: '',
+
+        waves: [
+          { id: 1, name: 'SDM Pilots',         subtitle: 'Prove the model with 3 foundational SDM agents',             timeline: 'Months 1–3'  },
+          { id: 2, name: 'CXM + PM Expansion', subtitle: 'Customer health, outreach, and project plan management',      timeline: 'Months 4–6'  },
+          { id: 3, name: 'CE + CDA Technical', subtitle: 'Config acceleration, diagnostics, and architecture intelligence', timeline: 'Months 7–9' },
+          { id: 4, name: 'HTOM + SDM Ops',     subtitle: 'SLA monitoring, resource optimization, operational reporting', timeline: 'Months 10–12'},
+          { id: 5, name: 'CPM + CXL Strategic',subtitle: 'Program intelligence, executive reporting, and org leadership', timeline: 'Year 2 Q1'  },
+        ],
+
+        agents: [
+          /* ── Wave 1 — SDM Pilots ── */
+          { id:1,  name:'Delivery Tracker',              role:'SDM',     wave:1, tier:'T1', ease:'easy',    status:'In Design',
+            desc:'Real-time dashboard of all active service deliveries, milestones, and entitlement consumption across the SDM portfolio' },
+          { id:2,  name:'Risk & Escalation Sentinel',    role:'SDM',     wave:1, tier:'T2', ease:'medium',  status:'In Design',
+            desc:'Monitors delivery health indicators, detects scope creep and timeline slippage, and auto-routes escalations by severity' },
+          { id:3,  name:'Business Review Generator',     role:'SDM/CXM', wave:1, tier:'T2', ease:'medium',  status:'In Design',
+            desc:'Auto-compiles quarterly and executive business reviews from usage data, delivery milestones, and outcomes' },
+
+          /* ── Wave 2 — CXM + PM ── */
+          { id:4,  name:'Customer Health Pulse',         role:'CXM',     wave:2, tier:'T1', ease:'easy',    status:'Planned',
+            desc:'Aggregates telemetry, support cases, adoption signals, and engagement data into a real-time health score per account' },
+          { id:5,  name:'Proactive Outreach Drafter',    role:'CXM',     wave:2, tier:'T2', ease:'medium',  status:'Planned',
+            desc:'Drafts personalized customer communications based on health signals; human approves before send' },
+          { id:6,  name:'Cross-Functional Coordinator',  role:'CXM',     wave:2, tier:'T1', ease:'easy',    status:'Planned',
+            desc:'Synthesizes status from CE, PM, and CDA workstreams into a unified customer view and flags gaps' },
+          { id:7,  name:'Living Plan Agent',             role:'PM',      wave:2, tier:'T2', ease:'complex', status:'Planned',
+            desc:'Continuously updates project plans based on actual progress, dependency shifts, and team velocity in real time' },
+          { id:8,  name:'Stakeholder Communicator',      role:'PM',      wave:2, tier:'T2', ease:'medium',  status:'Planned',
+            desc:'Drafts tailored project updates — executive summary for leaders, technical detail for CEs and CDAs' },
+          { id:9,  name:'Schedule Risk Predictor',       role:'PM',      wave:2, tier:'T2', ease:'complex', status:'Planned',
+            desc:'Uses ML on historical Cisco delivery data to predict schedule delays and recommend mitigations' },
+          { id:10, name:'Lessons Learned Harvester',     role:'PM',      wave:2, tier:'T1', ease:'easy',    status:'Planned',
+            desc:'Auto-captures project outcomes, decisions, and reusable patterns to build a systematic knowledge base' },
+
+          /* ── Wave 3 — CE + CDA ── */
+          { id:11, name:'Config Accelerator',            role:'CE',      wave:3, tier:'T2', ease:'complex', status:'Planned',
+            desc:'Generates validated configuration templates based on customer requirements and Cisco best practices' },
+          { id:12, name:'Diagnostic Accelerator',        role:'CE',      wave:3, tier:'T2', ease:'complex', status:'Planned',
+            desc:'Analyzes logs, configs, and symptoms to suggest probable causes and resolution steps from Cisco knowledge' },
+          { id:13, name:'Engagement Context Keeper',     role:'CE',      wave:3, tier:'T1', ease:'medium',  status:'Planned',
+            desc:'Maintains full technical narrative across handoffs — no customer or teammate starts from zero' },
+          { id:14, name:'Implementation Pattern Miner',  role:'CE',      wave:3, tier:'T1', ease:'medium',  status:'Planned',
+            desc:'Captures implementation decisions and outcomes to build a reusable knowledge base of what works' },
+          { id:15, name:'Architecture Pattern Matcher',  role:'CDA',     wave:3, tier:'T1', ease:'medium',  status:'Planned',
+            desc:'Matches customer requirements against proven Cisco design patterns and past successful implementations' },
+          { id:16, name:'Compatibility Validator',       role:'CDA',     wave:3, tier:'T1', ease:'easy',    status:'Planned',
+            desc:'Automatically validates designs against Cisco compatibility matrices, EOL data, and known constraints' },
+          { id:17, name:'Design Doc Generator',          role:'CDA',     wave:3, tier:'T2', ease:'medium',  status:'Planned',
+            desc:'Creates comprehensive HLD/LLD documents from structured inputs and validated architecture patterns' },
+          { id:18, name:'Product Intelligence Feed',     role:'CDA',     wave:3, tier:'T1', ease:'easy',    status:'Planned',
+            desc:'Continuously monitors Cisco product updates, release notes, bugs, and feature changes relevant to active designs' },
+
+          /* ── Wave 4 — HTOM + SDM Ops ── */
+          { id:19, name:'SLA Sentinel',                  role:'HTOM',    wave:4, tier:'T2', ease:'medium',  status:'Planned',
+            desc:'Real-time SLA monitoring with automatic alerting when thresholds approach breach across all active engagements' },
+          { id:20, name:'Resource Optimizer',            role:'HTOM',    wave:4, tier:'T2', ease:'complex', status:'Planned',
+            desc:'Analyzes workload, skills, availability, and time zones to recommend optimal resource allocation' },
+          { id:21, name:'Ops Status Generator',          role:'HTOM',    wave:4, tier:'T2', ease:'medium',  status:'Planned',
+            desc:'Auto-compiles operational status reports from project tools, delivery milestones, and team inputs' },
+          { id:22, name:'Delivery Risk Radar',           role:'HTOM',    wave:4, tier:'T1', ease:'medium',  status:'Planned',
+            desc:'Scans engagement patterns, resource gaps, and SLA trends to flag delivery risks before they materialize' },
+          { id:23, name:'Entitlement Monitor',           role:'SDM',     wave:4, tier:'T1', ease:'easy',    status:'Planned',
+            desc:'Tracks contracted vs. consumed services and flags underutilization or overrun before they become issues' },
+          { id:24, name:'Service Gap Predictor',         role:'SDM',     wave:4, tier:'T2', ease:'complex', status:'Planned',
+            desc:'Analyzes delivery patterns, resource availability, and contract timelines to predict gaps and recommend actions' },
+          { id:25, name:'Delivery Comms Drafter',        role:'SDM',     wave:4, tier:'T2', ease:'medium',  status:'Planned',
+            desc:'Auto-generates customer-facing delivery status updates and service reports; human approves before send' },
+          { id:26, name:'Financial Health Agent',        role:'SDM',     wave:4, tier:'T1', ease:'medium',  status:'Planned',
+            desc:'Monitors account-level P&L, margin performance, and cost adherence; alerts on anomalies and overruns' },
+
+          /* ── Wave 5 — CPM + CXL ── */
+          { id:27, name:'Program Pulse Dashboard',       role:'CPM',     wave:5, tier:'T1', ease:'medium',  status:'Planned',
+            desc:'Real-time program status aggregated from all CX workstreams, tools, and team updates automatically' },
+          { id:28, name:'Dependency Tracker',            role:'CPM',     wave:5, tier:'T2', ease:'complex', status:'Planned',
+            desc:'Maps and monitors cross-team dependencies with automatic risk flagging on blockers across CXM, PM, CE, CDA' },
+          { id:29, name:'Executive Report Generator',    role:'CPM',     wave:5, tier:'T2', ease:'medium',  status:'Planned',
+            desc:'Auto-compiles executive-ready program reports with KPIs, risks, milestones, and recommendations' },
+          { id:30, name:'Portfolio Impact Measurer',     role:'CPM',     wave:5, tier:'T1', ease:'complex', status:'Planned',
+            desc:'Continuously tracks cycle-time reductions, throughput gains, and ROI across the full AI Factory agent portfolio' },
+          { id:31, name:'Org Performance Dashboard',     role:'CXL',     wave:5, tier:'T1', ease:'medium',  status:'Planned',
+            desc:'Real-time organizational KPIs across all CX functions powered by agent and human performance data' },
+          { id:32, name:'Strategic Signal Aggregator',   role:'CXL',     wave:5, tier:'T1', ease:'complex', status:'Planned',
+            desc:'Synthesizes customer sentiment, market trends, product signals, and internal metrics into strategic insights' },
+          { id:33, name:'Investment Recommender',        role:'CXL',     wave:5, tier:'T2', ease:'complex', status:'Planned',
+            desc:'Analyzes agent ROI data to recommend where to invest next in the AI Factory portfolio' },
+          { id:34, name:'Innovation Pipeline Monitor',   role:'CXL',     wave:5, tier:'T1', ease:'easy',    status:'Planned',
+            desc:'Tracks agent ideas from identification through deployment, ensuring systematic innovation flow across the org' },
+        ],
+
+        get allRoles() {
+          return [...new Set(this.agents.map(a => a.role))].sort();
+        },
+
+        get filteredAgents() {
+          return this.agents.filter(a => {
+            if (this.filterRole && a.role !== this.filterRole) return false;
+            if (this.filterEase && a.ease !== this.filterEase) return false;
+            if (this.filterTier && a.tier !== this.filterTier) return false;
+            return true;
+          });
+        },
+
+        waveEaseAgents(waveId, ease) {
+          return this.filteredAgents.filter(a => a.wave === waveId && a.ease === ease);
+        },
+
+        init() {
+          this.$nextTick(() => {
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+          });
+        }
+      };
+    }
+  </script>
+</body>
+</html>
