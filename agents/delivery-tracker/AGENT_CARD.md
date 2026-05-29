@@ -7,7 +7,7 @@
 - Date: 2026-05-27
 - Owner: SDM domain expert
 - Reviewer(s): Windsurf (Architect), SDM lead
-- Status: `Concept`
+- Status: `In Development`
 
 ---
 

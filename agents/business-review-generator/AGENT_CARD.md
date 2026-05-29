@@ -7,7 +7,7 @@
 - Date: 2026-05-27
 - Owner: SDM / CXM domain expert
 - Reviewer(s): Windsurf (Architect), SDM lead, CXM lead
-- Status: `Concept`
+- Status: `In Development`
 
 ---
 

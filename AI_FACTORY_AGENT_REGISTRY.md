@@ -9,10 +9,10 @@
 ## Registry
 
 | # | Agent Name | Role | Phase | Status | Trust Tier | Location |
-|---|-----------|------|-------|--------|------------|---------|
-| 1 | Delivery Tracker | SDM | 1 | 🟡 In Design | T1 | `agents/delivery-tracker/` |
-| 2 | Risk & Escalation Sentinel | SDM | 1 | 🟡 In Design | T2 | `agents/risk-escalation-sentinel/` |
-| 3 | Business Review Generator | SDM/CXM | 1 | 🟡 In Design | T2 | `agents/business-review-generator/` |
+| --- | ----------- | ---- | ----- | ------ | ---------- | ------- |
+| 1 | Delivery Tracker | SDM | 1 | 🔵 In Development | T1 | `agents/delivery-tracker/` |
+| 2 | Risk & Escalation Sentinel | SDM | 1 | 🔵 In Development | T2 | `agents/risk-escalation-sentinel/` |
+| 3 | Business Review Generator | SDM/CXM | 1 | 🔵 In Development | T2 | `agents/business-review-generator/` |
 | 4 | Customer Health Pulse | CXM | 2 | ⬜ Planned | T1 | `agents/customer-health-pulse/` |
 | 5 | Proactive Outreach Drafter | CXM | 2 | ⬜ Planned | T2 | `agents/proactive-outreach-drafter/` |
 | 6 | Cross-Functional Coordinator | CXM | 2 | ⬜ Planned | T1 | `agents/cross-functional-coordinator/` |
@@ -50,7 +50,7 @@
 ## Status Key
 
 | Symbol | Meaning |
-|--------|---------|
+| ------ | ------- |
 | ⬜ Planned | In backlog — not yet started |
 | 🟡 In Design | Agent card being written, not yet in dev |
 | 🔵 In Development | Active sprint, code being written |
@@ -63,9 +63,9 @@
 ## Phase Summary
 
 | Phase | Agents | Status |
-|-------|--------|--------|
+| ----- | ------ | ------ |
 | 0 — Foundation | 0 | ✅ Infrastructure work |
-| 1 — SDM Pilots | #1–3 | 🟡 Week 1: In Design |
+| 1 — SDM Pilots | #1–3 | 🔵 #1–3 In Development |
 | 2 — CXM + PM | #4–10 | ⬜ Planned (Months 4–6) |
 | 3 — CE + CDA | #11–18 | ⬜ Planned (Months 7–9) |
 | 4 — HTOM + SDM Ops | #19–26 | ⬜ Planned (Months 10–12) |
@@ -74,5 +74,13 @@
 
 ---
 
+## Engagement-Specific Agents (Outside 34-Agent Plan)
+
+| Agent | Customer | Status | Trust Tier | Location |
+| ----- | -------- | ------ | ---------- | -------- |
+| MGM Network Profile | MGM Resorts International | 🔵 In Development | T3 | `agents/mgm-network-profile/` |
+
+---
+
 *Reference: `AI_FACTORY_IMPLEMENTATION_PLAN.md` Section 12*  
-*Last updated: 2026-05-27*
+*Last updated: 2026-05-29*
