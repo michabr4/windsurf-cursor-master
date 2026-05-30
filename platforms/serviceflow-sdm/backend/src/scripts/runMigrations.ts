@@ -11,6 +11,7 @@ async function runSql(relativePath: string) {
 
 async function main() {
   await runSql("migrations/001_init.sql");
+  await runSql("migrations/002_mimir_snapshots.sql");
   await runSql("seeds/001_seed.sql");
   const pwdRows = await ensureDevUserPasswordHashes();
   console.log(

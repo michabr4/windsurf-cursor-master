@@ -3,6 +3,8 @@ import { env } from "../config.js";
 import { DnaCenterClient } from "../integrations/dnaCenterClient.js";
 import { TacClient } from "../integrations/tacClient.js";
 import { SmartLicensingClient } from "../integrations/smartLicensingClient.js";
+import { createMimirClient } from "../integrations/mimirClient.js";
+import { persistMimirSnapshots } from "./mimirSnapshotStore.js";
 
 export async function runDnaSync(): Promise<number> {
   const client = new DnaCenterClient(
@@ -53,4 +55,22 @@ export async function runSmartLicensingSync(): Promise<number> {
   );
   const entitlements = await client.getEntitlements();
   return entitlements.length;
+}
+
+/** Wave 18 — fetch Mimir NP/QBR data and persist snapshot rows. */
+export async function runMimirSync(companyId?: string): Promise<number> {
+  if (!env.MIMIR_CLIENT_ID.trim() || !env.MIMIR_CLIENT_SECRET.trim()) return 0;
+
+  const cid = (companyId ?? env.MIMIR_COMPANY_ID).trim();
+  if (!cid) return 0;
+
+  const client = createMimirClient(env);
+  const [devices, psirt, fn, qbr] = await Promise.all([
+    client.getNpDevices(cid),
+    client.getPsirtSummary(cid),
+    client.getFnSummary(cid),
+    client.getQbrComposite(cid)
+  ]);
+
+  return persistMimirSnapshots(cid, devices, psirt, fn, qbr);
 }

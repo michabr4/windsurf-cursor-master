@@ -1,8 +1,15 @@
 # Master Project Index
 
 **Owner:** Windsurf (Architect)  
-**Last Updated:** May 26, 2026  
+**Last Updated:** May 27, 2026  
 **Purpose:** Single source of truth for all projects across Windsurf and Cursor
+
+**Governing Documents (V2):**
+- `WINDSURF_ARCHITECT_PLAN_V2.md` — Active operating model (supersedes V1)
+- `CURSOR_UPGRADES_V2.md` — Cursor model routing, new rules, Anthropic MCP (additive to V1 setup)
+- `AUTOMATION_BACKLOG.md` — Prioritized backlog (A: Customer, B: Platform, C: Internal, D: Infra)
+- `AI_FACTORY_IMPLEMENTATION_PLAN.md` — 34-agent build pipeline
+- `ADR_LOG.md` — Architecture decisions (ADR-001 through ADR-011)
 
 ---
 

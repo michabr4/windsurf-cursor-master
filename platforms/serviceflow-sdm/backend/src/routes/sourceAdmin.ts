@@ -2,7 +2,7 @@ import { Router } from "express";
 import { z } from "zod";
 import { pool } from "../db.js";
 import { requireAuth, requireRoles } from "../middleware/auth.js";
-import { runDnaSync, runSmartLicensingSync, runTacSync } from "../jobs/syncService.js";
+import { runDnaSync, runMimirSync, runSmartLicensingSync, runTacSync } from "../jobs/syncService.js";
 import { SalesforceClient } from "../integrations/salesforceClient.js";
 
 const VALID_SOURCES = [
@@ -24,7 +24,8 @@ const VALID_SOURCES = [
   "psirt-openvuln",
   "field-notices",
   "fmc",
-  "salesforce"
+  "salesforce",
+  "mimir"
 ] as const;
 
 const SourceUpdateSchema = z.object({
@@ -77,7 +78,8 @@ async function ensureTable(): Promise<void> {
       ('psirt-openvuln', false, 'oauth2-client-credentials', '0 3 * * *', 'Wave 14 — PSIRT / OpenVuln advisories & CVEs'),
       ('field-notices', false, 'api-key-oauth', '0 4 * * *', 'Wave 15 — Cisco Field Notices (PID/serial/software match)'),
       ('fmc', true, 'api-token-or-basic', '*/30 * * * *', 'Wave 16 — Firepower Management Center (FMC REST · FTD inventory & policies)'),
-      ('salesforce', false, 'oauth2-password', '*/15 * * * *', 'Wave 17 — Salesforce CRM (Cases, Accounts, Contacts, Opportunities, Entitlements, Service Contracts)')
+      ('salesforce', false, 'oauth2-password', '*/15 * * * *', 'Wave 17 — Salesforce CRM (Cases, Accounts, Contacts, Opportunities, Entitlements, Service Contracts)'),
+      ('mimir', false, 'oauth2-client-credentials', '0 */4 * * *', 'Wave 18 — Cisco Mimir API (NP, QBR, BCIBM, Compliance)')
     ON CONFLICT (source_name) DO NOTHING
   `);
 }
@@ -182,6 +184,20 @@ sourceAdminRouter.post(
       if (sourceName === "salesforce") {
         const result = await SalesforceClient.testConnection();
         res.json({ sourceName, processed: 0, status: result.ok ? "ok" : "error", message: result.message });
+        return;
+      }
+
+      if (sourceName === "mimir") {
+        const processed = await runMimirSync();
+        res.json({
+          sourceName,
+          processed,
+          status: processed > 0 ? "ok" : "no_data",
+          message:
+            processed > 0
+              ? "Mimir snapshots persisted"
+              : "Set MIMIR_* credentials, MIMIR_COMPANY_ID, and run migration 002"
+        });
         return;
       }
 

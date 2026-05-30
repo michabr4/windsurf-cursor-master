@@ -9,6 +9,7 @@ node_modules/
 venv/
 .venv/
 **/.venv/
+tools/sharepoint-mcp-venv/
 .xlsx_venv/
 **/.xlsx_venv/
 
@@ -34,6 +35,16 @@ coverage/
 
 # Logs
 *.log
+
+# Agent run outputs (keep .gitkeep placeholders)
+data/runs/**/*.json
+data/runs/**/*.md
+data/runs/**/*.csv
+!data/runs/**/.gitkeep
+
+# mgm-network-profile agent output
+output/
+agents/mgm-network-profile/output/
 
 # Local runtime (SDM Webex)
 sdm-files/subscribers.json

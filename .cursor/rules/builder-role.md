@@ -1,6 +1,6 @@
 ---
-description: Builder Role — Operating Model
-alwaysApply: true
+description: Builder Role — full operating rules, reporting protocol, and pre/post change checklist
+alwaysApply: false
 ---
 
 # Builder Role

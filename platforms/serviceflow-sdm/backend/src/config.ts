@@ -82,7 +82,15 @@ export const EnvSchema = z
     SALESFORCE_USERNAME: z.string().optional().default(""),
     SALESFORCE_PASSWORD: z.string().optional().default(""),
     SALESFORCE_SECURITY_TOKEN: z.string().optional().default(""),
-    SALESFORCE_API_VERSION: z.string().optional().default("v59.0")
+    SALESFORCE_API_VERSION: z.string().optional().default("v59.0"),
+
+    /** Cisco Mimir API — Wave 18 (OAuth2 client_credentials, M2M). */
+    MIMIR_BASE_URL: z.string().default("https://mimir-prod.cisco.com/api/mimir"),
+    MIMIR_OAUTH_TOKEN_URL: z.string().default("https://cloudsso.cisco.com/as/token.oauth2"),
+    MIMIR_CLIENT_ID: z.string().optional().default(""),
+    MIMIR_CLIENT_SECRET: z.string().optional().default(""),
+    /** Mimir NP/QBR company scope (query param overrides). */
+    MIMIR_COMPANY_ID: z.string().optional().default("")
   })
   .superRefine((data, ctx) => {
     if (!data.SSO_ENABLED) return;

@@ -17,23 +17,23 @@ export default function KPIBar({ tasks }: Props) {
   ).length
 
   const cards = [
-    { label: 'Total', value: total, Icon: ListTodo, cls: 'border-blue-200 bg-blue-50 text-blue-700' },
-    { label: 'Completed', value: completed, Icon: CheckCircle2, cls: 'border-green-200 bg-green-50 text-green-700' },
-    { label: 'In Progress', value: inProgress, Icon: Clock, cls: 'border-yellow-200 bg-yellow-50 text-yellow-700' },
-    { label: 'At Risk', value: atRisk, Icon: AlertTriangle, cls: 'border-orange-200 bg-orange-50 text-orange-700' },
-    { label: 'Blocked', value: blocked, Icon: XCircle, cls: 'border-red-200 bg-red-50 text-red-700' },
-    { label: 'Overdue', value: overdue, Icon: AlertCircle, cls: 'border-purple-200 bg-purple-50 text-purple-700' },
+    { label: 'Total',       value: total,      Icon: ListTodo,      cls: 'border-[#049fd9]/30 bg-[#049fd9]/8 text-[#049fd9]', num: 'text-cisco-dark' },
+    { label: 'Completed',   value: completed,  Icon: CheckCircle2,  cls: 'border-[#6cc04a]/30 bg-[#6cc04a]/8 text-[#6cc04a]', num: 'text-cisco-dark' },
+    { label: 'In Progress', value: inProgress, Icon: Clock,         cls: 'border-[#00bceb]/30 bg-[#00bceb]/8 text-[#00bceb]', num: 'text-cisco-dark' },
+    { label: 'At Risk',     value: atRisk,     Icon: AlertTriangle, cls: 'border-orange-300/50 bg-orange-50 text-orange-600',  num: 'text-slate-800'  },
+    { label: 'Blocked',     value: blocked,    Icon: XCircle,       cls: 'border-red-300/50 bg-red-50 text-red-600',           num: 'text-slate-800'  },
+    { label: 'Overdue',     value: overdue,    Icon: AlertCircle,   cls: 'border-slate-300 bg-slate-100 text-slate-600',       num: 'text-slate-800'  },
   ]
 
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-      {cards.map(({ label, value, Icon, cls }) => (
-        <div key={label} className={`rounded-lg border p-4 ${cls}`}>
-          <div className="flex items-center justify-between">
-            <span className="text-sm font-medium">{label}</span>
-            <Icon className="w-4 h-4 opacity-70" />
+      {cards.map(({ label, value, Icon, cls, num }) => (
+        <div key={label} className={`kpi-card rounded-2xl border bg-white p-4 shadow-sm ${cls}`}>
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-xs font-semibold uppercase tracking-wider opacity-80">{label}</span>
+            <Icon className="w-4 h-4 opacity-60" />
           </div>
-          <p className="mt-1 text-2xl font-bold">{value}</p>
+          <p className={`text-3xl font-black tracking-tight ${num}`}>{value}</p>
         </div>
       ))}
     </div>

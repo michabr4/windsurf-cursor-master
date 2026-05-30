@@ -7,46 +7,75 @@ interface Props {
 }
 
 const STATUS_COLORS: Record<string, string> = {
-  Completed: '#22c55e',
-  'In Progress': '#f59e0b',
-  Blocked: '#ef4444',
-  'At Risk': '#f97316',
+  Completed:    '#6cc04a',
+  'In Progress': '#00bceb',
+  Blocked:      '#ef4444',
+  'At Risk':    '#f97316',
   'Not Started': '#94a3b8',
 }
 
 export default function GanttView({ tasks }: Props) {
-  const ganttTasks: GanttTask[] = tasks
-    .filter(t => t.startDate && t.dueDate && t.startDate < t.dueDate)
-    .map(t => {
+  const dated = tasks.filter(t => t.dueDate)
+
+  const sectionNames = Array.from(new Set(dated.map(t => t.section || 'Unsectioned')))
+
+  const ganttTasks: GanttTask[] = []
+
+  for (const section of sectionNames) {
+    const members = dated.filter(t => (t.section || 'Unsectioned') === section)
+
+    const starts = members.map(t => new Date((t.startDate || t.dueDate)! + 'T00:00:00').getTime())
+    const ends = members.map(t => {
+      const e = new Date(t.dueDate! + 'T00:00:00')
+      e.setDate(e.getDate() + 1)
+      return e.getTime()
+    })
+    const projEnd = new Date(Math.max(...ends))
+    const projStart = new Date(Math.min(...starts))
+
+    ganttTasks.push({
+      id: `section::${section}`,
+      name: section,
+      start: projStart,
+      end: projEnd,
+      progress: 0,
+      type: 'project' as const,
+      hideChildren: false,
+    })
+
+    for (const t of members) {
       const color = STATUS_COLORS[t.status] ?? '#94a3b8'
+      const start = new Date((t.startDate || t.dueDate)! + 'T00:00:00')
       const end = new Date(t.dueDate! + 'T00:00:00')
       end.setDate(end.getDate() + 1)
-      return {
+      ganttTasks.push({
         id: t.id,
         name: t.name,
-        start: new Date(t.startDate! + 'T00:00:00'),
+        start,
         end,
         progress: t.status === 'Completed' ? 100 : t.status === 'In Progress' ? 50 : 0,
         type: 'task' as const,
+        project: `section::${section}`,
         styles: { progressColor: color, progressSelectedColor: color },
-      }
-    })
+      })
+    }
+  }
 
   if (ganttTasks.length === 0) {
     return (
-      <div className="rounded-lg border border-gray-200 bg-white p-8 text-center text-gray-500">
-        No tasks with start &amp; due dates to display in Gantt view.
+      <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center text-slate-500 shadow-sm">
+        No tasks with due dates to display in Gantt view.
       </div>
     )
   }
 
   return (
-    <div className="overflow-hidden rounded-lg border border-gray-200 bg-white">
+    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
       <Gantt
         tasks={ganttTasks}
         viewMode={GanttViewMode.Week}
-        listCellWidth="180px"
-        todayColor="rgba(59,130,246,0.1)"
+        listCellWidth="200px"
+        todayColor="rgba(4,159,217,0.12)"
       />
     </div>
   )

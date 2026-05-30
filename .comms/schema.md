@@ -33,6 +33,9 @@ Both IDEs read and write JSON files here using their native filesystem capabilit
   "spec": "Full instruction text. Can be multi-line.",
   "depends_on": null,
   "files_to_read": [],
+  "out_of_scope": [],
+  "model": "sonnet",
+  "complexity": "MEDIUM",
   "created_at": "2026-05-26T12:30:00-04:00",
   "status": "pending"
 }
@@ -47,11 +50,23 @@ Both IDEs read and write JSON files here using their native filesystem capabilit
 - `type` — "instruction" | "review-request" | "question"
 - `phase` — Roadmap phase reference (e.g., "0.5", "1", "2.1")
 - `title` — Short human-readable description
-- `spec` — Full instruction text (the actual work to do)
+- `spec` — Full instruction text. Must include: exact files to touch, expected output, and what "done" looks like.
 - `depends_on` — ID of prerequisite task, or null
-- `files_to_read` — Array of file paths Cursor should read before starting
+- `files_to_read` — Array of file paths Cursor must read before starting (be precise — do not omit or over-include)
+- `out_of_scope` — Array of files or concerns explicitly excluded from this task
+- `model` — Target model: `"haiku"` | `"sonnet"` | `"opus"` — see routing table below
+- `complexity` — `"LOW"` | `"MEDIUM"` | `"HIGH"` — HIGH triggers reasoning-first protocol
 - `created_at` — ISO 8601 timestamp
 - `status` — "pending" (set by Windsurf)
+
+**Model Routing Table:**
+
+| Task type | `model` | `complexity` |
+|-----------|---------|-------------|
+| Simple edits, config changes, rename, log adds, formatting | `haiku` | `LOW` |
+| Standard implementation, APIs, scripts, tests | `sonnet` | `MEDIUM` |
+| Complex agent logic, auth flows, orchestration, data schema | `opus` | `HIGH` |
+| Security review, debugging unclear root causes | `opus` | `HIGH` |
 
 ## Result Message (Cursor → Windsurf)
 

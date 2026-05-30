@@ -1,20 +1,37 @@
 ---
-description: Comms Protocol — Windsurf ↔ Cursor task handoff
-alwaysApply: true
+description: Comms Protocol — full task lifecycle, file move steps, result schema, and batch/chain execution rules
+alwaysApply: false
 ---
 
 # Comms Protocol
 
 This workspace uses a file-based message queue in `.comms/` for task handoff between Windsurf (Architect) and Cursor (Builder).
 
-## Checking for Tasks
+## Automatic Inbox Check (Session Start)
+
+Before sending your first reply in every conversation, silently check `.comms/inbox/` for pending tasks using the `check_inbox` MCP tool.
+
+**Current mode: BATCH** — auto-execute the highest priority pending task. Stop after one. Do not chain.
+
+If tasks are waiting:
+
+1. Claim the highest priority task immediately (no user prompt required)
+2. Announce: "Picked up task [ID] — [title]. Executing now."
+3. Execute fully per the spec
+4. Submit result to outbox
+5. If more tasks remain in inbox: surface them (ID, priority, title) but **stop — do not auto-execute the next one**. Tell the user: "Result submitted. [N] tasks remain. Tell Windsurf to review and send next."
+6. If inbox is now empty after completing: say "Result submitted. Inbox clear."
+
+If inbox is empty at session start: say nothing.
+
+## Checking for Tasks (Manual)
 
 When the user says "check inbox", "check for tasks", or "any tasks from Windsurf":
 
 1. Read all `.json` files in `.comms/inbox/`
 2. Display them sorted by priority (critical > high > medium > low)
 3. For each task, show: ID, priority, title, and phase
-4. Ask the user which task to execute (or execute the highest priority one)
+4. Claim and execute the top task immediately
 
 ## Executing a Task
 
@@ -36,6 +53,7 @@ After completing a task:
 ## When Completing Any Work (Even Without an Inbox Task)
 
 If `.comms/` exists and you complete a significant piece of work:
+
 - Write a result file to `.comms/outbox/` summarizing what was done
 - Use ID format: `ADHOC-{YYYY}-{MMDD}-{NNN}`
 

@@ -1593,7 +1593,8 @@
     "secure-access": "Secure Access",
     "psirt-openvuln": "PSIRT / OpenVuln",
     "field-notices": "Field notices",
-    fmc: "FMC (Firepower)"
+    fmc: "FMC (Firepower)",
+    mimir: "Cisco Mimir API"
   };
 
   const WAVE_GRID_META = {
@@ -1612,7 +1613,8 @@
     "psirt-openvuln":
       'OAuth client @ <code style="font-size:13px;color:#93c5fd">id.cisco.com</code> · advisories · CVE ↔ inventory',
     "field-notices": "Field Notice API / feed · PID · serial · software correlation",
-    fmc: "FTD / managed-device inventory, access policies, objects & rules — FMC REST parity"
+    fmc: "FTD / managed-device inventory, access policies, objects & rules — FMC REST parity",
+    mimir: "NP · QBR · BCIBM · Compliance — OAuth2 client_credentials"
   };
 
   /** Aligned to backend VALID_SOURCES + sourceAdmin seed (auth_type, schedule, notes). */
@@ -1634,7 +1636,18 @@
     { name: "secure-access", on: false, wave: "W13", note: "SSE / ZTNA", authType: "oauth2-client-credentials", schedule: "*/15 * * * *", apiBuild: "Secure Access (SSE) diagnostics APIs" },
     { name: "psirt-openvuln", on: false, wave: "W14", note: "PSIRT advisories & CVEs", authType: "oauth2-client-credentials", schedule: "0 3 * * *", apiBuild: "<strong>OpenVuln</strong> · OAuth <code>id.cisco.com</code> · <code>OPENVULN_CLIENT_ID/SECRET</code>", spotlight: true },
     { name: "field-notices", on: false, wave: "W15", note: "Cisco Field Notices", authType: "api-key-oauth", schedule: "0 4 * * *", apiBuild: "FN API/feed · <code>FIELD_NOTICE_API_BASE_URL</code> + <code>CISCO_FN_API_KEY</code> · PID/serial/software match", spotlight: true },
-    { name: "fmc", on: true, wave: "W16", note: "Firepower Management Center — FTD inventory & access policies", authType: "api-token-or-basic", schedule: "*/30 * * * *", apiBuild: "FMC REST API · managed devices, access rules, network & host objects · policy deployment status · <code>/api/</code> per Cisco FMC guide", spotlight: true }
+    { name: "fmc", on: true, wave: "W16", note: "Firepower Management Center — FTD inventory & access policies", authType: "api-token-or-basic", schedule: "*/30 * * * *", apiBuild: "FMC REST API · managed devices, access rules, network & host objects · policy deployment status · <code>/api/</code> per Cisco FMC guide", spotlight: true },
+    {
+      name: "mimir",
+      on: false,
+      wave: "W18",
+      note: "Cisco Mimir API — NP, QBR, BCIBM, Compliance",
+      authType: "oauth2-client-credentials",
+      schedule: "0 */4 * * *",
+      apiBuild:
+        "<code>mimir-prod.cisco.com/api/mimir</code> · NP devices/PSIRT/FN · QBR composite · BCIBM peer benchmarks · <code>MIMIR_CLIENT_ID/SECRET</code>",
+      spotlight: true
+    }
   ];
 
   /**
@@ -1755,6 +1768,13 @@
       mapNote:
         "Journey: <strong>Optimize (5)</strong> — FMC REST parity lands firewall policy in the same API-first story as DNA and ISE.",
       rec: "Reconcile <strong>FTD rev vs DNA intent</strong> weekly; add policy export snapshots to change evidence for regulated properties (Detroit, National Harbor)."
+    },
+    W18: {
+      phaseIndex: 4,
+      maturityPct: 55,
+      mapNote:
+        "Journey: <strong>Optimize (5)</strong> — Mimir unifies NP, QBR, and peer benchmarks; requires OAuth app + company scope before estate-wide polling.",
+      rec: "Obtain <strong>MIMIR_CLIENT_ID/SECRET</strong>; set <code>MIMIR_COMPANY_ID</code>; run <code>POST /integrations/sync/mimir</code> on a 4h cadence for PSIRT/FN and 24h for devices."
     }
   };
 
@@ -1762,8 +1782,318 @@
     "dna-center": 'Last sync <strong style="color:var(--ok)">12 min ago</strong> · 1,284 devices',
     tac: 'Last sync <strong style="color:var(--ok)">8 min ago</strong> · 42 cases',
     "smart-licensing": 'Last sync <strong style="color:var(--ok)">44 min ago</strong> · 98% compliant',
-    fmc: 'Last sync <strong style="color:var(--ok)">22 min ago</strong> · 86 FTD/LINA devices · policy rev 412'
+    fmc: 'Last sync <strong style="color:var(--ok)">22 min ago</strong> · 86 FTD/LINA devices · policy rev 412',
+    mimir: 'Last sync <strong style="color:var(--muted)">Not configured</strong> · set MIMIR_* env'
   };
+
+  /** Wave 18 — illustrative Mimir figures (replaced when live mode pulls /mimir/*). */
+  const MIMIR_MOCK = {
+    companyId: "GES-WEST-MGM",
+    configured: false,
+    psirt: { totalCount: 47, critical: 2, high: 8, medium: 14, low: 23 },
+    fn: { totalCount: 6, affectedDevices: 26 },
+    qbr: { riskComposite: 72, psirtScore: 68, fnScore: 54, hwLifecycleScore: 61, swLifecycleScore: 58 },
+    peer: { customer: 47, peerMedian: 31, percentile: 78 },
+    devices: [
+      { deviceName: "mgm-core-sw01", ipAddress: "10.48.1.11", productId: "C9500-40X", swVersion: "17.9.4a", role: "Core" },
+      { deviceName: "mgm-edge-rtr01", ipAddress: "10.48.1.1", productId: "ASR1001-X", swVersion: "17.6.5", role: "Edge" },
+      { deviceName: "bel-wlc-01", ipAddress: "10.52.2.10", productId: "C9800-CL", swVersion: "17.12.3", role: "WLC" },
+      { deviceName: "aria-ise-psn2", ipAddress: "10.55.8.22", productId: "SNS-3615", swVersion: "3.2 p5", role: "ISE PSN" }
+    ]
+  };
+
+  var _mimirUiState = null;
+
+  function mimirMetricHtml(label, value, sub) {
+    return (
+      '<div><div class="dd-metric">' +
+      escHtml(String(value)) +
+      '</div><div class="dd-sub">' +
+      escHtml(label) +
+      (sub ? " · " + escHtml(sub) : "") +
+      "</div></div>"
+    );
+  }
+
+  function mimirPeerBarHtml(label, value, maxVal, cssClass) {
+    var pct = maxVal > 0 ? Math.min(100, Math.round((value / maxVal) * 100)) : 0;
+    return (
+      '<div class="mimir-peer-row"><span>' +
+      escHtml(label) +
+      '</span><div class="mimir-peer-track"><div class="mimir-peer-fill ' +
+      (cssClass || "") +
+      '" style="width:' +
+      pct +
+      '%"></div></div><span>' +
+      escHtml(String(value)) +
+      "</span></div>"
+    );
+  }
+
+  function mergeMimirUiState(patch) {
+    _mimirUiState = Object.assign({}, MIMIR_MOCK, _mimirUiState || {}, patch || {});
+    return _mimirUiState;
+  }
+
+  function renderMimirPanels(state) {
+    var s = state || _mimirUiState || MIMIR_MOCK;
+    _mimirUiState = s;
+
+    var qbrRow = document.getElementById("mimir-overview-qbr-row");
+    if (qbrRow && s.qbr) {
+      qbrRow.innerHTML =
+        mimirMetricHtml("Risk composite", s.qbr.riskComposite, "QBR") +
+        mimirMetricHtml("PSIRT score", s.qbr.psirtScore, "NP") +
+        mimirMetricHtml("FN score", s.qbr.fnScore, "NP") +
+        mimirMetricHtml("HW lifecycle", s.qbr.hwLifecycleScore, "") +
+        mimirMetricHtml("SW lifecycle", s.qbr.swLifecycleScore, "");
+    }
+
+    var devTb = document.getElementById("mimir-devices-tbody");
+    if (devTb) {
+      var list = Array.isArray(s.devices) ? s.devices : [];
+      devTb.innerHTML = list.length
+        ? list
+            .map(function (d) {
+              return (
+                "<tr><td>" +
+                escHtml(d.deviceName || "—") +
+                "</td><td>" +
+                escHtml(d.ipAddress || "—") +
+                "</td><td>" +
+                escHtml(d.productId || "—") +
+                "</td><td>" +
+                escHtml(d.swVersion || "—") +
+                "</td><td>" +
+                escHtml(d.role || "—") +
+                '</td><td><span class="wave">W18</span></td></tr>'
+              );
+            })
+            .join("")
+        : '<tr><td colspan="6" style="color:var(--muted)">No Mimir devices — run sync or set credentials.</td></tr>';
+    }
+
+    var psirtKpis = document.getElementById("mimir-psirt-kpis");
+    if (psirtKpis && s.psirt) {
+      psirtKpis.innerHTML =
+        mimirMetricHtml("Total PSIRT", s.psirt.totalCount, "estate") +
+        mimirMetricHtml("Critical", s.psirt.critical, "") +
+        mimirMetricHtml("High", s.psirt.high, "") +
+        mimirMetricHtml("Medium", s.psirt.medium, "") +
+        mimirMetricHtml("Low", s.psirt.low, "");
+    }
+
+    var peerChart = document.getElementById("mimir-peer-chart");
+    if (peerChart && s.peer) {
+      var maxP = Math.max(s.peer.customer, s.peer.peerMedian, 1);
+      peerChart.innerHTML =
+        mimirPeerBarHtml("Customer", s.peer.customer, maxP, "") +
+        mimirPeerBarHtml("Peer median", s.peer.peerMedian, maxP, "peer") +
+        '<p class="hint" style="margin-top:8px">Percentile vs peers: <strong>' +
+        escHtml(String(s.peer.percentile)) +
+        "%</strong> (higher = more exposure than typical)</p>";
+    }
+
+    var secBanner = document.getElementById("mimir-security-banner");
+    if (secBanner && s.psirt) {
+      secBanner.innerHTML =
+        '<strong><span class="wave">W18</span> Mimir PSIRT</strong> — ' +
+        s.psirt.totalCount +
+        " advisories in scope (" +
+        s.psirt.critical +
+        " critical, " +
+        s.psirt.high +
+        " high). Peer percentile " +
+        (s.peer ? s.peer.percentile : "—") +
+        "% · company <code>" +
+        escHtml(s.companyId) +
+        "</code>";
+    }
+
+    var fnBanner = document.getElementById("mimir-fn-banner");
+    if (fnBanner && s.fn) {
+      fnBanner.innerHTML =
+        '<strong><span class="wave">W18</span> Mimir Field Notices</strong> — ' +
+        s.fn.totalCount +
+        " active FN(s), " +
+        s.fn.affectedDevices +
+        " devices affected (NP fn-summary). Complements Wave 15 FN feed.";
+    }
+
+    setElText("mimir-fn-kpi-matches", s.fn ? String(s.fn.totalCount) : "—");
+    setElText("mimir-fn-kpi-devices", s.fn ? String(s.fn.affectedDevices) : "—");
+
+    var srcMetrics = document.getElementById("mimir-sources-detail-metrics");
+    if (srcMetrics) {
+      srcMetrics.innerHTML =
+        mimirMetricHtml("Services", "NP · QBR · BCIBM", "") +
+        mimirMetricHtml("Auth", "OAuth2 M2M", "cloudsso") +
+        mimirMetricHtml("Schedule", "0 */4 * * *", "PSIRT/FN") +
+        mimirMetricHtml("Status", s.configured ? "Configured" : "Unconfigured", "");
+    }
+
+    var srcDl = document.getElementById("mimir-sources-dl");
+    if (srcDl) {
+      srcDl.innerHTML =
+        "<dt>Base URL</dt><dd><code>https://mimir-prod.cisco.com/api/mimir</code></dd>" +
+        "<dt>Token URL</dt><dd><code>https://cloudsso.cisco.com/as/token.oauth2</code></dd>" +
+        "<dt>Company scope</dt><dd><code>" +
+        escHtml(s.companyId) +
+        "</code></dd>" +
+        "<dt>Client ID</dt><dd><span class=\"tag tag-sched\">••••••••</span> (masked)</dd>" +
+        "<dt>Last sync</dt><dd>" +
+        (s.lastSyncAt ? escHtml(s.lastSyncAt) : "—") +
+        "</dd>";
+    }
+
+    var ddBadge = document.getElementById("mimir-dd-source-badge");
+    if (ddBadge) {
+      ddBadge.textContent = s.configured ? "Enabled" : "Disabled";
+      ddBadge.className = "badge " + (s.configured ? "b-ok" : "b-p3");
+    }
+
+    var mimirSrc = INTEGRATION_SOURCES.find(function (x) {
+      return x.name === "mimir";
+    });
+    if (mimirSrc) {
+      mimirSrc.on = !!s.configured;
+      OVERVIEW_SYNC_LINES.mimir = s.lastSyncAt
+        ? 'Last sync <strong style="color:var(--ok)">' + escHtml(s.lastSyncAt) + "</strong> · snapshots"
+        : 'Last sync <strong style="color:var(--muted)">Not configured</strong> · set MIMIR_* env';
+      renderOverviewSyncCards();
+      renderSources();
+      renderIntegrationWaveCards();
+    }
+  }
+
+  function parseMimirSnapshotPsirt(body) {
+    if (!body || !body.data) return null;
+    var d = body.data;
+    return {
+      totalCount: d.totalCount != null ? d.totalCount : d.total_count,
+      critical: d.critical,
+      high: d.high,
+      medium: d.medium,
+      low: d.low
+    };
+  }
+
+  function applyLiveMimirViews() {
+    return Promise.all([
+      mockupFetchJson("/mimir/status"),
+      mockupFetchJson("/mimir/snapshots/psirt-summary"),
+      mockupFetchJson("/mimir/snapshots/fn-summary"),
+      mockupFetchJson("/mimir/snapshots/qbr"),
+      mockupFetchJson("/mimir/snapshots/devices"),
+      mockupFetchJson("/mimir/peer-comparison")
+    ]).then(function (results) {
+      var statusRes = results[0];
+      var configured = !!(statusRes.body && statusRes.body.configured);
+      var companyId =
+        (statusRes.body && statusRes.body.companyId) || MIMIR_MOCK.companyId;
+
+      var psirt = parseMimirSnapshotPsirt(results[1].body);
+      var fnBody = results[2].body;
+      var fn = fnBody && fnBody.data ? fnBody.data : null;
+      var qbrBody = results[3].body;
+      var qbr = qbrBody && qbrBody.data ? qbrBody.data : null;
+      var devBody = results[4].body;
+      var devices = devBody && Array.isArray(devBody.devices) ? devBody.devices : [];
+      if (!devices.length && devBody && Array.isArray(devBody.data)) devices = devBody.data;
+
+      var peerBody = results[5].body;
+      var peer = MIMIR_MOCK.peer;
+      if (peerBody && peerBody.data && psirt) {
+        peer = {
+          customer: psirt.totalCount || 0,
+          peerMedian: Math.round((psirt.totalCount || 0) * 0.65),
+          percentile: 78
+        };
+      }
+
+      var syncedAt = null;
+      if (psirt && results[1].body && results[1].body.data && results[1].body.data.syncedAt) {
+        syncedAt = String(results[1].body.data.syncedAt).slice(0, 16).replace("T", " ");
+      }
+
+      if (!configured && !psirt && !devices.length) {
+        renderMimirPanels(MIMIR_MOCK);
+        return { configured: false, skipped: true };
+      }
+
+      renderMimirPanels(
+        mergeMimirUiState({
+          configured: configured,
+          companyId: companyId,
+          psirt: psirt || MIMIR_MOCK.psirt,
+          fn: fn || MIMIR_MOCK.fn,
+          qbr: qbr || MIMIR_MOCK.qbr,
+          peer: peer,
+          devices: devices.length ? devices : MIMIR_MOCK.devices,
+          lastSyncAt: syncedAt
+        })
+      );
+      return { configured: configured, devices: devices.length };
+    });
+  }
+
+  function runMimirSyncFromMockup(btn) {
+    if (!getLiveAccessToken()) {
+      setAppStatusMessage("Mimir sync requires a JWT — sign in on Operations or paste accessToken.");
+      return;
+    }
+    if (btn) btn.disabled = true;
+    mockupPostJson("/integrations/sync/mimir", {})
+      .then(function (r) {
+        if (btn) btn.disabled = false;
+        if (r.ok) {
+          var proc = r.body && r.body.processed != null ? r.body.processed : 0;
+          setAppStatusMessage(
+            "Mimir sync complete · " + proc + " snapshot row(s). Refreshing panels…"
+          );
+          return applyLiveMimirViews();
+        }
+        setAppStatusMessage(
+          (r.body && r.body.message) || "Mimir sync failed (HTTP " + (r.status || "?") + ")."
+        );
+      })
+      .catch(function () {
+        if (btn) btn.disabled = false;
+        setAppStatusMessage("Mimir sync request failed.");
+      });
+  }
+
+  function initMimirSyncButtons() {
+    ["mimir-sync-overview-btn", "mimir-sync-sources-btn"].forEach(function (id) {
+      var btn = document.getElementById(id);
+      if (!btn) return;
+      btn.addEventListener("click", function () {
+        runMimirSyncFromMockup(btn);
+      });
+    });
+    var testBtn = document.getElementById("mimir-test-sources-btn");
+    if (testBtn) {
+      testBtn.addEventListener("click", function () {
+        if (!getLiveAccessToken()) {
+          setAppStatusMessage("Test connection requires a JWT.");
+          return;
+        }
+        testBtn.disabled = true;
+        mockupPostJson("/admin/sources/mimir/test", {})
+          .then(function (r) {
+            testBtn.disabled = false;
+            var msg =
+              r.body && r.body.message
+                ? r.body.message
+                : r.ok
+                  ? "Mimir test OK"
+                  : "Test failed";
+            setAppStatusMessage(msg + (r.body && r.body.processed != null ? " · " + r.body.processed + " rows" : ""));
+            if (r.ok) applyLiveMimirViews();
+          });
+      });
+    }
+  }
 
   const CONSOLE_MAP_ROWS = [
     ["Cisco API Console (DevNet)", "Gate 1–17", "OAuth clients, API products, entitlements"],
@@ -1784,6 +2114,7 @@
     ["Cisco Field Notices", "15", "FN impact on PID, serial, software"],
     ["Cisco Firepower Management Center (FMC)", "16", "FTD inventory, access policies, objects — REST API parity"],
     ["<strong style='color:#00a1e0'>Salesforce CRM</strong>", "<strong>17</strong>", "Cases, Accounts, Contacts, Opportunities, Entitlements, Service Contracts — REST v59.0 / SOQL"],
+    ["Cisco Mimir API", "18", "NP devices, PSIRT/FN summaries, QBR composite, BCIBM peer benchmarks, compliance BP"],
     ["Meraki Dashboard", "DD-K", "Cloud-managed devices, config templates, site health (inline on Devices, Properties, Integrations)"],
     ["AppDynamics APM", "DD-L", "App health, business transactions, incident correlation (inline on Devices, Incidents, Overview)"]
   ];
@@ -3901,6 +4232,15 @@
           );
           renderIntegrationAdvisor();
         });
+
+        applyLiveMimirViews().then(function (mimirRes) {
+          if (mimirRes && mimirRes.configured && !mimirRes.skipped) {
+            setAppStatusMessage(
+              "Live data refreshed · Mimir panels updated" +
+                (mimirRes.devices != null ? " (" + mimirRes.devices + " devices)." : ".")
+            );
+          }
+        });
       })
       .catch(function (e) {
         setAppStatusMessage(
@@ -4577,6 +4917,8 @@
   renderPropertySiteMap();
   renderPropertyTechDl();
   renderMvpProductJourney();
+  renderMimirPanels(MIMIR_MOCK);
+  initMimirSyncButtons();
   initMockupLiveMode();
   initOverviewWarRoom();
   initPropertyFilters();

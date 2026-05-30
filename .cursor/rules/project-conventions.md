@@ -1,6 +1,6 @@
 ---
-description: Project Conventions — Code Standards
-alwaysApply: true
+description: Project Conventions — full file structure, Python and TypeScript style guide, git branch naming, security non-negotiables
+alwaysApply: false
 ---
 
 # Project Conventions

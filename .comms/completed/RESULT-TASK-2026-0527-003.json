@@ -1,0 +1,21 @@
+{
+  "id": "TASK-2026-0527-003",
+  "from": "cursor",
+  "to": "windsurf",
+  "type": "result",
+  "status": "success",
+  "summary": "Added Asana OAuth setup and fetch scripts for firewall-dashboard",
+  "details": "Created scripts/asana-oauth-setup.js (local OAuth on port 8845, CSRF state validation, token upsert to .env without logging secrets), scripts/fetch-asana.js (refresh token flow, paginated project tasks, maps to FirewallTask shape for the React app), and scripts/asana-env.js (shared .env load/upsert). Updated .env.example for OAuth vars and ASANA_PROJECT_GID default. Added npm run setup-oauth. Output writes to public/data/tasks.json.\n\nUser action: copy .env.example to .env, add ASANA_CLIENT_ID/SECRET, run npm run setup-oauth then npm run fetch.",
+  "files_changed": [
+    "tools/firewall-dashboard/scripts/asana-oauth-setup.js",
+    "tools/firewall-dashboard/scripts/fetch-asana.js",
+    "tools/firewall-dashboard/scripts/asana-env.js",
+    "tools/firewall-dashboard/.env.example",
+    "tools/firewall-dashboard/package.json"
+  ],
+  "issues": [
+    "Live OAuth/fetch not run in agent environment (no .env credentials). User must complete browser auth locally."
+  ],
+  "completed_at": "2026-05-27T17:51:51-04:00",
+  "next_recommended": null
+}

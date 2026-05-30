@@ -3,7 +3,7 @@ import { env } from "../config.js";
 import { WebexClient } from "../integrations/webexClient.js";
 import { SalesforceClient } from "../integrations/salesforceClient.js";
 import { requireAuth, requireRoles } from "../middleware/auth.js";
-import { runDnaSync, runSmartLicensingSync, runTacSync } from "../jobs/syncService.js";
+import { runDnaSync, runMimirSync, runSmartLicensingSync, runTacSync } from "../jobs/syncService.js";
 import { SyncSourceParamSchema, WarRoomBodySchema } from "../schemas/integrations.js";
 
 export const integrationsRouter = Router();
@@ -83,6 +83,21 @@ integrationsRouter.post(
       if (source === "salesforce") {
         const result = await SalesforceClient.testConnection();
         res.json({ source, processed: 0, status: result.ok ? "connected" : "error", message: result.message });
+        return;
+      }
+      if (source === "mimir") {
+        const companyId =
+          typeof req.body?.companyId === "string" ? req.body.companyId.trim() : undefined;
+        const count = await runMimirSync(companyId);
+        res.json({
+          source,
+          processed: count,
+          status: count > 0 ? "ok" : "no_data",
+          message:
+            count > 0
+              ? "Mimir snapshots persisted"
+              : "No data — check MIMIR_* credentials, MIMIR_COMPANY_ID, and DB migration 002"
+        });
         return;
       }
     } catch {

@@ -9,7 +9,7 @@
 ## Phase Gate Log
 
 | Date | Gate | Decision | Notes |
-|------|------|----------|-------|
+| ---- | ---- | -------- | ----- |
 | 2026-05-27 | Phase 0 → Phase 1 | 🟡 Pending | Criteria: baselines measured, integration readiness confirmed, 3 agent cards signed |
 
 ---
@@ -19,7 +19,7 @@
 Track each T2 agent's 45-day human-in-the-loop window here.
 
 | Agent | HITL Start | HITL End (Day 45) | Cards Sent | Approve | Edit | Dismiss | False+ Rate | Decision |
-|-------|-----------|-------------------|-----------|---------|------|---------|-------------|---------|
+| ----- | ---------- | ----------------- | ---------- | ------- | ---- | ------- | ----------- | -------- |
 | Risk & Escalation Sentinel | — | — | — | — | — | — | — | Pending |
 | Business Review Generator | — | — | — | — | — | — | — | Pending |
 
@@ -28,12 +28,22 @@ Track each T2 agent's 45-day human-in-the-loop window here.
 ## Trust Tier Promotion Log
 
 | Date | Agent | From | To | Approver | Evidence | Notes |
-|------|-------|------|-----|----------|---------|-------|
+| ---- | ----- | ---- | -- | -------- | -------- | ----- |
 | — | — | — | — | — | — | First promotion pending Phase 1 |
 
 ---
 
 ## Governance Decisions (Rolling)
+
+### 2026-05-29 — Phase 1 Development Start
+
+- **Decision:** Phase 1 Agent #1 (Delivery Tracker, T1) and Agent #2 (Risk & Escalation Sentinel, T2) moved to 🔵 In Development; Agent #3 (Business Review Generator, T2) scaffolded and in development
+- **AI Factory compliance verified:** `trust_tier`, `validate_inputs()`, `handle_error()`, `[METRICS]` print confirmed in `delivery-tracker/tracker.py` and `risk-escalation-sentinel/sentinel.py`
+- **Rule inheritance:** `.windsurf/rules/agent-context.md` and `.cursor/rules/agent-context.md` created for all three Phase 1 agents
+- **Data directories provisioned:** `data/runs/delivery-tracker/`, `data/runs/risk-sentinel/`, `data/runs/business-review/`
+- **Next gate:** Phase 0 exit review criteria — baselines measured, Salesforce access confirmed, all 3 agent cards signed
+
+---
 
 ### 2026-05-27 — Phase 0 Kickoff
 
@@ -48,7 +58,7 @@ Track each T2 agent's 45-day human-in-the-loop window here.
 ## Governance Review Cadence
 
 | Cadence | Activity |
-|---------|---------|
+| ------- | -------- |
 | Weekly (15 min) | Review HITL logs, surface any issues |
 | Monthly | Phase gate assessment, KPI review |
 | Per T3 promotion | Full governance review + written sign-off |
@@ -61,9 +71,9 @@ Track each T2 agent's 45-day human-in-the-loop window here.
 Record any incidents where an agent produced unexpected output or required emergency intervention.
 
 | Date | Agent | Incident | Impact | Action Taken | Resolved |
-|------|-------|---------|--------|-------------|---------|
+| ---- | ----- | -------- | ------ | ------------ | -------- |
 | — | — | No incidents yet | — | — | — |
 
 ---
 
-*Last updated: 2026-05-27 | Reference: `AI_FACTORY_IMPLEMENTATION_PLAN.md` Section 14*
+*Last updated: 2026-05-29 | Reference: `AI_FACTORY_IMPLEMENTATION_PLAN.md` Section 14*

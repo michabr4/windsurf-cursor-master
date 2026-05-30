@@ -13,7 +13,7 @@
 | Helix / ServiceFlow REST API | Bearer token (`.env`) | ✅ Ready | Read: accounts, cases, milestones | Yes (T1 read) | Dev | Already used in delivery-workbench |
 | Salesforce MCP | OAuth 2.0 / MCP server | 🟡 MCP exists, access TBC | Read: CRM accounts, entitlements, health | Yes (T1 read) | 👤 Ops | Confirm delegated read permissions |
 | ServiceNow MCP | OAuth 2.0 / MCP server | 🟡 MCP exists, access TBC | Read: cases, SLAs, incidents | Yes (T1 read) | 👤 Ops | Confirm ServiceNow instance URL + credentials |
-| Webex MCP / Bot | Bot token (`.env`) | ⚠️ Token rotation needed | Post messages, DM | Yes (T2 notifications) | 👤 Ops | Rotate token — current token may be stale |
+| Webex MCP / Bot | Bot token (`.env`) | ✅ Ready | Post messages, DM, SpaceLift read | Yes (T2 notifications) | Dev | Rotated 2026-05-28: WEBEX_BOT_TOKEN + WEBEX_ACCESS_TOKEN + WEBEX_REFRESH_TOKEN all set |
 | Outlook / MS Graph API | Azure AD OAuth 2.0 | 🔴 Not registered | Read: calendar, email drafting | Phase 2 | 👤 Ops/IT | Register Azure AD app, configure delegated perms |
 | Airtable | API key (`.env`) | ✅ Ready (MCP + direct) | Read/Write: agent registry, tracking | Yes (agent registry) | Dev | airtable-user-mcp available |
 
@@ -46,7 +46,7 @@
 
 | Priority | Action | Integration | Who | Due |
 |----------|--------|------------|-----|-----|
-| 🔴 P1 | Rotate Webex bot token | Webex MCP | 👤 You | Before Phase 1 HITL start |
+| ✅ Done | Rotate Webex bot token | Webex MCP | 👤 You | Completed 2026-05-28 |
 | 🟡 P2 | Confirm Salesforce delegated read access | Salesforce MCP | 👤 Ops/Admin | Before Phase 1 HITL start |
 | 🟡 P2 | Confirm ServiceNow instance URL + read credentials | ServiceNow MCP | 👤 Ops/Admin | Before Phase 1 HITL start |
 | ⬜ P3 | Register Azure AD app for Graph API | Outlook/Graph | 👤 IT | Before Phase 2 |
@@ -99,4 +99,4 @@ Run these once Ops confirms access is ready.
 
 ---
 
-*Last updated: 2026-05-27 | Reference: `AI_FACTORY_IMPLEMENTATION_PLAN.md` Section 13*
+*Last updated: 2026-05-28 | Reference: `AI_FACTORY_IMPLEMENTATION_PLAN.md` Section 13*

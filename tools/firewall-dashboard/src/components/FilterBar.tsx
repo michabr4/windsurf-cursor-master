@@ -27,11 +27,12 @@ export default function FilterBar({
       onFiltersChange({ ...filters, [key]: e.target.value })
 
   return (
-    <div className="flex flex-wrap items-center gap-3 rounded-lg border border-gray-200 bg-white px-4 py-3">
+    <div className="flex flex-wrap items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm">
       <select
+        title="Filter by phase"
         value={filters.section}
         onChange={set('section')}
-        className="rounded border border-gray-300 px-3 py-1.5 text-sm"
+        className="rounded-lg border border-slate-300 bg-slate-50 px-3 py-1.5 text-sm text-slate-700 focus:border-[#049fd9] focus:outline-none focus:ring-1 focus:ring-[#049fd9]"
       >
         <option value="">All Phases</option>
         {sections.map(s => (
@@ -40,9 +41,10 @@ export default function FilterBar({
       </select>
 
       <select
+        title="Filter by assignee"
         value={filters.assignee}
         onChange={set('assignee')}
-        className="rounded border border-gray-300 px-3 py-1.5 text-sm"
+        className="rounded-lg border border-slate-300 bg-slate-50 px-3 py-1.5 text-sm text-slate-700 focus:border-[#049fd9] focus:outline-none focus:ring-1 focus:ring-[#049fd9]"
       >
         <option value="">All Assignees</option>
         {assignees.map(a => (
@@ -51,9 +53,10 @@ export default function FilterBar({
       </select>
 
       <select
+        title="Filter by status"
         value={filters.status}
         onChange={set('status')}
-        className="rounded border border-gray-300 px-3 py-1.5 text-sm"
+        className="rounded-lg border border-slate-300 bg-slate-50 px-3 py-1.5 text-sm text-slate-700 focus:border-[#049fd9] focus:outline-none focus:ring-1 focus:ring-[#049fd9]"
       >
         <option value="">All Statuses</option>
         {STATUSES.map(s => (
@@ -61,23 +64,23 @@ export default function FilterBar({
         ))}
       </select>
 
-      <div className="ml-auto flex overflow-hidden rounded-lg border border-gray-300">
+      <div className="ml-auto flex overflow-hidden rounded-xl border border-slate-300">
         <button
           onClick={() => onViewChange('gantt')}
-          className={`flex items-center gap-1.5 px-3 py-1.5 text-sm ${
+          className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium transition-colors ${
             view === 'gantt'
-              ? 'bg-gray-900 text-white'
-              : 'bg-white text-gray-600 hover:bg-gray-50'
+              ? 'bg-[#049fd9] text-white'
+              : 'bg-white text-slate-600 hover:bg-slate-50'
           }`}
         >
           <LayoutList className="h-4 w-4" /> Gantt
         </button>
         <button
           onClick={() => onViewChange('kanban')}
-          className={`flex items-center gap-1.5 px-3 py-1.5 text-sm ${
+          className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium transition-colors ${
             view === 'kanban'
-              ? 'bg-gray-900 text-white'
-              : 'bg-white text-gray-600 hover:bg-gray-50'
+              ? 'bg-[#049fd9] text-white'
+              : 'bg-white text-slate-600 hover:bg-slate-50'
           }`}
         >
           <LayoutGrid className="h-4 w-4" /> Kanban

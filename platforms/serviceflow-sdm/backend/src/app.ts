@@ -14,6 +14,7 @@ import { integrationsRouter } from "./routes/integrations.js";
 import { sourceAdminRouter } from "./routes/sourceAdmin.js";
 import { powerBiRouter } from "./routes/powerBi.js";
 import { salesforceRouter } from "./routes/salesforce.js";
+import { mimirRouter } from "./routes/mimir.js";
 
 export function createApp() {
   const app = express();
@@ -39,6 +40,7 @@ export function createApp() {
   app.use("/api/v1/admin", sourceAdminRouter);
   app.use("/api/v1/analytics/powerbi", powerBiRouter);
   app.use("/api/v1/salesforce", salesforceRouter);
+  app.use("/api/v1/mimir", mimirRouter);
 
   return app;
 }

@@ -1699,6 +1699,24 @@
     .dd-callout .dd-metric { font-size: 1.425rem; font-weight: 700; color: var(--text); }
     .dd-callout .dd-sub { font-size: 13px; color: var(--muted); margin-top: 2px; }
 
+    /* Wave 18 — Cisco Mimir mock widgets */
+    .mimir-panel { border-left: 3px solid #00a1e0; }
+    .mimir-panel h2 { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .mimir-kpi-row { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 10px; }
+    .mimir-kpi-row .dd-metric { color: #00a1e0; }
+    .mimir-fn-banner {
+      border: 1px solid rgba(0, 161, 224, 0.35);
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      background: linear-gradient(90deg, rgba(0, 161, 224, 0.08), transparent 55%);
+    }
+    .mimir-peer-chart { margin-top: 12px; }
+    .mimir-peer-row { display: grid; grid-template-columns: 120px 1fr 48px; gap: 10px; align-items: center; margin-bottom: 8px; font-size: 14px; }
+    .mimir-peer-track { height: 10px; border-radius: 5px; background: var(--surface-2, rgba(255,255,255,0.06)); overflow: hidden; }
+    .mimir-peer-fill { height: 100%; border-radius: 5px; background: linear-gradient(90deg, #00a1e0, #2eb6ea); }
+    .mimir-peer-fill.peer { background: linear-gradient(90deg, #64748b, #94a3b8); }
+
     /* AI insight magenta accent for Digitized Delivery positioning */
     .ai-insight-block--dd {
       border-left: 3px solid var(--nav-section-cx);
@@ -3297,6 +3315,11 @@
             <div class="kpi"><div class="lbl">Field notices (impacted)</div><div class="val">2</div><div class="delta">FN ↔ inventory</div></div>
             <div class="kpi"><div class="lbl">Guest sentiment (7d)</div><div class="val">+0.4</div><div class="delta" style="color:var(--ok)">CSAT 4.2 · VoC blended</div></div>
           </div>
+          <div class="panel mimir-panel" id="mimir-overview-qbr-panel" style="margin-top:16px">
+            <h2><span class="wave">W18</span> Mimir QBR composite <span class="pill">NP · QBR</span></h2>
+            <p class="hint">Quarterly business review scores from Cisco Mimir — risk composite, PSIRT, field notices, and lifecycle (mock; live via <code>/api/v1/mimir</code>).</p>
+            <div class="mimir-kpi-row" id="mimir-overview-qbr-row"></div>
+          </div>
           <div class="two-col">
             <div class="panel">
               <h2>Quick actions</h2>
@@ -3337,6 +3360,7 @@
                     <button class="btn" type="button" onclick="alert('Mock: Smart Licensing sync')">Sync licensing</button>
                     <button class="btn btn-ghost" type="button" onclick="alert('Mock: OpenVuln advisory pull (Wave 14)')">Sync OpenVuln</button>
                     <button class="btn btn-ghost" type="button" onclick="alert('Mock: Field notice feed (Wave 15)')">Sync field notices</button>
+                    <button class="btn btn-ghost" type="button" id="mimir-sync-overview-btn">Sync Mimir (W18)</button>
                     <button class="btn btn-ghost" type="button" onclick="alert('Mock: Cisco IQ insights (Wave 9)')">Sync Cisco IQ</button>
                     <button class="btn btn-ghost" type="button" onclick="alert('Mock: CSPC collector alignment (Wave 10)')">Sync CSPC</button>
                   </div>
@@ -3958,6 +3982,16 @@
               </table>
             </div>
           </div>
+          <div class="panel mimir-panel" id="mimir-devices-panel">
+            <h2><span class="wave">W18</span> Mimir Network Profile</h2>
+            <p class="hint">NP device inventory from Mimir — augments Catalyst Center with product ID, SW version, and role (mock sample; snapshots at <code>/mimir/snapshots/devices</code>).</p>
+            <div class="matrix-wrap">
+              <table class="data">
+                <thead><tr><th>Device</th><th>IP</th><th>Product ID</th><th>SW version</th><th>Role</th><th>Source</th></tr></thead>
+                <tbody id="mimir-devices-tbody"></tbody>
+              </table>
+            </div>
+          </div>
           <div class="panel">
             <h2>Assurance issues (sample)</h2>
             <p class="hint">DNA assurance / issues pulled into triage (Wave 1).</p>
@@ -4111,7 +4145,7 @@
         <section class="view" id="view-integrations">
           <div class="kpi-grid">
             <div class="kpi"><div class="lbl">Sources enabled</div><div class="val">4</div><div class="delta">of 18 configured</div></div>
-            <div class="kpi"><div class="lbl">Waves in scope</div><div class="val">16</div><div class="delta">MVP freeze</div></div>
+            <div class="kpi"><div class="lbl">Waves in scope</div><div class="val">18</div><div class="delta">MVP + Mimir W18</div></div>
             <div class="kpi"><div class="lbl">API products (gate)</div><div class="val">13</div><div class="delta">DevNet console</div></div>
             <div class="kpi"><div class="lbl">Last registry edit</div><div class="val">2d</div><div class="delta">admin@sflow</div></div>
           </div>
@@ -4291,7 +4325,7 @@
             <div class="kpi"><div class="lbl">Enabled</div><div class="val">4</div><div class="delta">dna, tac, licensing, fmc</div></div>
             <div class="kpi"><div class="lbl">Credentials ref</div><div class="val">Vault</div><div class="delta">mock · no secrets shown</div></div>
             <div class="kpi"><div class="lbl">Failed tests (24h)</div><div class="val">0</div><div class="delta">Health checks</div></div>
-            <div class="kpi"><div class="lbl">Sources total</div><div class="val">18</div><div class="delta">VALID_SOURCES</div></div>
+            <div class="kpi"><div class="lbl">Sources total</div><div class="val">19</div><div class="delta">VALID_SOURCES + Mimir</div></div>
           </div>
           <div class="panel">
             <h2>Source administration</h2>
@@ -4324,8 +4358,20 @@
                 <li><code>FMC_BASE_URL</code> / <code>FMC_API_TOKEN</code> (or basic) for Wave 16</li>
                 <li>ISE: ERS admin + pxGrid client for Wave 11</li>
                 <li><code>SALESFORCE_*</code> (Connected App OAuth) for Wave 17</li>
+                <li><code>MIMIR_*</code> + <code>MIMIR_COMPANY_ID</code> for Wave 18</li>
               </ul>
             </div>
+          </div>
+
+          <div class="panel mimir-panel" id="mimir-sources-detail-panel" style="border-left:3px solid #00a1e0;margin-top:16px">
+            <h2 style="color:#00a1e0;font-size:1.125rem;margin:0 0 8px">Cisco Mimir — Wave 18 source detail</h2>
+            <p class="hint">OAuth2 client_credentials M2M · NP, QBR, BCIBM, Compliance. Test via <code>POST /api/v1/integrations/sync/mimir</code> or <code>POST /api/v1/admin/sources/mimir/test</code>.</p>
+            <div class="mimir-kpi-row" id="mimir-sources-detail-metrics"></div>
+            <div class="btn-row" style="margin-top:10px">
+              <button class="btn" type="button" id="mimir-sync-sources-btn">Sync now</button>
+              <button class="btn btn-ghost" type="button" id="mimir-test-sources-btn">Test connection</button>
+            </div>
+            <dl class="dl-grid" style="margin-top:12px" id="mimir-sources-dl"></dl>
           </div>
 
           <!-- Digitized Delivery — source readiness for DD waves -->
@@ -4345,6 +4391,7 @@
                   <tr><td>DD-K (Meraki Dashboard)</td><td>Meraki Dashboard API v1</td><td><span class="badge b-ok">Active</span></td><td><span class="badge b-ok">REST</span></td></tr>
                   <tr><td>DD-L (AppDynamics)</td><td>AppDynamics Controller API</td><td><span class="badge b-ok">Active</span></td><td><span class="badge b-ok">REST</span></td></tr>
                   <tr><td>W-17 (Salesforce)</td><td>salesforce</td><td><span class="badge b-p3">Disabled</span></td><td><span class="badge b-ok">REST v59.0</span></td></tr>
+                  <tr><td>W-18 (Mimir)</td><td>mimir</td><td><span class="badge b-p3" id="mimir-dd-source-badge">Disabled</span></td><td><span class="badge b-ok">REST · OAuth2</span></td></tr>
                 </tbody>
               </table>
             </div>
@@ -4721,11 +4768,20 @@
 
         <!-- PSIRT -->
         <section class="view" id="view-security">
+          <div class="mimir-fn-banner" id="mimir-security-banner" role="status"></div>
           <div class="kpi-grid">
             <div class="kpi"><div class="lbl">OpenVuln sync</div><div class="val">OK</div><div class="delta">Last 03:12 local</div></div>
             <div class="kpi"><div class="lbl">CVEs in estate</div><div class="val">7</div><div class="delta">3 need action</div></div>
             <div class="kpi"><div class="lbl">Critical / high</div><div class="val">1</div><div class="delta" style="color:var(--warn)">Patched window</div></div>
             <div class="kpi"><div class="lbl">Advisories tracked</div><div class="val">412</div><div class="delta">feed cursor apr-02</div></div>
+          </div>
+          <div class="panel mimir-panel" id="mimir-security-panel">
+            <h2><span class="wave">W18</span> Mimir PSIRT summary</h2>
+            <p class="hint">NP PSIRT roll-up from Mimir — complements OpenVuln (W14) with estate-wide severity buckets.</p>
+            <div class="mimir-kpi-row" id="mimir-psirt-kpis"></div>
+            <h3 style="margin:16px 0 8px;font-size:15px">Peer comparison (BCIBM)</h3>
+            <p class="hint">Customer PSIRT exposure vs peer median (mock percentile).</p>
+            <div class="mimir-peer-chart" id="mimir-peer-chart"></div>
           </div>
           <div class="panel">
             <h2>Security advisories (Wave 14)</h2>
@@ -4777,9 +4833,10 @@
 
         <!-- Field notices -->
         <section class="view" id="view-fieldnotes">
+          <div class="mimir-fn-banner" id="mimir-fn-banner" role="status"></div>
           <div class="kpi-grid">
-            <div class="kpi"><div class="lbl">Active FN matches</div><div class="val">2</div><div class="delta">inventory join</div></div>
-            <div class="kpi"><div class="lbl">Devices flagged</div><div class="val">26</div><div class="delta">serial / PID</div></div>
+            <div class="kpi"><div class="lbl">Active FN matches</div><div class="val" id="mimir-fn-kpi-matches">2</div><div class="delta">inventory join</div></div>
+            <div class="kpi"><div class="lbl">Devices flagged</div><div class="val" id="mimir-fn-kpi-devices">26</div><div class="delta">serial / PID · Mimir NP</div></div>
             <div class="kpi"><div class="lbl">Feed status</div><div class="val">OK</div><div class="delta">Last sync 04:00</div></div>
             <div class="kpi"><div class="lbl">Pending review</div><div class="val">1</div><div class="delta">Bellagio pattern</div></div>
           </div>

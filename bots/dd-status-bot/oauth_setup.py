@@ -3,6 +3,7 @@ Webex OAuth Setup for Digitized Delivery Status Bot
 Run this once to get your access token for SpaceLift and recordings.
 """
 
+import os
 import webbrowser
 import http.server
 import socketserver
@@ -12,8 +13,8 @@ import subprocess
 import sys
 
 # Digitized Delivery Webex Integration credentials
-CLIENT_ID = "C2b5947b478928691b3705f47513dbb40824e7b775cb78de2f897671b241bf90e"
-CLIENT_SECRET = "24f923db556dd9b7239a49094dc4dd64d57eff98c7e9c4c825fc5b954510e65c"
+CLIENT_ID = os.environ.get("WEBEX_CLIENT_ID", "")
+CLIENT_SECRET = os.environ.get("WEBEX_CLIENT_SECRET", "")
 REDIRECT_URI = "http://localhost:8080/callback"
 
 # Scopes needed for SpaceLift + recordings
