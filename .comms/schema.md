@@ -37,7 +37,9 @@ Both IDEs read and write JSON files here using their native filesystem capabilit
   "model": "sonnet",
   "complexity": "MEDIUM",
   "created_at": "2026-05-26T12:30:00-04:00",
-  "status": "pending"
+  "status": "pending",
+  "requires_review": true,
+  "fast_path": false
 }
 ```
 
@@ -56,6 +58,8 @@ Both IDEs read and write JSON files here using their native filesystem capabilit
 - `out_of_scope` — Array of files or concerns explicitly excluded from this task
 - `model` — Target model: `"haiku"` | `"sonnet"` | `"opus"` — see routing table below
 - `complexity` — `"LOW"` | `"MEDIUM"` | `"HIGH"` — HIGH triggers reasoning-first protocol
+- `requires_review` — `true` = Cursor stops after this task and waits for Windsurf sign-off; `false` = Cursor auto-chains to next task. **Default: true** (omitting field = pause)
+- `fast_path` — `true` = task meets all fast-path criteria (LOW/MEDIUM, no security-sensitive code, no approval-needed commands); `false` = review required. Must match `requires_review`.
 - `created_at` — ISO 8601 timestamp
 - `status` — "pending" (set by Windsurf)
 

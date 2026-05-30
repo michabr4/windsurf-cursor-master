@@ -61,3 +61,31 @@ Only use `"model": "opus"` when the task has:
 - Security-sensitive code (auth, encryption, key management)
 
 All other tasks: `sonnet` or `haiku`.
+
+## Terse Spec Format (Token Reduction)
+
+Write `spec` as structured key:value pairs — no markdown prose, no rule re-statements:
+
+```json
+"spec": "FILE: backend/src/routes/mimir.ts | ADD: GET /api/mimir/devices/:customerId route calling mimirClient.getDevices() | DONE: curl returns 200 with device array | FOLLOW: dependency-audit.md if packages change"
+```
+
+Rules for terse format:
+
+- `FILE:` — exact file paths (required)
+- `ADD:` / `CHANGE:` / `DELETE:` — specific operation (required)
+- `DONE:` — what "success" looks like (required)
+- `FOLLOW:` — named rule to apply (replaces re-stating the rule content)
+- Never copy rule text into `spec` — reference by rule name only
+- Never exceed 300 characters for LOW tasks; 600 for MEDIUM; no limit for HIGH
+
+## New Required Fields (Pipeline)
+
+Always include these two fields in every task JSON:
+
+```json
+"requires_review": true,
+"fast_path": false
+```
+
+Set `requires_review: false` + `fast_path: true` only when the task meets ALL fast-path criteria defined in `pipeline-mode.md`.

@@ -86,6 +86,26 @@ After creating the report, send exactly one line to the user:
 
 No further explanation unless the user asks.
 
+## Content Restrictions (Security)
+
+Session log reports MUST contain ONLY:
+
+- Task and work item titles (plain text descriptions)
+- File paths that were changed — never their contents
+- Issue descriptions in plain text — no code snippets, no values, no stack traces longer than 5 lines
+- Next steps as plain text
+
+Session log reports MUST NEVER contain:
+
+- File contents of any kind
+- Environment variable values (only variable names)
+- API response bodies
+- Database records or query results
+- Any string matching secret patterns (AWS keys, JWTs, private keys, connection strings with passwords)
+- Output of shell commands that may include sensitive data
+
+If any of the above would naturally appear in a work description, describe it in abstract terms only (e.g., "updated OAuth token handling" — not the token value or response body).
+
 ## Time Tracking
 
 - Treat the timestamp of the first user message in the session as session start.
