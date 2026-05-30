@@ -1,6 +1,7 @@
 ---
 description: Project Progress Tracker — maintain PROJECT_PROGRESS.md at session start and after any project milestone
-alwaysApply: true
+globs: "PROJECT_PROGRESS.md,ROADMAP.md,AI_FACTORY_IMPLEMENTATION_PLAN.md"
+alwaysApply: false
 ---
 
 # Project Progress Tracker Protocol

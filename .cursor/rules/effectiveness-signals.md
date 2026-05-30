@@ -1,6 +1,7 @@
 ---
 description: Effectiveness Signals — instrument all code to emit measurable quality, health, and velocity signals
-alwaysApply: true
+globs: "**/*.py,**/*.ts,**/*.js,**/*.mjs"
+alwaysApply: false
 ---
 
 # Effectiveness Signals — Builder Protocol

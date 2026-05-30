@@ -1,6 +1,7 @@
 ---
 description: Certificate Best Practices
-alwaysApply: true
+globs: "**/*.c,**/*.go,**/*.h,**/*.java,**/*.js,**/*.jsx,**/*.mjs,**/*.php,**/*.py,**/*.pyi,**/*.pyx,**/*.rb,**/*.swift,**/*.ts,**/*.tsx,**/*.pem,**/*.crt,**/*.cer,**/*.der"
+alwaysApply: false
 ---
 
 rule_id: codeguard-1-digital-certificates

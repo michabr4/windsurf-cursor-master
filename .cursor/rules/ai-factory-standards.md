@@ -1,3 +1,9 @@
+---
+description: AI Factory Agent Development Standards — file structure, trust tiers, and KPI logging requirements
+globs: "agents/**/*.py,agents/**/*.md,agents/**/*.sh,agents/**/.env.example"
+alwaysApply: false
+---
+
 # AI Factory Agent Development Standards
 
 ## Agent File Structure (Required)

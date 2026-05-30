@@ -1,3 +1,9 @@
+---
+description: Claude Reasoning Protocol — when to apply reasoning-first approach and model routing by task type
+globs: "agents/**/*.py,agents/**/*.ts,platforms/**/*.ts,platforms/**/*.py,sdm-files/**/*.py"
+alwaysApply: false
+---
+
 # Claude Reasoning Protocol for Cursor
 
 ## When to Use Reasoning-First Approach

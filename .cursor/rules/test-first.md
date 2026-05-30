@@ -1,3 +1,9 @@
+---
+description: Test-First Development Protocol — write tests before implementation for all new functions and agent components
+globs: "**/*.py,**/*.ts,**/*.js,**/*.go,**/tests/**,**/test_*.py"
+alwaysApply: false
+---
+
 # Test-First Development Protocol
 
 ## Requirement

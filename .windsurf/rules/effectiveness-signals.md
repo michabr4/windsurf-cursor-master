@@ -1,6 +1,7 @@
 ---
 description: Effectiveness Signals — monitor and surface project health, quality, and velocity signals across all active projects
-alwaysApply: true
+globs: "**/*.py,**/*.ts,**/*.js,**/*.mjs"
+alwaysApply: false
 ---
 
 # Effectiveness Signals Protocol

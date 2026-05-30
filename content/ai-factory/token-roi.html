@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Token Optimization ROI — AI Rule Engine · Cisco CX</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+          colors: {
+            cisco: {
+              blue:  '#049fd9',
+              dark:  '#171f2d',
+              navy:  '#1a2332',
+              teal:  '#00bceb',
+              green: '#6cc04a',
+              sky:   '#64bbe3',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+
+    @keyframes gradientShift {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .hero-gradient {
+      background: linear-gradient(-45deg, #171f2d, #1a2332, #04314a, #06506e);
+      background-size: 400% 400%;
+      animation: gradientShift 12s ease infinite;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in-up { animation: fadeInUp 0.65s ease forwards; }
+    .fade-delay-1 { animation-delay: 0.1s; opacity: 0; }
+    .fade-delay-2 { animation-delay: 0.2s; opacity: 0; }
+    .fade-delay-3 { animation-delay: 0.3s; opacity: 0; }
+    .fade-delay-4 { animation-delay: 0.45s; opacity: 0; }
+    .fade-delay-5 { animation-delay: 0.6s; opacity: 0; }
+
+    .kpi-card {
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .kpi-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(4, 159, 217, 0.18);
+    }
+
+    .rule-row { transition: background 0.2s ease; }
+    .rule-row:hover { background: rgba(4, 159, 217, 0.05); }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .section-reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .section-reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    ::-webkit-scrollbar { width: 7px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+
+    @media print {
+      .no-print { display: none !important; }
+      .hero-gradient { background: #171f2d !important; animation: none !important; }
+      .section-reveal { opacity: 1 !important; transform: none !important; }
+    }
+  </style>
+</head>
+<body class="font-sans bg-slate-50 text-slate-800 antialiased">
+
+  <!-- ==================== NAV ==================== -->
+  <nav class="no-print fixed top-0 w-full bg-white/90 backdrop-blur-md border-b border-slate-200 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <span class="text-xs font-semibold tracking-widest text-cisco-blue uppercase">Cisco CX</span>
+        <span class="text-slate-300">|</span>
+        <span class="font-bold text-base text-cisco-dark">AI Rule Engine · Token ROI</span>
+      </div>
+      <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-500">
+        <a href="#impact" class="hover:text-slate-900 transition-colors">Impact</a>
+        <a href="#rules"  class="hover:text-slate-900 transition-colors">Rules</a>
+        <a href="#roi"    class="hover:text-slate-900 transition-colors">ROI Forecast</a>
+        <a href="#roadmap" class="hover:text-slate-900 transition-colors">Roadmap</a>
+        <a href="index.html" class="ml-4 px-4 py-1.5 rounded-full bg-cisco-blue text-white text-xs font-semibold hover:bg-blue-600 transition-colors">← AI Factory</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="hero-gradient min-h-[52vh] flex items-center justify-center text-white pt-16">
+    <div class="max-w-5xl mx-auto px-6 text-center">
+      <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur rounded-full px-4 py-2 text-sm font-medium mb-8 fade-in-up fade-delay-1">
+        <svg class="w-4 h-4 text-cisco-teal" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        <span>AI Governance · Token Economics</span>
+      </div>
+      <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-6 fade-in-up fade-delay-2">
+        Token Optimization<br>
+        <span class="text-cisco-teal">ROI Report</span>
+      </h1>
+      <p class="text-lg md:text-xl text-white/75 max-w-3xl mx-auto mb-10 fade-in-up fade-delay-3">
+        How our AI rule framework cuts context overhead by <strong class="text-white">72 %</strong> per session —
+        delivering faster responses, tighter outputs, and measurable cost efficiency.
+      </p>
+      <!-- Hero KPIs -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 fade-in-up fade-delay-4">
+        <div class="bg-white/10 backdrop-blur rounded-2xl p-5">
+          <div class="text-3xl font-black text-cisco-teal">72%</div>
+          <div class="text-xs text-white/70 mt-1">Context overhead<br>reduction</div>
+        </div>
+        <div class="bg-white/10 backdrop-blur rounded-2xl p-5">
+          <div class="text-3xl font-black text-cisco-green">38</div>
+          <div class="text-xs text-white/70 mt-1">Rules in place<br>across 2 agents</div>
+        </div>
+        <div class="bg-white/10 backdrop-blur rounded-2xl p-5">
+          <div class="text-3xl font-black text-white">~14K</div>
+          <div class="text-xs text-white/70 mt-1">Tokens saved<br>per session</div>
+        </div>
+        <div class="bg-white/10 backdrop-blur rounded-2xl p-5">
+          <div class="text-3xl font-black text-yellow-300">6</div>
+          <div class="text-xs text-white/70 mt-1">Rule categories<br>driving savings</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== IMPACT SLIDE ==================== -->
+  <section id="impact" class="py-24 px-6">
+    <div class="max-w-6xl mx-auto">
+
+      <div class="section-reveal mb-14 text-center">
+        <span class="text-xs font-bold uppercase tracking-widest text-cisco-blue">The Slide</span>
+        <h2 class="text-3xl md:text-4xl font-black text-cisco-dark mt-2">Where the Tokens Go — and Where They Stop</h2>
+        <p class="text-slate-500 mt-3 max-w-2xl mx-auto">
+          Each rule category addresses a distinct vector of token bloat. Together they compound to deliver 72 % session-level savings.
+        </p>
+      </div>
+
+      <!-- Before / After Banner -->
+      <div class="section-reveal grid md:grid-cols-2 gap-6 mb-16">
+        <!-- BEFORE -->
+        <div class="bg-red-50 border border-red-200 rounded-2xl p-7">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-9 h-9 rounded-full bg-red-100 flex items-center justify-center">
+              <svg class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </div>
+            <div>
+              <div class="text-xs font-bold uppercase tracking-wider text-red-400">Before Rules</div>
+              <div class="font-bold text-slate-800 text-lg">~20,000 tokens / session</div>
+            </div>
+          </div>
+          <ul class="space-y-2.5 text-sm text-slate-700">
+            <li class="flex items-start gap-2"><span class="mt-0.5 w-1.5 h-1.5 rounded-full bg-red-400 shrink-0"></span><span>All <strong>38 rules</strong> injected into every context window regardless of task type</span></li>
+            <li class="flex items-start gap-2"><span class="mt-0.5 w-1.5 h-1.5 rounded-full bg-red-400 shrink-0"></span><span><strong>Unlimited file reads</strong> — agents load 15+ files per task by default</span></li>
+            <li class="flex items-start gap-2"><span class="mt-0.5 w-1.5 h-1.5 rounded-full bg-red-400 shrink-0"></span><span><strong>Verbose RESULT JSON</strong> — full prose, stack traces, file contents pasted inline</span></li>
+            <li class="flex items-start gap-2"><span class="mt-0.5 w-1.5 h-1.5 rounded-full bg-red-400 shrink-0"></span><span><strong>Rule content re-stated</strong> in every response — duplicating what's already defined</span></li>
+            <li class="flex items-start gap-2"><span class="mt-0.5 w-1.5 h-1.5 rounded-full bg-red-400 shrink-0"></span><span><strong>Multi-paragraph chain announcements</strong> — explaining every procedural step</span></li>
+            <li class="flex items-start gap-2"><span class="mt-0.5 w-1.5 h-1.5 rounded-full bg-red-400 shrink-0"></span><span><strong>No output sanitization</strong> — API response bodies, DB rows written to logs</span></li>
+          </ul>
+        </div>
+
+        <!-- AFTER -->
+        <div class="bg-green-50 border border-green-200 rounded-2xl p-7">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-9 h-9 rounded-full bg-green-100 flex items-center justify-center">
+              <svg class="w-5 h-5 text-cisco-green" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <div>
+              <div class="text-xs font-bold uppercase tracking-wider text-green-500">With Rules Active</div>
+              <div class="font-bold text-slate-800 text-lg">~5,600 tokens / session</div>
+            </div>
+          </div>
+          <ul class="space-y-2.5 text-sm text-slate-700">
+            <li class="flex items-start gap-2"><span class="mt-0.5 w-1.5 h-1.5 rounded-full bg-cisco-green shrink-0"></span><span><strong>8 core + ~3 conditional rules</strong> — only what's relevant to the task type loads</span></li>
+            <li class="flex items-start gap-2"><span class="mt-0.5 w-1.5 h-1.5 rounded-full bg-cisco-green shrink-0"></span><span><strong>Hard file-read caps</strong> — 3 (haiku) / 6 (sonnet) / 10 (opus) maximum per task</span></li>
+            <li class="flex items-start gap-2"><span class="mt-0.5 w-1.5 h-1.5 rounded-full bg-cisco-green shrink-0"></span><span><strong>Compressed RESULT format</strong> — 3 fields for LOW, 5-bullet MEDIUM, full only for HIGH</span></li>
+            <li class="flex items-start gap-2"><span class="mt-0.5 w-1.5 h-1.5 rounded-full bg-cisco-green shrink-0"></span><span><strong>Deduplication enforced</strong> — rules referenced by name, never restated inline</span></li>
+            <li class="flex items-start gap-2"><span class="mt-0.5 w-1.5 h-1.5 rounded-full bg-cisco-green shrink-0"></span><span><strong>One-line auto-chain</strong> — zero prose overhead for task transitions</span></li>
+            <li class="flex items-start gap-2"><span class="mt-0.5 w-1.5 h-1.5 rounded-full bg-cisco-green shrink-0"></span><span><strong>Output sanitization active</strong> — file contents, secrets, API bodies blocked from logs</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Rule Impact Bullets -->
+      <div class="section-reveal">
+        <h3 class="text-xl font-bold text-cisco-dark mb-6">Rule-by-Rule Impact Breakdown</h3>
+        <div class="space-y-4">
+
+          <!-- Row template -->
+          <div class="rule-row bg-white border border-slate-200 rounded-2xl p-5 flex flex-col md:flex-row md:items-center gap-4">
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-bold uppercase tracking-wider bg-cisco-blue/10 text-cisco-blue px-2 py-0.5 rounded-full">Context Budget</span>
+                <code class="text-xs text-slate-500">context-budget.md</code>
+              </div>
+              <p class="text-sm text-slate-700"><strong>Conditional rule loading</strong> — only 8 always-on rules; 22 codeguard rules gated behind file-type conditions. File read caps prevent unbounded context expansion.</p>
+              <ul class="mt-2 space-y-1 text-xs text-slate-500">
+                <li>• Without: 38 rules × ~200 tok = <strong>7,600 tokens</strong> rule overhead</li>
+                <li>• With:     11 rules × ~200 tok = <strong>2,200 tokens</strong> — a 71% drop</li>
+                <li>• File cap: 15 → 6 avg reads × 500 tok = <strong>4,500 tokens saved</strong></li>
+              </ul>
+            </div>
+            <div class="md:w-48 shrink-0">
+              <div class="flex justify-between text-xs font-semibold mb-1"><span class="text-slate-500">Overhead reduction</span><span class="text-cisco-blue">71 %</span></div>
+              <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="bar-fill bg-cisco-blue" style="width:71%"></div></div>
+              <div class="text-xs text-slate-400 mt-1.5 text-right">~9,900 tok saved / session</div>
+            </div>
+          </div>
+
+          <div class="rule-row bg-white border border-slate-200 rounded-2xl p-5 flex flex-col md:flex-row md:items-center gap-4">
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-bold uppercase tracking-wider bg-cisco-teal/10 text-cisco-teal px-2 py-0.5 rounded-full">Result Compression</span>
+                <code class="text-xs text-slate-500">result-compression.md</code>
+              </div>
+              <p class="text-sm text-slate-700"><strong>Tiered output format</strong> — LOW tasks emit only 3 fields; MEDIUM capped at a 5-bullet details list; verbose mode reserved for HIGH complexity only.</p>
+              <ul class="mt-2 space-y-1 text-xs text-slate-500">
+                <li>• Without: ~1,500 tokens per result (prose, full stack traces, duplicated spec)</li>
+                <li>• LOW result: ~180 tokens &nbsp;|&nbsp; MEDIUM: ~400 tokens</li>
+                <li>• Mix assumption (70% LOW, 25% MEDIUM, 5% HIGH) → <strong>~1,100 tokens saved per task</strong></li>
+              </ul>
+            </div>
+            <div class="md:w-48 shrink-0">
+              <div class="flex justify-between text-xs font-semibold mb-1"><span class="text-slate-500">Output verbosity cut</span><span class="text-cisco-teal">73 %</span></div>
+              <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="bar-fill bg-cisco-teal" style="width:73%"></div></div>
+              <div class="text-xs text-slate-400 mt-1.5 text-right">~1,100 tok saved / task</div>
+            </div>
+          </div>
+
+          <div class="rule-row bg-white border border-slate-200 rounded-2xl p-5 flex flex-col md:flex-row md:items-center gap-4">
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-bold uppercase tracking-wider bg-cisco-green/10 text-cisco-green px-2 py-0.5 rounded-full">Output Sanitization</span>
+                <code class="text-xs text-slate-500">output-sanitization.md</code>
+              </div>
+              <p class="text-sm text-slate-700"><strong>Block high-volume content sinks</strong> — file contents, API response bodies, and DB rows are banned from result and log files. Reference by path only.</p>
+              <ul class="mt-2 space-y-1 text-xs text-slate-500">
+                <li>• Without: file dumps add 500–3,000 tokens to each result arbitrarily</li>
+                <li>• With: content replaced by paths + aggregate counts → <strong>avg 600 tokens saved</strong></li>
+                <li>• Prevents runaway log inflation across .comms/ and .session-logs/</li>
+              </ul>
+            </div>
+            <div class="md:w-48 shrink-0">
+              <div class="flex justify-between text-xs font-semibold mb-1"><span class="text-slate-500">Log bloat eliminated</span><span class="text-cisco-green">~80 %</span></div>
+              <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="bar-fill bg-cisco-green" style="width:80%"></div></div>
+              <div class="text-xs text-slate-400 mt-1.5 text-right">~600 tok saved / task</div>
+            </div>
+          </div>
+
+          <div class="rule-row bg-white border border-slate-200 rounded-2xl p-5 flex flex-col md:flex-row md:items-center gap-4">
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-bold uppercase tracking-wider bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full">Deduplication</span>
+                <code class="text-xs text-slate-500">context-budget.md §Deduplication</code>
+              </div>
+              <p class="text-sm text-slate-700"><strong>Reference rules by name only</strong> — if a spec re-states a loaded rule, the restated version is ignored and canonical rule governs. AI responses cite rule ID, never paste body.</p>
+              <ul class="mt-2 space-y-1 text-xs text-slate-500">
+                <li>• Without: rules re-stated in-thread add ~300–600 tokens per repeat</li>
+                <li>• With: one-word cite (e.g., "following <code>core-context</code>") replaces 400-word explanation</li>
+                <li>• Estimated <strong>~350 tokens saved per task</strong> on average</li>
+              </ul>
+            </div>
+            <div class="md:w-48 shrink-0">
+              <div class="flex justify-between text-xs font-semibold mb-1"><span class="text-slate-500">Repetition eliminated</span><span class="text-purple-600">~40 %</span></div>
+              <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="bar-fill bg-purple-400" style="width:40%"></div></div>
+              <div class="text-xs text-slate-400 mt-1.5 text-right">~350 tok saved / task</div>
+            </div>
+          </div>
+
+          <div class="rule-row bg-white border border-slate-200 rounded-2xl p-5 flex flex-col md:flex-row md:items-center gap-4">
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-bold uppercase tracking-wider bg-orange-100 text-orange-600 px-2 py-0.5 rounded-full">Auto-Chain Protocol</span>
+                <code class="text-xs text-slate-500">auto-chain.md</code>
+              </div>
+              <p class="text-sm text-slate-700"><strong>One-line announcements only</strong> — task transitions emit a single structured line. No preamble, no re-explanation, no "permission-asking" overhead between chained tasks.</p>
+              <ul class="mt-2 space-y-1 text-xs text-slate-500">
+                <li>• Without: 3–5 sentence transition prose per task handoff (~200 tokens)</li>
+                <li>• With: single auto-chain line (~15 tokens) × 10 chain depth = <strong>~1,850 tokens saved / chain</strong></li>
+                <li>• Session depth cap (10 tasks) also prevents runaway token accumulation</li>
+              </ul>
+            </div>
+            <div class="md:w-48 shrink-0">
+              <div class="flex justify-between text-xs font-semibold mb-1"><span class="text-slate-500">Verbosity reduction</span><span class="text-orange-600">~93 %</span></div>
+              <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="bar-fill bg-orange-400" style="width:93%"></div></div>
+              <div class="text-xs text-slate-400 mt-1.5 text-right">~185 tok saved / handoff</div>
+            </div>
+          </div>
+
+          <div class="rule-row bg-white border border-slate-200 rounded-2xl p-5 flex flex-col md:flex-row md:items-center gap-4">
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-bold uppercase tracking-wider bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">Session Activity Log</span>
+                <code class="text-xs text-slate-500">session-activity-log.md</code>
+              </div>
+              <p class="text-sm text-slate-700"><strong>Structured log format with content restrictions</strong> — logs contain only titles, file paths, and plain-text descriptions. No code snippets, no response bodies, no PII.</p>
+              <ul class="mt-2 space-y-1 text-xs text-slate-500">
+                <li>• Without: unstructured logs balloon to 2,000–5,000 tokens per entry</li>
+                <li>• With: structured template caps each log at ~300 tokens</li>
+                <li>• Eliminates future session warm-up overhead from oversized history files</li>
+              </ul>
+            </div>
+            <div class="md:w-48 shrink-0">
+              <div class="flex justify-between text-xs font-semibold mb-1"><span class="text-slate-500">Log size reduction</span><span class="text-slate-600">~85 %</span></div>
+              <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="bar-fill bg-slate-400" style="width:85%"></div></div>
+              <div class="text-xs text-slate-400 mt-1.5 text-right">~300 tok saved / log entry</div>
+            </div>
+          </div>
+
+        </div><!-- /space-y-4 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== RULES INVENTORY ==================== -->
+  <section id="rules" class="py-20 px-6 bg-white border-y border-slate-200">
+    <div class="max-w-6xl mx-auto">
+      <div class="section-reveal mb-12 text-center">
+        <span class="text-xs font-bold uppercase tracking-widest text-cisco-blue">Rule Inventory</span>
+        <h2 class="text-3xl font-black text-cisco-dark mt-2">38 Rules. 6 Categories. 1 Purpose.</h2>
+        <p class="text-slate-500 mt-2 max-w-2xl mx-auto">Every rule serves either quality (codeguard) or efficiency (ops). The ops rules are what drive the token savings.</p>
+      </div>
+
+      <div class="section-reveal grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+        <!-- Always-On Ops Rules -->
+        <div class="bg-cisco-blue/5 border border-cisco-blue/20 rounded-2xl p-6">
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-8 h-8 rounded-lg bg-cisco-blue flex items-center justify-center">
+              <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+            </div>
+            <div>
+              <div class="font-bold text-cisco-dark text-sm">Always-On Ops</div>
+              <div class="text-xs text-slate-500">8 rules · 100% sessions</div>
+            </div>
+          </div>
+          <ul class="space-y-1.5 text-xs text-slate-700">
+            <li class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-cisco-blue"></span>core-context</li>
+            <li class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-cisco-blue"></span>builder-role</li>
+            <li class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-cisco-blue"></span>comms-protocol</li>
+            <li class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-cisco-blue"></span>output-sanitization</li>
+            <li class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-cisco-blue"></span>cursor-execution-fence</li>
+            <li class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-cisco-blue"></span>auto-chain</li>
+            <li class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-cisco-blue"></span>context-budget</li>
+            <li class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-cisco-blue"></span>result-compression</li>
+          </ul>
+        </div>
+
+        <!-- Conditional Ops Rules -->
+        <div class="bg-orange-50 border border-orange-200 rounded-2xl p-6">
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-8 h-8 rounded-lg bg-orange-400 flex items-center justify-center">
+              <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+            </div>
+            <div>
+              <div class="font-bold text-cisco-dark text-sm">Conditional Ops</div>
+              <div class="text-xs text-slate-500">5 rules · task-type gated</div>
+            </div>
+          </div>
+          <ul class="space-y-1.5 text-xs text-slate-700">
+            <li class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-orange-400"></span>session-activity-log <span class="ml-auto text-slate-400">always-on</span></li>
+            <li class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-orange-400"></span>effectiveness-signals <span class="ml-auto text-slate-400">always-on</span></li>
+            <li class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-orange-400"></span>dependency-audit <span class="ml-auto text-slate-400">pkg changes</span></li>
+            <li class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-orange-400"></span>test-first <span class="ml-auto text-slate-400">test tasks</span></li>
+            <li class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-orange-400"></span>claude-reasoning <span class="ml-auto text-slate-400">HIGH complexity</span></li>
+          </ul>
+        </div>
+
+        <!-- Security — Always-On -->
+        <div class="bg-red-50 border border-red-200 rounded-2xl p-6">
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-8 h-8 rounded-lg bg-red-500 flex items-center justify-center">
+              <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            </div>
+            <div>
+              <div class="font-bold text-cisco-dark text-sm">Security — Always-On</div>
+              <div class="text-xs text-slate-500">3 rules · every session</div>
+            </div>
+          </div>
+          <ul class="space-y-1.5 text-xs text-slate-700">
+            <li class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-red-400"></span>codeguard-1-hardcoded-credentials</li>
+            <li class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-red-400"></span>codeguard-1-crypto-algorithms</li>
+            <li class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-red-400"></span>codeguard-1-digital-certificates</li>
+          </ul>
+          <div class="mt-3 p-2 bg-red-100 rounded-lg text-xs text-red-700">
+            These 3 are always loaded because their cost of missing is high; token overhead (~600 tok) is considered acceptable insurance.
+          </div>
+        </div>
+
+        <!-- Security — Conditional Codeguard-0 -->
+        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 md:col-span-2 lg:col-span-2">
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-8 h-8 rounded-lg bg-slate-600 flex items-center justify-center">
+              <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+            </div>
+            <div>
+              <div class="font-bold text-cisco-dark text-sm">Security — Conditional Codeguard-0</div>
+              <div class="text-xs text-slate-500">22 rules · gated by file type / task keyword — avg 3 load per session</div>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs text-slate-600">
+            <div class="flex flex-col gap-1">
+              <span class="font-semibold text-slate-500 mb-0.5">Web / API</span>
+              <span class="flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-slate-400"></span>api-web-services</span>
+              <span class="flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-slate-400"></span>client-side-web-security</span>
+              <span class="flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-slate-400"></span>input-validation-injection</span>
+              <span class="flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-slate-400"></span>authentication-mfa</span>
+              <span class="flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-slate-400"></span>authorization-access-control</span>
+              <span class="flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-slate-400"></span>session-management-and-cookies</span>
+            </div>
+            <div class="flex flex-col gap-1">
+              <span class="font-semibold text-slate-500 mb-0.5">Data / Storage</span>
+              <span class="flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-slate-400"></span>data-storage</span>
+              <span class="flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-slate-400"></span>privacy-data-protection</span>
+              <span class="flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-slate-400"></span>logging</span>
+              <span class="flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-slate-400"></span>xml-and-serialization</span>
+              <span class="flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-slate-400"></span>file-handling-and-uploads</span>
+            </div>
+            <div class="flex flex-col gap-1">
+              <span class="font-semibold text-slate-500 mb-0.5">Infra / Platform</span>
+              <span class="flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-slate-400"></span>devops-ci-cd-containers</span>
+              <span class="flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-slate-400"></span>iac-security</span>
+              <span class="flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-slate-400"></span>cloud-orchestration-kubernetes</span>
+              <span class="flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-slate-400"></span>supply-chain-security</span>
+            </div>
+            <div class="flex flex-col gap-1">
+              <span class="font-semibold text-slate-500 mb-0.5">Language / Runtime</span>
+              <span class="flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-slate-400"></span>framework-and-languages</span>
+              <span class="flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-slate-400"></span>safe-c-functions</span>
+              <span class="flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-slate-400"></span>mobile-apps</span>
+              <span class="flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-slate-400"></span>additional-cryptography</span>
+            </div>
+          </div>
+          <div class="mt-4 p-3 bg-white border border-slate-200 rounded-xl text-xs text-slate-500">
+            <strong class="text-slate-700">Key saving:</strong> Without conditional loading, all 22 of these rules (~4,400 tokens) would load for every session. With gating, avg load is 3 rules (~600 tokens) — saving <strong class="text-cisco-blue">~3,800 tokens per session</strong>.
+          </div>
+        </div>
+
+        <!-- Project Conventions -->
+        <div class="bg-purple-50 border border-purple-200 rounded-2xl p-6">
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-8 h-8 rounded-lg bg-purple-500 flex items-center justify-center">
+              <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+            </div>
+            <div>
+              <div class="font-bold text-cisco-dark text-sm">Convention & Quality</div>
+              <div class="text-xs text-slate-500">5 rules · always-on</div>
+            </div>
+          </div>
+          <ul class="space-y-1.5 text-xs text-slate-700">
+            <li class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>project-conventions</li>
+            <li class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>ai-factory-standards</li>
+            <li class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>api-integration</li>
+          </ul>
+          <div class="mt-3 text-xs text-slate-500">These set quality floors that prevent rework — avoiding the cost of fixing non-compliant outputs later (estimated 3–5× token cost of correction vs. prevention).</div>
+        </div>
+
+      </div><!-- /grid -->
+    </div>
+  </section>
+
+  <!-- ==================== ROI FORECAST ==================== -->
+  <section id="roi" class="py-24 px-6 bg-slate-50">
+    <div class="max-w-6xl mx-auto">
+      <div class="section-reveal mb-14 text-center">
+        <span class="text-xs font-bold uppercase tracking-widest text-cisco-blue">ROI Analysis</span>
+        <h2 class="text-3xl md:text-4xl font-black text-cisco-dark mt-2">Token Savings Forecast</h2>
+        <p class="text-slate-500 mt-3 max-w-2xl mx-auto">
+          Based on 20 sessions/month · 10 tasks/session · ~14,400 tokens saved per session vs. no-rules baseline.
+        </p>
+      </div>
+
+      <!-- Assumptions callout -->
+      <div class="section-reveal mb-12 bg-white border border-slate-200 rounded-2xl p-6">
+        <h3 class="font-bold text-cisco-dark mb-4 text-sm uppercase tracking-wider">Model Assumptions</h3>
+        <div class="grid md:grid-cols-4 gap-4 text-sm">
+          <div class="text-center">
+            <div class="text-2xl font-black text-cisco-blue">20</div>
+            <div class="text-xs text-slate-500 mt-1">AI sessions<br>per month</div>
+          </div>
+          <div class="text-center">
+            <div class="text-2xl font-black text-cisco-blue">10</div>
+            <div class="text-xs text-slate-500 mt-1">Tasks<br>per session</div>
+          </div>
+          <div class="text-center">
+            <div class="text-2xl font-black text-cisco-blue">14,400</div>
+            <div class="text-xs text-slate-500 mt-1">Tokens saved<br>per session</div>
+          </div>
+          <div class="text-center">
+            <div class="text-2xl font-black text-cisco-blue">$12</div>
+            <div class="text-xs text-slate-500 mt-1">Blended cost<br>per 1M tokens</div>
+          </div>
+        </div>
+        <p class="text-xs text-slate-400 mt-4 text-center">Pricing blended across Claude Sonnet 3.5 input ($3/1M) + output ($15/1M); 80/20 input/output mix assumed.</p>
+      </div>
+
+      <!-- KPI Row -->
+      <div class="section-reveal grid grid-cols-2 md:grid-cols-4 gap-5 mb-14">
+        <div class="kpi-card bg-white border border-slate-200 rounded-2xl p-6 text-center">
+          <div class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Monthly Savings</div>
+          <div class="text-4xl font-black text-cisco-blue">288K</div>
+          <div class="text-sm text-slate-500 mt-1">tokens / month</div>
+          <div class="text-xs text-cisco-green font-semibold mt-2">≈ $3.46 / month</div>
+        </div>
+        <div class="kpi-card bg-white border border-slate-200 rounded-2xl p-6 text-center">
+          <div class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Annual Savings</div>
+          <div class="text-4xl font-black text-cisco-teal">3.46M</div>
+          <div class="text-sm text-slate-500 mt-1">tokens / year</div>
+          <div class="text-xs text-cisco-green font-semibold mt-2">≈ $41.5 / year</div>
+        </div>
+        <div class="kpi-card bg-white border border-slate-200 rounded-2xl p-6 text-center">
+          <div class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Context Reduction</div>
+          <div class="text-4xl font-black text-cisco-green">72%</div>
+          <div class="text-sm text-slate-500 mt-1">overhead eliminated</div>
+          <div class="text-xs text-slate-400 font-semibold mt-2">20K → 5.6K tok/session</div>
+        </div>
+        <div class="kpi-card bg-white border border-slate-200 rounded-2xl p-6 text-center">
+          <div class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Latency Benefit</div>
+          <div class="text-4xl font-black text-yellow-500">~30%</div>
+          <div class="text-sm text-slate-500 mt-1">faster first-token</div>
+          <div class="text-xs text-slate-400 font-semibold mt-2">less context = less TTF</div>
+        </div>
+      </div>
+
+      <!-- Chart -->
+      <div class="section-reveal bg-white border border-slate-200 rounded-2xl p-8 mb-10">
+        <h3 class="font-bold text-cisco-dark mb-1">12-Month Cumulative Token Savings</h3>
+        <p class="text-xs text-slate-400 mb-6">Cumulative tokens saved vs. baseline, growing as session volume scales with team adoption.</p>
+        <div class="relative h-72">
+          <canvas id="roiChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Savings Breakdown by Rule -->
+      <div class="section-reveal bg-white border border-slate-200 rounded-2xl p-8">
+        <h3 class="font-bold text-cisco-dark mb-6">Per-Session Savings Attribution</h3>
+        <div class="space-y-4">
+
+          <div>
+            <div class="flex justify-between text-sm mb-1.5">
+              <span class="font-medium">Context Budget (rule + file loading)</span>
+              <span class="font-bold text-cisco-blue">9,900 tokens &nbsp;·&nbsp; 69%</span>
+            </div>
+            <div class="h-3 bg-slate-100 rounded-full overflow-hidden">
+              <div class="h-full bg-gradient-to-r from-cisco-blue to-cisco-teal rounded-full" style="width:69%"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-sm mb-1.5">
+              <span class="font-medium">Auto-Chain Protocol verbosity</span>
+              <span class="font-bold text-orange-500">1,850 tokens &nbsp;·&nbsp; 13%</span>
+            </div>
+            <div class="h-3 bg-slate-100 rounded-full overflow-hidden">
+              <div class="h-full bg-orange-400 rounded-full" style="width:13%"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-sm mb-1.5">
+              <span class="font-medium">Result Compression</span>
+              <span class="font-bold text-cisco-teal">1,100 tokens &nbsp;·&nbsp; 8%</span>
+            </div>
+            <div class="h-3 bg-slate-100 rounded-full overflow-hidden">
+              <div class="h-full bg-cisco-teal rounded-full" style="width:8%"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-sm mb-1.5">
+              <span class="font-medium">Output Sanitization</span>
+              <span class="font-bold text-cisco-green">600 tokens &nbsp;·&nbsp; 4%</span>
+            </div>
+            <div class="h-3 bg-slate-100 rounded-full overflow-hidden">
+              <div class="h-full bg-cisco-green rounded-full" style="width:4%"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-sm mb-1.5">
+              <span class="font-medium">Deduplication + Session Log format</span>
+              <span class="font-bold text-purple-600">650 tokens &nbsp;·&nbsp; 5%</span>
+            </div>
+            <div class="h-3 bg-slate-100 rounded-full overflow-hidden">
+              <div class="h-full bg-purple-400 rounded-full" style="width:5%"></div>
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-slate-100 flex justify-between items-center">
+            <span class="font-bold text-slate-700">Total per session</span>
+            <span class="text-xl font-black text-cisco-dark">14,100 tokens</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== ROADMAP ==================== -->
+  <section id="roadmap" class="py-24 px-6 bg-white">
+    <div class="max-w-6xl mx-auto">
+      <div class="section-reveal mb-12 text-center">
+        <span class="text-xs font-bold uppercase tracking-widest text-cisco-blue">Roadmap</span>
+        <h2 class="text-3xl font-black text-cisco-dark mt-2">Next Optimizations</h2>
+        <p class="text-slate-500 mt-2 max-w-2xl mx-auto">Incremental improvements that compound the current 72% baseline.</p>
+      </div>
+
+      <div class="section-reveal grid md:grid-cols-3 gap-6">
+
+        <div class="border border-slate-200 rounded-2xl p-6 relative overflow-hidden">
+          <div class="absolute top-0 left-0 right-0 h-1 bg-cisco-blue rounded-t-2xl"></div>
+          <div class="text-xs font-bold uppercase tracking-wider text-cisco-blue mb-3">Phase 1 · Now</div>
+          <h3 class="font-bold text-cisco-dark mb-3">Completed Baseline</h3>
+          <ul class="space-y-2 text-sm text-slate-600">
+            <li class="flex items-start gap-2">
+              <svg class="w-4 h-4 text-cisco-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              Conditional rule loading gate
+            </li>
+            <li class="flex items-start gap-2">
+              <svg class="w-4 h-4 text-cisco-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              Result compression tiers
+            </li>
+            <li class="flex items-start gap-2">
+              <svg class="w-4 h-4 text-cisco-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              Output sanitization enforcement
+            </li>
+            <li class="flex items-start gap-2">
+              <svg class="w-4 h-4 text-cisco-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              Files-to-read hard caps
+            </li>
+            <li class="flex items-start gap-2">
+              <svg class="w-4 h-4 text-cisco-green mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              Deduplication enforcement
+            </li>
+          </ul>
+          <div class="mt-4 px-3 py-2 bg-cisco-green/10 rounded-lg text-xs font-bold text-cisco-green text-center">72% overhead reduction achieved</div>
+        </div>
+
+        <div class="border border-slate-200 rounded-2xl p-6 relative overflow-hidden">
+          <div class="absolute top-0 left-0 right-0 h-1 bg-cisco-teal rounded-t-2xl"></div>
+          <div class="text-xs font-bold uppercase tracking-wider text-cisco-teal mb-3">Phase 2 · Q3 2026</div>
+          <h3 class="font-bold text-cisco-dark mb-3">Smart Caching & Summary Injection</h3>
+          <ul class="space-y-2 text-sm text-slate-600">
+            <li class="flex items-start gap-2">
+              <div class="w-4 h-4 rounded-full border-2 border-cisco-teal mt-0.5 shrink-0"></div>
+              Rule summary cache — pre-compressed rule summaries replace full text (est. −40%)
+            </li>
+            <li class="flex items-start gap-2">
+              <div class="w-4 h-4 rounded-full border-2 border-cisco-teal mt-0.5 shrink-0"></div>
+              Session warm-up compressor — previous session log distilled to 200-token brief
+            </li>
+            <li class="flex items-start gap-2">
+              <div class="w-4 h-4 rounded-full border-2 border-cisco-teal mt-0.5 shrink-0"></div>
+              Haiku-first routing — simple tasks pre-classified for smallest model
+            </li>
+          </ul>
+          <div class="mt-4 px-3 py-2 bg-cisco-teal/10 rounded-lg text-xs font-bold text-cisco-teal text-center">Projected: +12% additional savings</div>
+        </div>
+
+        <div class="border border-slate-200 rounded-2xl p-6 relative overflow-hidden">
+          <div class="absolute top-0 left-0 right-0 h-1 bg-purple-400 rounded-t-2xl"></div>
+          <div class="text-xs font-bold uppercase tracking-wider text-purple-500 mb-3">Phase 3 · Q4 2026</div>
+          <h3 class="font-bold text-cisco-dark mb-3">Telemetry & Adaptive Loading</h3>
+          <ul class="space-y-2 text-sm text-slate-600">
+            <li class="flex items-start gap-2">
+              <div class="w-4 h-4 rounded-full border-2 border-purple-400 mt-0.5 shrink-0"></div>
+              Live token counter dashboard (Windsurf ↔ Cursor comms-bridge)
+            </li>
+            <li class="flex items-start gap-2">
+              <div class="w-4 h-4 rounded-full border-2 border-purple-400 mt-0.5 shrink-0"></div>
+              Auto-tune rule loading based on task-type hit rates from session logs
+            </li>
+            <li class="flex items-start gap-2">
+              <div class="w-4 h-4 rounded-full border-2 border-purple-400 mt-0.5 shrink-0"></div>
+              Per-agent token budget alerts when approaching context ceiling
+            </li>
+          </ul>
+          <div class="mt-4 px-3 py-2 bg-purple-100 rounded-lg text-xs font-bold text-purple-600 text-center">Projected: ~85% total overhead reduction</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="hero-gradient text-white py-10 px-6">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <div>
+        <div class="font-black text-lg">Cisco CX · People AI Factory</div>
+        <div class="text-sm text-white/60 mt-1">Token Optimization ROI · Generated May 2026</div>
+      </div>
+      <div class="flex gap-4 text-sm text-white/60">
+        <a href="index.html" class="hover:text-white transition-colors">AI Factory Home</a>
+        <span>·</span>
+        <a href="tutorial-email-agent.html" class="hover:text-white transition-colors">Email Agent Tutorial</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── Section reveal observer ──────────────────────────────────
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.section-reveal').forEach(el => observer.observe(el));
+
+    // ── Bar fills on scroll ─────────────────────────────────────
+    const barObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.querySelectorAll('.bar-fill').forEach(bar => {
+            const w = bar.style.width;
+            bar.style.width = '0';
+            setTimeout(() => { bar.style.width = w; }, 80);
+          });
+        }
+      });
+    }, { threshold: 0.2 });
+    document.querySelectorAll('.rule-row').forEach(el => barObserver.observe(el));
+
+    // ── Chart.js ROI Chart ──────────────────────────────────────
+    const months = ['Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr','May'];
+    // Cumulative: starts 288K/month, scales 10% per month (team adoption growth)
+    const baseline = [];
+    const optimized = [];
+    let cumBase = 0, cumOpt = 0;
+    const monthlyBase = 1000000; // tokens/month without rules
+    const monthlyOpt  = 288000;  // tokens saved per month
+    for (let i = 0; i < 12; i++) {
+      const growthFactor = 1 + i * 0.05; // 5% growth per month
+      cumBase += Math.round(monthlyBase * growthFactor);
+      cumOpt  += Math.round(monthlyOpt  * growthFactor);
+      baseline.push(Math.round(cumBase / 1000));  // in K
+      optimized.push(Math.round(cumOpt  / 1000));
+    }
+
+    const ctx = document.getElementById('roiChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: months,
+        datasets: [
+          {
+            label: 'Baseline token spend (K)',
+            data: baseline,
+            borderColor: '#f87171',
+            backgroundColor: 'rgba(248,113,113,0.08)',
+            borderWidth: 2,
+            pointBackgroundColor: '#f87171',
+            pointRadius: 4,
+            tension: 0.35,
+            fill: true,
+          },
+          {
+            label: 'Optimized spend (K)',
+            data: baseline.map((b, i) => b - optimized[i]),
+            borderColor: '#049fd9',
+            backgroundColor: 'rgba(4,159,217,0.10)',
+            borderWidth: 2.5,
+            pointBackgroundColor: '#049fd9',
+            pointRadius: 4,
+            tension: 0.35,
+            fill: true,
+          },
+          {
+            label: 'Cumulative saved (K)',
+            data: optimized,
+            borderColor: '#6cc04a',
+            backgroundColor: 'rgba(108,192,74,0.08)',
+            borderWidth: 2,
+            borderDash: [5, 4],
+            pointBackgroundColor: '#6cc04a',
+            pointRadius: 4,
+            tension: 0.35,
+            fill: false,
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: {
+            labels: {
+              font: { family: 'Inter', size: 12 },
+              color: '#475569',
+              boxWidth: 12,
+              padding: 18
+            }
+          },
+          tooltip: {
+            backgroundColor: '#1a2332',
+            titleFont: { family: 'Inter', weight: '600' },
+            bodyFont: { family: 'Inter', size: 12 },
+            padding: 12,
+            callbacks: {
+              label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y.toLocaleString()}K tokens`
+            }
+          }
+        },
+        scales: {
+          x: {
+            grid: { color: '#f1f5f9' },
+            ticks: { font: { family: 'Inter', size: 11 }, color: '#94a3b8' }
+          },
+          y: {
+            grid: { color: '#f1f5f9' },
+            ticks: {
+              font: { family: 'Inter', size: 11 },
+              color: '#94a3b8',
+              callback: v => v.toLocaleString() + 'K'
+            },
+            title: {
+              display: true,
+              text: 'Tokens (thousands)',
+              font: { family: 'Inter', size: 11 },
+              color: '#94a3b8'
+            }
+          }
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>
