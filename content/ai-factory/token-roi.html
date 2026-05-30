@@ -102,10 +102,13 @@
         <span class="font-bold text-base text-cisco-dark">AI Rule Engine · Token ROI</span>
       </div>
       <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-500">
-        <a href="#impact" class="hover:text-slate-900 transition-colors">Impact</a>
-        <a href="#rules"  class="hover:text-slate-900 transition-colors">Rules</a>
-        <a href="#roi"    class="hover:text-slate-900 transition-colors">ROI Forecast</a>
-        <a href="#roadmap" class="hover:text-slate-900 transition-colors">Roadmap</a>
+        <a href="#impact"     class="hover:text-slate-900 transition-colors">Impact</a>
+        <a href="#rules"      class="hover:text-slate-900 transition-colors">Rules</a>
+        <a href="#roi"        class="hover:text-slate-900 transition-colors">ROI Forecast</a>
+        <a href="#calculator" class="hover:text-slate-900 transition-colors">Calculator</a>
+        <a href="#ide-guide"  class="hover:text-slate-900 transition-colors">Apply to IDE</a>
+        <a href="#pricing"    class="hover:text-slate-900 transition-colors">Pricing</a>
+        <a href="#roadmap"    class="hover:text-slate-900 transition-colors">Roadmap</a>
         <a href="index.html" class="ml-4 px-4 py-1.5 rounded-full bg-cisco-blue text-white text-xs font-semibold hover:bg-blue-600 transition-colors">← AI Factory</a>
       </div>
     </div>
@@ -620,6 +623,319 @@
     </div>
   </section>
 
+  <!-- ==================== CALCULATOR ==================== -->
+  <section id="calculator" class="py-24 px-6 bg-white border-y border-slate-200">
+    <div class="max-w-6xl mx-auto">
+
+      <div class="section-reveal mb-12 text-center">
+        <span class="text-xs font-bold uppercase tracking-widest text-cisco-blue">Interactive</span>
+        <h2 class="text-3xl font-black text-cisco-dark mt-2">Calculate Your Own Savings</h2>
+        <p class="text-slate-500 mt-2 max-w-2xl mx-auto">The numbers above reflect this specific rule inventory. Adjust the sliders to match your setup — the chart above updates live.</p>
+      </div>
+
+      <div class="section-reveal grid lg:grid-cols-2 gap-10">
+
+        <!-- ── Inputs ── -->
+        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-8 space-y-8">
+          <h3 class="font-bold text-cisco-dark text-sm uppercase tracking-wider">Your Usage Baseline</h3>
+
+          <div>
+            <div class="flex justify-between text-sm mb-2">
+              <label class="font-medium text-slate-700" for="calc-sessions">Sessions per month</label>
+              <span id="disp-sessions" class="font-bold text-cisco-blue tabular-nums">20</span>
+            </div>
+            <input id="calc-sessions" type="range" min="1" max="200" value="20" class="w-full h-2 rounded-lg appearance-none cursor-pointer bg-slate-200 accent-[#049fd9]">
+            <div class="flex justify-between text-xs text-slate-400 mt-1.5"><span>1 / month</span><span>200 / month</span></div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-sm mb-2">
+              <label class="font-medium text-slate-700" for="calc-baseline">Baseline tokens per session</label>
+              <span id="disp-baseline" class="font-bold text-cisco-blue tabular-nums">19,800</span>
+            </div>
+            <input id="calc-baseline" type="range" min="2000" max="100000" step="200" value="19800" class="w-full h-2 rounded-lg appearance-none cursor-pointer bg-slate-200 accent-[#049fd9]">
+            <div class="flex justify-between text-xs text-slate-400 mt-1.5"><span>2K</span><span>100K</span></div>
+            <p class="text-xs text-slate-400 mt-1">Estimate yours: count always-on rule files × avg line count × 4 tokens/line</p>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-sm mb-2">
+              <label class="font-medium text-slate-700" for="calc-reduction">Rule overhead reduction</label>
+              <span id="disp-reduction" class="font-bold text-cisco-blue tabular-nums">72%</span>
+            </div>
+            <input id="calc-reduction" type="range" min="10" max="95" value="72" class="w-full h-2 rounded-lg appearance-none cursor-pointer bg-slate-200 accent-[#049fd9]">
+            <div class="flex justify-between text-xs text-slate-400 mt-1.5"><span>10%</span><span>95%</span></div>
+            <p class="text-xs text-slate-400 mt-1">Conservative start: 50–60%. With full gating + 3 behavioral rules: 72–88%.</p>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-sm mb-2">
+              <label class="font-medium text-slate-700" for="calc-cost">Blended cost per 1M tokens</label>
+              <span id="disp-cost" class="font-bold text-cisco-blue tabular-nums">$12</span>
+            </div>
+            <input id="calc-cost" type="range" min="1" max="75" value="12" class="w-full h-2 rounded-lg appearance-none cursor-pointer bg-slate-200 accent-[#049fd9]">
+            <div class="flex justify-between text-xs text-slate-400 mt-1.5"><span>$1 (mini/haiku)</span><span>$75 (Opus)</span></div>
+            <p class="text-xs text-slate-400 mt-1">Haiku: ~$1 · Sonnet blended: ~$12 · GPT-4o blended: ~$10 · Opus blended: ~$60</p>
+          </div>
+        </div>
+
+        <!-- ── Results ── -->
+        <div class="flex flex-col gap-5">
+          <h3 class="font-bold text-cisco-dark text-sm uppercase tracking-wider">Your Projected Results</h3>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div class="kpi-card bg-white border border-slate-200 rounded-2xl p-5 text-center">
+              <div class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Saved / Session</div>
+              <div id="calc-out-per-session" class="text-3xl font-black text-cisco-blue tabular-nums">14,256</div>
+              <div class="text-xs text-slate-400 mt-1">tokens</div>
+            </div>
+            <div class="kpi-card bg-white border border-slate-200 rounded-2xl p-5 text-center">
+              <div class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Reduction</div>
+              <div id="calc-out-reduction" class="text-3xl font-black text-cisco-green tabular-nums">72%</div>
+              <div class="text-xs text-slate-400 mt-1">of context overhead</div>
+            </div>
+            <div class="kpi-card bg-white border border-slate-200 rounded-2xl p-5 text-center">
+              <div class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Monthly Saved</div>
+              <div id="calc-out-monthly-tokens" class="text-3xl font-black text-cisco-teal tabular-nums">285K</div>
+              <div class="text-xs text-slate-400 mt-1">tokens / month</div>
+            </div>
+            <div class="kpi-card bg-white border border-slate-200 rounded-2xl p-5 text-center">
+              <div class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Annual Saved</div>
+              <div id="calc-out-annual-tokens" class="text-3xl font-black text-purple-600 tabular-nums">3.42M</div>
+              <div class="text-xs text-slate-400 mt-1">tokens / year</div>
+            </div>
+          </div>
+
+          <div class="rounded-2xl bg-gradient-to-r from-cisco-dark to-cisco-navy p-6 text-white">
+            <div class="text-xs font-bold uppercase tracking-widest text-cisco-sky mb-3">Cost Impact</div>
+            <div class="grid grid-cols-2 gap-6">
+              <div>
+                <div class="text-xs text-slate-400">Monthly $ saved</div>
+                <div id="calc-out-monthly-dollars" class="text-2xl font-black text-cisco-green mt-1 tabular-nums">$3.42</div>
+              </div>
+              <div>
+                <div class="text-xs text-slate-400">Annual $ saved</div>
+                <div id="calc-out-annual-dollars" class="text-2xl font-black text-cisco-green mt-1 tabular-nums">$41.04</div>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 mt-4 border-t border-white/10 pt-3">At enterprise scale (team of 10, per-token billing): multiply all figures by 10.</p>
+          </div>
+
+          <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-700 leading-relaxed">
+            <strong>This page's baseline: 19,800 tokens/session</strong> — measured by summing all always-on rule files in this workspace. Your baseline will differ based on how many rules you have loaded unconditionally. The chart in the ROI Forecast section updates as you move the sliders.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PRICING CONTEXT ==================== -->
+  <section id="pricing" class="py-24 px-6 bg-slate-50">
+    <div class="max-w-6xl mx-auto">
+
+      <div class="section-reveal mb-12 text-center">
+        <span class="text-xs font-bold uppercase tracking-widest text-cisco-blue">Industry Context</span>
+        <h2 class="text-3xl font-black text-cisco-dark mt-2">Why This Matters Now</h2>
+        <p class="text-slate-500 mt-2 max-w-2xl mx-auto">The 2025–2026 pricing shift across LLM APIs and AI IDEs makes token efficiency a hard business requirement, not a nice-to-have.</p>
+      </div>
+
+      <!-- Pricing shift callout -->
+      <div class="section-reveal mb-10 rounded-2xl overflow-hidden border border-cisco-blue/20 bg-white shadow-sm">
+        <div class="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-100">
+          <div class="p-6">
+            <div class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">2023 Model</div>
+            <div class="text-lg font-bold text-cisco-dark mb-2">Flat-Rate Seat Licensing</div>
+            <p class="text-sm text-slate-500">GitHub Copilot at $10/seat with unlimited token consumption. No incentive to optimize — overuse had no cost.</p>
+            <div class="mt-4 inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 text-slate-500 rounded-full text-xs font-semibold">Largely phased out</div>
+          </div>
+          <div class="p-6">
+            <div class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">2024–2025 Model</div>
+            <div class="text-lg font-bold text-cisco-dark mb-2">Seat + Request Caps</div>
+            <p class="text-sm text-slate-500">Cursor Pro: 500 fast requests/month. Windsurf Pro: request quota per tier. Overage drops to slow/degraded models.</p>
+            <div class="mt-4 inline-flex items-center gap-1.5 px-3 py-1 bg-amber-50 text-amber-600 rounded-full text-xs font-semibold">Active now</div>
+          </div>
+          <div class="p-6">
+            <div class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">2026+ Model</div>
+            <div class="text-lg font-bold text-cisco-dark mb-2">Per-Token Enterprise Billing</div>
+            <p class="text-sm text-slate-500">AWS Bedrock, Azure OpenAI, and Copilot Enterprise all moving toward consumption-based billing. Every token counts directly.</p>
+            <div class="mt-4 inline-flex items-center gap-1.5 px-3 py-1 bg-cisco-blue/10 text-cisco-blue rounded-full text-xs font-semibold">Emerging standard</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Model pricing table -->
+      <div class="section-reveal grid md:grid-cols-2 gap-8 mb-10">
+
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+          <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+            <h3 class="font-bold text-cisco-dark">LLM API Pricing (Input / 1M tokens)</h3>
+            <span class="text-xs text-slate-400 font-medium">As of Q2 2026</span>
+          </div>
+          <div class="divide-y divide-slate-50">
+            <div class="px-6 py-3 flex items-center justify-between">
+              <div>
+                <div class="font-semibold text-sm text-slate-700">Claude 3 Haiku</div>
+                <div class="text-xs text-slate-400">Anthropic · Fast tier</div>
+              </div>
+              <div class="text-right">
+                <div class="font-bold text-cisco-green">$0.25</div>
+                <div class="text-xs text-slate-400">out: $1.25</div>
+              </div>
+            </div>
+            <div class="px-6 py-3 flex items-center justify-between">
+              <div>
+                <div class="font-semibold text-sm text-slate-700">GPT-4o mini</div>
+                <div class="text-xs text-slate-400">OpenAI · Fast tier</div>
+              </div>
+              <div class="text-right">
+                <div class="font-bold text-cisco-green">$0.15</div>
+                <div class="text-xs text-slate-400">out: $0.60</div>
+              </div>
+            </div>
+            <div class="px-6 py-3 flex items-center justify-between">
+              <div>
+                <div class="font-semibold text-sm text-slate-700">Claude 3.5 Sonnet</div>
+                <div class="text-xs text-slate-400">Anthropic · Standard</div>
+              </div>
+              <div class="text-right">
+                <div class="font-bold text-amber-500">$3.00</div>
+                <div class="text-xs text-slate-400">out: $15.00</div>
+              </div>
+            </div>
+            <div class="px-6 py-3 flex items-center justify-between">
+              <div>
+                <div class="font-semibold text-sm text-slate-700">GPT-4o</div>
+                <div class="text-xs text-slate-400">OpenAI · Standard</div>
+              </div>
+              <div class="text-right">
+                <div class="font-bold text-amber-500">$5.00</div>
+                <div class="text-xs text-slate-400">out: $15.00</div>
+              </div>
+            </div>
+            <div class="px-6 py-3 flex items-center justify-between">
+              <div>
+                <div class="font-semibold text-sm text-slate-700">Claude 3 Opus</div>
+                <div class="text-xs text-slate-400">Anthropic · High complexity</div>
+              </div>
+              <div class="text-right">
+                <div class="font-bold text-red-500">$15.00</div>
+                <div class="text-xs text-slate-400">out: $75.00</div>
+              </div>
+            </div>
+          </div>
+          <div class="px-6 py-3 bg-cisco-blue/5 border-t border-slate-100">
+            <p class="text-xs text-slate-500">Cost spread between haiku and opus: <span class="font-bold text-cisco-dark">60×</span>. Model routing captures most of this arbitrage.</p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+          <div class="px-6 py-4 border-b border-slate-100">
+            <h3 class="font-bold text-cisco-dark">IDE / Copilot Seat Costs</h3>
+          </div>
+          <div class="divide-y divide-slate-50">
+            <div class="px-6 py-3 flex items-center justify-between">
+              <div>
+                <div class="font-semibold text-sm text-slate-700">GitHub Copilot Individual</div>
+                <div class="text-xs text-slate-400">Unlimited requests · GPT-4o</div>
+              </div>
+              <div class="font-bold text-sm text-slate-700">$10 / mo</div>
+            </div>
+            <div class="px-6 py-3 flex items-center justify-between">
+              <div>
+                <div class="font-semibold text-sm text-slate-700">GitHub Copilot Business</div>
+                <div class="text-xs text-slate-400">Enterprise + Claude access</div>
+              </div>
+              <div class="font-bold text-sm text-slate-700">$19 / user</div>
+            </div>
+            <div class="px-6 py-3 flex items-center justify-between">
+              <div>
+                <div class="font-semibold text-sm text-slate-700">Cursor Pro</div>
+                <div class="text-xs text-red-400 font-medium">500 fast requests cap / month</div>
+              </div>
+              <div class="font-bold text-sm text-slate-700">$20 / mo</div>
+            </div>
+            <div class="px-6 py-3 flex items-center justify-between">
+              <div>
+                <div class="font-semibold text-sm text-slate-700">Windsurf Pro</div>
+                <div class="text-xs text-red-400 font-medium">Request quota per tier</div>
+              </div>
+              <div class="font-bold text-sm text-slate-700">$15 / mo</div>
+            </div>
+            <div class="px-6 py-3 flex items-center justify-between">
+              <div>
+                <div class="font-semibold text-sm text-slate-700">AWS Bedrock / Azure OpenAI</div>
+                <div class="text-xs text-slate-400">Pure per-token enterprise billing</div>
+              </div>
+              <div class="font-bold text-sm text-red-500">Pay-per-token</div>
+            </div>
+          </div>
+          <div class="px-6 py-3 bg-cisco-blue/5 border-t border-slate-100">
+            <p class="text-xs text-slate-500">Cursor's 500 fast request/month cap means each wasted round-trip costs <span class="font-bold text-cisco-dark">0.2%</span> of your monthly quota.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- How our rules respond -->
+      <div class="section-reveal bg-white rounded-2xl border border-slate-200 shadow-sm p-8">
+        <h3 class="font-bold text-cisco-dark text-lg mb-6">How Our Rule System Responds to This Pricing Landscape</h3>
+        <div class="grid md:grid-cols-3 gap-6">
+
+          <div class="space-y-3">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-cisco-green/10 flex items-center justify-center shrink-0">
+                <svg class="w-5 h-5 text-cisco-green" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 11h.01M12 11h.01M15 11h.01M4 19h16a2 2 0 002-2V7a2 2 0 00-2-2H4a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              </div>
+              <div class="font-bold text-cisco-dark text-sm">Model Routing Arbitrage</div>
+            </div>
+            <p class="text-sm text-slate-500 pl-13">Routes 60% of tasks to Haiku (20× cheaper than Opus). The <code class="text-xs bg-slate-100 px-1 rounded">model-routing.md</code> rule enforces this automatically — no manual model selection required.</p>
+            <div class="pl-13 text-xs font-bold text-cisco-green">Saves ~$4.50/month at 20 sessions</div>
+          </div>
+
+          <div class="space-y-3">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-cisco-blue/10 flex items-center justify-center shrink-0">
+                <svg class="w-5 h-5 text-cisco-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              </div>
+              <div class="font-bold text-cisco-dark text-sm">Request Quota Preservation</div>
+            </div>
+            <p class="text-sm text-slate-500">Tool-call batching and read deduplication eliminate unnecessary round-trips. Fewer round-trips = fewer fast requests consumed against your Cursor/Windsurf monthly cap.</p>
+            <div class="text-xs font-bold text-cisco-blue">Preserves ~30–60 fast requests/month</div>
+          </div>
+
+          <div class="space-y-3">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-purple-100 flex items-center justify-center shrink-0">
+                <svg class="w-5 h-5 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+              </div>
+              <div class="font-bold text-cisco-dark text-sm">Enterprise Bedrock/Azure Readiness</div>
+            </div>
+            <p class="text-sm text-slate-500">As teams migrate to per-token enterprise APIs (AWS Bedrock, Azure OpenAI), our 88% context overhead reduction maps <em>directly</em> to invoice reduction — no behavior change required.</p>
+            <div class="text-xs font-bold text-purple-600">~88% lower input token bill at enterprise scale</div>
+          </div>
+
+        </div>
+
+        <!-- The multiplier insight -->
+        <div class="mt-8 rounded-xl bg-gradient-to-r from-cisco-dark to-cisco-navy p-6 text-white">
+          <div class="flex flex-col md:flex-row md:items-center gap-4">
+            <div class="flex-1">
+              <div class="text-xs font-bold uppercase tracking-widest text-cisco-sky mb-1">Key Insight</div>
+              <div class="font-bold text-lg">Token reduction × model routing = multiplicative savings</div>
+              <p class="text-sm text-slate-300 mt-1">Cutting 88% of context tokens AND routing to a 20× cheaper model doesn't add — it multiplies. A task that previously cost 20,000 tokens at Opus rates now costs ~2,400 tokens at Haiku rates: a <strong class="text-cisco-green">166× cost reduction</strong> on that individual task.</p>
+            </div>
+            <div class="text-center md:text-right shrink-0">
+              <div class="text-5xl font-black text-cisco-green">166×</div>
+              <div class="text-xs text-slate-400 mt-1">worst-case → best-case cost ratio</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <!-- ==================== ROADMAP ==================== -->
   <section id="roadmap" class="py-24 px-6 bg-white">
     <div class="max-w-6xl mx-auto">
@@ -706,6 +1022,239 @@
     </div>
   </section>
 
+  <!-- ==================== IDE GUIDE ==================== -->
+  <section id="ide-guide" class="py-24 px-6 bg-white">
+    <div class="max-w-6xl mx-auto">
+
+      <div class="section-reveal mb-12 text-center">
+        <span class="text-xs font-bold uppercase tracking-widest text-cisco-blue">Apply to Your IDE</span>
+        <h2 class="text-3xl font-black text-cisco-dark mt-2">Replicate These Savings in 10 Minutes</h2>
+        <p class="text-slate-500 mt-2 max-w-2xl mx-auto">All patterns below work identically in <strong class="text-slate-700">Cursor</strong> (<code class="text-xs bg-slate-100 px-1 rounded">.cursor/rules/</code>) and <strong class="text-slate-700">Windsurf</strong> (<code class="text-xs bg-slate-100 px-1 rounded">.windsurf/rules/</code>). The frontmatter format is the same for both.</p>
+      </div>
+
+      <!-- Step cards -->
+      <div class="section-reveal space-y-6 mb-14">
+
+        <!-- Step 1 -->
+        <div class="bg-slate-50 border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="flex items-center gap-4 px-8 py-5 border-b border-slate-200 bg-white">
+            <div class="w-8 h-8 rounded-full bg-cisco-blue text-white flex items-center justify-center font-black text-sm shrink-0">1</div>
+            <div>
+              <div class="font-bold text-cisco-dark">Audit your rules directory — find the token leak</div>
+              <div class="text-sm text-slate-500">Run this in your terminal to see which rules are always loaded and how large they are</div>
+            </div>
+          </div>
+          <div class="px-8 py-6">
+            <pre class="bg-slate-900 text-slate-100 rounded-xl p-4 text-xs font-mono overflow-x-auto leading-relaxed"><code><span class="text-slate-400"># List all rule files, sorted by size (largest = most token overhead)</span>
+ls -lS .cursor/rules/ | awk '{print $5, $9}'
+ls -lS .windsurf/rules/ | awk '{print $5, $9}'
+
+<span class="text-slate-400"># Find rules with no frontmatter (these load for EVERY session)</span>
+for f in .cursor/rules/*.md; do
+  head -1 "$f" | grep -q "^---" || echo "NO FRONTMATTER: $f"
+done
+
+<span class="text-slate-400"># Find rules with alwaysApply: true</span>
+grep -l "alwaysApply: true" .cursor/rules/*.md .windsurf/rules/*.md</code></pre>
+            <p class="text-xs text-slate-500 mt-3">Any file with no frontmatter <strong>or</strong> <code class="bg-slate-100 px-1 rounded">alwaysApply: true</code> loads every session. These are your token leak sources.</p>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="bg-slate-50 border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="flex items-center gap-4 px-8 py-5 border-b border-slate-200 bg-white">
+            <div class="w-8 h-8 rounded-full bg-cisco-blue text-white flex items-center justify-center font-black text-sm shrink-0">2</div>
+            <div>
+              <div class="font-bold text-cisco-dark">Add conditional loading with frontmatter</div>
+              <div class="text-sm text-slate-500">Replace always-on loading with glob-gating so rules only load when relevant</div>
+            </div>
+          </div>
+          <div class="px-8 py-6">
+            <div class="grid md:grid-cols-2 gap-4">
+              <div>
+                <div class="text-xs font-bold text-red-500 uppercase tracking-wider mb-2">Before — loads every session</div>
+                <pre class="bg-slate-900 text-slate-100 rounded-xl p-4 text-xs font-mono leading-relaxed"><code><span class="text-slate-400"># my-rule.md (no frontmatter)</span>
+
+## My Rule
+...rule content...
+</code></pre>
+                <div class="text-xs text-slate-400 mt-2">Or with explicit always-on flag:</div>
+                <pre class="bg-slate-900 text-slate-100 rounded-xl p-4 text-xs font-mono leading-relaxed mt-2"><code>---
+alwaysApply: true
+---
+
+## My Rule
+...rule content...
+</code></pre>
+              </div>
+              <div>
+                <div class="text-xs font-bold text-cisco-green uppercase tracking-wider mb-2">After — loads only when needed</div>
+                <pre class="bg-slate-900 text-slate-100 rounded-xl p-4 text-xs font-mono leading-relaxed"><code><span class="text-slate-400"># Gate to code files only</span>
+---
+alwaysApply: false
+globs:
+  - "**/*.py"
+  - "**/*.ts"
+  - "**/*.js"
+  - "**/*.go"
+---
+
+## My Rule
+...rule content...
+</code></pre>
+                <div class="text-xs text-slate-400 mt-2">Other useful glob patterns:</div>
+                <pre class="bg-slate-900 text-slate-100 rounded-xl p-4 text-xs font-mono leading-relaxed mt-2"><code><span class="text-slate-400"># Agent code only</span>
+globs: ["agents/**", "platforms/**"]
+
+<span class="text-slate-400"># Infrastructure files</span>
+globs: ["**/*.yml","**/*.yaml","**/Dockerfile"]
+
+<span class="text-slate-400"># Specific file trigger</span>
+globs: ["PROJECT_PROGRESS.md"]
+
+<span class="text-slate-400"># Package config (dependency audit)</span>
+globs: ["**/package.json","**/requirements.txt"]
+</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="bg-slate-50 border border-slate-200 rounded-2xl overflow-hidden">
+          <div class="flex items-center gap-4 px-8 py-5 border-b border-slate-200 bg-white">
+            <div class="w-8 h-8 rounded-full bg-cisco-blue text-white flex items-center justify-center font-black text-sm shrink-0">3</div>
+            <div>
+              <div class="font-bold text-cisco-dark">Add 3 behavioral rules — the highest ROI change</div>
+              <div class="text-sm text-slate-500">These rules change how the AI responds, not just what context it loads</div>
+            </div>
+          </div>
+          <div class="px-8 py-6">
+            <div class="grid md:grid-cols-3 gap-4">
+              <div class="bg-white border border-slate-200 rounded-xl p-5">
+                <div class="font-bold text-cisco-dark text-sm mb-1">no-restatement.md</div>
+                <div class="text-xs text-slate-500 mb-3">Bans the AI from repeating your task spec or prior output back to you.</div>
+                <pre class="bg-slate-900 text-slate-100 rounded-lg p-3 text-xs font-mono leading-relaxed"><code>---
+alwaysApply: true
+---
+
+## No Restatement
+Never repeat the user's
+message, the task spec,
+or prior output.
+
+Start directly with
+action or answer.
+</code></pre>
+                <div class="mt-2 text-xs font-bold text-cisco-green">~1,120 tokens/session</div>
+              </div>
+
+              <div class="bg-white border border-slate-200 rounded-xl p-5">
+                <div class="font-bold text-cisco-dark text-sm mb-1">read-dedup.md</div>
+                <div class="text-xs text-slate-500 mb-3">Prevents re-reading files already read in the same session.</div>
+                <pre class="bg-slate-900 text-slate-100 rounded-lg p-3 text-xs font-mono leading-relaxed"><code>---
+alwaysApply: true
+---
+
+## Read Deduplication
+Do not re-read a file
+that was already read
+this session unless it
+was explicitly modified
+or user requests it.
+
+Cache file contents
+mentally for the
+session duration.
+</code></pre>
+                <div class="mt-2 text-xs font-bold text-cisco-green">~2,400 tokens/session</div>
+              </div>
+
+              <div class="bg-white border border-slate-200 rounded-xl p-5">
+                <div class="font-bold text-cisco-dark text-sm mb-1">tool-call-batching.md</div>
+                <div class="text-xs text-slate-500 mb-3">Forces parallel tool calls instead of sequential round-trips.</div>
+                <pre class="bg-slate-900 text-slate-100 rounded-lg p-3 text-xs font-mono leading-relaxed"><code>---
+alwaysApply: true
+---
+
+## Tool Call Batching
+Always batch independent
+tool calls in parallel.
+
+Never call tool B after
+tool A if B does not
+depend on A's output.
+
+One round-trip is always
+better than two.
+</code></pre>
+                <div class="mt-2 text-xs font-bold text-cisco-green">~30–40K tokens saved in multi-cluster tasks</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Priority audit table -->
+      <div class="section-reveal bg-white border border-slate-200 rounded-2xl overflow-hidden">
+        <div class="px-8 py-5 border-b border-slate-200">
+          <h3 class="font-bold text-cisco-dark">5 Rules to Gate First — Highest ROI, Lowest Risk</h3>
+          <p class="text-sm text-slate-500 mt-1">If you only have 15 minutes, start here. These are safe to gate and have immediate token impact.</p>
+        </div>
+        <div class="divide-y divide-slate-50">
+          <div class="grid grid-cols-12 gap-4 px-8 py-3 text-xs font-bold uppercase tracking-wider text-slate-400 bg-slate-50">
+            <div class="col-span-4">Rule pattern</div>
+            <div class="col-span-3">Common name</div>
+            <div class="col-span-2">Typical size</div>
+            <div class="col-span-2">Gate to</div>
+            <div class="col-span-1 text-right">Saving</div>
+          </div>
+          <div class="grid grid-cols-12 gap-4 px-8 py-4 items-center">
+            <div class="col-span-4"><code class="text-xs bg-slate-100 px-2 py-0.5 rounded">crypto / encryption rules</code></div>
+            <div class="col-span-3 text-sm text-slate-600">codeguard-crypto, codeguard-certs</div>
+            <div class="col-span-2 text-sm text-slate-500">100–150 lines</div>
+            <div class="col-span-2 text-xs text-slate-500"><code class="bg-slate-100 px-1 rounded">**/*.py, **/*.ts, **/*.go, **/*.c</code></div>
+            <div class="col-span-1 text-right text-xs font-bold text-cisco-green">~1,200 tok</div>
+          </div>
+          <div class="grid grid-cols-12 gap-4 px-8 py-4 items-center bg-slate-50/50">
+            <div class="col-span-4"><code class="text-xs bg-slate-100 px-2 py-0.5 rounded">effectiveness signals</code></div>
+            <div class="col-span-3 text-sm text-slate-600">effectiveness-signals</div>
+            <div class="col-span-2 text-sm text-slate-500">200+ lines</div>
+            <div class="col-span-2 text-xs text-slate-500"><code class="bg-slate-100 px-1 rounded">agents/**, platforms/**</code></div>
+            <div class="col-span-1 text-right text-xs font-bold text-cisco-green">~2,000 tok</div>
+          </div>
+          <div class="grid grid-cols-12 gap-4 px-8 py-4 items-center">
+            <div class="col-span-4"><code class="text-xs bg-slate-100 px-2 py-0.5 rounded">agent standards / conventions</code></div>
+            <div class="col-span-3 text-sm text-slate-600">ai-factory-standards, claude-reasoning</div>
+            <div class="col-span-2 text-sm text-slate-500">60–100 lines</div>
+            <div class="col-span-2 text-xs text-slate-500"><code class="bg-slate-100 px-1 rounded">agents/**, platforms/**</code></div>
+            <div class="col-span-1 text-right text-xs font-bold text-cisco-green">~1,500 tok</div>
+          </div>
+          <div class="grid grid-cols-12 gap-4 px-8 py-4 items-center bg-slate-50/50">
+            <div class="col-span-4"><code class="text-xs bg-slate-100 px-2 py-0.5 rounded">progress / status trackers</code></div>
+            <div class="col-span-3 text-sm text-slate-600">project-progress-tracker</div>
+            <div class="col-span-2 text-sm text-slate-500">80–100 lines</div>
+            <div class="col-span-2 text-xs text-slate-500">specific file trigger</div>
+            <div class="col-span-1 text-right text-xs font-bold text-cisco-green">~940 tok</div>
+          </div>
+          <div class="grid grid-cols-12 gap-4 px-8 py-4 items-center">
+            <div class="col-span-4"><code class="text-xs bg-slate-100 px-2 py-0.5 rounded">test-first / dependency audit</code></div>
+            <div class="col-span-3 text-sm text-slate-600">test-first, dependency-audit</div>
+            <div class="col-span-2 text-sm text-slate-500">30–60 lines</div>
+            <div class="col-span-2 text-xs text-slate-500"><code class="bg-slate-100 px-1 rounded">**/*.test.*, **/package.json</code></div>
+            <div class="col-span-1 text-right text-xs font-bold text-cisco-green">~450 tok</div>
+          </div>
+          <div class="grid grid-cols-12 gap-4 px-8 py-4 bg-cisco-blue/5">
+            <div class="col-span-11 text-sm font-bold text-cisco-dark">Combined saving from these 5 gates alone</div>
+            <div class="col-span-1 text-right text-sm font-black text-cisco-green">~6,090 tok</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <!-- ==================== FOOTER ==================== -->
   <footer class="hero-gradient text-white py-10 px-6">
     <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
@@ -759,7 +1308,7 @@
     }
 
     const ctx = document.getElementById('roiChart').getContext('2d');
-    new Chart(ctx, {
+    window.roiChart = new Chart(ctx, {
       type: 'line',
       data: {
         labels: months,
@@ -845,6 +1394,61 @@
         }
       }
     });
+    // ── Calculator ───────────────────────────────────────────────
+    function setText(id, val) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = val;
+    }
+
+    function updateCalculator() {
+      const sessions  = parseFloat(document.getElementById('calc-sessions').value)  || 20;
+      const baseline  = parseFloat(document.getElementById('calc-baseline').value)  || 19800;
+      const reduction = parseFloat(document.getElementById('calc-reduction').value) || 72;
+      const costPerM  = parseFloat(document.getElementById('calc-cost').value)      || 12;
+
+      const savedPerSession      = Math.round(baseline * reduction / 100);
+      const monthlySavedTokens   = savedPerSession * sessions;
+      const annualSavedTokens    = monthlySavedTokens * 12;
+      const monthlySavedDollars  = (monthlySavedTokens / 1e6) * costPerM;
+      const annualSavedDollars   = monthlySavedDollars * 12;
+
+      setText('disp-sessions',  sessions);
+      setText('disp-baseline',  baseline.toLocaleString());
+      setText('disp-reduction', reduction + '%');
+      setText('disp-cost',      '$' + costPerM);
+
+      setText('calc-out-per-session',     savedPerSession.toLocaleString());
+      setText('calc-out-reduction',       reduction + '%');
+      setText('calc-out-monthly-tokens',  (monthlySavedTokens / 1000).toFixed(0) + 'K');
+      setText('calc-out-annual-tokens',   (annualSavedTokens / 1e6).toFixed(2) + 'M');
+      setText('calc-out-monthly-dollars', '$' + monthlySavedDollars.toFixed(2));
+      setText('calc-out-annual-dollars',  '$' + annualSavedDollars.toFixed(2));
+
+      if (window.roiChart) {
+        const monthlyBase = baseline * sessions;
+        const monthlyOpt  = savedPerSession * sessions;
+        const newBase = [], newOpt = [];
+        let cBase = 0, cOpt = 0;
+        for (let i = 0; i < 12; i++) {
+          const g = 1 + i * 0.05;
+          cBase += Math.round(monthlyBase * g);
+          cOpt  += Math.round(monthlyOpt  * g);
+          newBase.push(Math.round(cBase / 1000));
+          newOpt.push(Math.round(cOpt  / 1000));
+        }
+        window.roiChart.data.datasets[0].data = newBase;
+        window.roiChart.data.datasets[1].data = newBase.map((b, i) => b - newOpt[i]);
+        window.roiChart.data.datasets[2].data = newOpt;
+        window.roiChart.update('none');
+      }
+    }
+
+    ['calc-sessions', 'calc-baseline', 'calc-reduction', 'calc-cost'].forEach(function(id) {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('input', updateCalculator);
+    });
+
+    updateCalculator();
   </script>
 
 </body>
