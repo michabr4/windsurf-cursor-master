@@ -1,6 +1,6 @@
 ---
 description: Comms Protocol — full task lifecycle, file move steps, result schema, and batch/chain execution rules
-alwaysApply: false
+alwaysApply: true
 ---
 
 # Comms Protocol
@@ -9,18 +9,21 @@ This workspace uses a file-based message queue in `.comms/` for task handoff bet
 
 ## Automatic Inbox Check (Session Start)
 
-Before sending your first reply in every conversation, silently check `.comms/inbox/` for pending tasks using the `check_inbox` MCP tool.
+Before sending your first reply in every conversation, silently check `.comms/inbox/` for pending tasks using the `check_inbox` MCP tool. If MCP is unavailable, read `.comms/inbox/*.json` directly from the filesystem.
 
-**Current mode: BATCH** — auto-execute the highest priority pending task. Stop after one. Do not chain.
+**Current mode: SMART AUTO-CHAIN** — execute all consecutive eligible fast-path tasks without stopping. Only pause for `requires_review: true` or `status: failed`.
 
 If tasks are waiting:
 
-1. Claim the highest priority task immediately (no user prompt required)
-2. Announce: "Picked up task [ID] — [title]. Executing now."
+1. Claim the highest-priority eligible task immediately (no user prompt required)
+2. Announce: `"Picked up [ID] — [title]. Executing now."`
 3. Execute fully per the spec
 4. Submit result to outbox
-5. If more tasks remain in inbox: surface them (ID, priority, title) but **stop — do not auto-execute the next one**. Tell the user: "Result submitted. [N] tasks remain. Tell Windsurf to review and send next."
-6. If inbox is now empty after completing: say "Result submitted. Inbox clear."
+5. Apply auto-chain decision logic (see `auto-chain.md`):
+   - If next task exists with `requires_review: false` and `fast_path: true` → auto-claim and execute immediately
+   - If next task has `requires_review: true` → stop and announce: `"Task [ID] queued — requires Windsurf review before proceeding."`
+   - If result was `failed` → stop all chaining, alert user
+6. When chain is exhausted: `"Auto-chain complete. [N] tasks executed. Inbox clear."`
 
 If inbox is empty at session start: say nothing.
 

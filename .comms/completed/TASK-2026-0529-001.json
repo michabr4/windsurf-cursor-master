@@ -4,15 +4,25 @@
   "to": "cursor",
   "priority": "high",
   "type": "instruction",
-  "phase": "Phase 1 — SDM Pilots",
-  "title": "Update delivery-tracker tests for new AI Factory methods",
-  "spec": "The tracker.py was updated to add AI Factory standard methods. The existing test_tracker.py needs coverage for these additions.\n\nFiles to update:\n- agents/delivery-tracker/tests/test_tracker.py\n\nNew methods added to DeliveryTracker (tracker.py):\n1. `trust_tier: str = \"T1\"` — class attribute\n2. `validate_inputs()` — raises ValueError if HELIX_BASE_URL or HELIX_API_TOKEN is empty (delegates to self.settings.validate_helix())\n3. `handle_error(exc)` — logs and re-raises the exception\n4. `run()` — now calls validate_inputs() at start, tracks records/errors counters, prints [METRICS] on every exit path\n\nTests to add:\n- test_trust_tier: assert DeliveryTracker.trust_tier == \"T1\"\n- test_validate_inputs_passes: mock settings.validate_helix() returning True, assert no exception raised\n- test_validate_inputs_fails: mock settings.validate_helix() returning False, assert ValueError raised with correct message\n- test_handle_error_reraises: pass an exception to handle_error(), assert it is re-raised\n- test_run_prints_metrics (capsys): mock HelixClient, run a happy path, assert \"[METRICS]\" appears in captured stdout\n- test_run_metrics_on_validation_failure (capsys): run with invalid settings, assert \"[METRICS]\" still appears in stdout\n\nFixtures already in conftest.py — use mock_settings and patch 'tracker.HelixClient'.\n\nAI Factory standard: every run() exit path must print [METRICS].",
+  "phase": "3",
+  "title": "Build Project Progress Dashboard",
+  "spec": "Build a React/Vite/Tailwind project progress dashboard at tools/project-dashboard/. Full spec in CURSOR_TASK_PROJECT_DASHBOARD.md. Read that file first.",
   "depends_on": null,
   "files_to_read": [
-    "agents/delivery-tracker/tests/test_tracker.py",
-    "agents/delivery-tracker/tests/conftest.py",
-    "agents/delivery-tracker/tracker.py"
+    "CURSOR_TASK_PROJECT_DASHBOARD.md",
+    "PROJECT_PROGRESS.md",
+    "tools/firewall-dashboard/tailwind.config.js",
+    "tools/firewall-dashboard/src/index.css"
   ],
-  "created_at": "2026-05-29T01:18:59-04:00",
-  "status": "in_progress"
+  "out_of_scope": [
+    "tools/firewall-dashboard/ (read-only reference)",
+    "platforms/serviceflow-sdm/",
+    "agents/"
+  ],
+  "model": "sonnet",
+  "complexity": "HIGH",
+  "created_at": "2026-05-29T22:02:00-04:00",
+  "status": "in_progress",
+  "requires_review": true,
+  "fast_path": false
 }

@@ -21,10 +21,16 @@ Every agent class must:
 2. Implement: `run()`, `validate_inputs()`, `handle_error()`
 3. Log all decisions to stdout at INFO level
 4. Never swallow exceptions silently — always log before re-raising
-5. Print KPI metrics at end of each run:
+5. Print KPI metrics at end of each run (full format per `effectiveness-signals.md`):
    ```python
-   print(f"[METRICS] Records processed: {n}, errors: {e}, duration: {t:.1f}s")
+   print(
+       f"[METRICS] agent={self.__class__.__name__} "
+       f"records_in={records_in} records_out={records_out} "
+       f"errors={error_count} duration={elapsed:.1f}s "
+       f"trust_tier={self.trust_tier} hitl_required={hitl_required}"
+   )
    ```
+   T2 agents also include: `llm_calls={n} llm_fallbacks={n} output_fields_complete={pct:.0f}%`
 
 ## Trust Tier Rules
 - **T1 (Full Autonomy):** Runs without human review — output must be idempotent
@@ -81,6 +87,10 @@ Before submitting any agent build result:
 - [ ] Happy path test passing
 - [ ] Error path test passing
 - [ ] No hardcoded credentials
-- [ ] KPI metrics printed at end of `run()`
-- [ ] AGENT_CARD.md updated to reflect current state
+- [ ] Full `[METRICS]` line printed at end of `run()` (per `effectiveness-signals.md`)
+- [ ] `[TOKEN_CHECK]` validation runs before first API call (bots only)
+- [ ] `[HITL_CHECKPOINT]` emitted at pause point (T2 agents only)
+- [ ] `[CYCLE_TIME]` line printed at run exit
+- [ ] `[OUTPUT_COVERAGE]` check run before output is returned
+- [ ] AGENT_CARD.md updated — includes `## Effectiveness Signals` section
 - [ ] Timeout on all HTTP calls

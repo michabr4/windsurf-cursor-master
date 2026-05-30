@@ -34,12 +34,36 @@ Confirm the task ID back to the user after sending.
 
 ## Handoff State
 
-**Current mode: BATCH** — Cursor auto-executes one task per session. Windsurf is the bottleneck between tasks.
+**Current mode: SMART AUTO-CHAIN** — Windsurf auto-dispatches the next eligible task after reviewing a fast-path result. User intervention is only required for `requires_review: true` results.
 
-After reviewing a result in outbox:
+### After reviewing a result in outbox
 
-- If approved: archive it (`archive_completed`) and ask the user whether to send the next task
-- If revision needed: send a new task with `depends_on: <original-task-id>` describing the correction
-- Do NOT auto-send the next task. User must explicitly say "send it" or "dispatch next"
+**Fast-path result (`requires_review: false`):**
+1. Auto-archive it (`archive_completed`)
+2. Check inbox for the next eligible task: `depends_on` satisfied AND `requires_review: false`
+3. If found → dispatch it immediately. Announce: `"Auto-dispatching → [task-id] — [title]"`
+4. If inbox is empty → announce: `"Pipeline clear. No tasks queued."`
+5. Do NOT ask the user for permission on fast-path dispatch.
 
-Do not send tasks to Cursor without explicit user instruction.
+**Review-path result (`requires_review: true`):**
+1. Surface the result to the user with a clear summary
+2. Wait for explicit user instruction: "approve", "revise", or "reject"
+3. On approval: archive + dispatch next eligible task (fast-path auto, review-path waits again)
+4. On revision: send a new task with `depends_on: <original-task-id>`
+
+**Failed result (any path):**
+1. Stop all auto-dispatch immediately
+2. Surface to user: "Task [ID] failed — [reason]. Pausing pipeline. Review before continuing."
+3. Wait for explicit user instruction before resuming
+
+### Sending Tasks
+
+When the user instructs a new task, call `send_task` with full spec. For queued batches, dispatch all fast-path tasks immediately in priority order without waiting for user confirmation between each.
+
+### MCP Fallback
+
+If `check_outbox` or `send_task` MCP tools fail with transport error:
+1. Read `.comms/outbox/` directly via filesystem
+2. Write new tasks directly to `.comms/inbox/` as JSON files
+3. Log: `"MCP unavailable — using filesystem fallback"`
+4. Do NOT stall the pipeline waiting for MCP to recover
