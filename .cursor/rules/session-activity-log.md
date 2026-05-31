@@ -3,7 +3,7 @@ description: Session Activity Log — timestamped report every 60 min and at ses
 alwaysApply: true
 ---
 
-## Session Activity Log
+# Session Activity Log
 
 **Triggers:** (1) ~60 min of active work elapsed · (2) user signals session end ("done", "wrapping up", "closing", "end session") · (3) explicit user request. Generate silently — one notification line after save.
 
@@ -11,7 +11,7 @@ alwaysApply: true
 
 **Notification:** `📋 Session log saved → .session-logs/YYYY-MM-DD/session-HHMM/activity-report.md`
 
-### Template
+## Template
 
 ```md
 # Session Activity Report
@@ -33,6 +33,7 @@ alwaysApply: true
 ```
 
 ### Content Rules
+
 **Include:** task descriptions, changed file paths, issue summaries (plain text), next steps.
 **Never include:** file contents, env variable values, API response bodies, DB records, shell output with sensitive data, secrets (AWS keys, JWTs, private keys, connection strings).
 Describe sensitive operations abstractly: "updated OAuth token handling" — not the value.

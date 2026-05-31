@@ -89,6 +89,20 @@
       .hero-gradient { background: #171f2d !important; animation: none !important; }
       .section-reveal { opacity: 1 !important; transform: none !important; }
     }
+
+    /* Named bar-width classes — replaces data-driven inline styles */
+    .bw-4   { width: 4%; }   .bw-5   { width: 5%; }   .bw-8   { width: 8%; }
+    .bw-13  { width: 13%; }  .bw-40  { width: 40%; }  .bw-69  { width: 69%; }
+    .bw-71  { width: 71%; }  .bw-73  { width: 73%; }  .bw-80  { width: 80%; }
+    .bw-85  { width: 85%; }  .bw-93  { width: 93%; }  .bw-100 { width: 100%; }
+    .bw-307 { width: 30.7%; } .bw-393 { width: 39.3%; } .bw-486 { width: 48.6%; }
+    .bw-596 { width: 59.6%; } .bw-657 { width: 65.7%; }
+
+    /* Section / table background classes — savings section */
+    .bg-savings   { background: linear-gradient(135deg, #0d1b2e 0%, #171f2d 60%, #0a1628 100%); }
+    .bg-thead-row { background: rgba(255,255,255,0.04); }
+    .bg-row-opus  { background: rgba(108,192,74,0.08); }
+    .bg-tfoot-row { background: rgba(255,255,255,0.02); }
   </style>
 </head>
 <body class="font-sans bg-slate-50 text-slate-800 antialiased">
@@ -231,7 +245,7 @@
             </div>
             <div class="md:w-48 shrink-0">
               <div class="flex justify-between text-xs font-semibold mb-1"><span class="text-slate-500">Overhead reduction</span><span class="text-cisco-blue">71 %</span></div>
-              <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="bar-fill bg-cisco-blue" style="width:71%"></div></div>
+              <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="bar-fill bg-cisco-blue bw-71"></div></div>
               <div class="text-xs text-slate-400 mt-1.5 text-right">~9,900 tok saved / session</div>
             </div>
           </div>
@@ -251,7 +265,7 @@
             </div>
             <div class="md:w-48 shrink-0">
               <div class="flex justify-between text-xs font-semibold mb-1"><span class="text-slate-500">Output verbosity cut</span><span class="text-cisco-teal">73 %</span></div>
-              <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="bar-fill bg-cisco-teal" style="width:73%"></div></div>
+              <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="bar-fill bg-cisco-teal bw-73"></div></div>
               <div class="text-xs text-slate-400 mt-1.5 text-right">~1,100 tok saved / task</div>
             </div>
           </div>
@@ -271,7 +285,7 @@
             </div>
             <div class="md:w-48 shrink-0">
               <div class="flex justify-between text-xs font-semibold mb-1"><span class="text-slate-500">Log bloat eliminated</span><span class="text-cisco-green">~80 %</span></div>
-              <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="bar-fill bg-cisco-green" style="width:80%"></div></div>
+              <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="bar-fill bg-cisco-green bw-80"></div></div>
               <div class="text-xs text-slate-400 mt-1.5 text-right">~600 tok saved / task</div>
             </div>
           </div>
@@ -291,7 +305,7 @@
             </div>
             <div class="md:w-48 shrink-0">
               <div class="flex justify-between text-xs font-semibold mb-1"><span class="text-slate-500">Repetition eliminated</span><span class="text-purple-600">~40 %</span></div>
-              <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="bar-fill bg-purple-400" style="width:40%"></div></div>
+              <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="bar-fill bg-purple-400 bw-40"></div></div>
               <div class="text-xs text-slate-400 mt-1.5 text-right">~350 tok saved / task</div>
             </div>
           </div>
@@ -311,7 +325,7 @@
             </div>
             <div class="md:w-48 shrink-0">
               <div class="flex justify-between text-xs font-semibold mb-1"><span class="text-slate-500">Verbosity reduction</span><span class="text-orange-600">~93 %</span></div>
-              <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="bar-fill bg-orange-400" style="width:93%"></div></div>
+              <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="bar-fill bg-orange-400 bw-93"></div></div>
               <div class="text-xs text-slate-400 mt-1.5 text-right">~185 tok saved / handoff</div>
             </div>
           </div>
@@ -331,7 +345,7 @@
             </div>
             <div class="md:w-48 shrink-0">
               <div class="flex justify-between text-xs font-semibold mb-1"><span class="text-slate-500">Log size reduction</span><span class="text-slate-600">~85 %</span></div>
-              <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="bar-fill bg-slate-400" style="width:85%"></div></div>
+              <div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="bar-fill bg-slate-400 bw-85"></div></div>
               <div class="text-xs text-slate-400 mt-1.5 text-right">~300 tok saved / log entry</div>
             </div>
           </div>
@@ -367,7 +381,7 @@
             <div class="w-8 h-8 rounded-full bg-red-500 flex items-center justify-center shrink-0 text-white text-xs font-black">0</div>
             <span class="text-xs font-semibold text-slate-500 w-20 shrink-0">Day 0</span>
             <div class="flex-1 h-10 bg-white rounded-xl overflow-hidden border border-slate-200">
-              <div class="h-full bg-red-400 rounded-xl flex items-center justify-end pr-4" style="width:100%">
+              <div class="h-full bg-red-400 rounded-xl flex items-center justify-end pr-4 bw-100">
                 <span class="text-xs font-bold text-white">~19,800 tok</span>
               </div>
             </div>
@@ -377,7 +391,7 @@
             <div class="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center shrink-0 text-white text-xs font-black">1</div>
             <span class="text-xs font-semibold text-slate-500 w-20 shrink-0">Session 1</span>
             <div class="flex-1 h-10 bg-white rounded-xl overflow-hidden border border-slate-200">
-              <div class="h-full bg-orange-400 rounded-xl flex items-center justify-end pr-4" style="width:65.7%">
+              <div class="h-full bg-orange-400 rounded-xl flex items-center justify-end pr-4 bw-657">
                 <span class="text-xs font-bold text-white">~13,000 tok</span>
               </div>
             </div>
@@ -387,7 +401,7 @@
             <div class="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center shrink-0 text-white text-xs font-black">T0</div>
             <span class="text-xs font-semibold text-slate-500 w-20 shrink-0">Tier 0</span>
             <div class="flex-1 h-10 bg-white rounded-xl overflow-hidden border border-slate-200">
-              <div class="h-full bg-amber-400 rounded-xl flex items-center justify-end pr-4" style="width:59.6%">
+              <div class="h-full bg-amber-400 rounded-xl flex items-center justify-end pr-4 bw-596">
                 <span class="text-xs font-bold text-white">~11,800 tok</span>
               </div>
             </div>
@@ -397,7 +411,7 @@
             <div class="w-8 h-8 rounded-full bg-yellow-400 flex items-center justify-center shrink-0 text-slate-700 text-xs font-black">T1</div>
             <span class="text-xs font-semibold text-slate-500 w-20 shrink-0">Tier 1</span>
             <div class="flex-1 h-10 bg-white rounded-xl overflow-hidden border border-slate-200">
-              <div class="h-full bg-yellow-300 rounded-xl flex items-center justify-end pr-4" style="width:48.6%">
+              <div class="h-full bg-yellow-300 rounded-xl flex items-center justify-end pr-4 bw-486">
                 <span class="text-xs font-bold text-slate-700">~9,630 tok</span>
               </div>
             </div>
@@ -407,7 +421,7 @@
             <div class="w-8 h-8 rounded-full bg-lime-500 flex items-center justify-center shrink-0 text-white text-xs font-black">T2</div>
             <span class="text-xs font-semibold text-slate-500 w-20 shrink-0">Tier 2</span>
             <div class="flex-1 h-10 bg-white rounded-xl overflow-hidden border border-slate-200">
-              <div class="h-full bg-lime-400 rounded-xl flex items-center justify-end pr-4" style="width:39.3%">
+              <div class="h-full bg-lime-400 rounded-xl flex items-center justify-end pr-4 bw-393">
                 <span class="text-xs font-bold text-slate-700">~7,780 tok</span>
               </div>
             </div>
@@ -419,7 +433,7 @@
             </div>
             <span class="text-xs font-bold text-cisco-green w-20 shrink-0">Today ✓</span>
             <div class="flex-1 h-10 bg-white rounded-xl overflow-hidden border border-slate-200">
-              <div class="h-full bg-cisco-green rounded-xl flex items-center justify-end pr-4" style="width:30.7%">
+              <div class="h-full bg-cisco-green rounded-xl flex items-center justify-end pr-4 bw-307">
                 <span class="text-xs font-bold text-white">6,072 tok</span>
               </div>
             </div>
@@ -549,7 +563,7 @@
   </section>
 
   <!-- ==================== SAVINGS ATTRIBUTION ==================== -->
-  <section id="savings" class="py-20 px-6" style="background: linear-gradient(135deg, #0d1b2e 0%, #171f2d 60%, #0a1628 100%);">
+  <section id="savings" class="py-20 px-6 bg-savings">
     <div class="max-w-6xl mx-auto">
 
       <div class="section-reveal mb-14 text-center">
@@ -639,7 +653,7 @@
         </div>
         <div class="overflow-x-auto">
           <table class="w-full text-sm">
-            <thead class="border-b border-white/10" style="background:rgba(255,255,255,0.04)">
+            <thead class="border-b border-white/10 bg-thead-row">
               <tr>
                 <th class="text-left px-6 py-3 text-xs font-bold uppercase tracking-wider text-white/40">Model</th>
                 <th class="text-right px-6 py-3 text-xs font-bold uppercase tracking-wider text-white/40">Input $/1M</th>
@@ -682,7 +696,7 @@
                 <td class="px-6 py-3 text-right font-mono text-xs text-white/60">$13.73</td>
                 <td class="px-6 py-3 text-right font-mono text-xs text-white font-bold">$164.74</td>
               </tr>
-              <tr style="background:rgba(108,192,74,0.08)">
+              <tr class="bg-row-opus">
                 <td class="px-6 py-3 text-cisco-green text-xs font-bold">Claude 3 Opus</td>
                 <td class="px-6 py-3 text-right font-mono text-xs text-white/50">$15.00</td>
                 <td class="px-6 py-3 text-right font-mono text-xs text-cisco-green font-bold">$0.2059</td>
@@ -693,7 +707,7 @@
             </tbody>
           </table>
         </div>
-        <div class="px-6 py-3 border-t border-white/5 text-xs text-white/30" style="background:rgba(255,255,255,0.02)">
+        <div class="px-6 py-3 border-t border-white/5 text-xs text-white/30 bg-tfoot-row">
           These figures represent rule context overhead only. Your total session token spend (prompts, code, AI responses) will be larger — this saving is a guaranteed fixed reduction applied before any work begins, on every session, forever.
         </div>
       </div>
@@ -963,7 +977,7 @@
               <span class="font-bold text-cisco-blue">9,900 tokens &nbsp;·&nbsp; 69%</span>
             </div>
             <div class="h-3 bg-slate-100 rounded-full overflow-hidden">
-              <div class="h-full bg-gradient-to-r from-cisco-blue to-cisco-teal rounded-full" style="width:69%"></div>
+              <div class="h-full bg-gradient-to-r from-cisco-blue to-cisco-teal rounded-full bw-69"></div>
             </div>
           </div>
 
@@ -973,7 +987,7 @@
               <span class="font-bold text-orange-500">1,850 tokens &nbsp;·&nbsp; 13%</span>
             </div>
             <div class="h-3 bg-slate-100 rounded-full overflow-hidden">
-              <div class="h-full bg-orange-400 rounded-full" style="width:13%"></div>
+              <div class="h-full bg-orange-400 rounded-full bw-13"></div>
             </div>
           </div>
 
@@ -983,7 +997,7 @@
               <span class="font-bold text-cisco-teal">1,100 tokens &nbsp;·&nbsp; 8%</span>
             </div>
             <div class="h-3 bg-slate-100 rounded-full overflow-hidden">
-              <div class="h-full bg-cisco-teal rounded-full" style="width:8%"></div>
+              <div class="h-full bg-cisco-teal rounded-full bw-8"></div>
             </div>
           </div>
 
@@ -993,7 +1007,7 @@
               <span class="font-bold text-cisco-green">600 tokens &nbsp;·&nbsp; 4%</span>
             </div>
             <div class="h-3 bg-slate-100 rounded-full overflow-hidden">
-              <div class="h-full bg-cisco-green rounded-full" style="width:4%"></div>
+              <div class="h-full bg-cisco-green rounded-full bw-4"></div>
             </div>
           </div>
 
@@ -1003,7 +1017,7 @@
               <span class="font-bold text-purple-600">650 tokens &nbsp;·&nbsp; 5%</span>
             </div>
             <div class="h-3 bg-slate-100 rounded-full overflow-hidden">
-              <div class="h-full bg-purple-400 rounded-full" style="width:5%"></div>
+              <div class="h-full bg-purple-400 rounded-full bw-5"></div>
             </div>
           </div>
 

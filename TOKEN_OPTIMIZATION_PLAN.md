@@ -14,7 +14,7 @@ plus 5 structural gaps that leave significant token savings on the table.
 ### Misconfigurations Fixed (P0 — Done)
 
 | Rule | Issue | Fix | Tokens Freed/Session |
-|------|-------|-----|----------------------|
+| ---- | ----- | --- | -------------------- |
 | `effectiveness-signals.md` (.cursor) | `alwaysApply: true` on 230-line rule, loaded every session | Changed to `alwaysApply: false` + `globs: **/*.py,**/*.ts,**/*.js,**/*.mjs` | ~1,840 avg |
 | `codeguard-1-crypto-algorithms.md` | `alwaysApply: true` on 134-line rule, even for markdown sessions | Changed to `alwaysApply: false` + code file globs | ~500 avg |
 | `codeguard-1-digital-certificates.md` | `alwaysApply: true` on 121-line rule, even for markdown sessions | Changed to `alwaysApply: false` + code + cert file globs | ~485 avg |
@@ -31,7 +31,7 @@ plus 5 structural gaps that leave significant token savings on the table.
 Routes 60% of tasks to haiku (20× cheaper than opus, 5× cheaper than sonnet).
 
 | Tier | Model | Criteria |
-|------|-------|----------|
+| ---- | ----- | -------- |
 | LOW | haiku | ≤2 files, no deps, no schema changes, spec <200 tokens |
 | MEDIUM | sonnet | Default |
 | HIGH | opus | New system design, cross-service breaking changes |
@@ -60,6 +60,7 @@ Prevents loading full session logs at start. Instead reads only:
 - `.comms/active/` for in-progress tasks
 
 Never reads:
+
 - Full `activity-report-*.md` files
 - `.comms/completed/` directory
 - `PROJECT_PROGRESS.md` unless the task requires it
@@ -84,7 +85,7 @@ Prevents unbounded growth that would compound with every session.
 ## Cumulative Token Impact
 
 | Phase | Tokens Saved/Session | Monthly Savings (20 sessions) |
-|-------|---------------------|-------------------------------|
+| ----- | -------------------- | ------------------------------ |
 | Baseline (existing rules) | 14,400 | 288,000 |
 | P0: alwaysApply fixes | +4,000 | +80,000 |
 | P1: session-warm-up | +800 | +16,000 |
@@ -146,7 +147,7 @@ so it doesn't re-fire mid-session on sequential milestone tasks.
 ## Files Modified
 
 | File | Change |
-|------|--------|
+| ---- | ------ |
 | `.cursor/rules/effectiveness-signals.md` | `alwaysApply: true` → `false`, added globs |
 | `.cursor/rules/codeguard-1-crypto-algorithms.md` | `alwaysApply: true` → `false`, added globs |
 | `.cursor/rules/codeguard-1-digital-certificates.md` | `alwaysApply: true` → `false`, added globs |
