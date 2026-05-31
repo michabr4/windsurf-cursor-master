@@ -1,6 +1,6 @@
 ---
-description: Auto-Chain — Cursor automatically executes the next queued task when requires_review is false
-alwaysApply: true
+description: "[MERGED] → behavioral-core.md"
+alwaysApply: false
 ---
 
 # Auto-Chain Protocol

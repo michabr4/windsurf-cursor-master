@@ -1,6 +1,6 @@
 ---
-description: Result Compression — minimal RESULT format for LOW/MEDIUM tasks to reduce output token usage
-alwaysApply: true
+description: "[MERGED] → behavioral-core.md"
+alwaysApply: false
 ---
 
 # Result Compression Protocol

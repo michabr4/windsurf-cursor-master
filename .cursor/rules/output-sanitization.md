@@ -1,6 +1,6 @@
 ---
-description: Output Sanitization — prohibits secrets and file contents from result files, session logs, and comms messages
-alwaysApply: true
+description: "[MERGED] → behavioral-core.md"
+alwaysApply: false
 ---
 
 # Output Sanitization Rule
