@@ -1,6 +1,7 @@
 ---
 description: Comms Protocol — full task lifecycle, file move steps, result schema, and batch/chain execution rules
-alwaysApply: true
+alwaysApply: false
+globs: [".comms/**", ".comms-bridge/**"]
 ---
 
 # Comms Protocol

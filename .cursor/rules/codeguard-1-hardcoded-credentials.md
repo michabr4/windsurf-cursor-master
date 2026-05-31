@@ -1,6 +1,22 @@
 ---
 description: No Hardcoded Credentials
-alwaysApply: true
+alwaysApply: false
+globs:
+  - "**/*.py"
+  - "**/*.ts"
+  - "**/*.tsx"
+  - "**/*.js"
+  - "**/*.jsx"
+  - "**/*.go"
+  - "**/*.sh"
+  - "**/*.json"
+  - "**/*.yml"
+  - "**/*.yaml"
+  - "**/*.env*"
+  - "**/*.toml"
+  - "**/*.ini"
+  - "**/*.cfg"
+  - "**/*.conf"
 ---
 
 rule_id: codeguard-1-hardcoded-credentials
