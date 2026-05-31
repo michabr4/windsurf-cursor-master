@@ -1,5 +1,6 @@
 ---
-trigger: always_on
+trigger: glob
+globs: "**/*.py,**/*.ts,**/*.tsx,**/*.js,**/*.jsx,**/*.go,**/*.sh,**/*.json,**/*.yml,**/*.yaml,**/*.env*,**/*.toml,**/*.ini,**/*.cfg,**/*.conf"
 title: No Hardcoded Credentials
 version: 1.0.1
 ---
