@@ -10,15 +10,19 @@ alwaysApply: false
 
 Keep a single authoritative file — `PROJECT_PROGRESS.md` in the workspace root — that reflects the current progress state of every active project. This file is the source of truth for the project dashboard and for cross-session continuity.
 
+## Frequency Cap
+
+**Maximum 1 update per 60 minutes per session.** If a session-start update was performed, skip all subsequent auto-triggers (milestones, status changes, new projects) until 60 minutes have elapsed or the user explicitly requests an update. Manual triggers always override the cap.
+
 ## When to Update PROJECT_PROGRESS.md
 
-Update the file when **any** of these events occur:
+Update the file when **any** of these events occur, subject to the frequency cap above:
 
 1. **Session start** — read the file, verify it reflects reality, fix stale entries silently.
 2. **Milestone completed** — a feature, phase, or agent ships.
 3. **Status changes** — a project moves from one phase to another, or a blocker is resolved or added.
 4. **New project created** — a new agent, tool, or platform folder is scaffolded.
-5. **Manual trigger** — user asks "update progress" or "show project status".
+5. **Manual trigger** — user asks "update progress" or "show project status" (always fires, ignores cap).
 
 ## File Location
 
@@ -62,7 +66,7 @@ Each project entry in `PROJECT_PROGRESS.md` follows this exact structure:
 Use these anchors consistently:
 
 | % | Meaning |
-|---|---------|
+| - | ------- |
 | 0% | Planned, not started |
 | 10% | Agent card / spec written |
 | 25% | Scaffold + directory structure created |
