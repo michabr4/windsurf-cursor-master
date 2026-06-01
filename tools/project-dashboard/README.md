@@ -12,6 +12,14 @@ npm run dev
 
 Open http://localhost:5173/project-dashboard/ (Vite base path) or the URL shown in the terminal.
 
+## Public URL (GitHub Pages)
+
+After a push to `main` or `cursor/**`, the root Pages workflow builds and publishes the dashboard at:
+
+**https://michabr4.github.io/windsurf-cursor-master/project-dashboard/**
+
+Requires repo **Settings → Pages → Source: GitHub Actions** (already enabled).
+
 ## Update data
 
 Edit `src/data/projects.json` following the `Project` and `ProjectData` types in `src/types/project.ts`. Keep counts in `summary` aligned with project statuses.
