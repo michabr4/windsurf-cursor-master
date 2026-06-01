@@ -40,6 +40,8 @@ jobs:
           cache: npm
           cache-dependency-path: tools/project-dashboard/package-lock.json
       - name: Build project dashboard
+        env:
+          VITE_BASE_URL: /windsurf-cursor-master/project-dashboard/
         run: |
           npm ci
           npm run build
