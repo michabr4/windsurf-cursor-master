@@ -9,6 +9,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <title>AI Factory · Project Dashboard</title>
+    <script>
+      (function () {
+        var version = '20260601';
+        if (!location.search.includes('v=' + version)) {
+          var next = new URL(location.href);
+          next.searchParams.set('v', version);
+          location.replace(next.toString());
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root">
@@ -35,8 +45,9 @@
             '<h1 style="font-size:1.25rem;margin-bottom:0.75rem">Dashboard scripts did not load</h1>' +
             '<p style="margin-bottom:0.5rem">This is usually a <strong>cached old version</strong> or wrong URL.</p>' +
             '<ol style="margin:0.75rem 0 0.75rem 1.25rem;line-height:1.6">' +
-            '<li>Hard refresh: <strong>Cmd+Shift+R</strong> (Mac) or <strong>Ctrl+Shift+R</strong> (Windows)</li>' +
-            '<li>Or open a private/incognito window</li>' +
+            '<li>Chrome: DevTools → Application → Storage → <strong>Clear site data</strong> for github.io</li>' +
+            '<li>Safari: Develop menu → <strong>Empty Caches</strong> (enable Develop in Advanced settings)</li>' +
+            '<li>If using Cursor&apos;s built-in browser, open the link in Chrome/Safari instead</li>' +
             '<li>Use this exact URL:<br><a href="https://michabr4.github.io/windsurf-cursor-master/project-dashboard/">https://michabr4.github.io/windsurf-cursor-master/project-dashboard/</a></li>' +
             '</ol>' +
             '<p style="font-size:0.875rem;color:#64748b">In DevTools → Network, the JS file should load from <code>/windsurf-cursor-master/project-dashboard/assets/</code> (not <code>/project-dashboard/assets/</code>).</p>' +
