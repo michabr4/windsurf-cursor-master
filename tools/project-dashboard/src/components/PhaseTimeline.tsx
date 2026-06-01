@@ -83,7 +83,7 @@ export default function PhaseTimeline() {
         </div>
       </div>
 
-      <div className="relative h-72 w-full">
+      <div className="relative h-72 min-h-[18rem] w-full min-w-0">
         <div
           className="pointer-events-none absolute bottom-12 top-8 z-10 w-0.5 bg-cisco-blue"
           style={{ left: '38%' }}

@@ -27,7 +27,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
   const etaIsTbd = project.eta.toLowerCase().includes('tbd')
 
   return (
-    <article className="fade-in-up flex flex-col rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+    <article className="flex flex-col rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
       <div className="mb-4 flex flex-wrap items-start justify-between gap-2">
         <div>
           <h3 className="text-lg font-bold text-slate-900">{project.name}</h3>
