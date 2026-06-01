@@ -45,3 +45,22 @@ Cap this file at 200 tokens. It replaces reading the full activity report.
 
 - Full session log ~1,000 tokens → brief ~200 tokens = **800 tokens saved per session start**
 - Over 20 sessions/month = **16,000 tokens/month** saved
+
+## Specialized Rule Catalog
+
+Glob-gated rules auto-load only when matching file types are in context. You do NOT need to load them manually.
+
+| Category | Auto-loads when editing |
+| -------- | ----------------------- |
+| Safe C functions | `*.c *.cc *.cpp *.h *.hpp` |
+| Crypto algorithms | `*.c *.go *.h *.java *.js *.py *.ts` + others |
+| Digital certificates | Above + `*.pem *.crt *.cer *.der` |
+| Hardcoded credentials | `*.py *.ts *.js *.go *.sh *.json *.yml *.env*` |
+| Framework security | `*.java *.js *.py *.rb *.ts *.php *.xml *.yml` |
+| Effectiveness signals | `*.py *.ts *.js *.mjs` (agents & platforms) |
+| Input validation / injection | `*.c *.go *.py *.ts *.js *.php *.sql *.sh` |
+| API integration | `*.py *.ts *.js` |
+| Test first | `*.py *.ts *.js *.go` and `tests/**` |
+| AI factory standards | `agents/**` and `platforms/**` |
+
+For sessions with no code files open, none of these load. Check `[ROUTING]` telemetry to confirm active rules.

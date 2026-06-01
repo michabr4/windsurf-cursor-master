@@ -41,3 +41,11 @@ Routing 60% of tasks to haiku instead of sonnet = **~5x cost reduction** on thos
 | 10 tasks, all sonnet   | $0.30    | —        | —      |
 | 6 haiku + 4 sonnet     | —        | $0.075   | 75%    |
 | 20 sessions/month      | $6.00    | $1.50    | $4.50/mo |
+
+## Routing Telemetry
+
+Emit exactly one line at the start of your first substantive response for any non-trivial task:
+
+`[ROUTING] task="<3-word summary>" complexity=LOW|MEDIUM|HIGH routed_to=haiku|sonnet|opus`
+
+Omit for pure conversational exchanges (≤2 turns, no file edits). This feeds the adaptive routing audit — data collected here identifies mis-routed tasks and informs threshold tuning.

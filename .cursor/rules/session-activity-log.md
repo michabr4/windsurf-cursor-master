@@ -30,7 +30,14 @@ alwaysApply: true
 | File | Change Type |
 |------|-------------|
 | path/to/file | Modified / Created / Deleted |
+
+## Rule Hits
+| Rule | Enforcement action |
+|------|--------------------|
+| [rule name] | [what it flagged/blocked] or "loaded, no action" |
 ```
+
+**Rule Hits guidance:** List each glob-gated rule that loaded this session. Mark "loaded, no action" for rules that matched but had nothing to enforce. This data feeds the adaptive loading audit — zero-action rules across 10+ sessions are candidates for glob narrowing.
 
 ### Content Rules
 
