@@ -296,6 +296,7 @@ CONSTRAINTS:
 | 2026-05-26 | Flerken wins email consolidation | Most complete architecture |
 | 2026-05-26 | serviceflow-sdm is canonical platform | Full-stack, Docker, mobile |
 | 2026-05-26 | Keep AgenticStarterKit + delivery-workbench separate | Different audiences (template vs operational) |
+| 2026-06-03 | Devin Desktop — no upgrade path | Evaluated and ruled out; governance gates limit parallelization value and cost does not justify capability at current scale; not to be reconsidered without explicit decision reversal |
 
 ---
 
