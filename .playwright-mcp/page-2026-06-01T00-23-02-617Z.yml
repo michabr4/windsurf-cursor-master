@@ -1,0 +1,322 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - generic [ref=e6]:
+          - heading "AI Factory Project Dashboard" [level=1] [ref=e7]
+          - paragraph [ref=e8]: Cisco CX · SDM Platform
+        - generic [ref=e9]: "Last updated: 2026-05-29"
+    - main [ref=e10]:
+      - generic [ref=e11]:
+        - generic [ref=e12]:
+          - paragraph [ref=e13]: Total Projects
+          - paragraph [ref=e14]: "9"
+        - generic [ref=e15]:
+          - paragraph [ref=e16]: On Track
+          - paragraph [ref=e17]: "8"
+        - generic [ref=e18]:
+          - paragraph [ref=e19]: Blocked
+          - paragraph [ref=e20]: "3"
+        - generic [ref=e21]:
+          - paragraph [ref=e22]: Stable
+          - paragraph [ref=e23]: "3"
+        - generic [ref=e24]:
+          - paragraph [ref=e25]: Phase 0 Ops Pending
+          - paragraph [ref=e26]: "6"
+      - generic [ref=e27]:
+        - heading "⚠️ Action Required — Ops Blockers" [level=2] [ref=e28]
+        - generic [ref=e29]:
+          - generic [ref=e30]:
+            - generic [ref=e31]:
+              - generic [ref=e32]: CRITICAL
+              - heading "Rotate WEBEX_BOT_TOKEN" [level=3] [ref=e33]
+              - generic [ref=e34]: "Owner: You"
+            - paragraph [ref=e35]: Regenerate bot token at developer.webex.com and update GitHub Secrets.
+            - paragraph [ref=e36]: "Affects: mgm-status-bot, dd-status-bot, delivery-tracker, risk-sentinel"
+          - generic [ref=e37]:
+            - generic [ref=e38]:
+              - generic [ref=e39]: CRITICAL
+              - heading "Refresh WEBEX_ACCESS_TOKEN (dd-status-bot)" [level=3] [ref=e40]
+              - generic [ref=e41]: "Owner: You"
+            - paragraph [ref=e42]: Run oauth_refresh.py and update WEBEX_ACCESS_TOKEN in GitHub Secrets.
+            - paragraph [ref=e43]: "Affects: dd-status-bot"
+          - generic [ref=e44]:
+            - generic [ref=e45]:
+              - generic [ref=e46]: HIGH
+              - heading "Update WEBEX_CLIENT_SECRET in GitHub Secrets (2026-05-28 rotation)" [level=3] [ref=e47]
+              - generic [ref=e48]: "Owner: You"
+            - paragraph [ref=e49]: Paste the new client secret from 2026-05-28 rotation into GitHub Secrets.
+            - paragraph [ref=e50]: "Affects: dd-status-bot"
+          - generic [ref=e51]:
+            - generic [ref=e52]:
+              - generic [ref=e53]: HIGH
+              - heading "Register Azure AD app in Microsoft Entra" [level=3] [ref=e54]
+              - generic [ref=e55]: "Owner: You"
+            - paragraph [ref=e56]: Register the app in Microsoft Entra admin center and configure redirect URIs.
+            - paragraph [ref=e57]: "Affects: flerken"
+          - generic [ref=e58]:
+            - generic [ref=e59]:
+              - generic [ref=e60]: HIGH
+              - heading "Confirm Salesforce MCP delegated read access" [level=3] [ref=e61]
+              - generic [ref=e62]: "Owner: You"
+            - paragraph [ref=e63]: Confirm delegated read access for the Salesforce MCP integration.
+            - paragraph [ref=e64]: "Affects: business-review-generator"
+          - generic [ref=e65]:
+            - generic [ref=e66]:
+              - generic [ref=e67]: HIGH
+              - heading "Confirm ServiceNow MCP access" [level=3] [ref=e68]
+              - generic [ref=e69]: "Owner: You"
+            - paragraph [ref=e70]: Confirm ServiceNow MCP credentials and scoped permissions.
+            - paragraph [ref=e71]: "Affects: risk-sentinel, business-review-generator"
+      - generic [ref=e72]:
+        - heading "Active Projects" [level=2] [ref=e73]
+        - generic [ref=e74]:
+          - article [ref=e75]:
+            - generic [ref=e76]:
+              - generic [ref=e77]:
+                - heading "Helix / ServiceFlow SDM" [level=3] [ref=e78]
+                - paragraph [ref=e79]: platforms/serviceflow-sdm/
+              - generic [ref=e80]:
+                - generic [ref=e81]: Stable
+                - generic [ref=e82]: Platform
+            - generic [ref=e83]:
+              - generic [ref=e84]:
+                - img [ref=e85]
+                - generic [ref=e88]: 85%
+              - generic [ref=e89]:
+                - paragraph [ref=e90]: Phase 2.1 — Complete
+                - paragraph [ref=e91]: Updated 2026-05-26
+            - generic [ref=e92]:
+              - img [ref=e93]
+              - generic [ref=e95]: "ETA:"
+              - generic [ref=e96]: July 2026 (GitHub Pages publish)
+            - button "Show completed / remaining" [ref=e97] [cursor=pointer]
+            - paragraph [ref=e98]: Full-stack SDM platform serving as data backbone for all AI Factory agents with live integrations and public demo URL.
+          - article [ref=e99]:
+            - generic [ref=e100]:
+              - generic [ref=e101]:
+                - 'heading "Agent 1: Delivery Tracker" [level=3] [ref=e102]'
+                - paragraph [ref=e103]: agents/delivery-tracker/
+              - generic [ref=e104]:
+                - generic [ref=e105]: In Development
+                - generic [ref=e106]: AI Agent
+                - generic [ref=e107]: T1
+            - generic [ref=e108]:
+              - generic [ref=e109]:
+                - img [ref=e110]
+                - generic [ref=e113]: 60%
+              - generic [ref=e114]:
+                - paragraph [ref=e115]: Phase 1 — Week 5–8
+                - paragraph [ref=e116]: Updated 2026-05-27
+            - generic [ref=e117]:
+              - img [ref=e118]
+              - generic [ref=e120]: "ETA:"
+              - generic [ref=e121]: Week 8 (~2026-07-08)
+            - generic [ref=e122]:
+              - paragraph [ref=e123]: Blockers
+              - list [ref=e124]:
+                - listitem [ref=e125]: • WEBEX_BOT_TOKEN expired — rotate at developer.webex.com
+            - button "Show completed / remaining" [ref=e126] [cursor=pointer]
+            - paragraph [ref=e127]: Daily delivery health report covering 100% of accounts — reduces weekly check from 2–3 hours to 5-minute review.
+          - article [ref=e128]:
+            - generic [ref=e129]:
+              - generic [ref=e130]:
+                - 'heading "Agent 2: Risk & Escalation Sentinel" [level=3] [ref=e131]'
+                - paragraph [ref=e132]: agents/risk-escalation-sentinel/
+              - generic [ref=e133]:
+                - generic [ref=e134]: In Development
+                - generic [ref=e135]: AI Agent
+                - generic [ref=e136]: T2
+            - generic [ref=e137]:
+              - generic [ref=e138]:
+                - img [ref=e139]
+                - generic [ref=e142]: 25%
+              - generic [ref=e143]:
+                - paragraph [ref=e144]: Phase 1 — Week 9 HITL
+                - paragraph [ref=e145]: Updated 2026-05-27
+            - generic [ref=e146]:
+              - img [ref=e147]
+              - generic [ref=e149]: "ETA:"
+              - generic [ref=e150]: Week 9 HITL opens (~2026-07-15)
+            - generic [ref=e151]:
+              - paragraph [ref=e152]: Blockers
+              - list [ref=e153]:
+                - listitem [ref=e154]: • Depends on Delivery Tracker live output
+                - listitem [ref=e155]: • WEBEX_BOT_TOKEN expired
+            - button "Show completed / remaining" [ref=e156] [cursor=pointer]
+            - paragraph [ref=e157]: Predictive risk detection 5–10 days ahead of issues — replaces reactive escalation with proactive intervention.
+          - article [ref=e158]:
+            - generic [ref=e159]:
+              - generic [ref=e160]:
+                - 'heading "Agent 3: Business Review Generator" [level=3] [ref=e161]'
+                - paragraph [ref=e162]: agents/business-review-generator/
+              - generic [ref=e163]:
+                - generic [ref=e164]: In Development
+                - generic [ref=e165]: AI Agent
+                - generic [ref=e166]: T2
+            - generic [ref=e167]:
+              - generic [ref=e168]:
+                - img [ref=e169]
+                - generic [ref=e172]: 50%
+              - generic [ref=e173]:
+                - paragraph [ref=e174]: Phase 1 — Week 10 HITL
+                - paragraph [ref=e175]: Updated 2026-05-27
+            - generic [ref=e176]:
+              - img [ref=e177]
+              - generic [ref=e179]: "ETA:"
+              - generic [ref=e180]: Week 10 HITL opens (~2026-07-22)
+            - generic [ref=e181]:
+              - paragraph [ref=e182]: Blockers
+              - list [ref=e183]:
+                - listitem [ref=e184]: • Salesforce MCP delegated read access unconfirmed
+            - button "Show completed / remaining" [ref=e185] [cursor=pointer]
+            - paragraph [ref=e186]: QBR prep time reduced from 8–12 hours to 30-minute human review of AI-generated draft.
+          - article [ref=e187]:
+            - generic [ref=e188]:
+              - generic [ref=e189]:
+                - heading "MGM Status Bot" [level=3] [ref=e190]
+                - paragraph [ref=e191]: bots/mgm-status-bot/
+              - generic [ref=e192]:
+                - generic [ref=e193]: Blocked
+                - generic [ref=e194]: Bot
+            - generic [ref=e195]:
+              - generic [ref=e196]:
+                - img [ref=e197]
+                - generic [ref=e200]: 90%
+              - generic [ref=e201]:
+                - paragraph [ref=e202]: Phase 2.2 — Ops Fix
+                - paragraph [ref=e203]: Updated 2026-05-26
+            - generic [ref=e204]:
+              - img [ref=e205]
+              - generic [ref=e207]: "ETA:"
+              - generic [ref=e208]: TBD — unblocks when token rotated
+            - generic [ref=e209]:
+              - paragraph [ref=e210]: Blockers
+              - list [ref=e211]:
+                - listitem [ref=e212]: • WEBEX_BOT_TOKEN returning 401 — regenerate at developer.webex.com, update GitHub Secret
+            - button "Show completed / remaining" [ref=e213] [cursor=pointer]
+            - paragraph [ref=e214]: Daily automated MGM status delivery restored via GitHub Actions.
+          - article [ref=e215]:
+            - generic [ref=e216]:
+              - generic [ref=e217]:
+                - heading "DD Status Bot" [level=3] [ref=e218]
+                - paragraph [ref=e219]: bots/dd-status-bot/
+              - generic [ref=e220]:
+                - generic [ref=e221]: Blocked
+                - generic [ref=e222]: Bot
+            - generic [ref=e223]:
+              - generic [ref=e224]:
+                - img [ref=e225]
+                - generic [ref=e228]: 90%
+              - generic [ref=e229]:
+                - paragraph [ref=e230]: Phase 2.2 — Ops Fix
+                - paragraph [ref=e231]: Updated 2026-05-28
+            - generic [ref=e232]:
+              - img [ref=e233]
+              - generic [ref=e235]: "ETA:"
+              - generic [ref=e236]: TBD — unblocks when tokens rotated
+            - generic [ref=e237]:
+              - paragraph [ref=e238]: Blockers
+              - list [ref=e239]:
+                - listitem [ref=e240]: • WEBEX_ACCESS_TOKEN expired
+                - listitem [ref=e241]: • WEBEX_CLIENT_SECRET needs update (new secret from 2026-05-28 rotation)
+            - button "Show completed / remaining" [ref=e242] [cursor=pointer]
+            - paragraph [ref=e243]: Daily Digitized Delivery status delivery restored.
+          - article [ref=e244]:
+            - generic [ref=e245]:
+              - generic [ref=e246]:
+                - heading "Flerken — Personal AI Assistant" [level=3] [ref=e247]
+                - paragraph [ref=e248]: agents/flerken/
+              - generic [ref=e249]:
+                - generic [ref=e250]: Blocked
+                - generic [ref=e251]: Agent
+                - generic [ref=e252]: T1
+            - generic [ref=e253]:
+              - generic [ref=e254]:
+                - img [ref=e255]
+                - generic [ref=e258]: 70%
+              - generic [ref=e259]:
+                - paragraph [ref=e260]: Phase 2.3 — Post-email-consolidation upgrade
+                - paragraph [ref=e261]: Updated 2026-05-26
+            - generic [ref=e262]:
+              - img [ref=e263]
+              - generic [ref=e265]: "ETA:"
+              - generic [ref=e266]: TBD — blocked by Azure AD registration
+            - generic [ref=e267]:
+              - paragraph [ref=e268]: Blockers
+              - list [ref=e269]:
+                - listitem [ref=e270]: • Azure AD app not registered in Microsoft Entra — ops required
+            - button "Show completed / remaining" [ref=e271] [cursor=pointer]
+            - paragraph [ref=e272]: Fully functional personal AI assistant for morning email briefings and proactive outreach drafting.
+          - article [ref=e273]:
+            - generic [ref=e274]:
+              - generic [ref=e275]:
+                - heading "Firewall Dashboard" [level=3] [ref=e276]
+                - paragraph [ref=e277]: tools/firewall-dashboard/
+              - generic [ref=e278]:
+                - generic [ref=e279]: Stable
+                - generic [ref=e280]: Tool
+            - generic [ref=e281]:
+              - generic [ref=e282]:
+                - img [ref=e283]
+                - generic [ref=e286]: 75%
+              - generic [ref=e287]:
+                - paragraph [ref=e288]: Phase 3+ — extensions on demand
+                - paragraph [ref=e289]: Updated 2026-05-27
+            - generic [ref=e290]:
+              - img [ref=e291]
+              - generic [ref=e293]: "ETA:"
+              - generic [ref=e294]: No active sprint — Phase 3+
+            - button "Show completed / remaining" [ref=e295] [cursor=pointer]
+            - paragraph [ref=e296]: Real-time firewall implementation tracking dashboard with Cisco CX branding.
+          - article [ref=e297]:
+            - generic [ref=e298]:
+              - generic [ref=e299]:
+                - heading "Delivery Workbench" [level=3] [ref=e300]
+                - paragraph [ref=e301]: tools/delivery-workbench/
+              - generic [ref=e302]:
+                - generic [ref=e303]: Stable
+                - generic [ref=e304]: Tool
+            - generic [ref=e305]:
+              - generic [ref=e306]:
+                - img [ref=e307]
+                - generic [ref=e310]: 40%
+              - generic [ref=e311]:
+                - paragraph [ref=e312]: Phase 3.1 — Evolution to daily driver
+                - paragraph [ref=e313]: Updated 2026-05-26
+            - generic [ref=e314]:
+              - img [ref=e315]
+              - generic [ref=e317]: "ETA:"
+              - generic [ref=e318]: June–July 2026
+            - button "Show completed / remaining" [ref=e319] [cursor=pointer]
+            - paragraph [ref=e320]: "Primary SDM daily-driver: one command triggers morning briefing with email, calendar, Webex, and risk signals."
+      - generic [ref=e321]:
+        - generic [ref=e322]:
+          - generic [ref=e323]:
+            - heading "AI Factory Phase Timeline" [level=2] [ref=e324]
+            - paragraph [ref=e325]: Six phases from ops readiness through autonomous agent chains
+          - generic [ref=e326]:
+            - text: Complete
+            - text: In progress
+            - text: Planned
+        - generic [ref=e330]:
+          - generic "Current date marker"
+          - application [ref=e333]:
+            - generic [ref=e342]:
+              - generic [ref=e344]: Phase 0
+              - generic [ref=e346]: Phase 1
+              - generic [ref=e348]: Phase 2
+              - generic [ref=e350]: Phase 3
+              - generic [ref=e352]: Phase 4
+              - generic [ref=e354]: Phase 5
+              - generic [ref=e356]: Phase 6
+      - generic [ref=e357]:
+        - paragraph [ref=e358]: Status Legend
+        - generic [ref=e359]:
+          - generic [ref=e361]: Stable
+          - generic [ref=e363]: In Development
+          - generic [ref=e365]: Blocked
+          - generic [ref=e367]: Planned
+          - generic [ref=e369]: HITL Active
+          - generic [ref=e371]: Complete
+  - generic [ref=e372]: Phase 0

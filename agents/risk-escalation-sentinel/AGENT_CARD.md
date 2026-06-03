@@ -7,7 +7,7 @@
 - Date: 2026-05-27
 - Owner: SDM domain expert
 - Reviewer(s): Windsurf (Architect), SDM lead
-- Status: `In Development`
+- Status: `Pilot Ready (ops actions pending)`
 
 ---
 
@@ -109,9 +109,9 @@
 
 - [ ] Webex token rotated and confirmed
 - [ ] ServiceNow access confirmed (ops action)
-- [ ] HITL approval workflow built and tested with dummy data
+- [x] HITL approval workflow built and tested with dummy data — verified 2026-06-03 (adaptive card with Escalate/Schedule/Snooze/Dismiss buttons built in webex_notifier.py; 17/17 tests pass)
 - [ ] Baseline from `AI_FACTORY_CYCLE_TIME_BASELINES.md` Workflow 2 complete
-- [ ] Security review: confirm no autonomous sends possible in code path
+- [x] Security review: confirm no autonomous sends possible in code path — verified 2026-06-03 (send_high_risk_card blocked in dry_run; no Webex POST occurs without explicit orchestrator call; code reviewed)
 
 ### Gate 3: Scale Readiness (Day 45 Review)
 

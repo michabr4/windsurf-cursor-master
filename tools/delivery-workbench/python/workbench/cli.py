@@ -77,6 +77,41 @@ def cmd_new_raid_draft(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_new_project(args: argparse.Namespace) -> int:
+    slug = args.slug
+    dest = PROJECTS / slug
+    if dest.exists():
+        raise SystemExit(f"Project already exists: {dest}")
+    src = PROJECTS / "_example"
+    if src.is_dir():
+        shutil.copytree(src, dest)
+    else:
+        dest.mkdir(parents=True)
+    data_dir = DATA / slug
+    data_dir.mkdir(parents=True, exist_ok=True)
+    print(f"Created project : {dest}")
+    print(f"Data folder     : {data_dir}")
+    print(f"Next: python3 -m workbench new-status-draft --project {slug}")
+    return 0
+
+
+def cmd_list_projects(args: argparse.Namespace) -> int:  # noqa: ARG001
+    found = []
+    if PROJECTS.is_dir():
+        for p in sorted(PROJECTS.iterdir()):
+            if p.is_dir() and not p.name.startswith("_"):
+                draft_dir = DATA / p.name
+                drafts = len(list(draft_dir.glob("*.md"))) if draft_dir.is_dir() else 0
+                found.append((p.name, drafts))
+    if not found:
+        print("No projects yet. Run: python3 -m workbench new-project --slug <name>")
+        return 0
+    for slug, drafts in found:
+        label = f"{drafts} draft" if drafts == 1 else f"{drafts} drafts"
+        print(f"  {slug:<32}  {label}")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="workbench",
@@ -97,6 +132,18 @@ def build_parser() -> argparse.ArgumentParser:
             help="Project slug (folder under projects/)",
         )
         p.set_defaults(func=handler)
+
+    p_new = sub.add_parser("new-project", help="Create a new project folder under projects/")
+    p_new.add_argument(
+        "--slug",
+        type=_validate_slug,
+        required=True,
+        help="Project slug (lowercase letters, digits, hyphens, underscores)",
+    )
+    p_new.set_defaults(func=cmd_new_project)
+
+    p_list = sub.add_parser("list-projects", help="List all projects with draft counts")
+    p_list.set_defaults(func=cmd_list_projects)
 
     return parser
 

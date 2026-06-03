@@ -3,13 +3,14 @@
 from __future__ import annotations
 
 import importlib.util
+import os
 import sys
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from .paths import AGENT_COMMUNICATION, AGENT_FLERKEN, AGENT_STATUS_REPORT
+from .paths import AGENT_COMMUNICATION, AGENT_FLERKEN, AGENT_STATUS_REPORT, WORKBENCH_ROOT
 
 
 @dataclass
@@ -204,4 +205,87 @@ def calendar_placeholder() -> StepResult:
         ),
         meta={"placeholder": True},
     )
+
+
+def agt001_digest_markdown(*, dry_run: bool) -> StepResult:
+    """Outlook inbox digest via local AGT-001 (Microsoft Graph device-code flow).
+
+    Requires MS_CLIENT_ID and MS_TENANT_ID in .env. Gracefully degrades when
+    credentials are absent or the MSAL device-code flow has not yet completed.
+    Read-only — no emails are modified, deleted, or sent.
+    """
+    ms_client_id = os.getenv("MS_CLIENT_ID")
+
+    if not ms_client_id:
+        return StepResult(
+            ok=True,
+            markdown=(
+                "## Email digest (AGT-001)\n\n"
+                "_Microsoft Graph not configured. Set `MS_CLIENT_ID` and `MS_TENANT_ID` in `.env`"
+                " then run without `--dry-run` to authenticate via device-code flow._\n\n"
+                "See `docs/email/OVERVIEW.md` for setup instructions.\n"
+            ),
+            meta={"mode": "unconfigured"},
+        )
+
+    if dry_run:
+        return StepResult(
+            ok=True,
+            markdown=(
+                "## Email digest (AGT-001 dry-run)\n\n"
+                "_Graph credentials found (`MS_CLIENT_ID` set). "
+                "Run without `--dry-run` to authenticate and fetch live inbox._\n"
+            ),
+            meta={"mode": "dry-run", "configured": True},
+        )
+
+    try:
+        _ensure_path(WORKBENCH_ROOT / "python" / "integrations")
+        from agt001 import EmailChiefOfStaff  # type: ignore[import-not-found]
+
+        digest = EmailChiefOfStaff().generate_daily_digest()
+        return StepResult(
+            ok=True,
+            markdown=_format_agt001_digest(digest),
+            meta={"mode": "live", "scanned": digest.total_emails_scanned},
+        )
+    except Exception as exc:  # noqa: BLE001
+        return StepResult(
+            ok=False,
+            markdown=f"## Email digest (AGT-001)\n\n_Inbox fetch failed: {exc}_\n",
+            meta={"error": str(exc)},
+        )
+
+
+def _format_agt001_digest(digest: Any) -> str:
+    lines = [
+        "## Email digest (AGT-001)",
+        "",
+        f"Scanned **{digest.total_emails_scanned}** messages.",
+        "",
+    ]
+    if digest.handle_first:
+        lines.append(f"### Handle first ({len(digest.handle_first)})")
+        for item in digest.handle_first:
+            urgency = item.urgency.upper()
+            lines.append(f"- **[{urgency}]** {item.subject} — {item.sender}")
+        lines.append("")
+    if digest.decisions_needed:
+        lines.append(f"### Decisions needed ({len(digest.decisions_needed)})")
+        for item in digest.decisions_needed:
+            lines.append(f"- {item.subject} — {item.sender}")
+        lines.append("")
+    if digest.action_required:
+        lines.append(f"### Action required ({len(digest.action_required)})")
+        for item in digest.action_required:
+            due = f" *(due {item.due_date})*" if item.due_date else ""
+            lines.append(f"- {item.subject}{due} — {item.sender}")
+        lines.append("")
+    follow_ups = len(digest.follow_ups)
+    fyi = len(digest.fyi_items)
+    delegatable = len(digest.delegatable)
+    if follow_ups or fyi or delegatable:
+        lines.append(f"Follow-ups: {follow_ups} | FYI: {fyi} | Delegatable: {delegatable}")
+        lines.append("")
+    return "\n".join(lines)
 

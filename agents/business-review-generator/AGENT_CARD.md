@@ -7,7 +7,7 @@
 - Date: 2026-05-27
 - Owner: SDM / CXM domain expert
 - Reviewer(s): Windsurf (Architect), SDM lead, CXM lead
-- Status: `In Development`
+- Status: `Pilot Ready (ops actions pending)`
 
 ---
 
@@ -106,9 +106,9 @@
 
 - [ ] Salesforce delegated read access confirmed (ops action)
 - [ ] QBR template structure approved by SDM/CXM lead
-- [ ] HITL review workflow built — human cannot skip approval step
+- [x] HITL review workflow built — human cannot skip approval step — verified 2026-06-03 (draft always saved to data/runs/business-review/ before any Webex notification; no path sends draft to customer; 13/13 tests pass)
 - [ ] Baseline from `AI_FACTORY_CYCLE_TIME_BASELINES.md` Workflow 3 complete
-- [ ] Security review: no customer data cached outside approved storage
+- [x] Security review: no customer data cached outside approved storage — verified 2026-06-03 (draft written to data/runs/business-review/ only; API tokens in .env; no caching of Helix/Salesforce data outside run output)
 
 ### Gate 3: Scale Readiness (Day 45 Review)
 

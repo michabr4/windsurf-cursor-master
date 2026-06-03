@@ -35,6 +35,24 @@ Track each T2 agent's 45-day human-in-the-loop window here.
 
 ## Governance Decisions (Rolling)
 
+### 2026-06-03 — Phase 1 Code Complete + Security Verification
+
+- **Test results:** All three Phase 1 agents fully tested and green — 56/56 tests pass (Delivery Tracker 26, Risk Sentinel 17, Business Review Generator 13)
+- **Code-verifiable Gate 2 items confirmed:**
+  - Delivery Tracker: HITL controls approved (T1, display-only); security check passed (all GET, no PII in WeeklySummary)
+  - Risk Sentinel: HITL workflow confirmed (4-button adaptive card built + tested); no autonomous sends possible (dry_run guard + explicit call required)
+  - Business Review Generator: HITL workflow confirmed (draft always persisted before any notification, no customer path); no customer data cached outside `data/runs/business-review/`
+- **AGENT_CARD statuses updated:** Delivery Tracker → `Pilot Ready (baseline pending)`; Sentinel → `Pilot Ready (ops actions pending)`; BRG → `Pilot Ready (ops actions pending)`
+- **Outstanding blockers for Phase 0 gate (human/ops actions — cannot be resolved by code):**
+  1. `AI_FACTORY_CYCLE_TIME_BASELINES.md` — all 5 workflows empty; SDM must time-log 5 instances per workflow
+  2. Webex bot token rotation → 👤 You (required before Sentinel pilot start)
+  3. ServiceNow access confirmation → 👤 Ops (required before Sentinel pilot start)
+  4. Salesforce delegated read access → 👤 Ops/Admin (required before BRG pilot start)
+  5. QBR template structure sign-off → 👤 SDM/CXM lead (required before BRG pilot start)
+- **Next gate:** Phase 0 → Phase 1 formal sign-off pending baseline measurements + ops actions above
+
+---
+
 ### 2026-05-29 — Phase 1 Development Start
 
 - **Decision:** Phase 1 Agent #1 (Delivery Tracker, T1) and Agent #2 (Risk & Escalation Sentinel, T2) moved to 🔵 In Development; Agent #3 (Business Review Generator, T2) scaffolded and in development
@@ -76,4 +94,4 @@ Record any incidents where an agent produced unexpected output or required emerg
 
 ---
 
-*Last updated: 2026-05-29 | Reference: `AI_FACTORY_IMPLEMENTATION_PLAN.md` Section 14*
+*Last updated: 2026-06-03 | Reference: `AI_FACTORY_IMPLEMENTATION_PLAN.md` Section 14*

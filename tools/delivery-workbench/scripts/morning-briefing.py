@@ -16,6 +16,7 @@ WORKBENCH_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(WORKBENCH_ROOT / "python"))
 
 from orchestration.agent_bridge import (  # noqa: E402
+    agt001_digest_markdown,
     calendar_placeholder,
     communication_scan_markdown,
     flerken_digest_markdown,
@@ -53,7 +54,10 @@ def build_briefing(
         "",
     ]
 
-    email = flerken_digest_markdown(demo=dry_run or not os.getenv("OPENAI_API_KEY"), dry_run=dry_run)
+    if os.getenv("MS_CLIENT_ID"):
+        email = agt001_digest_markdown(dry_run=dry_run)
+    else:
+        email = flerken_digest_markdown(demo=dry_run or not os.getenv("OPENAI_API_KEY"), dry_run=dry_run)
     parts.append(email.markdown)
 
     cal = calendar_placeholder()

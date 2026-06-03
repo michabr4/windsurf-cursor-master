@@ -7,7 +7,7 @@
 - Date: 2026-05-27
 - Owner: SDM domain expert
 - Reviewer(s): Windsurf (Architect), SDM lead
-- Status: `In Development`
+- Status: `Pilot Ready (baseline pending)`
 
 ---
 
@@ -99,8 +99,8 @@
 
 ### Gate 2: Pilot Readiness
 
-- [ ] HITL/autonomy controls approved (T1 — display only, no approval needed)
-- [ ] Security check: read-only scope confirmed, no PII in output
+- [x] HITL/autonomy controls approved (T1 — display only, no approval needed)
+- [x] Security check: read-only scope confirmed, no PII in output — verified 2026-06-03 (all Helix calls are GET; WeeklySummary model contains no PII; token stored in .env only)
 - [ ] Baseline measurement from `AI_FACTORY_CYCLE_TIME_BASELINES.md` Workflow 1 complete
 
 ### Gate 3: Scale Readiness
