@@ -32,7 +32,7 @@ const phases = [
     status: 'planned',
     agents: 8,
     fill: '#94a3b8',
-    detail: 'Bot fixes, Flerken upgrade, Helix publish — target after Phase 1 stable.',
+    detail: 'Bot fixes, Forge upgrade, Helix publish — target after Phase 1 stable.',
   },
   {
     phase: 'Phase 3',
@@ -85,8 +85,7 @@ export default function PhaseTimeline() {
 
       <div className="relative h-72 min-h-[18rem] w-full min-w-0">
         <div
-          className="pointer-events-none absolute bottom-12 top-8 z-10 w-0.5 bg-cisco-blue"
-          style={{ left: '38%' }}
+          className="pointer-events-none absolute bottom-12 left-[38%] top-8 z-10 w-0.5 bg-cisco-blue"
           title="Current date marker"
         />
         <ResponsiveContainer width="100%" height="100%">
