@@ -78,7 +78,7 @@ Append a new section entry after completing each subsequent section.
 ├── agents/
 │   ├── status-report-agent/            # Salesforce/ServiceNow weekly reports
 │   ├── communication-agent/            # Webex/Email action item extraction
-│   ├── flerken/                        # Personal email triage + digest
+│   ├── forge/                        # Personal email triage + digest
 │   └── email-summary-agent/            # CLI email summary (archive candidate)
 │
 ├── bots/
@@ -199,8 +199,8 @@ STEPS:
 2. Communication Agent:
    cp -R ~/Desktop/SDM\ Files/communication-agent/ agents/communication-agent/
 
-3. Flerken:
-   cp -R ~/Desktop/Flerken\ -\ Personal\ AI\ Assistant/ agents/flerken/
+3. Forge:
+   cp -R ~/Desktop/Forge\ -\ Personal\ AI\ Assistant/ agents/forge/
 
 4. Email Summary Agent:
    cp -R ~/Desktop/email-summary-agent/ agents/email-summary-agent/
@@ -402,7 +402,7 @@ STEPS:
    | ServiceFlow-SDC | ~/Desktop/SDM Files/ServiceFlow SDC/ | Superseded by serviceflow-sdm |
    | ServiceFlow-SDC-Windsurf | ~/Desktop/SDM Files/ServiceFlow SDC_Windsurf/ | Superseded by serviceflow-sdm |
    | python-empty | ~/Desktop/Python/ | Empty placeholder directories |
-   | outlook-agent | ~/.cursor/Outlook Agent/ | Cursor-only exploration, superseded by Flerken |
+   | outlook-agent | ~/.cursor/Outlook Agent/ | Cursor-only exploration, superseded by Forge |
 
 REPORT BACK: Confirm archive log created and all items present.
 
@@ -545,7 +545,7 @@ STEPS:
 
 2. Spot check key files:
    test -f platforms/serviceflow-sdm/README.md && echo "OK: Helix" || echo "MISSING: Helix"
-   test -f agents/flerken/run.py && echo "OK: Flerken" || echo "MISSING: Flerken"
+   test -f agents/forge/run.py && echo "OK: Forge" || echo "MISSING: Forge"
    test -f bots/mgm-status-bot/send_reports.py && echo "OK: MGM Bot" || echo "MISSING: MGM Bot"
    test -f tools/netpilot/README.md && echo "OK: NetPilot" || echo "MISSING: NetPilot"
    test -f content/ai-factory/index.html && echo "OK: AI Factory" || echo "MISSING: AI Factory"
@@ -618,8 +618,8 @@ TASK 13.4: Close open issues in MIGRATION_LOG.md
 **Status:** [SUCCESS or PARTIAL]
 
 ### Decisions from Windsurf Review
-- email-summary-agent missing README: ACCEPTED — will be absorbed into Flerken (Phase 1)
-- personal-automation missing README: ACCEPTED — will be absorbed into Flerken (Phase 1)
+- email-summary-agent missing README: ACCEPTED — will be absorbed into Forge (Phase 1)
+- personal-automation missing README: ACCEPTED — will be absorbed into Forge (Phase 1)
 - data/blue-shield empty: ACCEPTED — empty repo placeholder, content expected later
 - serviceflow-sdm no .git: ACCEPTED — intentional exclude during rsync, remote is michabr4/helix
 - Archived backend .env unprotected: ACCEPTED — not active code
@@ -650,7 +650,7 @@ Execute each command. If any command fails, log the error and continue.
 
 mv ~/Desktop/serviceflow-sdm ~/.Trash/serviceflow-sdm
 mv ~/Desktop/"SDM Files" ~/.Trash/"SDM Files"
-mv ~/Desktop/"Flerken - Personal AI Assistant" ~/.Trash/"Flerken - Personal AI Assistant"
+mv ~/Desktop/"Forge - Personal AI Assistant" ~/.Trash/"Forge - Personal AI Assistant"
 mv ~/Desktop/email-summary-agent ~/.Trash/email-summary-agent
 mv ~/Desktop/"Personal Automation" ~/.Trash/"Personal Automation"
 mv ~/Desktop/NetPilot ~/.Trash/NetPilot
@@ -670,7 +670,7 @@ TASK 14.2: Verify cleanup
 Run this check — all should say GONE:
 
 for d in ~/Desktop/serviceflow-sdm ~/Desktop/"SDM Files" \
-  ~/Desktop/"Flerken - Personal AI Assistant" ~/Desktop/email-summary-agent \
+  ~/Desktop/"Forge - Personal AI Assistant" ~/Desktop/email-summary-agent \
   ~/Desktop/"Personal Automation" ~/Desktop/NetPilot \
   ~/firewall-implementation-planning ~/Desktop/delivery-workbench \
   ~/Desktop/AgenticStarterKitv1_0 ~/Desktop/"AI Factory" \
@@ -717,7 +717,7 @@ Execute each command in order. Do NOT use mv — we need to KEEP the master fold
 
 cp -R ~/New\ Master\ Folder\ -\ Windsurf\ and\ Cursor/platforms/serviceflow-sdm ~/Desktop/serviceflow-sdm
 cp -R ~/New\ Master\ Folder\ -\ Windsurf\ and\ Cursor/sdm-files ~/Desktop/"SDM Files"
-cp -R ~/New\ Master\ Folder\ -\ Windsurf\ and\ Cursor/agents/flerken ~/Desktop/"Flerken - Personal AI Assistant"
+cp -R ~/New\ Master\ Folder\ -\ Windsurf\ and\ Cursor/agents/forge ~/Desktop/"Forge - Personal AI Assistant"
 cp -R ~/New\ Master\ Folder\ -\ Windsurf\ and\ Cursor/agents/email-summary-agent ~/Desktop/email-summary-agent
 cp -R ~/New\ Master\ Folder\ -\ Windsurf\ and\ Cursor/tools/personal-automation ~/Desktop/"Personal Automation"
 cp -R ~/New\ Master\ Folder\ -\ Windsurf\ and\ Cursor/tools/netpilot ~/Desktop/NetPilot
@@ -752,7 +752,7 @@ cp -R ~/New\ Master\ Folder\ -\ Windsurf\ and\ Cursor/sdm-files/sdm-agentic-fram
 
 TASK 15.2: Verify restoration
 for d in ~/Desktop/serviceflow-sdm ~/Desktop/"SDM Files" \
-  ~/Desktop/"Flerken - Personal AI Assistant" ~/Desktop/email-summary-agent \
+  ~/Desktop/"Forge - Personal AI Assistant" ~/Desktop/email-summary-agent \
   ~/Desktop/"Personal Automation" ~/Desktop/NetPilot \
   ~/firewall-implementation-planning ~/Desktop/delivery-workbench \
   ~/Desktop/AgenticStarterKitv1_0 ~/Desktop/"AI Factory" \

@@ -12,7 +12,7 @@ from openai import OpenAI
 
 from .config import cfg
 
-TRIAGE_SYSTEM_PROMPT = """You are Flerken, a personal AI email assistant. Your job is to triage emails and create a daily digest.
+TRIAGE_SYSTEM_PROMPT = """You are Forge, a personal AI email assistant. Your job is to triage emails and create a daily digest.
 
 You MUST respond with ONLY a valid JSON object (no markdown, no explanation outside the JSON). The JSON must have these fields:
 - "category": one of "urgent", "action_required", "fyi", "low_priority", "spam"
@@ -41,7 +41,7 @@ TONE-BASED SEVERITY RULES:
 Always be concise. Match the user's professional tone in draft replies.
 Respond with ONLY the JSON object."""
 
-DIGEST_SYSTEM_PROMPT = """You are Flerken, a personal AI assistant. Given a set of triaged emails, create a brief executive summary for the daily digest.
+DIGEST_SYSTEM_PROMPT = """You are Forge, a personal AI assistant. Given a set of triaged emails, create a brief executive summary for the daily digest.
 
 Include:
 1. A 2-3 sentence overview of the day's email landscape

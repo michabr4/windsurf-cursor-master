@@ -100,11 +100,11 @@
 | **Stack** | Python, Webex SpaceLift, OpenAI, GitHub Actions |
 | **Self-contained** | README, `requirements.txt` (added May 26), `send_reports.py` |
 
-### 7. Flerken — Personal AI Assistant
+### 7. Forge — Personal AI Assistant
 
 | Field | Value |
 | --- | --- |
-| **Location** | `agents/flerken/` (also `~/Desktop/Flerken - Personal AI Assistant/`) |
+| **Location** | `agents/forge/` (also `~/Desktop/Forge - Personal AI Assistant/`) |
 | **Status** | ACTIVE — canonical email agent |
 | **Primary IDE** | Both |
 | **Stack** | Python, LLM (OpenAI/Ollama), Microsoft Graph (device-code flow), HTML digest |
@@ -119,7 +119,7 @@
 | **Status** | ARCHIVE |
 | **Primary IDE** | — |
 | **Stack** | Python, OpenAI, Microsoft Graph |
-| **Next Action** | None — superseded by Flerken (May 26 EMAIL-CONSOLIDATE) |
+| **Next Action** | None — superseded by Forge (May 26 EMAIL-CONSOLIDATE) |
 
 ### 9. Personal Automation — Email Digest
 
@@ -129,7 +129,7 @@
 | **Status** | ARCHIVE |
 | **Primary IDE** | — |
 | **Stack** | Python, Apple Mail export parsing |
-| **Next Action** | Use Flerken `run.py --offline-mail` for offline digest |
+| **Next Action** | Use Forge `run.py --offline-mail` for offline digest |
 
 ### 10. NetPilot — Network Automation Platform
 
@@ -219,7 +219,7 @@
 | **Location** | `_archived/outlook-agent/` (empty shell; was `~/.cursor/Outlook Agent/`) |
 | **Status** | ARCHIVE |
 | **Primary IDE** | — |
-| **Next Action** | None — superseded by Flerken (May 26 ARCHIVE-STALE) |
+| **Next Action** | None — superseded by Forge (May 26 ARCHIVE-STALE) |
 
 ---
 
@@ -227,7 +227,7 @@
 
 ```text
 Email Automation Cluster:
-  Flerken (canonical) ← delivery-workbench (orchestration YAML, kept)
+  Forge (canonical) ← delivery-workbench (orchestration YAML, kept)
   ARCHIVED: email-summary-agent, personal-automation → _archived/
   ARCHIVED: Outlook Agent → _archived/outlook-agent/
 

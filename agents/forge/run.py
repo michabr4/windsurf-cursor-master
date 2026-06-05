@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Quick-start runner for Flerken."""
+"""Quick-start runner for Forge."""
 
 from src.main import main
 

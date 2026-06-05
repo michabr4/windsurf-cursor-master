@@ -16,6 +16,11 @@
         "command": ".cursor/hooks/context-handoff.py"
       }
     ],
+    "subagentStop": [
+      {
+        "command": ".cursor/hooks/context-handoff.py"
+      }
+    ],
     "sessionStart": [
       {
         "command": ".cursor/hooks/session-start-handoff.py"

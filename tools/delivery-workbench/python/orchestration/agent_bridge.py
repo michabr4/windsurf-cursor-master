@@ -10,7 +10,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from .paths import AGENT_COMMUNICATION, AGENT_FLERKEN, AGENT_STATUS_REPORT, WORKBENCH_ROOT
+from .paths import AGENT_COMMUNICATION, AGENT_FORGE, AGENT_STATUS_REPORT, WORKBENCH_ROOT
 
 
 @dataclass
@@ -35,13 +35,13 @@ def _load_module(name: str, file_path: Path):
     return mod
 
 
-def flerken_digest_markdown(*, demo: bool, dry_run: bool) -> StepResult:
-    """Email triage via Flerken DigestBuilder (demo uses mock inbox + LLM when configured)."""
+def forge_digest_markdown(*, demo: bool, dry_run: bool) -> StepResult:
+    """Email triage via Forge DigestBuilder (demo uses mock inbox + LLM when configured)."""
     if dry_run:
-        return _flerken_dry_run_placeholder()
+        return _forge_dry_run_placeholder()
 
     try:
-        _ensure_path(AGENT_FLERKEN)
+        _ensure_path(AGENT_FORGE)
         from src.digest_builder import DigestBuilder  # type: ignore[import-not-found]
 
         builder = DigestBuilder(demo=demo)
@@ -55,7 +55,7 @@ def flerken_digest_markdown(*, demo: bool, dry_run: bool) -> StepResult:
             )
         return StepResult(
             ok=True,
-            markdown=_format_flerken_data(data),
+            markdown=_format_forge_data(data),
             meta={"mode": "demo" if demo else "live", "counts": data.get("counts", {})},
         )
     except Exception as exc:  # noqa: BLE001 — surface degradation to briefing
@@ -66,16 +66,16 @@ def flerken_digest_markdown(*, demo: bool, dry_run: bool) -> StepResult:
         )
 
 
-def _flerken_dry_run_placeholder() -> StepResult:
+def _forge_dry_run_placeholder() -> StepResult:
     try:
-        _ensure_path(AGENT_FLERKEN)
+        _ensure_path(AGENT_FORGE)
         from src.mock_emails import MOCK_EMAILS  # type: ignore[import-not-found]
 
         lines = [
             "## Email digest (dry-run)",
             "",
-            f"Simulated scan of **{len(MOCK_EMAILS)}** messages (Flerken mock data).",
-            "Run without `--dry-run` and configure Flerken `.env` for live Graph + LLM triage.",
+            f"Simulated scan of **{len(MOCK_EMAILS)}** messages (Forge mock data).",
+            "Run without `--dry-run` and configure Forge `.env` for live Graph + LLM triage.",
             "",
         ]
         for item in MOCK_EMAILS[:8]:
@@ -87,12 +87,12 @@ def _flerken_dry_run_placeholder() -> StepResult:
     except Exception as exc:  # noqa: BLE001
         return StepResult(
             ok=True,
-            markdown="## Email digest (dry-run)\n\n_Placeholder — connect Flerken for triage._\n",
+            markdown="## Email digest (dry-run)\n\n_Placeholder — connect Forge for triage._\n",
             meta={"error": str(exc)},
         )
 
 
-def _format_flerken_data(data: dict[str, Any]) -> str:
+def _format_forge_data(data: dict[str, Any]) -> str:
     counts = data.get("counts", {})
     lines = [
         "## Email digest",

@@ -23,36 +23,36 @@ Five separate projects do variations of "read my email and extract value":
 
 | Project | What it does | Status |
 | --- | --- | --- |
-| Flerken | Full triage + digest via GPT-4o + Graph API | STABLE, most complete |
-| email-summary-agent | CLI email summary | STALE, subset of Flerken |
+| Forge | Full triage + digest via GPT-4o + Graph API | STABLE, most complete |
+| email-summary-agent | CLI email summary | STALE, subset of Forge |
 | Personal Automation | Apple Mail parser + regex priority | STALE, offline only |
 | delivery-workbench (email) | M365 email orchestration YAML | ACTIVE, partial |
 | Outlook Agent (.cursor) | Cursor-only exploration | STALE |
 
 ### Decision
 
-**Winner: Flerken** — it has the most complete architecture (Graph API, GPT-4o, HTML digest, device-code auth).
+**Winner: Forge** — it has the most complete architecture (Graph API, GPT-4o, HTML digest, device-code auth).
 
 ### Cursor Instruction Packet: EMAIL-CONSOLIDATE
 
 ```text
-TASK: Consolidate email automation into Flerken
-CONTEXT: Flerken at ~/Desktop/Flerken - Personal AI Assistant/ is the surviving email agent.
+TASK: Consolidate email automation into Forge
+CONTEXT: Forge at ~/Desktop/Forge - Personal AI Assistant/ is the surviving email agent.
 
 STEPS:
 1. From ~/Desktop/email-summary-agent/:
-   - Review summarizer.py and email_reader.py for any logic not in Flerken
-   - If unique logic exists, port it into Flerken's src/ as optional modules
-   - Copy nothing if Flerken already covers the functionality
+   - Review summarizer.py and email_reader.py for any logic not in Forge
+   - If unique logic exists, port it into Forge's src/ as optional modules
+   - Copy nothing if Forge already covers the functionality
 
 2. From ~/Desktop/Personal Automation/:
    - Review email_digest.py regex priority patterns
-   - If Flerken lacks offline/Apple Mail support and we want it, add as src/offline_parser.py
+   - If Forge lacks offline/Apple Mail support and we want it, add as src/offline_parser.py
    - Otherwise skip — this is a legacy approach
 
 3. From ~/Desktop/delivery-workbench/docs/email/:
    - Review orchestration YAML (email-inbox-review.yaml, email-morning-digest.yaml)
-   - If these add orchestration patterns Flerken lacks, port the YAML concept
+   - If these add orchestration patterns Forge lacks, port the YAML concept
    - Do NOT move delivery-workbench's core structure — only email-specific assets
 
 4. Archive completed sources:
@@ -60,12 +60,12 @@ STEPS:
    - Move email-summary-agent/ and Personal Automation/ into _archived/
    - Leave delivery-workbench intact (it has non-email purposes)
 
-5. Update Flerken's README.md to reflect any new capabilities added
+5. Update Forge's README.md to reflect any new capabilities added
 
 CONSTRAINTS:
 - Do NOT modify .env files or create new API keys
 - Do NOT delete anything — only move to _archived/
-- Commit message format: "consolidate: merge [source] email logic into Flerken"
+- Commit message format: "consolidate: merge [source] email logic into Forge"
 ```
 
 ---
@@ -255,9 +255,9 @@ CONSTRAINTS:
 
 | # | Action | Owner | Status | Notes |
 |---|--------|-------|--------|-------|
-| 1 | Register Azure AD app for Flerken (Graph API) | User / IT Admin | BLOCKED — no Azure Portal access | Need app registration with Mail.Read, Mail.Send, User.Read delegated permissions. Public client, device-code flow. Once obtained, update `agents/flerken/.env` with AZURE_CLIENT_ID, AZURE_TENANT_ID, MY_EMAIL. |
-| 2 | Verify Flerken live email pipeline | Windsurf | WAITING on #1 | Run `python3 run.py` with real credentials, confirm device-code auth + email fetch + LLM triage + digest send. |
-| 3 | Verify Ollama LLM is running | User | PENDING | `ollama serve` + `ollama pull llama3.1:8b` required before Flerken runs. |
+| 1 | Register Azure AD app for Forge (Graph API) | User / IT Admin | BLOCKED — no Azure Portal access | Need app registration with Mail.Read, Mail.Send, User.Read delegated permissions. Public client, device-code flow. Once obtained, update `agents/forge/.env` with AZURE_CLIENT_ID, AZURE_TENANT_ID, MY_EMAIL. |
+| 2 | Verify Forge live email pipeline | Windsurf | WAITING on #1 | Run `python3 run.py` with real credentials, confirm device-code auth + email fetch + LLM triage + digest send. |
+| 3 | Verify Ollama LLM is running | User | PENDING | `ollama serve` + `ollama pull llama3.1:8b` required before Forge runs. |
 
 ---
 

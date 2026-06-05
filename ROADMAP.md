@@ -127,15 +127,15 @@
 - Update dd-status-bot GHA actions to v5/v6 (currently v4/v5 with Node 20 deprecation warnings)
 - Fix `continue-on-error` masking analysis failures
 
-### 2.3 Flerken (Post-Email Consolidation)
+### 2.3 Forge (Post-Email Consolidation)
 
 **Priority:** MEDIUM — after Phase 1 email consolidation
 
 ```text
-CURSOR INSTRUCTION: FLERKEN-UPGRADE
+CURSOR INSTRUCTION: FORGE-UPGRADE
 
-TASK: Upgrade Flerken after email consolidation
-LOCATION: ~/Desktop/Flerken - Personal AI Assistant/
+TASK: Upgrade Forge after email consolidation
+LOCATION: ~/Desktop/Forge - Personal AI Assistant/
 
 STEPS:
 1. Verify base functionality:
@@ -208,7 +208,7 @@ STEPS:
 1. Implement agent orchestration layer:
    - Create orchestration/ directory with YAML-based workflows
    - Support: email-digest, status-report, communication-scan
-   - Each workflow should call the appropriate agent (Flerken, status-report-agent, etc.)
+   - Each workflow should call the appropriate agent (Forge, status-report-agent, etc.)
 
 2. Build morning briefing pipeline:
    - Sequence: fetch email → triage → fetch calendar → generate briefing
@@ -293,7 +293,7 @@ CONSTRAINTS:
 | Date | Decision | Rationale |
 | --- | --- | --- |
 | 2026-05-26 | Windsurf = Architect, Cursor = Builder | Clear separation of design vs execution |
-| 2026-05-26 | Flerken wins email consolidation | Most complete architecture |
+| 2026-05-26 | Forge wins email consolidation | Most complete architecture |
 | 2026-05-26 | serviceflow-sdm is canonical platform | Full-stack, Docker, mobile |
 | 2026-05-26 | Keep AgenticStarterKit + delivery-workbench separate | Different audiences (template vs operational) |
 | 2026-06-03 | Devin Desktop — no upgrade path | Evaluated and ruled out; governance gates limit parallelization value and cost does not justify capability at current scale; not to be reconsidered without explicit decision reversal |

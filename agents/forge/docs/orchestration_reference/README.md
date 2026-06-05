@@ -1,6 +1,6 @@
 # Orchestration reference (from delivery-workbench)
 
-These YAML specs document multi-step email workflows with **human gates** (no send/move without approval). Flerken runs a single Python pipeline today; use these as patterns when extending Flerken or when using delivery-workbench for SDM orchestration.
+These YAML specs document multi-step email workflows with **human gates** (no send/move without approval). Forge runs a single Python pipeline today; use these as patterns when extending Forge or when using delivery-workbench for SDM orchestration.
 
 | File | Purpose |
 | --- | --- |

@@ -268,10 +268,10 @@ Generate this file based on `PROJECT_PROGRESS.md`. Populate it with the current 
       "phase_number": 2
     },
     {
-      "id": "flerken",
-      "name": "Flerken — Personal AI Assistant",
+      "id": "forge",
+      "name": "Forge — Personal AI Assistant",
       "category": "Agent",
-      "location": "agents/flerken/",
+      "location": "agents/forge/",
       "status": "Blocked",
       "phase": "Phase 2.3 — Post-email-consolidation upgrade",
       "progressPct": 70,
@@ -377,7 +377,7 @@ Generate this file based on `PROJECT_PROGRESS.md`. Populate it with the current 
       "priority": "HIGH",
       "owner": "You",
       "done": false,
-      "affectsProjects": ["flerken"]
+      "affectsProjects": ["forge"]
     },
     {
       "id": "salesforce-mcp",

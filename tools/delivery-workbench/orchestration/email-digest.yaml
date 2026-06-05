@@ -1,10 +1,10 @@
-# Repo-agent email triage (Flerken) — complements workbench-native email-morning-digest.yaml
+# Repo-agent email triage (Forge) — complements workbench-native email-morning-digest.yaml
 name: email-digest
 version: 1
-description: Triage primary inbox via agents/flerken DigestBuilder
+description: Triage primary inbox via agents/forge DigestBuilder
 
 agent:
-  path: agents/flerken
+  path: agents/forge
   entry: src.digest_builder.DigestBuilder
 
 inputs:

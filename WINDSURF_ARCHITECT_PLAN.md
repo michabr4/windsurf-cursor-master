@@ -102,7 +102,7 @@ To be an effective Architect, I need these capabilities maintained:
 │  │             │  │              │  │                        │ │
 │  │  Helix      │  │  Status Rpt  │  │  MGM Status Bot       │ │
 │  │  (Express/  │  │  Comms Intel  │  │  DD Status Bot        │ │
-│  │   React/    │  │  Flerken     │  │                        │ │
+│  │   React/    │  │  Forge     │  │                        │ │
 │  │   Expo/     │  │  (future:    │  │  (GitHub Actions,     │ │
 │  │   Docker)   │  │   more...)   │  │   Webex delivery)     │ │
 │  └──────┬──────┘  └──────┬───────┘  └────────────┬───────────┘ │
@@ -160,7 +160,7 @@ To be an effective Architect, I need these capabilities maintained:
         └──────┬──────┘
                │
         ┌──────┴──────┐
-        │  Flerken    │
+        │  Forge    │
         └─────────────┘
 
         ┌─────────────────────────────────┐
@@ -182,7 +182,7 @@ Instead of each project implementing its own API clients, I am designing a **sha
 | `integrations/salesforce/` | Shared Salesforce client with connection pooling | Helix, Status Report Agent, Comms Agent |
 | `integrations/servicenow/` | Shared ServiceNow client | Helix, Status Report Agent |
 | `integrations/webex/` | Shared Webex bot framework | MGM Bot, DD Bot, Comms Agent |
-| `integrations/msgraph/` | Shared Microsoft Graph client | Flerken, Comms Agent |
+| `integrations/msgraph/` | Shared Microsoft Graph client | Forge, Comms Agent |
 | `integrations/cisco/` | Shared Cisco API clients (DNA, FMC, ISE, OpenVuln) | Helix, NetPilot |
 | `integrations/auth/` | Shared OAuth 2.0/OIDC flows | All projects |
 
@@ -242,7 +242,7 @@ Every deliverable from Cursor passes through these gates before acceptance:
 | **0** | Week 1 (May 26) | Migration instructions | Project migration into master folder |
 | **0.5** | Week 1 (May 26) | Cursor setup plan | IDE configuration, rules, MCP servers |
 | **1** | Week 2 (Jun 2) | Consolidation specs | Email merge, starter/workbench split |
-| **2** | Weeks 3-4 (Jun 9-16) | Hardening specs for Helix, bots, Flerken | Production-ready code, tests, docs |
+| **2** | Weeks 3-4 (Jun 9-16) | Hardening specs for Helix, bots, Forge | Production-ready code, tests, docs |
 | **3** | Weeks 5-8 (Jun 23-Jul 14) | Shared integration layer specs, custom MCP specs | Integration modules, Webex/SF/SNOW MCP servers |
 | **4** | Weeks 9-12 (Jul 21-Aug 11) | Scaling specs: GitHub Pages, team templates, live data | Public deployment, real API integrations |
 
@@ -255,7 +255,7 @@ Every deliverable from Cursor passes through these gates before acceptance:
 | SPEC-003 | Consolidation instruction packets | HIGH | DELIVERED | Phase 1 |
 | SPEC-004 | Helix production hardening spec | HIGH | PENDING | Phase 2 |
 | SPEC-005 | Bot health check and Node 22 upgrade | HIGH | PENDING | Phase 2 |
-| SPEC-006 | Flerken post-consolidation upgrade | MEDIUM | PENDING | Phase 2 |
+| SPEC-006 | Forge post-consolidation upgrade | MEDIUM | PENDING | Phase 2 |
 | SPEC-007 | Shared Salesforce integration module | HIGH | PENDING | Phase 3 |
 | SPEC-008 | Shared ServiceNow integration module | HIGH | PENDING | Phase 3 |
 | SPEC-009 | Shared Webex bot framework | HIGH | PENDING | Phase 3 |
@@ -278,7 +278,7 @@ Every deliverable from Cursor passes through these gates before acceptance:
 | **0** | All 17 projects in master folder, verified, no data loss |
 | **0.5** | Cursor has 25 rules, 7 MCP servers, 16 extensions, optimized settings |
 | **1** | Email cluster reduced to 1 project, starter/workbench clearly bounded |
-| **2** | Helix runs end-to-end in Docker, both bots on Node 22, Flerken enhanced |
+| **2** | Helix runs end-to-end in Docker, both bots on Node 22, Forge enhanced |
 | **3** | Shared integration layer exists, 3 custom MCP servers functional |
 | **4** | Helix demo-able via URL, StarterKit shareable, NetPilot app complete |
 

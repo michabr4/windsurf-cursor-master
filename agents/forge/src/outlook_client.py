@@ -45,7 +45,7 @@ class OutlookClient:
                 raise RuntimeError(f"Device flow failed: {flow.get('error_description', 'unknown error')}")
 
             print("\n┌─────────────────────────────────────────────┐")
-            print("│  🔐  Flerken needs Outlook access            │")
+            print("│  🔐  Forge needs Outlook access               │")
             print("│                                               │")
             print(f"│  Open: {flow['verification_uri']:<36} │")
             print(f"│  Code: {flow['user_code']:<36} │")

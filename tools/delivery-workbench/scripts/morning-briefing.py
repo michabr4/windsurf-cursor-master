@@ -19,7 +19,7 @@ from orchestration.agent_bridge import (  # noqa: E402
     agt001_digest_markdown,
     calendar_placeholder,
     communication_scan_markdown,
-    flerken_digest_markdown,
+    forge_digest_markdown,
     status_report_markdown,
 )
 from orchestration.paths import MORNING_BRIEFING_DIR  # noqa: E402
@@ -57,7 +57,7 @@ def build_briefing(
     if os.getenv("MS_CLIENT_ID"):
         email = agt001_digest_markdown(dry_run=dry_run)
     else:
-        email = flerken_digest_markdown(demo=dry_run or not os.getenv("OPENAI_API_KEY"), dry_run=dry_run)
+        email = forge_digest_markdown(demo=dry_run or not os.getenv("OPENAI_API_KEY"), dry_run=dry_run)
     parts.append(email.markdown)
 
     cal = calendar_placeholder()

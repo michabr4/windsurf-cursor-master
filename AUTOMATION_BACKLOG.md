@@ -152,7 +152,7 @@ Priority is scored on **Impact × Ease**. Impact = business value, time savings,
 
 | # | Item | Priority | Impact | Ease | Status | Linked Artifacts |
 |---|------|----------|--------|------|--------|-----------------|
-| C1-01 | **Flerken Email Digest** — Daily AI-powered email triage and digest; unblocked after Azure AD registration | 🟠 P1 | High | Medium | 🔒 Blocked (Azure AD) | `agents/flerken/` |
+| C1-01 | **Forge Email Digest** — Daily AI-powered email triage and digest; unblocked after Azure AD registration | 🟠 P1 | High | Medium | 🔒 Blocked (Azure AD) | `agents/forge/` |
 | C1-02 | **Webex Unread Monitor** — Pull unread DMs/mentions, classify action-required vs FYI, include in morning briefing | 🟡 P2 | Medium | Medium | ⬜ Planned | `agents/communication-agent/` |
 
 ---
@@ -182,7 +182,7 @@ Priority is scored on **Impact × Ease**. Impact = business value, time savings,
 | D1-01 | **Salesforce MCP Server** — Delegated read access for Cases, Accounts, CSAT, Opportunities | 🟠 P1 | Agents #2, #3, #4, #5, #15 | ⚠️ Needs confirmation |
 | D1-02 | **ServiceNow MCP Server** — API key for Incidents, Problems, Change Requests | 🟠 P1 | Agents #2, #3, #12, #19 | ⚠️ Needs confirmation |
 | D1-03 | **Webex HITL Card Infrastructure** — Interactive approve/dismiss card template for all T2 agents | 🟠 P1 | All T2 agents | ⬜ Planned |
-| D1-04 | **Azure AD App Registration** — MSAL device code flow for Outlook/Graph (email + calendar) | 🟠 P1 | Flerken, 8 agents | 🔒 Blocked |
+| D1-04 | **Azure AD App Registration** — MSAL device code flow for Outlook/Graph (email + calendar) | 🟠 P1 | Forge, 8 agents | 🔒 Blocked |
 | D1-05 | **Helix API Client Library** — Shared connector for 10 agents; exists in delivery-workbench | 🔴 P0 | Agents #1–3 | ✅ Exists — extend |
 
 ---

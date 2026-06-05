@@ -25,12 +25,12 @@
 
 ---
 
-## ADR-003: Flerken as Canonical Email Agent
+## ADR-003: Forge as Canonical Email Agent
 
 - **Date:** 2026-05-26
 - **Status:** Accepted
-- **Context:** Five separate projects implement email automation (Flerken, email-summary-agent, Personal Automation, delivery-workbench email, Outlook Agent). Maintenance burden and confusion.
-- **Decision:** Flerken is the surviving email agent. Others are archived or have unique logic ported into Flerken.
+- **Context:** Five separate projects implement email automation (Forge, email-summary-agent, Personal Automation, delivery-workbench email, Outlook Agent). Maintenance burden and confusion.
+- **Decision:** Forge is the surviving email agent. Others are archived or have unique logic ported into Forge.
 - **Consequences:** email-summary-agent and Personal Automation will be archived. delivery-workbench keeps non-email features. Outlook Agent workspace archived.
 
 ---

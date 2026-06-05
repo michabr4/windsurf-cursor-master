@@ -10,6 +10,6 @@ ORCHESTRATION_DIR = WORKBENCH_ROOT / "orchestration"
 RUNS_DIR = WORKBENCH_ROOT / "data" / "runs"
 MORNING_BRIEFING_DIR = RUNS_DIR / "morning-briefing"
 
-AGENT_FLERKEN = REPO_ROOT / "agents" / "flerken"
+AGENT_FORGE = REPO_ROOT / "agents" / "forge"
 AGENT_COMMUNICATION = REPO_ROOT / "agents" / "communication-agent"
 AGENT_STATUS_REPORT = REPO_ROOT / "agents" / "status-report-agent"

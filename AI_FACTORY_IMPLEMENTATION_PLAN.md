@@ -38,7 +38,7 @@
 
 | Agent | Location | Status | Maps To |
 |-------|----------|--------|---------|
-| Flerken | `agents/flerken/` | 🔒 Blocked (Azure AD) | CXM: Proactive Outreach Drafter |
+| Forge | `agents/forge/` | 🔒 Blocked (Azure AD) | CXM: Proactive Outreach Drafter |
 | Communication Agent | `agents/communication-agent/` | ⚠️ Token expired | CE: Context Keeper |
 | Status Report Agent | `agents/status-report-agent/` | ✅ Working | SDM: Delivery Comms Drafter |
 | MGM/DD Status Bots | `bots/` | ⚠️ Token expired | SDM: Delivery Tracker baseline |
@@ -76,12 +76,12 @@
 
 | Layer | Decision | Rationale |
 |-------|----------|-----------|
-| Agent runtime | Python 3.11+ | Matches flerken, comm-agent pattern |
+| Agent runtime | Python 3.11+ | Matches forge, comm-agent pattern |
 | LLM | LiteLLM (Ollama local / hosted via env) | Flexible, no hardcoded endpoints |
 | Orchestration | Delivery Workbench YAML + agent_bridge.py | Already built |
 | API | FastAPI per agent service | Consistent with NetPilot pattern |
 | Data | PostgreSQL (Helix) + Airtable + `data/runs/` | Existing data layer |
-| Communication | Webex + Outlook/Graph (Flerken) | Existing patterns |
+| Communication | Webex + Outlook/Graph (Forge) | Existing patterns |
 | Deployment | Docker multi-stage + GitHub Actions | Helix production pattern |
 | Secrets | `.env` per agent, gitignored | CodeGuard: no hardcoded credentials |
 
@@ -136,7 +136,7 @@ Track manually for 2 weeks before first agent:
 ### 5.4 Register Azure AD App (Ops — no code)
 1. Register in Microsoft Entra admin center
 2. Permissions: `Mail.Read`, `Mail.Send`, `User.Read`, `Calendars.Read`
-3. Save `AZURE_CLIENT_ID` + `AZURE_TENANT_ID` to `agents/flerken/.env`
+3. Save `AZURE_CLIENT_ID` + `AZURE_TENANT_ID` to `agents/forge/.env`
 4. Verify MSAL device code flow
 
 ### 5.5 Integration Scaffold
@@ -284,7 +284,7 @@ python run.py --account "Acme Corp" --quarter Q2-2026 [--format pptx]
 | # | Agent | Role | T-Tier | Key Dependency |
 |---|-------|------|--------|----------------|
 | 4 | Customer Health Pulse | CXM | T1 | Delivery Tracker + Salesforce |
-| 5 | Proactive Outreach Drafter | CXM | T2 | Health Pulse + Flerken |
+| 5 | Proactive Outreach Drafter | CXM | T2 | Health Pulse + Forge |
 | 6 | Cross-Functional Coordinator | CXM | T1 | Helix API multi-lane |
 | 7 | Living Plan Agent | PM | T2 | Helix milestones |
 | 8 | Stakeholder Communicator | PM | T2 | Living Plan output |
@@ -311,7 +311,7 @@ Triggers Proactive Outreach Drafter when score drops > 10 pts.
 
 Trigger conditions: score drop > 10 pts, score < 60, or renewal < 90d with score < 80.
 
-Processing: pull account context + last 3 emails (Flerken) → LLM generates personalized outreach referencing specific milestone, acknowledging open issues, with clear ask.
+Processing: pull account context + last 3 emails (Forge) → LLM generates personalized outreach referencing specific milestone, acknowledging open issues, with clear ask.
 
 **Human gate:** Webex card [Send as-is] [Edit then send] [Dismiss] — agent never sends autonomously.
 
@@ -616,7 +616,7 @@ All 32 agents mapped to roles, phases, trust tiers, and locations:
 | **Salesforce** | 6 agents | OAuth2 via MCP | Cases, accounts, CSAT, opportunities |
 | **ServiceNow** | 4 agents | API key via MCP | Incidents, problems, change requests |
 | **Webex** | 8 agents | Bot token | Cards, messages, HITL approvals |
-| **Outlook/Graph** | 8 agents | MSAL device code (Flerken) | Email, calendar, stakeholder context |
+| **Outlook/Graph** | 8 agents | MSAL device code (Forge) | Email, calendar, stakeholder context |
 | **Airtable** | 4 agents | PAT (gitignored) | Reference data, baselines |
 | **Cisco Bug Search** | 2 agents | CCO credentials | Known bugs, EOS/EOL data |
 

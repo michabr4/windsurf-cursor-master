@@ -108,9 +108,9 @@ A **SpaceLift-powered status bot** for Digitized Delivery:
 
 ---
 
-### 6. Flerken — Personal AI Assistant
+### 6. Forge — Personal AI Assistant
 
-**Location:** `~/Desktop/Flerken - Personal AI Assistant/`  
+**Location:** `~/Desktop/Forge - Personal AI Assistant/`  
 **Stack:** Python, OpenAI GPT-4o, Microsoft Graph API (Azure AD device-code flow)
 
 A **personal email triage and daily digest** tool:

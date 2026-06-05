@@ -185,10 +185,10 @@
       "phase_number": 2
     },
     {
-      "id": "flerken",
-      "name": "Flerken \u2014 Personal AI Assistant",
+      "id": "forge",
+      "name": "Forge \u2014 Personal AI Assistant",
       "category": "Agent",
-      "location": "agents/flerken/",
+      "location": "agents/forge/",
       "status": "Blocked",
       "phase": "Phase 2.3 \u2014 Post-email-consolidation upgrade",
       "progressPct": 70,
@@ -306,7 +306,7 @@
       "owner": "You",
       "done": false,
       "affectsProjects": [
-        "flerken"
+        "forge"
       ]
     },
     {

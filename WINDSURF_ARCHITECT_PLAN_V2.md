@@ -453,7 +453,7 @@ V1 spec backlog had SPEC-001 through SPEC-020. Updated below to reflect current 
 | SPEC-035 | Shared integration layer (Salesforce, SNOW, Webex, Graph) | Infrastructure | P1 |
 | SPEC-036 | Agents 4-10 (AI Factory Phase 2: CXM + PM) | AI Factory | P2 |
 | SPEC-037 | Agents 11-18 (AI Factory Phase 3: CE + CDA) | AI Factory | P2 |
-| SPEC-038 | Azure AD registration for Flerken | Infrastructure | P1 |
+| SPEC-038 | Azure AD registration for Forge | Infrastructure | P1 |
 | SPEC-039 | NetPilot CCNA App completion | Tools | P2 |
 
 ---

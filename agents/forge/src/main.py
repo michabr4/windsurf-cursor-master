@@ -1,4 +1,4 @@
-"""Flerken — Personal AI Assistant entry point."""
+"""Forge — Personal AI Assistant entry point."""
 
 import sys
 from pathlib import Path
@@ -16,7 +16,7 @@ console = Console()
 
 def print_banner(demo: bool = False) -> None:
     banner = Text()
-    banner.append("  FLERKEN  ", style="bold white on purple")
+    banner.append("  FORGE  ", style="bold white on purple")
     banner.append("  Personal AI Assistant\n", style="bold purple")
     banner.append("  Email Triage & Daily Digest", style="dim")
     if demo:

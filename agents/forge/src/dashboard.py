@@ -15,7 +15,7 @@ DASHBOARD_TEMPLATE = Template("""\
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Flerken Dashboard</title>
+<title>Forge Dashboard</title>
 <style>
   :root {
     --bg: #0f1117; --surface: #1a1d27; --surface-2: #242833; --border: #2e3240;
@@ -191,7 +191,7 @@ DASHBOARD_TEMPLATE = Template("""\
   <div class="header-inner">
     <div class="brand">
       <div class="brand-icon"><svg viewBox="0 0 100 100" width="36" height="36" xmlns="http://www.w3.org/2000/svg">
-        <!-- Flerken: Marvel's alien cat -->
+        <!-- Forge icon -->
         <!-- Tentacles (behind head) -->
         <path d="M30 75 Q15 90 8 82 Q2 76 18 68" fill="none" stroke="#c084fc" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
         <path d="M70 75 Q85 90 92 82 Q98 76 82 68" fill="none" stroke="#c084fc" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
@@ -240,7 +240,7 @@ DASHBOARD_TEMPLATE = Template("""\
         <line x1="68" y1="60" x2="86" y2="66" stroke="#fdba74" stroke-width="1" opacity="0.7"/>
       </svg></div>
       <div>
-        <h1>Flerken Dashboard</h1>
+        <h1>Forge Dashboard</h1>
         <div class="subtitle">Email Triage &amp; Priority Intelligence</div>
       </div>
     </div>

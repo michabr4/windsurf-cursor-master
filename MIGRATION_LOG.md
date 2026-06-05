@@ -14,7 +14,7 @@
 - Ran copy operations into `agents/`:
   - `cp -R ~/Desktop/SDM Files/status-report-agent/. agents/status-report-agent/`
   - `cp -R ~/Desktop/SDM Files/communication-agent/. agents/communication-agent/`
-  - `cp -R ~/Desktop/Flerken - Personal AI Assistant/. agents/flerken/`
+  - `cp -R ~/Desktop/Forge - Personal AI Assistant/. agents/forge/`
   - `cp -R ~/Desktop/email-summary-agent/. agents/email-summary-agent/`
 - Removed venv/cache directories:
   - `find agents/ -name "venv" -type d -prune -exec rm -rf {} +`
@@ -23,7 +23,7 @@
 - Verified each agent directory (files/README/requirements):
   - `communication-agent|files=16|README=YES|requirements=YES`
   - `email-summary-agent|files=6|README=NO|requirements=YES`
-  - `flerken|files=18|README=YES|requirements=YES`
+  - `forge|files=18|README=YES|requirements=YES`
   - `status-report-agent|files=30|README=YES|requirements=YES`
 
 ### Issues Found
@@ -219,7 +219,7 @@
 - `.env` gitignore checks:
   - OK: `tools/agentic-starter-kit/.env`
   - OK: `tools/delivery-workbench/.env`
-  - OK: `agents/flerken/.env`
+  - OK: `agents/forge/.env`
   - OK: `agents/email-summary-agent/.env`
   - OK: `data/digitized-delivery-ges/Airtable Tracking/.env`
   - WARNING: `tools/netpilot/.env` not gitignored by local `.gitignore`
@@ -273,7 +273,7 @@
   - Archived: 5
 - Spot checks passed:
   - `platforms/serviceflow-sdm/README.md` ✅
-  - `agents/flerken/run.py` ✅
+  - `agents/forge/run.py` ✅
   - `bots/mgm-status-bot/send_reports.py` ✅
   - `tools/netpilot/README.md` ✅
   - `content/ai-factory/index.html` ✅
@@ -316,8 +316,8 @@
 **Status:** SUCCESS
 
 ### Decisions from Windsurf Review
-- **email-summary-agent missing README:** ACCEPTED — will be absorbed into Flerken (Phase 1)
-- **personal-automation missing README:** ACCEPTED — will be absorbed into Flerken (Phase 1)
+- **email-summary-agent missing README:** ACCEPTED — will be absorbed into Forge (Phase 1)
+- **personal-automation missing README:** ACCEPTED — will be absorbed into Forge (Phase 1)
 - **data/blue-shield empty:** ACCEPTED — empty repo placeholder, content expected later
 - **serviceflow-sdm no .git:** ACCEPTED — intentional exclude during rsync; remote is `michabr4/helix`
 - **Archived backend `.env` unprotected (local check):** ACCEPTED — not active code; workspace root `.gitignore` also excludes `.env` globally
@@ -333,7 +333,7 @@
   - `tools/netpilot/.env` — OK (after 13.1)
   - `tools/agentic-starter-kit/.env` — OK
   - `tools/delivery-workbench/.env` — OK
-  - `agents/flerken/.env` — OK
+  - `agents/forge/.env` — OK
   - `agents/email-summary-agent/.env` — OK
   - `sdm-files/.env` — OK
   - `data/digitized-delivery-ges/Airtable Tracking/.env` — OK
@@ -356,7 +356,7 @@
 - Moved 14 original project folders to `~/.Trash/` (recoverable; not permanent delete):
   - `~/Desktop/serviceflow-sdm` → `~/.Trash/serviceflow-sdm`
   - `~/Desktop/SDM Files` → `~/.Trash/SDM Files`
-  - `~/Desktop/Flerken - Personal AI Assistant` → `~/.Trash/Flerken - Personal AI Assistant`
+  - `~/Desktop/Forge - Personal AI Assistant` → `~/.Trash/Forge - Personal AI Assistant`
   - `~/Desktop/email-summary-agent` → `~/.Trash/email-summary-agent`
   - `~/Desktop/Personal Automation` → `~/.Trash/Personal Automation`
   - `~/Desktop/NetPilot` → `~/.Trash/NetPilot`
@@ -436,20 +436,20 @@
 
 ---
 
-## TASK-2026-0526-007: EMAIL-CONSOLIDATE → Flerken
+## TASK-2026-0526-007: EMAIL-CONSOLIDATE → Forge
 **Completed:** 2026-05-26  
 **Status:** SUCCESS  
 **Builder:** Cursor (via comms-bridge MCP)
 
 ### Audit
-- **email-summary-agent:** Graph + gpt-4o-mini brief — subset of Flerken; no code port.
-- **personal-automation:** Unique offline Apple Mail regex digest — ported to `agents/flerken/src/optional/offline_mail_digest.py`.
-- **delivery-workbench email:** YAML orchestration + human gates — reference copies in `agents/flerken/docs/orchestration_reference/`; workbench unchanged.
+- **email-summary-agent:** Graph + gpt-4o-mini brief — subset of Forge; no code port.
+- **personal-automation:** Unique offline Apple Mail regex digest — ported to `agents/forge/src/optional/offline_mail_digest.py`.
+- **delivery-workbench email:** YAML orchestration + human gates — reference copies in `agents/forge/docs/orchestration_reference/`; workbench unchanged.
 
 ### Actions
 - Archived `agents/email-summary-agent` → `_archived/email-summary-agent/`
 - Archived `tools/personal-automation` → `_archived/personal-automation/`
-- Added `run.py --offline-mail`; updated Flerken README, `.gitignore`, `MASTER_INDEX.md`, `_archived/ARCHIVE_LOG.md`
+- Added `run.py --offline-mail`; updated Forge README, `.gitignore`, `MASTER_INDEX.md`, `_archived/ARCHIVE_LOG.md`
 - Security grep: no AKIA/ghp_/sk_live in source; `.env` gitignored (not tracked)
 
 ---

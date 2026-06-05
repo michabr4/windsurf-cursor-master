@@ -58,7 +58,7 @@ DIGEST_TEMPLATE = Template("""\
 <body>
 <div class="container">
   <div class="header">
-    <h1>Flerken Daily Digest</h1>
+    <h1>Forge Daily Digest</h1>
     <div class="subtitle">{{ timestamp }} &middot; {{ total_emails }} emails scanned &middot; {{ lookback_hours }}h window</div>
   </div>
 
@@ -104,7 +104,7 @@ DIGEST_TEMPLATE = Template("""\
   {% endfor %}
 
   <div class="footer">
-    Powered by Flerken &middot; Your Personal AI Assistant<br>
+    Powered by Forge &middot; Your Personal AI Assistant<br>
     Triaged with {{ model_name }} &middot; Delivered via Microsoft Graph
   </div>
 </div>
@@ -195,7 +195,7 @@ class DigestBuilder:
         if self.demo:
             print("  [DEMO MODE] Skipping email send — open the HTML file instead.")
             return
-        subject = f"Flerken Daily Digest — {datetime.now(timezone.utc).strftime('%b %d, %Y')}"
+        subject = f"Forge Daily Digest — {datetime.now(timezone.utc).strftime('%b %d, %Y')}"
         print(f"  Sending digest to {cfg.MY_EMAIL}...")
         self.outlook.send_email(
             to=cfg.MY_EMAIL,

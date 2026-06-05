@@ -1,8 +1,8 @@
-# Flerken — Personal AI Assistant
+# Forge — Personal AI Assistant
 
 **Email Triage & Daily Digest** powered by GPT-4o and Microsoft Graph.
 
-Flerken scans your Outlook inbox, triages every email into priority categories, drafts replies for action items, and delivers a beautiful HTML digest straight to your inbox.
+Forge scans your Outlook inbox, triages every email into priority categories, drafts replies for action items, and delivers a beautiful HTML digest straight to your inbox.
 
 ---
 
@@ -27,7 +27,7 @@ Flerken scans your Outlook inbox, triages every email into priority categories, 
 ### 2. Install Dependencies
 
 ```bash
-cd "Flerken - Personal AI Assistant"
+cd agents/forge
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
@@ -46,10 +46,10 @@ cp .env.example .env
 python run.py
 ```
 
-On first run, Flerken will show a device-code login prompt:
+On first run, Forge will show a device-code login prompt:
 ```
 ┌─────────────────────────────────────────────┐
-│  🔐  Flerken needs Outlook access            │
+│  🔐  Forge needs Outlook access               │
 │                                               │
 │  Open: https://microsoft.com/devicelogin      │
 │  Code: ABCD1234                               │
@@ -58,19 +58,19 @@ On first run, Flerken will show a device-code login prompt:
 └─────────────────────────────────────────────┘
 ```
 
-Open the URL in your browser, enter the code, sign in with your Microsoft account, and Flerken takes it from there.
+Open the URL in your browser, enter the code, sign in with your Microsoft account, and Forge takes it from there.
 
 ---
 
 ## Azure App Registration (One-Time Setup)
 
-This is needed so Flerken can read your email. Takes about 5 minutes.
+This is needed so Forge can read your email. Takes about 5 minutes.
 
 ### Step-by-Step
 
 1. Go to [Azure Portal → App registrations](https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade)
 2. Click **New registration**
-   - Name: `Flerken Personal Assistant`
+   - Name: `Forge Personal Assistant`
    - Supported account types: **Single tenant** (your org only)
    - Redirect URI: leave blank (we use device-code flow)
 3. Click **Register**
@@ -90,7 +90,7 @@ That's it! The device-code flow handles the rest securely — no client secret n
 ## Project Structure
 
 ```
-agents/flerken/
+agents/forge/
 ├── run.py                  # Entry point — run this
 ├── requirements.txt        # Python dependencies
 ├── .env.example            # Config template (copy to .env)
@@ -114,7 +114,7 @@ agents/flerken/
 
 | Source | Disposition |
 | --- | --- |
-| `email-summary-agent` | **Archived** → `_archived/email-summary-agent/` — functionality superseded by Flerken Graph + LLM pipeline |
+| `email-summary-agent` | **Archived** → `_archived/email-summary-agent/` — functionality superseded by Forge Graph + LLM pipeline |
 | `personal-automation` | **Archived** → `_archived/personal-automation/` — unique regex/offline digest ported to `src/optional/offline_mail_digest.py` |
 | `delivery-workbench` (email) | **Kept in place** — orchestration YAML copied to `docs/orchestration_reference/` for human-gate patterns |
 
@@ -147,7 +147,7 @@ Output: `out/offline_mail_digest.md`
 - **No credentials in code** — all secrets live in `.env` (gitignored)
 - **Device-code auth** — no client secret stored; tokens are short-lived
 - **Read-only email access** — `Mail.Read` permission only reads, never modifies
-- **Draft-first replies** — Flerken suggests replies but never sends without your approval
+- **Draft-first replies** — Forge suggests replies but never sends without your approval
 - **Local processing** — email content is sent to OpenAI's API for summarization; review their [data usage policy](https://openai.com/policies/api-data-usage-policies)
 
 ---

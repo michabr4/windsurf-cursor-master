@@ -26,7 +26,7 @@
 | Helix REST API | #1, #2, #3 + 7 others (10 total) | ✅ Yes | Bearer token (`HELIX_API_TOKEN`) | Cases, Milestones, SLA Records, Entitlements, Accounts | 🟡 In Progress | SDM lead | Delivery Tracker client built; bearer token needed per agent `.env` |
 | Salesforce MCP | #3 + 5 others (6 total) | Stub only in Phase 1 | MCP token (`SALESFORCE_MCP_TOKEN`) | Cases, Accounts, Opportunities, CSAT | ⬜ Not Started | Ops | BRG uses empty stub when token unset — not blocking Phase 1 |
 | Webex Bot API | #2, #3 + 6 others (8 total) | ✅ Yes | Bot token (`WEBEX_BOT_TOKEN`) | Messages, Adaptive Cards, Rooms | 🟡 In Progress | SDM lead | HITL cards required for Risk Sentinel (T2); token rotation per Phase 0 Section 5.3 |
-| Outlook / Graph API | #5 + 7 others (8 total) | ❌ Not needed in Phase 1 | MSAL device code flow (`AZURE_CLIENT_ID`, `AZURE_TENANT_ID`) | Mail.Read, Mail.Send, Calendars.Read | 🔴 Blocked | IT/Azure | Azure AD app registration required; Flerken blocked until registered |
+| Outlook / Graph API | #5 + 7 others (8 total) | ❌ Not needed in Phase 1 | MSAL device code flow (`AZURE_CLIENT_ID`, `AZURE_TENANT_ID`) | Mail.Read, Mail.Send, Calendars.Read | 🔴 Blocked | IT/Azure | Azure AD app registration required; Forge blocked until registered |
 | ServiceNow | #3 + 3 others (4 total) | Stub only in Phase 1 | API key or OAuth | Incidents, Problems, Change Requests | ⬜ Not Started | Ops | Not required until Phase 2+ agents; BRG stub acceptable for Phase 1 |
 
 ---
@@ -66,7 +66,7 @@ The following must be resolved before Phase 1 Week 5 gate:
 
 - [ ] Register app in Microsoft Entra admin center
 - [ ] Request permissions: `Mail.Read`, `Mail.Send`, `User.Read`, `Calendars.Read`
-- [ ] Save `AZURE_CLIENT_ID` and `AZURE_TENANT_ID` to `agents/flerken/.env`
+- [ ] Save `AZURE_CLIENT_ID` and `AZURE_TENANT_ID` to `agents/forge/.env`
 - [ ] Verify MSAL device code flow works end-to-end
 - [ ] Document consent grant process for production
 

@@ -1,19 +1,19 @@
 # Delivery Workbench — orchestration
 
-Workflow YAML files describe how the workbench chains **repo-root agents** (`agents/flerken`, `agents/status-report-agent`, `agents/communication-agent`) and local scripts. They are consumed by `python/orchestration/` and `scripts/morning-briefing.py`.
+Workflow YAML files describe how the workbench chains **repo-root agents** (`agents/forge`, `agents/status-report-agent`, `agents/communication-agent`) and local scripts. They are consumed by `python/orchestration/` and `scripts/morning-briefing.py`.
 
 ## Audit (TASK-015 baseline)
 
 | Asset | Role |
 |-------|------|
 | `email-morning-digest.yaml`, `email-inbox-review.yaml` | **Workbench-native** Graph + specialist agents under `agents/specialists/email/` |
-| `email-digest.yaml` | **Flerken** triage (`agents/flerken`) — executive summary + categories |
+| `email-digest.yaml` | **Forge** triage (`agents/forge`) — executive summary + categories |
 | `status-report.yaml` | **status-report-agent** — weekly metrics narrative |
 | `communication-scan.yaml` | **communication-agent** — Webex/email attention scan |
 | `python/integrations/agt001/` | Outlook “chief of staff” (separate from morning briefing) |
 | `playbooks/`, `templates/` | Human + Cursor workflows; not auto-run |
 
-Morning briefing (`scripts/morning-briefing.py`) runs **Flerken → calendar placeholder → combined markdown**. Status and communication workflows are optional follow-ons (see script flags).
+Morning briefing (`scripts/morning-briefing.py`) runs **Forge → calendar placeholder → combined markdown**. Status and communication workflows are optional follow-ons (see script flags).
 
 ## Workflow file format
 

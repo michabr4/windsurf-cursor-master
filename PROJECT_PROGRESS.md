@@ -235,11 +235,11 @@ Daily Digitized Delivery status delivery restored.
 
 ---
 
-### Flerken — Personal AI Assistant
+### Forge — Personal AI Assistant
 
 | Field | Value |
 | ----- | ----- |
-| **Location** | `agents/flerken/` |
+| **Location** | `agents/forge/` |
 | **Status** | Blocked |
 | **Phase** | Phase 2.3 — Post-email-consolidation upgrade |
 | **Progress** | 70% |
