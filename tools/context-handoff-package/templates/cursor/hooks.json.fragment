@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "hooks": {
+    "afterAgentResponse": [
+      {
+        "command": ".cursor/hooks/context-handoff.py"
+      }
+    ],
+    "stop": [
+      {
+        "command": ".cursor/hooks/context-handoff.py"
+      }
+    ],
+    "preCompact": [
+      {
+        "command": ".cursor/hooks/context-handoff.py"
+      }
+    ],
+    "subagentStop": [
+      {
+        "command": ".cursor/hooks/context-handoff.py"
+      }
+    ],
+    "sessionStart": [
+      {
+        "command": ".cursor/hooks/session-start-handoff.py"
+      }
+    ]
+  }
+}

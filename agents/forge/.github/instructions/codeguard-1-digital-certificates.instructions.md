@@ -1,7 +1,9 @@
 ---
+applyTo: '**/*'
 description: Certificate Best Practices
-applyTo: "**/*.c,**/*.go,**/*.h,**/*.java,**/*.js,**/*.jsx,**/*.mjs,**/*.php,**/*.py,**/*.pyi,**/*.pyx,**/*.rb,**/*.swift,**/*.ts,**/*.tsx,**/*.pem,**/*.crt,**/*.cer,**/*.der"
+version: 1.0.1
 ---
+
 rule_id: codeguard-1-digital-certificates
 
 When you encounter data that appears to be an X.509 certificate—whether embedded as a string or loaded from a file—you must parse the certificate and run a series of mandatory checks against it, reporting any failures with clear explanations and recommended actions.
@@ -66,6 +68,55 @@ Once certificate data is identified, you must perform the following validation s
 
 - Report Message: `This is a self-signed certificate. Ensure this is intentional and only used for development, testing, or internal services where trust is explicitly configured. Self-signed certificates should never be used for public-facing production systems as they will not be trusted by browsers or standard clients.`
 
+
+### 3. Actionable Examples
+
+Your feedback should be direct and easy to understand.
+
+Example 1: Flagging an Expired, In-line Certificate
+
+- Code Snippet:
+
+    ```
+    # Certificate for connecting to legacy_service
+    LEGACY_CERT = """
+    -----BEGIN CERTIFICATE-----
+    MIIC... (data for a certificate that expired on 2024-12-01) ...
+    -----END CERTIFICATE-----
+    """
+    ```
+
+- Your Analysis and Report:
+
+    > CRITICAL VULNERABILITY: The certificate stored in the `LEGACY_CERT` variable is invalid.
+    >
+    > - Reason: It expired on 2024-12-01.
+    >
+    > - Impact: Any TLS connection attempting to use this certificate will fail.
+    >
+    > - Action: This certificate must be renewed and the variable updated with the new PEM data immediately.
+    >
+
+
+Example 2: Flagging a Weak Key in a Loaded Certificate
+
+- Code Snippet:
+
+    ```
+    // Load the server certificate from disk
+    cert, err := tls.LoadX509KeyPair("server.crt", "server.key")
+    // Assume server.crt contains a 1024-bit RSA key.
+    ```
+
+- Your Analysis and Report:
+
+    > High-Priority Warning: The certificate being loaded from `server.crt` is using a weak public key.
+    >
+    > - Reason: It uses an RSA key with a 1024-bit modulus.
+    >
+    > - Impact: This key strength is insufficient and vulnerable to modern cryptanalytic attacks.
+    >
+    > - Action: A new certificate and key must be generated with at least a 2048-bit RSA key or a modern elliptic curve.
 
 
 You must always explain how this rule was applied and why it was applied.

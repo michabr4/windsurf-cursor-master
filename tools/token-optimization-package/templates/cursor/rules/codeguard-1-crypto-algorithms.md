@@ -1,7 +1,9 @@
 ---
 description: Cryptographic Security Guidelines
-applyTo: "**/*.c,**/*.go,**/*.h,**/*.java,**/*.js,**/*.jsx,**/*.mjs,**/*.php,**/*.py,**/*.pyi,**/*.pyx,**/*.rb,**/*.swift,**/*.ts,**/*.tsx"
+globs: "**/*.c,**/*.go,**/*.h,**/*.java,**/*.js,**/*.jsx,**/*.mjs,**/*.php,**/*.py,**/*.pyi,**/*.pyx,**/*.rb,**/*.swift,**/*.ts,**/*.tsx"
+alwaysApply: false
 ---
+
 rule_id: codeguard-1-crypto-algorithms
 
 # Cryptographic Security Guidelines

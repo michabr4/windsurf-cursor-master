@@ -1,0 +1,59 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": ".github/hooks/session-start-handoff.py",
+        "env": {
+          "CONTEXT_HANDOFF_DIR": ".github/handoff",
+          "CONTEXT_HANDOFF_AGENT": "VS Code Copilot",
+          "CONTEXT_HANDOFF_PLATFORM": "vscode"
+        }
+      }
+    ],
+    "PreCompact": [
+      {
+        "type": "command",
+        "command": ".github/hooks/context-handoff.py",
+        "env": {
+          "CONTEXT_HANDOFF_DIR": ".github/handoff",
+          "CONTEXT_HANDOFF_AGENT": "VS Code Copilot",
+          "CONTEXT_HANDOFF_PLATFORM": "vscode"
+        }
+      }
+    ],
+    "Stop": [
+      {
+        "type": "command",
+        "command": ".github/hooks/context-handoff.py",
+        "env": {
+          "CONTEXT_HANDOFF_DIR": ".github/handoff",
+          "CONTEXT_HANDOFF_AGENT": "VS Code Copilot",
+          "CONTEXT_HANDOFF_PLATFORM": "vscode"
+        }
+      }
+    ],
+    "SubagentStop": [
+      {
+        "type": "command",
+        "command": ".github/hooks/context-handoff.py",
+        "env": {
+          "CONTEXT_HANDOFF_DIR": ".github/handoff",
+          "CONTEXT_HANDOFF_AGENT": "VS Code Copilot",
+          "CONTEXT_HANDOFF_PLATFORM": "vscode"
+        }
+      }
+    ],
+    "PostToolUse": [
+      {
+        "type": "command",
+        "command": ".github/hooks/context-handoff.py",
+        "env": {
+          "CONTEXT_HANDOFF_DIR": ".github/handoff",
+          "CONTEXT_HANDOFF_AGENT": "VS Code Copilot",
+          "CONTEXT_HANDOFF_PLATFORM": "vscode"
+        }
+      }
+    ]
+  }
+}
