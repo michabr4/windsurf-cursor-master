@@ -1,6 +1,13 @@
 {
   "version": 1,
   "hooks": {
+    "beforeShellExecution": [
+      {
+        "command": ".cursor/hooks/before-git-push.py",
+        "matcher": "git\\b.*\\bpush\\b",
+        "failClosed": true
+      }
+    ],
     "afterAgentResponse": [
       {
         "command": ".cursor/hooks/context-handoff.py"
