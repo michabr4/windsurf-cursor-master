@@ -1,5 +1,5 @@
 ---
-description: Behavioral Core — no-restatement, read-dedup, tool-batching, result-compression, output-sanitization, auto-chain
+description: Behavioral Core — no-restatement, read-dedup, tool-batching, result-compression, output-sanitization, auto-chain, autonomous-no-prompt
 alwaysApply: true
 ---
 
@@ -22,11 +22,7 @@ All independent tool calls MUST be parallel in a single turn. Issue sequentially
 
 **HIGH (opus):** Full schema from `.comms/schema.md` — no compression.
 
-**BLOCKED/FAILED (any complexity):**
-```json
-{ "id": "TASK-...", "status": "blocked", "summary": "one sentence", "details": "what was attempted + what is needed to unblock", "files_changed": [], "issues": [{"issue": "...", "fix": "..."}], "completed_at": "..." }
-```
-Never include: file contents, stack traces >5 lines, task spec restatements, rule explanations.
+**BLOCKED/FAILED:** `{ id, status:"blocked", summary, details:"attempted+needed", files_changed:[], issues:[{issue,fix}], completed_at }` — never include file contents, stack traces >5 lines, or rule restatements.
 
 ## 5 · Output Sanitization
 
@@ -39,18 +35,36 @@ Before writing to `.comms/outbox/`, `.session-logs/`, or any result file, scan f
 - Connection strings with credentials: `://user:password@`
 - Any env variable VALUE (variable NAMEs are safe)
 
-Safe to write: file paths, function/class names, error messages (values stripped), HTTP status codes, aggregate counts, task IDs, commit SHAs.
-
 ## 6 · Auto-Chain
 
-After task completes — if inbox has task T where `T.depends_on == completed.id` (or null) AND `T.requires_review == false` AND `T.fast_path == true`: auto-claim T, announce `"Auto-chaining → [T.id] — [T.title]"`, execute immediately.
+After task completes — if inbox has task T where `T.depends_on == completed.id` (or null) AND `T.fast_path == true`: auto-claim T, announce `"Auto-chaining → [T.id] — [T.title]"`, execute immediately.
 
 Rules:
-- `requires_review` absent/null = treat as `true` (safe default: pause for review)
+- `requires_review` absent/null = treat as `false` (autonomous default)
 - Never skip an unsatisfied `depends_on` (prerequisite must be in `completed/`)
 - Multiple fast-path tasks: execute in priority order (critical → high → medium → low)
 - Session depth cap: **10 tasks** — then stop and surface a batch summary
 - On `failed`: stop all auto-chaining, alert user, wait for instruction
 - On `blocked`: auto-chain to other independent fast-path tasks if any; else stop and alert
 
-End-of-chain: `"Auto-chain complete. [N] tasks executed. [M] task(s) awaiting Windsurf review. [Inbox clear | X review-path tasks remain.]"`
+End-of-chain: `"Chain done. [N] executed. [M] awaiting review. [Inbox clear | X remain.]"`
+
+## 7 · Autonomous Mode — No Prompting
+
+**Default: proceed without asking.** State assumptions inline as `[ASSUME] <assumption> — proceeding`, then execute. The user corrects output, not the plan.
+
+**Hard-stop only for:**
+
+1. Secret/credential required but absent from env
+2. Command is on Execution Fence "Requires Explicit User Approval" list
+3. Irreversible data loss with no rollback
+
+Everything else — unclear scope, missing context, incomplete spec — assume and proceed.
+
+**Self-correction loop (before escalating any failure):**
+
+1. Tool call fails → retry once with a corrected approach
+2. Second attempt fails → emit `[RETRY_FAILED] step=<name> error=<msg>` and continue remaining steps
+3. Collect all failures in `RESULT.issues` — surface at the end, never interrupt mid-task
+
+**Loop completion:** Run ALL steps of a multi-step task to completion before surfacing the result. No mid-task acknowledgment pauses unless hitting a hard-stop condition above.
