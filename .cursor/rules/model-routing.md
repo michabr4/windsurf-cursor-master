@@ -1,21 +1,30 @@
 ---
-description: Model Routing — classify task complexity and route to cheapest capable model before starting work
+description: Model Routing — classify task complexity and route to cheapest capable Claude model; $1,000/month budget ceiling enforced
 alwaysApply: true
 ---
 
-# Model Routing Protocol
+# Model Routing Protocol — Claude Enterprise
+
+## Monthly Budget Ceiling: $1,000
+
+| Threshold | Action |
+| --------- | ------ |
+| < $750 (75%) | Normal routing applies |
+| $750–$900 (75–90%) | Downgrade MEDIUM tasks to Haiku where output quality permits |
+| $900–$1,000 (90–100%) | Suspend Opus entirely — route all HIGH tasks to Sonnet |
+| ≥ $1,000 | Alert user before starting any task with estimated cost > $5 |
 
 ## Routing Table
 
-| Complexity | Model  | Cost/1M input | Criteria |
-|------------|--------|---------------|----------|
-| LOW        | haiku  | ~$0.25        | Single-file edits, markdown updates, YAML/config, status checks, simple bug fixes |
-| MEDIUM     | sonnet | ~$3.00        | Multi-file changes, API integration, test writing, new feature in existing module |
-| HIGH       | opus   | ~$15.00       | New agent/system design, cross-service breaking changes, architecture decisions |
+| Complexity | Model | ≈Cost/1M input | ≈Cost/1M output | When to use |
+| ---------- | ----- | -------------- | --------------- | ----------- |
+| LOW | Claude Haiku 3.5 | $0.80 | $4.00 | Single-file edits, markdown, YAML/config, status checks, simple bug fixes |
+| MEDIUM | Claude Sonnet 4 | $3.00 | $15.00 | Multi-file changes, API integration, test writing, new feature in existing module |
+| HIGH | Claude Opus 4 | $15.00 | $75.00 | New agent/system design, cross-service breaking changes, architecture decisions |
 
 ## Decision Rules
 
-**Route to haiku when ALL of the following are true:**
+**Route to Haiku when ALL of the following are true:**
 
 - Changes touch ≤ 2 files
 - No new dependencies added
@@ -23,24 +32,25 @@ alwaysApply: true
 - Task spec is under 200 tokens
 - No `complexity: "HIGH"` tag on the task
 
-**Route to opus when ANY of the following is true:**
+**Route to Opus ONLY when ALL of the following are true:**
 
-- Task is tagged `complexity: "HIGH"`
-- Designing a new system, agent, or pipeline from scratch
-- Change requires breaking cross-service contracts
-- Task explicitly involves multi-system orchestration design
+- Task is tagged `complexity: "HIGH"` AND
+- Designing a new system, agent, or pipeline from scratch OR cross-service breaking change AND
+- Expected to touch ≥ 5 files or add a new integration layer AND
+- Monthly spend < $900 (budget gate)
 
-**Route to sonnet** for everything else (default).
+**Route to Sonnet** for everything else (default).
 
 ## Why This Matters
 
-Routing 60% of tasks to haiku instead of sonnet = **~5x cost reduction** on those tasks.
+Routing 60% of tasks to Haiku instead of Sonnet = **~4x cost reduction** on those tasks. Keeping Opus rare is critical — one Opus session costs ~30× a Haiku session.
 
-| Scenario               | Old cost | New cost | Saving |
-|------------------------|----------|----------|--------|
-| 10 tasks, all sonnet   | $0.30    | —        | —      |
-| 6 haiku + 4 sonnet     | —        | $0.075   | 75%    |
-| 20 sessions/month      | $6.00    | $1.50    | $4.50/mo |
+| Scenario | Cost/session | 100 sessions/month |
+| -------- | ------------ | ------------------ |
+| All Sonnet | ~$0.05 | ~$5/month |
+| 60% Haiku + 40% Sonnet | ~$0.025 | ~$2.50/month |
+| 5% Opus misrouted (5 sessions) | +$1.20 | +$1.20/month |
+| **Budget ceiling headroom** | — | **~$992 remaining for enterprise overhead** |
 
 ## Routing Telemetry
 

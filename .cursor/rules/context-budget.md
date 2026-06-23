@@ -1,5 +1,5 @@
 ---
-description: Context Budget — hard caps on files_to_read and rule loading to minimize token consumption
+description: Context Budget — hard caps on files_to_read and rule loading; tuned for Claude Enterprise 200K context, $1,000/month ceiling
 alwaysApply: true
 ---
 
@@ -7,11 +7,15 @@ alwaysApply: true
 
 ## files_to_read Hard Caps
 
-| Model | Max files to read |
-|-------|------------------|
-| haiku | 3 |
-| sonnet | 6 |
-| opus | 10 |
+Claude Enterprise provides 200K token context windows. Despite the headroom, token cost scales linearly — discipline still matters.
+
+| Model | Max files to read | Approx. cost if all large files (~500 tok each) |
+| ----- | ----------------- | ----------------------------------------------- |
+| Claude Haiku 3.5 | 3 | < $0.01/session |
+| Claude Sonnet 4 | 8 | ~$0.04/session |
+| Claude Opus 4 | 12 | ~$0.18/session |
+
+**Per-session cost guardrail:** If reading more files would push estimated input tokens above 50,000 for Haiku, 100,000 for Sonnet, or 150,000 for Opus — stop and trim before proceeding.
 
 If a task lists more files than the cap allows:
 
@@ -36,7 +40,7 @@ Always load these regardless of task type:
 Load these ONLY when the task touches matching file types:
 
 | Rule group | Load when task touches |
-|-----------|----------------------|
+| ---------- | ---------------------- |
 | `codeguard-0-api-web-services` | `.ts`, `.py`, `.go`, `.java` with HTTP/REST |
 | `codeguard-0-authentication-mfa` | Auth flows, login, tokens, session |
 | `codeguard-0-data-storage` | DB queries, ORM, migrations |
