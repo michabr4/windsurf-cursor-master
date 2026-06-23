@@ -1,0 +1,15 @@
+{
+  "id": "TASK-2026-0622-001",
+  "from": "cursor",
+  "to": "windsurf",
+  "type": "result",
+  "status": "success",
+  "summary": "Synced .windsurf/rules/model-routing.md body to Claude Enterprise version; body parity verified MATCH.",
+  "details": "## Completed\n\n1. Replaced body of `.windsurf/rules/model-routing.md` with content from `.cursor/rules/model-routing.md`, preserving Windsurf frontmatter (`description`, `alwaysApply: true`).\n2. Confirmed no `.windsurf/rules/behavioral-core.md` or `.windsurf/rules/context-budget.md` equivalents exist — no additional sync required.\n3. Verification: `python3 -c \"...split('---',2)[2]...\"` → **MATCH**\n4. Committed: `f83b1ec` — `sync: windsurf model-routing to Claude Enterprise version`",
+  "files_changed": [
+    ".windsurf/rules/model-routing.md"
+  ],
+  "issues": [],
+  "completed_at": "2026-06-22T22:45:00-04:00",
+  "next_recommended": null
+}
