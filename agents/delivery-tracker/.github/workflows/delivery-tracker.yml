@@ -1,0 +1,62 @@
+name: Delivery Tracker — Weekly Run
+
+on:
+  schedule:
+    - cron: "0 8 * * 1"   # Every Monday at 08:00 UTC
+  workflow_dispatch:
+    inputs:
+      lookback_days:
+        description: "Lookback window in days"
+        required: false
+        default: "7"
+      accounts:
+        description: "Comma-separated account name filter (leave blank for all)"
+        required: false
+        default: ""
+
+jobs:
+  run-tracker:
+    name: Run Delivery Tracker
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+          cache-dependency-path: agents/delivery-tracker/requirements.txt
+
+      - name: Install dependencies
+        working-directory: agents/delivery-tracker
+        run: pip install -r requirements.txt
+
+      - name: Run tests
+        working-directory: agents/delivery-tracker
+        run: python -m pytest tests/ -v --tb=short
+
+      - name: Generate weekly report
+        working-directory: agents/delivery-tracker
+        env:
+          HELIX_BASE_URL: ${{ secrets.HELIX_BASE_URL }}
+          HELIX_API_TOKEN: ${{ secrets.HELIX_API_TOKEN }}
+          WEBEX_BOT_TOKEN: ${{ secrets.WEBEX_BOT_TOKEN }}
+          WEBEX_ROOM_ID: ${{ secrets.WEBEX_ROOM_ID }}
+          LOOKBACK_DAYS: ${{ github.event.inputs.lookback_days || '7' }}
+          ACCOUNT_FILTER: ${{ github.event.inputs.accounts || '' }}
+        run: |
+          python main.py \
+            --output all \
+            --lookback "$LOOKBACK_DAYS" \
+            $( [ -n "$ACCOUNT_FILTER" ] && echo "--accounts \"$ACCOUNT_FILTER\"" || true )
+
+      - name: Upload report artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: delivery-tracker-report-${{ github.run_id }}
+          path: agents/delivery-tracker/output/
+          retention-days: 90

@@ -198,4 +198,30 @@ class DeliveryTracker:
         except HelixAPIError as exc:
             logger.warning("SLA data unavailable for %s: %s", account_name, exc)
 
+        # ── Health score ─────────────────────────────────────────────────────
+        metrics.health_score = self._compute_health_score(metrics)
+
         return metrics
+
+    @staticmethod
+    def _compute_health_score(metrics: AccountCaseMetrics) -> float:
+        """Compute a 0–100 account health score.
+
+        Deductions (all capped to prevent runaway single-signal dominance):
+          overdue cases      -5 each, max -25
+          critical/high open -3 each, max -15
+          escalated          -10 each, max -20
+          SLA AT_RISK        -10
+          SLA BREACHED       -25
+          milestone overdue  -5 each, max -15
+        """
+        score = 100.0
+        score -= min(metrics.overdue * 5, 25)
+        score -= min(metrics.critical_high * 3, 15)
+        score -= min(metrics.escalated * 10, 20)
+        if metrics.sla_status == SLAStatus.AT_RISK:
+            score -= 10
+        elif metrics.sla_status == SLAStatus.BREACHED:
+            score -= 25
+        score -= min(metrics.milestones_overdue * 5, 15)
+        return max(0.0, round(score, 1))

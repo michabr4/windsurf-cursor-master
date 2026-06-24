@@ -11,7 +11,7 @@ from unittest.mock import MagicMock, patch
 import pytest
 
 from helix_client import HelixAPIError
-from models import HelixAccount, SLAStatus, WeeklySummary
+from models import AccountCaseMetrics, HelixAccount, SLAStatus, WeeklySummary
 from tracker import DeliveryTracker
 
 
@@ -202,3 +202,88 @@ def test_run_metrics_on_validation_failure(capsys, settings):
     tracker.run()
     captured = capsys.readouterr()
     assert "[METRICS]" in captured.out
+
+
+# ── Health score ──────────────────────────────────────────────────────────────
+
+def test_health_score_perfect_account():
+    m = AccountCaseMetrics(account_id="a", account_name="A")
+    score = DeliveryTracker._compute_health_score(m)
+    assert score == 100.0
+    assert m.health_tier == "—"
+
+
+def test_health_score_overdue_deducts():
+    m = AccountCaseMetrics(account_id="a", account_name="A", overdue=3)
+    score = DeliveryTracker._compute_health_score(m)
+    assert score == 85.0
+
+
+def test_health_score_overdue_cap():
+    m = AccountCaseMetrics(account_id="a", account_name="A", overdue=10)
+    score = DeliveryTracker._compute_health_score(m)
+    assert score == 75.0
+
+
+def test_health_score_sla_at_risk():
+    m = AccountCaseMetrics(account_id="a", account_name="A", sla_status=SLAStatus.AT_RISK)
+    score = DeliveryTracker._compute_health_score(m)
+    assert score == 90.0
+
+
+def test_health_score_sla_breached():
+    m = AccountCaseMetrics(account_id="a", account_name="A", sla_status=SLAStatus.BREACHED)
+    score = DeliveryTracker._compute_health_score(m)
+    assert score == 75.0
+
+
+def test_health_score_multiple_signals():
+    m = AccountCaseMetrics(
+        account_id="a",
+        account_name="A",
+        overdue=2,
+        critical_high=3,
+        escalated=1,
+        sla_status=SLAStatus.AT_RISK,
+        milestones_overdue=1,
+    )
+    score = DeliveryTracker._compute_health_score(m)
+    assert score == 100.0 - 10 - 9 - 10 - 10 - 5
+
+
+def test_health_score_never_below_zero():
+    m = AccountCaseMetrics(
+        account_id="a",
+        account_name="A",
+        overdue=100,
+        critical_high=100,
+        escalated=100,
+        sla_status=SLAStatus.BREACHED,
+        milestones_overdue=100,
+    )
+    score = DeliveryTracker._compute_health_score(m)
+    assert score == 0.0
+
+
+def test_health_tier_tiers():
+    m = AccountCaseMetrics(account_id="a", account_name="A")
+    m.health_score = 95.0
+    assert m.health_tier == "🟢"
+    m.health_score = 70.0
+    assert m.health_tier == "🟡"
+    m.health_score = 50.0
+    assert m.health_tier == "🟠"
+    m.health_score = 20.0
+    assert m.health_tier == "🔴"
+
+
+def test_run_sets_health_score(settings, sample_account, sample_open_case, sample_sla):
+    client = _mock_client(
+        accounts=[sample_account],
+        open_cases=[sample_open_case],
+        sla=sample_sla,
+    )
+    tracker = _make_tracker(settings, client)
+    summary = tracker.run()
+    assert summary.accounts[0].health_score is not None
+    assert 0.0 <= summary.accounts[0].health_score <= 100.0

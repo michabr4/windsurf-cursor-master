@@ -118,6 +118,19 @@ class AccountCaseMetrics(BaseModel):
     sla_target_pct: Optional[float] = None
     milestone_completion_pct: Optional[float] = None
     milestones_overdue: int = 0
+    health_score: Optional[float] = None
+
+    @property
+    def health_tier(self) -> str:
+        if self.health_score is None:
+            return "—"
+        if self.health_score >= 80:
+            return "🟢"
+        if self.health_score >= 60:
+            return "🟡"
+        if self.health_score >= 40:
+            return "🟠"
+        return "🔴"
 
 
 class WeeklySummary(BaseModel):

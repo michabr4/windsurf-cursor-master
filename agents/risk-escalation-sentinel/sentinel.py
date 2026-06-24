@@ -80,6 +80,13 @@ class RiskEscalationSentinel:
                         f"Webex notification failed for {risk.account_name}: {exc}"
                     )
 
+            try:
+                if self._notifier.send_medium_risk_summary(medium):
+                    cards_sent += 1
+            except Exception as exc:
+                errors += 1
+                report.errors.append(f"Webex medium-risk summary failed: {exc}")
+
             report.webex_cards_sent = cards_sent
             self._write_report(report, run_date)
 

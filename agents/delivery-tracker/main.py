@@ -4,6 +4,8 @@ Usage:
     python main.py                   # console table only
     python main.py --output md       # markdown file in ./output/
     python main.py --output both     # console + markdown file
+    python main.py --output webex    # post to Webex (requires WEBEX_* env vars)
+    python main.py --output all      # console + markdown file + Webex
     python main.py --dry-run         # validate config, skip Helix calls
     python main.py --accounts "ACME Corp,Globex"
 """
@@ -22,6 +24,7 @@ from rich.console import Console
 from config import get_settings
 from report_formatter import render_console, render_markdown
 from tracker import DeliveryTracker
+from webex_sender import WebexSendError, send_report
 
 
 def _configure_logging(level: str) -> None:
@@ -51,6 +54,12 @@ def _dry_run(settings, console: Console) -> int:
     console.print(f"  ACCOUNT_FILTER  : {settings.account_filter or '(all accounts)'}")
     console.print(f"  OUTPUT_DIR      : {settings.output_dir}")
     console.print()
+    console.print()
+    console.print("[bold]Webex (optional)[/bold]")
+    console.print(f"  WEBEX_BOT_TOKEN  : {'[green]set[/green]' if settings.webex_bot_token else '[dim]not set[/dim]'}")
+    console.print(f"  WEBEX_ROOM_ID    : {'[green]set[/green]' if settings.webex_room_id else '[dim]not set[/dim]'}")
+    console.print(f"  WEBEX_PERSON_EMAIL: {'[green]set[/green]' if settings.webex_person_email else '[dim]not set[/dim]'}")
+    console.print()
     if ok:
         console.print("[bold green]✅  Config valid — ready to run.[/bold green]")
         return 0
@@ -64,7 +73,7 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument(
         "--output",
-        choices=["console", "md", "both"],
+        choices=["console", "md", "both", "webex", "all"],
         default="console",
         help="Output format (default: console)",
     )
@@ -102,13 +111,27 @@ def main(argv: list[str] | None = None) -> int:
     tracker = DeliveryTracker(settings=settings)
     summary = tracker.run()
 
-    if args.output in ("console", "both"):
+    if args.output in ("console", "both", "all"):
         render_console(summary, console=console)
 
-    if args.output in ("md", "both"):
+    if args.output in ("md", "both", "all"):
         md = render_markdown(summary)
         path = _write_markdown(md, settings.output_dir)
         console.print(f"[dim]Markdown saved → {path}[/dim]")
+
+    if args.output in ("webex", "all"):
+        if not settings.validate_webex():
+            console.print(
+                "[bold red]Webex not configured — set WEBEX_BOT_TOKEN and "
+                "WEBEX_ROOM_ID (or WEBEX_PERSON_EMAIL) in .env[/bold red]"
+            )
+        else:
+            md = md if args.output == "all" else render_markdown(summary)
+            try:
+                msg_id = send_report(md, settings)
+                console.print(f"[dim]Webex message sent → {msg_id}[/dim]")
+            except WebexSendError as exc:
+                console.print(f"[bold red]Webex send failed: {exc}[/bold red]")
 
     return 1 if summary.has_errors else 0
 

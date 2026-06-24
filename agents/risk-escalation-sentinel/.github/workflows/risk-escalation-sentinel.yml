@@ -1,0 +1,78 @@
+name: Risk & Escalation Sentinel
+
+on:
+  schedule:
+    - cron: "30 8 * * 2-6"
+  workflow_dispatch:
+    inputs:
+      run_date:
+        description: "Delivery Tracker run date to evaluate (YYYY-MM-DD, default: today)"
+        required: false
+        default: ""
+      dry_run:
+        description: "Evaluate risks without sending Webex cards"
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  sentinel:
+    name: Run Risk & Escalation Sentinel
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: agents/risk-escalation-sentinel/requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+        working-directory: agents/risk-escalation-sentinel
+
+      - name: Run unit tests
+        run: python -m pytest tests/ -v --tb=short
+        working-directory: agents/risk-escalation-sentinel
+
+      - name: Prepare data directory
+        run: mkdir -p data/runs/delivery-tracker data/runs/risk-sentinel
+        working-directory: agents/risk-escalation-sentinel
+
+      - name: Download latest Delivery Tracker artifact
+        uses: dawidd6/action-download-artifact@v3
+        with:
+          workflow: delivery-tracker.yml
+          name: delivery-tracker-report
+          path: agents/risk-escalation-sentinel/data/runs/delivery-tracker
+        continue-on-error: true
+
+      - name: Run sentinel
+        run: |
+          DATE_ARG=""
+          if [ -n "${{ github.event.inputs.run_date }}" ]; then
+            DATE_ARG="--date ${{ github.event.inputs.run_date }}"
+          fi
+          DRY_RUN_ARG=""
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            DRY_RUN_ARG="--dry-run"
+          fi
+          python main.py $DATE_ARG $DRY_RUN_ARG
+        working-directory: agents/risk-escalation-sentinel
+        env:
+          DATA_DIR: ./data/runs
+          WEBEX_BOT_TOKEN: ${{ secrets.WEBEX_BOT_TOKEN }}
+          WEBEX_ROOM_ID: ${{ secrets.WEBEX_ROOM_ID }}
+        continue-on-error: true
+
+      - name: Upload sentinel report
+        uses: actions/upload-artifact@v4
+        with:
+          name: sentinel-report
+          path: agents/risk-escalation-sentinel/data/runs/risk-sentinel/*.json
+          retention-days: 30
+        if: always()

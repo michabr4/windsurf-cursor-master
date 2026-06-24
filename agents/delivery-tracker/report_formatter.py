@@ -68,6 +68,7 @@ def render_console(summary: WeeklySummary, console: Optional[Console] = None) ->
         expand=True,
     )
     table.add_column("Account", style="bold", min_width=20)
+    table.add_column("Health", justify="center")
     table.add_column("Open", justify="right")
     table.add_column("Crit/High", justify="right")
     table.add_column("Overdue", justify="right")
@@ -76,11 +77,17 @@ def render_console(summary: WeeklySummary, console: Optional[Console] = None) ->
     table.add_column("SLA", justify="right")
     table.add_column("Milestones", justify="right")
 
-    for m in sorted(summary.accounts, key=lambda x: x.total_open, reverse=True):
+    for m in sorted(summary.accounts, key=lambda x: (x.health_score or 100), reverse=False):
         overdue_style = "bold red" if m.overdue > 0 else ""
         escalated_style = "bold red" if m.escalated > 0 else ""
+        health_cell = (
+            f"{m.health_tier} {m.health_score:.0f}"
+            if m.health_score is not None
+            else "—"
+        )
         table.add_row(
             m.account_name,
+            health_cell,
             str(m.total_open),
             str(m.critical_high),
             f"[{overdue_style}]{m.overdue}[/{overdue_style}]" if overdue_style else str(m.overdue),
@@ -129,14 +136,20 @@ def render_markdown(summary: WeeklySummary) -> str:
     lines.append("")
 
     # Per-account table
-    lines.append("| Account | Open | Crit/High | Overdue | Escalated | Avg Age | SLA | Milestones |")
-    lines.append("|---------|-----:|----------:|--------:|----------:|--------:|-----|------------|")
+    lines.append("| Account | Health | Open | Crit/High | Overdue | Escalated | Avg Age | SLA | Milestones |")
+    lines.append("|---------|:------:|-----:|----------:|--------:|----------:|--------:|-----|------------|")
 
-    for m in sorted(summary.accounts, key=lambda x: x.total_open, reverse=True):
+    for m in sorted(summary.accounts, key=lambda x: (x.health_score or 100), reverse=False):
         overdue = f"**{m.overdue}**" if m.overdue > 0 else str(m.overdue)
         escalated = f"**{m.escalated}**" if m.escalated > 0 else str(m.escalated)
+        health_cell = (
+            f"{m.health_tier} {m.health_score:.0f}"
+            if m.health_score is not None
+            else "—"
+        )
         lines.append(
             f"| {m.account_name} "
+            f"| {health_cell} "
             f"| {m.total_open} "
             f"| {m.critical_high} "
             f"| {overdue} "

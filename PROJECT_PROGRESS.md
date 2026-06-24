@@ -35,6 +35,7 @@
 | **Blockers** | None — P3 deferred items (dashboard wiring, AsyncStorage, Docker verification) not blockers |
 
 **Completed:**
+
 - Production-hardened: JWT auth, rate limiting, Zod validation
 - 5 of 7 frontend pages functional (build clean)
 - Mobile: Expo SDK 52, API-driven screens
@@ -43,6 +44,7 @@
 - Security: no hardcoded secrets, input validation
 
 **Remaining:**
+
 - Dashboard page wiring to live KPIs (currently placeholder)
 - Mobile AsyncStorage settings persistence
 - Docker build CLI verification
@@ -63,25 +65,28 @@ Full-stack SDM platform serving as data backbone for all AI Factory agents, with
 | Field | Value |
 | ----- | ----- |
 | **Location** | `agents/delivery-tracker/` |
-| **Status** | In Development |
+| **Status** | Code Complete — Pilot Pending |
 | **Phase** | Phase 1 — SDM Pilot Wave (Week 5–8) |
-| **Progress** | 60% |
-| **Last Updated** | 2026-05-27 |
+| **Progress** | 95% |
+| **Last Updated** | 2026-06-22 |
 | **ETA** | Week 8 (~2026-07-08) live pilot |
-| **Blockers** | Webex bot token expired (ops — rotate at developer.webex.com) |
+| **Blockers** | Webex bot token expired (ops — rotate at developer.webex.com); GitHub Secrets not yet populated |
 
 **Completed:**
+
 - Agent card written and signed
-- Directory scaffold: `main.py`, `config.py`, `tracker.py`, `models.py`, `helix_client.py`, `report_formatter.py`
+- Full scaffold: `main.py`, `config.py`, `tracker.py`, `models.py`, `helix_client.py`, `report_formatter.py`
+- Helix API client with retry, auth, pagination — all 4 endpoints wired
+- Health scoring: 0–100 per account with tier icons (🟢🟡🟠🔴), capped deductions per signal
+- Webex push module: `webex_sender.py` with truncation, error handling, `--output webex|all`
+- GitHub Actions cron: `.github/workflows/delivery-tracker.yml` (Monday 08:00 UTC, `workflow_dispatch`)
+- 49 passing unit tests (helix client, tracker orchestrator, health scoring, Webex sender)
 - Dockerfile present
-- Requirements defined
-- Tests directory created
 
 **Remaining:**
-- Helix API client integration (live endpoint wiring)
-- Health scoring implementation and validation
-- Webex card push (blocked by expired token)
-- Cron scheduling via GitHub Actions
+
+- Populate GitHub Secrets: `HELIX_BASE_URL`, `HELIX_API_TOKEN`, `WEBEX_BOT_TOKEN`, `WEBEX_ROOM_ID` (ops)
+- Rotate `WEBEX_BOT_TOKEN` at developer.webex.com (ops)
 - Live pilot: 100% portfolio coverage for 4 consecutive weeks
 
 **Expected Outcome:**
@@ -102,10 +107,12 @@ Daily automated delivery health report covering 100% of accounts, reducing weekl
 | **Blockers** | Depends on Delivery Tracker live output; Webex token expired |
 
 **Completed:**
+
 - Agent card written
 - Directory scaffold planned
 
 **Remaining:**
+
 - Core scaffold (`main.py`, `agent.py`, risk rules engine)
 - Risk rule implementation (P1/P2, SLA breach, health score drop, milestone slip, entitlement)
 - LLM integration for risk summary generation
@@ -131,12 +138,14 @@ Predictive risk detection 5–10 days ahead of issues, replacing reactive escala
 | **Blockers** | Salesforce MCP delegated read access unconfirmed |
 
 **Completed:**
+
 - Agent card written
 - Full directory scaffold: `main.py`, `config.py`, `data_collector.py`, `llm_writer.py`, `metrics_calculator.py`, `models.py`, `reviewer.py`
 - Templates directory created
 - Tests directory with test structure
 
 **Remaining:**
+
 - Salesforce data collector integration (blocked — MCP access)
 - ServiceNow data integration
 - Four-pass LLM chain implementation (exec summary, delivery narrative, risk section, next quarter)
@@ -162,6 +171,7 @@ QBR prep time reduced from 8–12 hours to 30-minute human review of AI-generate
 | **Blockers** | Blocked by Phase 1 exit criteria not yet met |
 
 **Remaining:**
+
 - 31 agents across CXM, PM, CE, CDA, HTOM, SDM Ops, CPM, CXL roles
 - 5 agent chains for end-to-end workflow automation
 - See `AI_FACTORY_IMPLEMENTATION_PLAN.md` for full specs
@@ -188,11 +198,13 @@ QBR prep time reduced from 8–12 hours to 30-minute human review of AI-generate
 | **Blockers** | `WEBEX_BOT_TOKEN` returning 401 — regenerate at developer.webex.com, update GitHub secret |
 
 **Completed:**
+
 - Code complete and clean
 - GitHub Actions cron configured
 - subscribers.json valid
 
 **Remaining:**
+
 - Rotate `WEBEX_BOT_TOKEN` in GitHub Secrets (ops — no code)
 - Trigger `workflow_dispatch` to verify fix
 - Optional: add `--dry-run` mode
@@ -216,11 +228,13 @@ Daily automated MGM status delivery restored, running reliably via GitHub Action
 | **Blockers** | Both `WEBEX_ACCESS_TOKEN` and bot token returning 401 — rotate and update GitHub Secrets |
 
 **Completed:**
+
 - Code complete and clean
 - GitHub Actions configured
 - P0 token rotation performed 2026-05-28 (new client secret obtained)
 
 **Remaining:**
+
 - Update WEBEX_CLIENT_SECRET in GitHub Secrets (new secret from 2026-05-28 rotation)
 - Refresh WEBEX_ACCESS_TOKEN using oauth_refresh.py
 - Trigger `workflow_dispatch` to verify
@@ -248,12 +262,14 @@ Daily Digitized Delivery status delivery restored.
 | **Blockers** | Azure AD app not registered — needs Microsoft Entra admin center setup |
 
 **Completed:**
+
 - Core email digest functionality built
 - Microsoft Graph device-code auth flow implemented
 - HTML digest output working
 - Offline mail fallback mode
 
 **Remaining:**
+
 - Register Azure AD app (Entra admin center — ops, no code)
 - Verify MSAL device code flow end-to-end
 - Web dashboard for reviewing drafts (planned Phase 2.3 feature)
@@ -281,6 +297,7 @@ Fully functional personal AI assistant for morning email briefings and proactive
 | **Blockers** | None |
 
 **Remaining:**
+
 - Full build spec in `CURSOR_TASK_PROJECT_DASHBOARD.md`
 - Cursor to execute: React/Vite + Tailwind + Cisco brand theme
 - Data source: reads `PROJECT_PROGRESS.md` (parsed at build) + optional JSON data layer
@@ -304,6 +321,7 @@ Single-page HTML dashboard showing every project's progress %, status, blockers,
 | **Blockers** | None |
 
 **Completed:**
+
 - React/Vite + Tailwind + Cisco brand theme established
 - Kanban board with dnd-kit
 - Gantt view
@@ -311,6 +329,7 @@ Single-page HTML dashboard showing every project's progress %, status, blockers,
 - Asana sync integration
 
 **Remaining:**
+
 - Mimir API integration (Wave 18 — per memory)
 - Live Airtable PAT rotation
 
@@ -332,11 +351,13 @@ Real-time firewall implementation tracking dashboard with Cisco CX branding.
 | **Blockers** | None |
 
 **Completed:**
+
 - Playbooks and templates
 - Email orchestration foundation
 - AGT-001 integration references
 
 **Remaining:**
+
 - Agent orchestration layer (YAML workflows)
 - Morning briefing pipeline (email → triage → calendar → brief)
 - Webex integration (DMs + space mentions)

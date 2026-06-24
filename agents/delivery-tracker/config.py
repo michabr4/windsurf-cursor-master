@@ -25,12 +25,22 @@ class Settings(BaseSettings):
     account_filter: Optional[str] = Field(default=None)
     output_dir: str = Field(default="./output")
 
+    # Webex messaging
+    webex_bot_token: str = Field(default="")
+    webex_room_id: Optional[str] = Field(default=None)
+    webex_person_email: Optional[str] = Field(default=None)
+    webex_timeout: int = Field(default=15)
+
     # Logging
     log_level: str = Field(default="INFO")
 
     def validate_helix(self) -> bool:
         """Return True when minimum Helix credentials are present."""
         return bool(self.helix_base_url and self.helix_api_token)
+
+    def validate_webex(self) -> bool:
+        """Return True when minimum Webex credentials are present."""
+        return bool(self.webex_bot_token and (self.webex_room_id or self.webex_person_email))
 
     @property
     def auth_header(self) -> dict:
