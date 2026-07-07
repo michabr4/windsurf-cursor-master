@@ -39,7 +39,12 @@ That interactively sets `WEBEX_BOT_TOKEN` (required), optionally `WEBEX_ACCESS_T
 | `WEBEX_ACCESS_TOKEN` | No — short-lived token for **Integration** (recordings / AI step) |
 | `WEBEX_REFRESH_TOKEN` | No — long-lived OAuth refresh for that Integration (see below) |
 | `WEBEX_CLIENT_ID` / `WEBEX_CLIENT_SECRET` | Only needed locally or if you automate refresh — Integration credentials |
-| `OPENAI_API_KEY` | No — AI transcript summaries |
+| `OPENAI_API_KEY` | No — AI transcript summaries; also powers Whisper fallback transcription |
+| `ANTHROPIC_API_KEY` | No — Claude extraction of structured action items (due date/priority) |
+| `ASANA_ACCESS_TOKEN` | No — personal access token used to create Asana tasks |
+| `ASANA_PROJECT_GID` | No — target Asana project for auto-created action-item tasks (created unassigned — never auto-attributed to a participant) |
+
+Set the repo **variable** (not secret) `CREATE_ASANA_TASKS=false` to keep extracting action items into the status report without creating Asana tasks, even when the Asana secrets above are configured.
 
 ### Create `WEBEX_REFRESH_TOKEN` (Integration OAuth)
 

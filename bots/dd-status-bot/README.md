@@ -42,7 +42,12 @@ Go to repo → **Settings** → **Secrets and variables** → **Actions** and ad
 |--------|---------|----------|
 | `WEBEX_BOT_TOKEN` | Sends messages to subscribers | ✅ Yes |
 | `WEBEX_ACCESS_TOKEN` | Reads spaces, messages, recordings | ✅ Yes (for SpaceLift) |
-| `OPENAI_API_KEY` | AI analysis of messages/transcripts | Optional |
+| `OPENAI_API_KEY` | AI analysis of messages/transcripts; Whisper fallback transcription | Optional |
+| `ANTHROPIC_API_KEY` | Claude extraction of structured action items (due date/priority) | Optional |
+| `ASANA_ACCESS_TOKEN` | Personal access token used to create Asana tasks | Optional (required to auto-create tasks) |
+| `ASANA_PROJECT_GID` | Target Asana project for auto-created action-item tasks (created unassigned — never auto-attributed to a participant) | Optional (required to auto-create tasks) |
+
+Set the repo **variable** (not secret) `CREATE_ASANA_TASKS=false` to keep extracting action items into the status report without creating Asana tasks, even when the Asana secrets above are configured.
 
 ### 3. Enable GitHub Actions
 

@@ -54,6 +54,10 @@ jobs:
         env:
           WEBEX_ACCESS_TOKEN: ${{ secrets.WEBEX_ACCESS_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
+          ASANA_PROJECT_GID: ${{ secrets.ASANA_PROJECT_GID }}
+          CREATE_ASANA_TASKS: ${{ vars.CREATE_ASANA_TASKS }}
         run: python webex_recordings.py --days 7
         continue-on-error: true
 

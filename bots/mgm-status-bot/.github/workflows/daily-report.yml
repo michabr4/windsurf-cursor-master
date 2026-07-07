@@ -55,11 +55,15 @@ jobs:
         env:
           WEBEX_ACCESS_TOKEN: ${{ secrets.WEBEX_ACCESS_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
+          ASANA_PROJECT_GID: ${{ secrets.ASANA_PROJECT_GID }}
+          CREATE_ASANA_TASKS: ${{ vars.CREATE_ASANA_TASKS }}
         run: |
-          if [ -n "$WEBEX_ACCESS_TOKEN" ] && [ -n "$OPENAI_API_KEY" ]; then
+          if [ -n "$WEBEX_ACCESS_TOKEN" ] && { [ -n "$OPENAI_API_KEY" ] || [ -n "$ANTHROPIC_API_KEY" ]; }; then
             python webex_recordings.py --days 7 --output recordings_insights.md
           else
-            echo "WEBEX_ACCESS_TOKEN or OPENAI_API_KEY missing — skipping live insights"
+            echo "WEBEX_ACCESS_TOKEN missing, or neither OPENAI_API_KEY nor ANTHROPIC_API_KEY set — skipping live insights"
             echo "(Report will still send using the static template.)"
           fi
         continue-on-error: true
