@@ -1,0 +1,23 @@
+NetPilot 5.0 — Skill Graph Definition
+
+Purpose:
+Defines the hierarchical and relational structure of skills, subskills, and micro-competencies used across training, labs, and exams.
+
+Structure:
+- Domains
+- Subdomains
+- Skills
+- Subskills
+- Micro-competencies
+
+Relationships:
+- prerequisite_of
+- related_to
+- strengthens
+- weakens_if_missing
+
+Example Node:
+id: skill.interface_basics
+domain: networking
+subdomain: interfaces
+description: Understanding interface configuration and operational states.

@@ -1,0 +1,89 @@
+name: MGM Daily Status Report
+
+on:
+  # Run Monday-Friday at 8:00 AM Eastern (13:00 UTC in standard time)
+  schedule:
+    - cron: '0 13 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      send_now:
+        description: 'Send report immediately'
+        required: false
+        default: 'true'
+
+env:
+  # Opt in now to avoid Node 20 deprecation issues in JavaScript actions
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  send-report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: ccna_automation_github_app
+    # Note: Some IDEs may warn that `secrets.*` context access is invalid in local lint.
+    # This is expected outside GitHub Actions runtime when repository secrets are not resolvable.
+    env:
+      WEBEX_BOT_TOKEN: ${{ secrets.WEBEX_BOT_TOKEN }}
+      WEBEX_ACCESS_TOKEN: ${{ secrets.WEBEX_ACCESS_TOKEN }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests openai
+
+      - name: Preflight checks
+        run: |
+          python --version
+          if [ ! -f send_reports.py ]; then
+            echo "::error::send_reports.py not found"
+            exit 1
+          fi
+          if [ ! -f subscribers.json ]; then
+            echo "::warning::subscribers.json not found (report may have no recipients)"
+          fi
+          if [ -z "$WEBEX_BOT_TOKEN" ]; then
+            echo "::error::Missing required secret: WEBEX_BOT_TOKEN"
+            exit 1
+          fi
+
+      - name: Analyze recordings (if token available)
+        run: |
+          if [ -n "$WEBEX_ACCESS_TOKEN" ]; then
+            if [ -f webex_recordings.py ]; then
+              python -u webex_recordings.py --days 7 || echo "Recordings analysis skipped"
+            else
+              echo "webex_recordings.py not found, skipping recordings analysis"
+            fi
+          else
+            echo "WEBEX_ACCESS_TOKEN not set, skipping recordings analysis"
+          fi
+        continue-on-error: true
+
+      - name: Send status report to subscribers
+        run: |
+          set -euo pipefail
+          python -u send_reports.py 2>&1 | tee send_report.log
+
+      - name: Upload send-report log on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: send-report-log
+          path: ccna_automation_github_app/send_report.log
+
+      - name: Log completion
+        run: |
+          echo "✅ MGM Status Report sent at $(date)"
+          echo "Subscribers notified from subscribers.json"

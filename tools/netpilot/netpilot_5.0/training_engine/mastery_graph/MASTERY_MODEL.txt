@@ -1,0 +1,22 @@
+NetPilot 5.0 — Mastery Model
+
+Purpose:
+Calculates mastery levels for each skill node using performance, difficulty, recency, and telemetry.
+
+Mastery Levels:
+- 0.0–0.2: Novice
+- 0.2–0.4: Beginner
+- 0.4–0.6: Intermediate
+- 0.6–0.8: Advanced
+- 0.8–1.0: Expert
+
+Inputs:
+- Performance Tracking
+- Skill Graph
+- ALE-X Difficulty
+- Time Decay
+
+Outputs:
+- mastery_scores
+- mastery_trends
+- mastery_confidence

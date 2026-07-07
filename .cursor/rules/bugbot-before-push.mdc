@@ -1,0 +1,39 @@
+---
+description: Run Bugbot code review before any git push to GitHub
+alwaysApply: true
+---
+
+# Bugbot Before Push
+
+Before running **any** `git push` (including `git push -u origin …`), run a Bugbot review on the changes about to be pushed.
+
+## Required workflow
+
+1. **Review first** — Launch exactly one `bugbot` subagent per the `review-bugbot` skill:
+   - `subagent_type: "bugbot"`, `readonly: true`, `run_in_background: false`
+   - Prompt shape: `Full Repository Path: <abs repo path>` + `Diff: branch changes` (or `uncommitted changes` if only local edits)
+   - Do not compute the diff yourself; the subagent handles it.
+
+2. **Summarize** — Report findings in a compact table (Severity, Location, Finding). If no diff, say so and skip push unless the user still wants an empty push.
+
+3. **Stamp** — After Bugbot completes, write `.cursor/bugbot-stamp.json`:
+   ```json
+   {
+     "head": "<output of git rev-parse HEAD>",
+     "reviewed_at": "<ISO-8601 UTC>",
+     "findings": <number>,
+     "status": "reviewed"
+   }
+   ```
+   Re-run Bugbot and refresh the stamp whenever `HEAD` changes after the last review.
+
+4. **Push last** — Only run `git push` after Bugbot has run for the current `HEAD` and the user has confirmed push (per `cursor-execution-fence`).
+
+## Exceptions
+
+- User explicitly says **"push without bugbot"** or **"skip bugbot"** for this push: proceed once, note the skip in your reply.
+- `git push --dry-run` is allowed without Bugbot (read-only probe).
+
+## On hook block
+
+If a `beforeShellExecution` hook blocks push, run Bugbot, write the stamp, then retry push.

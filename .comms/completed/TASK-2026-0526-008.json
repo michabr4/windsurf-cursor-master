@@ -1,0 +1,18 @@
+{
+  "id": "TASK-2026-0526-008",
+  "from": "windsurf",
+  "to": "cursor",
+  "priority": "medium",
+  "type": "instruction",
+  "phase": "1",
+  "title": "Phase 1 Consolidation — ARCHIVE-STALE: Archive stale and superseded projects",
+  "spec": "CONSOLIDATION ACTION: ARCHIVE-STALE\n\nArchive projects that are no longer active and have been superseded.\n\nTASK 1: Inventory stale projects\nCheck these locations in the master folder and report what exists:\n- _archived/python-empty/ (may already be archived from migration)\n- Any empty directories under _archived/ that are just shells\n\nTASK 2: Archive remaining stale items\nMove the following to _archived/ if not already there:\n- Any empty project directories (Email App, Asana shells, etc.)\n- Check if there are any Cursor-only exploration artifacts (.cursor/Outlook Agent or similar)\n\nTASK 3: Do NOT archive these (they have active value):\n- data/blue-shield/ (has SHI analysis — keep for reference)\n- data/digitized-delivery-ges/ (active data, Airtable tracking)\n- Any project marked ACTIVE in MASTER_INDEX.md\n\nTASK 4: Clean up _archived/\n- Ensure _archived/ARCHIVE_LOG.md exists (may have been created during EMAIL-CONSOLIDATE)\n- Append entries for anything newly archived with timestamp and reason\n- Verify each archived project has its README intact\n\nTASK 5: Security audit on archived projects\n- Run: grep -r \"AKIA\\\\|sk_live\\\\|ghp_\\\\|pat[A-Z]\\\\|Bearer \" in each archived project\n- If any credentials found, redact them and report to Windsurf\n- Verify no .env files contain real credentials\n\nTASK 6: Update MASTER_INDEX.md\n- Mark any newly archived projects as ARCHIVED\n- Verify all project statuses are accurate\n\nCONSTRAINTS:\n- Move only — never delete\n- Append to ARCHIVE_LOG.md, don't overwrite",
+  "depends_on": null,
+  "files_to_read": [
+    "CONSOLIDATION_PLAN.md",
+    "MASTER_INDEX.md",
+    "_archived/ARCHIVE_LOG.md"
+  ],
+  "created_at": "2026-05-26T13:51:09-04:00",
+  "status": "in_progress"
+}

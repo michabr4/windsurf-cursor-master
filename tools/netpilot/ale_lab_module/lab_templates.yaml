@@ -1,0 +1,7 @@
+labs:
+  - id: "auto_interface_lab"
+    base_scenario: "interface_config"
+    difficulty_levels:
+      - beginner
+      - intermediate
+      - advanced

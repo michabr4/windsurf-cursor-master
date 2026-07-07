@@ -1,0 +1,26 @@
+# Webex + email attention scan (communication-agent)
+name: communication-scan
+version: 1
+description: Surface items needing response across Webex and email (rule-based without LLM by default)
+
+agent:
+  path: agents/communication-agent
+  entry: agent.CommunicationAgent.run
+
+inputs:
+  days_back: 7
+  sources:
+    - webex_chat
+    - email
+  use_llm: false
+
+output:
+  format: markdown
+  section: "## Communication scan"
+
+error_handling:
+  retry:
+    max_attempts: 2
+    backoff_seconds: 10
+  fallback: skip_section_with_todo
+  notify: false

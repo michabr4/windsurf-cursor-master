@@ -1,0 +1,18 @@
+NETPILOT 4.0 — AUTONOMOUS LAB ENGINE (ALE)
+
+Purpose:
+ALE generates, adapts, and evaluates labs dynamically based on learner performance, telemetry, and platform intelligence.
+
+Core Capabilities:
+- Dynamic lab generation
+- Difficulty scaling
+- Scenario mutation
+- Performance-aware adaptation
+- Integration with ANE and PTE for “live” autonomous scenarios
+
+Key Components:
+- Lab Template Library
+- Difficulty Engine
+- Scenario Mutator
+- Performance Analyzer
+- Lab Telemetry Collector

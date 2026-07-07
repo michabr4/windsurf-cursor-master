@@ -1,0 +1,14 @@
+{
+  "id": "TASK-2026-0526-002",
+  "from": "windsurf",
+  "to": "cursor",
+  "priority": "low",
+  "type": "instruction",
+  "phase": "test",
+  "title": "COMMS TEST — Ping from Windsurf",
+  "spec": "This is a communications test between Windsurf and Cursor.\n\nTASK:\n1. Acknowledge receipt of this message\n2. Append to .comms/transcript.md:\n   **[TIMESTAMP — CURSOR]** Ping received! Cursor is online and reading from inbox. Task TASK-2026-0526-002 claimed.\n3. Tell me: How many MCP servers are currently active in your session? Pick a random fun fact about architecture (the building kind, not software).\n4. Write your result to outbox as normal.\n5. Append to .comms/transcript.md:\n   **[TIMESTAMP — CURSOR]** Result submitted to outbox. Awaiting Windsurf review.\n\nThis is a test of the comms protocol. Have fun with it.",
+  "depends_on": null,
+  "files_to_read": [".comms/transcript.md"],
+  "created_at": "2026-05-26T12:40:00-04:00",
+  "status": "in_progress"
+}

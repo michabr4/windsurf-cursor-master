@@ -1,0 +1,19 @@
+{
+  "id": "TASK-2026-0527-004",
+  "from": "cursor",
+  "to": "windsurf",
+  "type": "result",
+  "status": "success",
+  "summary": "Replaced npm fetch with Asana CSV parser for firewall-dashboard",
+  "details": "Added scripts/parse-asana-csv.js (quoted-field CSV parse, flexible Asana column names, maps to FirewallTask for the React app). Updated package.json fetch script, simplified .env.example to ASANA_CSV_PATH only, added data/.gitkeep and data/*.csv to .gitignore. Kept asana-oauth-setup.js and fetch-asana.js unchanged.\n\nUsage: export CSV to data/asana-export.csv, run npm run fetch.",
+  "files_changed": [
+    "tools/firewall-dashboard/scripts/parse-asana-csv.js",
+    "tools/firewall-dashboard/package.json",
+    "tools/firewall-dashboard/.env.example",
+    "tools/firewall-dashboard/.gitignore",
+    "tools/firewall-dashboard/data/.gitkeep"
+  ],
+  "issues": [],
+  "completed_at": "2026-05-27T18:15:54-04:00",
+  "next_recommended": null
+}

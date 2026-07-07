@@ -1,0 +1,58 @@
+import requests
+import base64
+import os
+from dotenv import load_dotenv
+
+load_dotenv() # Loads client_id and client_secret from .env file
+
+client_id = os.environ.get('BRIDGE_API_CLIENT_ID') # Or your specific env var name
+client_secret = os.environ.get('BRIDGE_API_CLIENT_SECRET') # Or your specific env var name
+
+url = "https://id.cisco.com/oauth2/default/v1/token"
+payload = "grant_type=client_credentials"
+value = base64.b64encode(f'{client_id}:{client_secret}'.encode('utf-8')).decode('utf-8')
+
+headers = {
+   "Accept": "*/*",
+   "Content-Type": "application/x-www-form-urlencoded",
+   "Authorization": f"Basic {value}"
+}
+
+response = requests.post(url, headers=headers, data=payload)
+response.raise_for_status() # Raise an exception for HTTP errors
+token_data = response.json()
+api_key = token_data.get('access_token')
+
+print("Access Token:", api_key)
+
+
+
+
+
+from langchain_openai import AzureChatOpenAI
+from langchain.schema import HumanMessage, SystemMessage
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+app_key = os.getenv("BRIDGE_API_APP_KEY")
+userid = os.getenv("CISCO_BRAIN_USER_ID") # Your Cisco CEC ID
+access_token = os.getenv("AZURE_OPENAI_API_KEY") # Your access token
+
+model = AzureChatOpenAI(
+   model="gpt-4.1", # Model name
+   azure_endpoint = 'https://chat-ai.cisco.com',
+   api_version="2024-12-01-preview",
+   openai_api_key=access_token, # Pass the access token
+   model_kwargs=dict(
+       user = f'{{"appkey": "{app_key}", "user": "{userid}"}}'
+   )
+)
+
+msgs = [
+   SystemMessage(content="You are a helpful assistant."),
+   HumanMessage(content="Translate to French: Hello, how are you?")
+]
+
+print (model.invoke(msgs)) # Recommended approach
+print (model.invoke("Tell me who is the president of USA for 2024"))

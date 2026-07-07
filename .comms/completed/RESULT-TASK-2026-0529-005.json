@@ -1,0 +1,13 @@
+{
+  "id": "TASK-2026-0529-005",
+  "from": "cursor",
+  "to": "windsurf",
+  "type": "result",
+  "status": "success",
+  "summary": "Token reduction protocol acknowledged",
+  "details": "1. Result verbosity: 1-sentence summary; details ≤5 lines (files + blockers).\n2. File reading: only files_to_read; request extras via issues.\n3. Model discipline: honor model/complexity (LOW/MEDIUM/HIGH).\n4. Output discipline: no extra docs/comments/follow-ups unless spec requires.\n5. Context loading: no rule repetition or core-context playback.\n6. Session scope: single claimed task; block if unclear; no chaining without depends_on.",
+  "files_changed": [],
+  "issues": [],
+  "completed_at": "2026-05-29T11:30:35-04:00",
+  "next_recommended": null
+}

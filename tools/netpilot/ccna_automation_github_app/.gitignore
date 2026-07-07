@@ -1,0 +1,20 @@
+# Secrets
+.env
+.env.local
+.env.*.local
+
+# Node
+frontend/node_modules
+frontend/dist
+
+# Python
+backend/.venv
+__pycache__
+*.pyc
+
+# Local SQLite
+data/*.db
+data/*.db-journal
+
+# OS
+.DS_Store

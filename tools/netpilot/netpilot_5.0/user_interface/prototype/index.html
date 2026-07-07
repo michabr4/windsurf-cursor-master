@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NetPilot 5.0 Learner UI Prototype</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="bg-orb orb-a"></div>
+    <div class="bg-orb orb-b"></div>
+
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-dot"></span>
+        <div>
+          <h1>NetPilot 5.0</h1>
+          <p>Learner Experience Prototype</p>
+        </div>
+      </div>
+      <div class="status-pill">Adaptive Session · Active</div>
+    </header>
+
+    <main class="layout">
+      <nav class="side-nav">
+        <button class="nav-btn active" data-view="dashboard">Learner Dashboard</button>
+        <button class="nav-btn" data-view="lesson">Lesson Viewer</button>
+        <button class="nav-btn" data-view="prep">Exam Prep Center</button>
+      </nav>
+
+      <section class="content">
+        <article class="view active" id="view-dashboard">
+          <div class="view-head">
+            <h2>Learner Dashboard</h2>
+            <p>Track mastery, path progression, recommendations, and readiness.</p>
+          </div>
+          <div class="cards grid-3">
+            <div class="card">
+              <h3>Skill Mastery</h3>
+              <div class="meter"><span class="w-74"></span></div>
+              <small>Overall mastery: 74%</small>
+            </div>
+            <div class="card">
+              <h3>Exam Readiness</h3>
+              <div class="score">81</div>
+              <small>Predicted readiness score</small>
+            </div>
+            <div class="card">
+              <h3>Gamification</h3>
+              <ul>
+                <li>Streak: 12 days</li>
+                <li>Badges: 9</li>
+                <li>XP: 14,320</li>
+              </ul>
+            </div>
+          </div>
+          <div class="cards grid-2">
+            <div class="card">
+              <h3>Active Learning Path</h3>
+              <ul class="timeline">
+                <li>Interface Baselines</li>
+                <li>Routing Convergence</li>
+                <li>QoS Stability (current)</li>
+                <li>Troubleshooting Workflows</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Recommended Next</h3>
+              <ul>
+                <li>Lab: Autonomous Interface Optimization</li>
+                <li>Lesson: Drift Prediction Fundamentals</li>
+                <li>Quiz: QoS & Latency Tradeoffs</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="view" id="view-lesson">
+          <div class="view-head">
+            <h2>Lesson Viewer</h2>
+            <p>Content navigation, notes, embedded checks, and skill mapping.</p>
+          </div>
+          <div class="cards grid-2">
+            <div class="card lesson-panel">
+              <h3>Lesson: Interface Reliability Patterns</h3>
+              <p>
+                This lesson covers telemetry-driven detection, policy-safe remediation,
+                and rollback checkpoints for high-utilization interfaces.
+              </p>
+              <div class="chip-row">
+                <span class="chip">Interactive</span>
+                <span class="chip">~24 min</span>
+                <span class="chip">Skill: interface_resilience</span>
+              </div>
+              <button class="cta">Launch Embedded Lab</button>
+            </div>
+            <div class="card">
+              <h3>Learning Tools</h3>
+              <ul>
+                <li>Section navigator</li>
+                <li>Inline checkpoint quiz</li>
+                <li>Notes + bookmarks</li>
+                <li>Progress indicator</li>
+                <li>Skill mapping indicators</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="view" id="view-prep">
+          <div class="view-head">
+            <h2>Exam Preparation Center</h2>
+            <p>Practice, readiness analytics, and blueprint coverage guidance.</p>
+          </div>
+          <div class="cards grid-3">
+            <div class="card">
+              <h3>Practice Exams</h3>
+              <ul>
+                <li>Adaptive Practice #3</li>
+                <li>Blueprint Mock #1</li>
+                <li>Speed Drill Set</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Weakness Analysis</h3>
+              <ul>
+                <li>Policy edge-cases</li>
+                <li>Rollback sequencing</li>
+                <li>Telemetry anomaly triage</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Blueprint Coverage</h3>
+              <div class="meter"><span class="w-68"></span></div>
+              <small>Current objective coverage: 68%</small>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Recommended Study Plan</h3>
+            <p>2-week sprint: close identified weak zones, then re-run adaptive mock.</p>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

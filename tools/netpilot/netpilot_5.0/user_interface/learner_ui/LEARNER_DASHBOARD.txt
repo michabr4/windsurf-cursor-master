@@ -1,0 +1,14 @@
+NetPilot 5.0 — Learner Dashboard
+
+Purpose:
+Provides learners with a centralized interface for tracking progress, accessing content, and viewing personalized recommendations.
+
+Dashboard Components:
+- Skill mastery overview
+- Active learning path
+- Recommended lessons
+- Recommended labs
+- Study plan milestones
+- Exam readiness score
+- Recent activity
+- Gamification stats

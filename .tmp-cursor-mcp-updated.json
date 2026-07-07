@@ -1,0 +1,246 @@
+{
+  "mcpServers": {
+    "airtable-user-mcp": {
+      "command": "node",
+      "args": [
+        "/Users/michabr4/.airtable-user-mcp/start.mjs"
+      ],
+      "env": {
+        "AIRTABLE_HEADLESS_ONLY": "1",
+        "AIRTABLE_PROFILE_DIR": "/Users/michabr4/.airtable-user-mcp/.chrome-profile"
+      }
+    },
+    "asana": {
+      "url": "https://mcp.asana.com/sse"
+    },
+    "atlassian": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@anthropic/mcp-atlassian"
+      ],
+      "envFile": "/Users/michabr4/.env.cursor"
+    },
+    "postman": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@anthropic/mcp-postman"
+      ],
+      "envFile": "/Users/michabr4/.env.cursor"
+    },
+    "github": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ],
+      "envFile": "/Users/michabr4/.env.cursor"
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/michabr4/New Master Folder - Windsurf and Cursor"
+      ]
+    },
+    "postgres": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-postgres"
+      ],
+      "envFile": "/Users/michabr4/.env.cursor"
+    },
+    "docker": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-docker"
+      ]
+    },
+    "memory": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-memory"
+      ]
+    },
+    "comms-bridge": {
+      "command": "/Users/michabr4/New Master Folder - Windsurf and Cursor/tools/agentic-starter-kit/mcp-servers/comms-bridge-mcp/.venv/bin/python3",
+      "args": [
+        "/Users/michabr4/New Master Folder - Windsurf and Cursor/tools/agentic-starter-kit/mcp-servers/comms-bridge-mcp/server.py"
+      ],
+      "env": {
+        "COMMS_DIR": "/Users/michabr4/New Master Folder - Windsurf and Cursor/.comms"
+      }
+    },
+    "puppeteer": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-puppeteer"
+      ]
+    },
+    "webex": {
+      "command": "python3",
+      "args": [
+        "-m",
+        "webex_mcp_server"
+      ],
+      "envFile": "/Users/michabr4/.env.cursor",
+      "disabled": true
+    },
+    "salesforce": {
+      "command": "python3",
+      "args": [
+        "-m",
+        "salesforce_mcp_server"
+      ],
+      "envFile": "/Users/michabr4/.env.cursor",
+      "disabled": true
+    },
+    "outlook": {
+      "command": "/Users/michabr4/.local/bin/outlook-mcp",
+      "env": {
+        "OUTLOOK_MCP_CONFIG_DIR": "/Users/michabr4/.outlook-mcp"
+      }
+    },
+    "context7": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@upstash/context7-mcp@latest"
+      ]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp@latest"
+      ]
+    },
+    "fetch": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "mcp/fetch"
+      ]
+    },
+    "sqlite": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sqlite",
+        "/Users/michabr4/New Master Folder - Windsurf and Cursor"
+      ]
+    },
+    "deepwiki": {
+      "url": "https://mcp.deepwiki.com/mcp"
+    },
+    "sequential-thinking": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ]
+    },
+    "redis": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-redis",
+        "redis://localhost:6379"
+      ]
+    },
+    "brave-search": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-brave-search"
+      ],
+      "env": {
+        "BRAVE_API_KEY": ""
+      },
+      "disabled": true
+    },
+    "exa": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "exa-mcp-server"
+      ],
+      "env": {
+        "EXA_API_KEY": ""
+      },
+      "disabled": true
+    },
+    "slack": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-slack"
+      ],
+      "env": {
+        "SLACK_BOT_TOKEN": "",
+        "SLACK_TEAM_ID": ""
+      },
+      "disabled": true
+    },
+    "notion": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "notion-mcp-server"
+      ],
+      "env": {
+        "NOTION_API_TOKEN": ""
+      },
+      "disabled": true
+    },
+    "sentry": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@sentry/mcp-server@latest"
+      ],
+      "env": {
+        "SENTRY_AUTH_TOKEN": "",
+        "SENTRY_ORG": ""
+      },
+      "disabled": true
+    },
+    "sharepoint": {
+      "command": "podman",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "SHP_TENANT_ID",
+        "-e",
+        "SHP_ID_APP",
+        "-e",
+        "SHP_ID_APP_SECRET",
+        "-e",
+        "SHP_SITE_URL",
+        "-e",
+        "SHP_API_TYPE",
+        "-e",
+        "TRANSPORT",
+        "ravikant1918/sharepoint-mcp:latest"
+      ],
+      "env": {
+        "SHP_TENANT_ID": "5ae1af62-9505-4097-a69a-c1553ef7840e",
+        "SHP_ID_APP": "",
+        "SHP_ID_APP_SECRET": "",
+        "SHP_SITE_URL": "https://cisco.sharepoint.com/sites/CXMGM",
+        "SHP_API_TYPE": "graph",
+        "TRANSPORT": "stdio"
+      }
+    }
+  }
+}

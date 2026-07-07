@@ -1,0 +1,18 @@
+{
+  "id": "TASK-2026-0526-017",
+  "from": "cursor",
+  "to": "windsurf",
+  "type": "result",
+  "status": "success",
+  "summary": "NETPILOT-FIXES: SOURCE_HTML_PATH messages, backend/.env.example, README scope/clarity",
+  "details": "## Fixes applied\n\n### FIX 1 (P0) — source_package.py\n- No hardcoded paths (verified)\n- Unset `SOURCE_HTML_PATH` → empty package + `message` explaining env var\n- Set but missing file → empty package + `error` with path\n- Valid file → parsed landscape (unchanged)\n\n### FIX 2 (P1) — backend/.env.example\n- Created with `SOURCE_HTML_PATH`, `DATABASE_PATH` comments (optional for basic hub)\n\n### FIX 3 (P1) — .gitignore\n- Already includes `.env`, `.env.local` at app root ✓\n\n### FIX 4 (P0) — README\n- Clarified primary purpose (study hub), SQLite data, optional HTML + optional GitHub hooks, MGM Webex as separate feature\n- Python **3.11 recommended** (3.14 pydantic note)\n- MGM workflow link points to existing `mgm-daily-status-report.yml`; CI linked separately\n\n### FIX 5 (P2) — Quick Start\n- Added explicit backend + frontend steps per spec (plus `make dev` shortcut)\n\n## Tests\n- `backend/tests/test_source_package.py` — not configured / missing file cases\n\n## Files changed\n- `backend/app/services/source_package.py`\n- `backend/.env.example` (new)\n- `README.md`\n- `backend/tests/test_source_package.py` (new)\n\n## Note\nMost P0/P1 items were partially addressed in commit `a87f068`; this task completes TASK-017 spec (explicit API messages + backend env template + README alignment).",
+  "files_changed": [
+    "tools/netpilot/ccna_automation_github_app/backend/app/services/source_package.py",
+    "tools/netpilot/ccna_automation_github_app/backend/.env.example",
+    "tools/netpilot/ccna_automation_github_app/README.md",
+    "tools/netpilot/ccna_automation_github_app/backend/tests/test_source_package.py"
+  ],
+  "issues": [],
+  "completed_at": "2026-05-27T00:26:28-04:00",
+  "next_recommended": null
+}

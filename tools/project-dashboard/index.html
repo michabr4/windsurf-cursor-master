@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <title>AI Factory · Project Dashboard</title>
+    <script>
+      (function () {
+        var version = '20260601';
+        if (!location.search.includes('v=' + version)) {
+          var next = new URL(location.href);
+          next.searchParams.set('v', version);
+          location.replace(next.toString());
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root">
+      <p style="padding: 2rem; font-family: Inter, system-ui, sans-serif; color: #171f2d;">
+        Loading AI Factory Project Dashboard…
+      </p>
+    </div>
+    <noscript>
+      <p style="padding: 2rem; font-family: system-ui, sans-serif;">
+        JavaScript is required. Open
+        <a href="https://michabr4.github.io/windsurf-cursor-master/project-dashboard/">
+          the dashboard
+        </a>
+        in a browser with JavaScript enabled.
+      </p>
+    </noscript>
+    <script>
+      window.setTimeout(function () {
+        var root = document.getElementById('root');
+        if (!root || root.querySelector('h1')) return;
+        if (root.textContent && root.textContent.indexOf('Loading AI Factory') !== -1) {
+          root.innerHTML =
+            '<div style="padding:2rem;font-family:Inter,system-ui,sans-serif;max-width:40rem;color:#171f2d">' +
+            '<h1 style="font-size:1.25rem;margin-bottom:0.75rem">Dashboard scripts did not load</h1>' +
+            '<p style="margin-bottom:0.5rem">This is usually a <strong>cached old version</strong> or wrong URL.</p>' +
+            '<ol style="margin:0.75rem 0 0.75rem 1.25rem;line-height:1.6">' +
+            '<li>Chrome: DevTools → Application → Storage → <strong>Clear site data</strong> for github.io</li>' +
+            '<li>Safari: Develop menu → <strong>Empty Caches</strong> (enable Develop in Advanced settings)</li>' +
+            '<li>If using Cursor&apos;s built-in browser, open the link in Chrome/Safari instead</li>' +
+            '<li>Use this exact URL:<br><a href="https://michabr4.github.io/windsurf-cursor-master/project-dashboard/">https://michabr4.github.io/windsurf-cursor-master/project-dashboard/</a></li>' +
+            '</ol>' +
+            '<p style="font-size:0.875rem;color:#64748b">In DevTools → Network, the JS file should load from <code>/windsurf-cursor-master/project-dashboard/assets/</code> (not <code>/project-dashboard/assets/</code>).</p>' +
+            '</div>';
+        }
+      }, 4000);
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

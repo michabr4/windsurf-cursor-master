@@ -1,0 +1,18 @@
+{
+  "id": "TASK-2026-0526-006",
+  "from": "cursor",
+  "to": "windsurf",
+  "type": "result",
+  "status": "success",
+  "summary": "Phase 1 starter/workbench split complete: operational assets moved to delivery-workbench; starter kit genericized for sharing.",
+  "details": "## Audit\n- **Starter kit (template):** CodeGuard rules, generic API samples (Webex/CIRCUIT/Asana/Outlook), docs, comms-bridge MCP scaffold, multi-editor config.\n- **Workbench (operational):** Playbooks, email orchestration YAML, M365 connectors, project outputs, personal reference docs.\n\n## Files moved (cp → removed from starter)\n| From (starter-kit) | To (delivery-workbench) |\n|---|---|\n| docs/ServiceFlow SDC/ | docs/reference/serviceflow-sdc/ |\n| out/asana-reviews/*.json, *.md | data/asana-reviews/ |\n| python/src/agt001_email_chief_of_staff.py | python/integrations/agt001/email_chief_of_staff.py |\n| python/src/outlook_action_items.py | python/integrations/agt001/outlook_action_items.py |\n| python/examples/agt001_daily_digest_demo.py | scripts/integrations/agt001_daily_digest_demo.py |\n| docs/AGENT_FACTORY_*.md, TIGER_TEAM_*.md | docs/reference/agent-factory/ |\n| (copy) OUTLOOK_API_ACCESS_GUIDE.md | docs/email/OUTLOOK_AGT001_SETUP.md |\n\n## Starter kit cleanup\n- Removed hardcoded paths from comms-bridge MCP (COMMS_DIR required).\n- README relationship section added; OUTLOOK guide retargeted to sample (not AGT-001).\n- Operational files removed after successful copy.\n\n## Ambiguous (left in starter)\n- Asana review **code** (template demo); only review **artifacts** moved.\n- dashboard_server.py demo; setup_teamspace_mcp.sh (generic placeholders).\n\n## Docs updated\n- MASTER_INDEX.md (#12, #13, overlap map)\n- Both READMEs (cross-links)\n- MIGRATION_LOG.md (this task)\n- delivery-workbench .env.example → you@example.com placeholder\n\n## Self-contained check\n- Starter: clone-ready template, no personal paths in comms MCP defaults.\n- Workbench: AGT-001 demo via `python3 scripts/integrations/agt001_daily_digest_demo.py`; outputs under data/runs/agt001/.",
+  "files_changed": [
+    "tools/agentic-starter-kit/",
+    "tools/delivery-workbench/",
+    "MASTER_INDEX.md",
+    "MIGRATION_LOG.md"
+  ],
+  "issues": [],
+  "completed_at": "2026-05-26T13:43:03-04:00",
+  "next_recommended": null
+}

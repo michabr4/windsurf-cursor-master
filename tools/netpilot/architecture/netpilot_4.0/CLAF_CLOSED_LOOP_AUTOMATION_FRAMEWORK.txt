@@ -1,0 +1,24 @@
+NETPILOT 4.0 — CLOSED-LOOP AUTOMATION FRAMEWORK (CLAF)
+
+Purpose:
+CLAF is the event-driven backbone that connects telemetry, intent, policies, ANE, PTE, and ARE-X into continuous closed loops.
+
+Core Capabilities:
+- Event ingestion (telemetry, intent, policy, workflow)
+- Trigger evaluation
+- Loop definition and orchestration
+- Feedback routing to ANE and PTE
+- Loop health monitoring
+
+Key Components:
+- Event Bus
+- Trigger Engine
+- Loop Orchestrator
+- Feedback Router
+- Loop Metrics Store
+
+Loop Types:
+- Telemetry-driven loops
+- Intent-driven loops
+- Policy-driven loops
+- Hybrid loops

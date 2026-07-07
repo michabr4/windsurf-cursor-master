@@ -1,0 +1,14 @@
+{
+  "id": "TASK-2026-0526-001",
+  "from": "windsurf",
+  "to": "cursor",
+  "priority": "high",
+  "type": "instruction",
+  "phase": "0.5",
+  "title": "Verify Phase 0.5 completion — extensions, settings, AI config",
+  "spec": "Verify the remaining Phase 0.5 items:\n\n1. EXTENSIONS CHECK:\n   Run: list all installed Cursor/VS Code extensions.\n   Expected: 16+ extensions including Python, ESLint, Prettier, Docker, GitLens, Ruff, Markdown.\n   Report exact count and list.\n\n2. SETTINGS CHECK:\n   Read Cursor user settings.json.\n   Verify these are set: formatOnSave=true, editor.rulers=[100], terminal.integrated.defaultProfile.osx=zsh, python.analysis.typeCheckingMode=basic.\n   Report any missing.\n\n3. AI MODEL CHECK:\n   Report current AI model settings: primary model, agent mode enabled, MCP enabled, iterate-on-lints enabled.\n\n4. RULES CHECK:\n   Run: ls .cursor/rules/ | wc -l\n   Expected: 26 (22 CodeGuard + 3 builder + 1 comms-protocol).\n   Report exact count.\n\nWrite result to .comms/outbox/RESULT-TASK-2026-0526-001.json per the comms protocol.",
+  "depends_on": null,
+  "files_to_read": [".comms/schema.md", "CURSOR_SETUP_PLAN.md"],
+  "created_at": "2026-05-26T12:25:00-04:00",
+  "status": "in_progress"
+}

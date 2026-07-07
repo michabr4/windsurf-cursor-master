@@ -1,0 +1,17 @@
+{
+  "id": "TASK-2026-0526-010",
+  "from": "windsurf",
+  "to": "cursor",
+  "priority": "medium",
+  "type": "instruction",
+  "phase": "1",
+  "title": "Phase 1 Consolidation — PLATFORM-CONSOLIDATE: Merge ServiceFlow variants into serviceflow-sdm",
+  "spec": "CONSOLIDATION ACTION: PLATFORM-CONSOLIDATE\n\nThree folders represent different generations of the same ServiceFlow platform. The canonical repo is serviceflow-sdm (full-stack: Express/React/Expo/Docker).\n\nTASK 1: Inventory ServiceFlow SDC (original mockup)\n- Read sdm-files/ServiceFlow SDC/ (or wherever the original HTML+CSS+JS mockup lives in the master folder)\n- Check for:\n  - Mockup HTML/CSS/JS files with UI views NOT already in serviceflow-sdm\n  - CISCO_DATA_SOURCES.md, MVP_SCOPE_FREEZE.md or similar docs NOT in serviceflow-sdm/docs/\n- List all unique assets found\n\nTASK 2: Inventory ServiceFlow SDC_Windsurf (Windsurf iteration)\n- Read sdm-files/ServiceFlow SDC_Windsurf/ (or equivalent)\n- Same check as Task 1\n- This is likely a subset of serviceflow-sdm — confirm or list differences\n\nTASK 3: Check serviceflow-sdm for existing coverage\n- Read apps/serviceflow-sdm/ (or wherever it lives in the master folder)\n- Compare against findings from Tasks 1-2\n- Determine what's actually unique vs already covered\n\nTASK 4: Port unique assets into serviceflow-sdm\n- Copy unique docs to serviceflow-sdm docs/legacy/\n- Copy unique mockup HTML to serviceflow-sdm frontend/public/legacy-mockup/ (or similar)\n- If nothing unique found, skip and note \"serviceflow-sdm already covers all\"\n\nTASK 5: Archive old variants\n- Move ServiceFlow SDC/ to _archived/ServiceFlow-SDC/\n- Move ServiceFlow SDC_Windsurf/ to _archived/ServiceFlow-SDC-Windsurf/\n- Update _archived/ARCHIVE_LOG.md with entries and timestamps\n\nTASK 6: Update serviceflow-sdm README\n- Add note about legacy mockup assets if any were ported\n- Add \"Consolidated From\" section\n\nTASK 7: Security audit\n- Run: grep -r \"AKIA\\\\|sk_live\\\\|ghp_\\\\|pat[A-Z]\\\\|Bearer \" in each ServiceFlow variant before archiving\n- Verify no .env files with real credentials\n- Report any findings\n\nTASK 8: Update MASTER_INDEX.md\n- Mark ServiceFlow SDC and SDC_Windsurf as ARCHIVED\n- Confirm serviceflow-sdm is the canonical platform entry\n\nCONSTRAINTS:\n- Do NOT modify serviceflow-sdm's working code\n- Archive only — never delete\n- If the SDC folders don't exist in the master folder (may still be on Desktop), report that and skip",
+  "depends_on": null,
+  "files_to_read": [
+    "CONSOLIDATION_PLAN.md",
+    "MASTER_INDEX.md"
+  ],
+  "created_at": "2026-05-26T14:00:29-04:00",
+  "status": "in_progress"
+}

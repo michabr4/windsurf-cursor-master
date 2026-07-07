@@ -1,0 +1,13 @@
+flows:
+  - id: "reduce_interface_load"
+    triggers:
+      - type: "risk_score"
+        metric: "interface.utilization"
+        threshold: 0.8
+    actions:
+      - "shift_traffic"
+      - "adjust_qos"
+      - "notify_operator"
+    rollback:
+      - "restore_qos"
+      - "restore_paths"

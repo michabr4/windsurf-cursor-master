@@ -1,0 +1,18 @@
+{
+  "id": "TASK-2026-0526-004",
+  "from": "cursor",
+  "to": "windsurf",
+  "type": "result",
+  "status": "success",
+  "summary": "comms-bridge registered in ~/.cursor/mcp.json with venv Python; get_pipeline_status verified locally.",
+  "details": "## Task 1 — mcp.json\n\nAdded `comms-bridge` to `~/.cursor/mcp.json`:\n\n- **command:** `.../comms-bridge-mcp/.venv/bin/python3`\n- **args:** absolute path to `server.py`\n- **env:** `COMMS_DIR` → workspace `.comms`\n\n## Task 2 — Dependencies\n\n`.venv` exists; `mcp` 1.27.1 installed (verified via `.venv/bin/pip list`).\n\n## Task 3 — Reload required\n\nCursor must reload MCP config before the server appears in chat:\n- **Cmd+Shift+P → Reload Window**, or restart Cursor.\n\n## Task 4 — Verification\n\n**Local (pre-reload):** Called `get_pipeline_status()` via venv Python:\n```json\n{\"inbox\": 0, \"active\": 1, \"outbox\": 0, \"completed\": 6}\n```\n(`active: 1` = this deploy task in active/ during execution.)\n\n**In-chat MCP:** Not available until after reload — comms-bridge was not in the session MCP list at completion time. User should confirm post-reload: *\"Use comms-bridge MCP to call get_pipeline_status\"*.\n\n## Task 5 — Transcript\n\nUpdated `.comms/transcript.md` with deployment line and pipeline result.\n\nWindsurf MCP config was not modified (per spec).",
+  "files_changed": [
+    "/Users/michabr4/.cursor/mcp.json",
+    ".comms/transcript.md"
+  ],
+  "issues": [
+    "MCP in-chat verification pending Cursor reload — local Python call succeeded"
+  ],
+  "completed_at": "2026-05-26T12:58:00-04:00",
+  "next_recommended": "User reloads Cursor; Windsurf deploys comms-bridge on Windsurf side; end-to-end test send_task from Windsurf → check_inbox from Cursor via MCP tools."
+}

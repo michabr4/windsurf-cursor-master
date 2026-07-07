@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vibe Coding 101 — Getting Started Guide</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+          colors: {
+            cisco: { blue: '#049fd9', dark: '#171f2d', teal: '#00bceb' },
+            splunk: { teal: '#006D9C', green: '#53A051', red: '#DC4E41', orange: '#F1813F', yellow: '#F8BE34' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; scroll-snap-type: y mandatory; }
+    .slide { scroll-snap-align: start; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .slide-nav { transition: all 0.2s; }
+    .slide-nav:hover { transform: scale(1.1); }
+    @media print {
+      .slide { page-break-after: always; min-height: auto; padding: 2rem 0; }
+      .no-print { display: none !important; }
+    }
+  </style>
+</head>
+<body class="font-sans bg-slate-50 text-slate-800 antialiased">
+
+  <!-- Slide navigation -->
+  <nav class="fixed top-4 right-4 z-50 flex flex-col gap-2 no-print">
+    <a href="#s1" class="slide-nav w-3 h-3 rounded-full bg-cisco-blue/40 hover:bg-cisco-blue" title="Title"></a>
+    <a href="#s2" class="slide-nav w-3 h-3 rounded-full bg-cisco-blue/40 hover:bg-cisco-blue" title="What Is It"></a>
+    <a href="#s3" class="slide-nav w-3 h-3 rounded-full bg-cisco-blue/40 hover:bg-cisco-blue" title="What You Need"></a>
+    <a href="#s4" class="slide-nav w-3 h-3 rounded-full bg-cisco-blue/40 hover:bg-cisco-blue" title="Your First Session"></a>
+    <a href="#s5" class="slide-nav w-3 h-3 rounded-full bg-cisco-blue/40 hover:bg-cisco-blue" title="The Conversation"></a>
+    <a href="#s6" class="slide-nav w-3 h-3 rounded-full bg-cisco-blue/40 hover:bg-cisco-blue" title="Tips"></a>
+    <a href="#s7" class="slide-nav w-3 h-3 rounded-full bg-cisco-blue/40 hover:bg-cisco-blue" title="Mindset Shifts"></a>
+    <a href="#s8" class="slide-nav w-3 h-3 rounded-full bg-cisco-blue/40 hover:bg-cisco-blue" title="Go Build"></a>
+  </nav>
+
+  <!-- ============ SLIDE 1: Title ============ -->
+  <section id="s1" class="slide bg-gradient-to-br from-cisco-dark to-slate-900 text-white">
+    <div class="max-w-4xl mx-auto px-8 text-center">
+      <div class="inline-flex items-center gap-2 bg-cisco-blue/20 rounded-full px-4 py-2 text-sm font-medium text-cisco-teal mb-8">
+        A Beginner's Guide
+      </div>
+      <h1 class="text-5xl md:text-7xl font-black tracking-tight leading-tight mb-6">
+        Vibe Coding
+        <span class="bg-gradient-to-r from-cisco-teal to-cisco-blue bg-clip-text text-transparent"> 101</span>
+      </h1>
+      <p class="text-xl md:text-2xl text-slate-400 max-w-2xl mx-auto mb-12">
+        You don't need to be a developer.<br>You just need an idea and a conversation.
+      </p>
+      <div class="flex justify-center">
+        <a href="#s2" class="inline-flex items-center gap-2 bg-cisco-blue text-white font-semibold px-8 py-4 rounded-xl hover:bg-cisco-teal transition no-print">
+          Let's Get Started
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 2: What Is Vibe Coding ============ -->
+  <section id="s2" class="slide bg-white">
+    <div class="max-w-4xl mx-auto px-8">
+      <div class="text-sm font-semibold text-cisco-blue uppercase tracking-widest mb-4">Slide 1 of 7</div>
+      <h2 class="text-4xl md:text-5xl font-black tracking-tight mb-8">What Is Vibe Coding?</h2>
+
+      <div class="grid md:grid-cols-2 gap-8 mb-10">
+        <div class="bg-splunk-red/5 rounded-2xl p-6 border border-splunk-red/10">
+          <div class="text-sm font-bold text-splunk-red uppercase tracking-wider mb-3">Traditional Coding</div>
+          <ul class="space-y-3 text-slate-600">
+            <li class="flex items-start gap-2"><span class="text-splunk-red mt-1">&#x2717;</span> Learn a programming language first</li>
+            <li class="flex items-start gap-2"><span class="text-splunk-red mt-1">&#x2717;</span> Type exact syntax the computer understands</li>
+            <li class="flex items-start gap-2"><span class="text-splunk-red mt-1">&#x2717;</span> Debug cryptic error messages alone</li>
+            <li class="flex items-start gap-2"><span class="text-splunk-red mt-1">&#x2717;</span> Months to build something useful</li>
+          </ul>
+        </div>
+        <div class="bg-splunk-green/5 rounded-2xl p-6 border border-splunk-green/10">
+          <div class="text-sm font-bold text-splunk-green uppercase tracking-wider mb-3">Vibe Coding</div>
+          <ul class="space-y-3 text-slate-600">
+            <li class="flex items-start gap-2"><span class="text-splunk-green mt-1">&#x2713;</span> Describe what you want in plain English</li>
+            <li class="flex items-start gap-2"><span class="text-splunk-green mt-1">&#x2713;</span> AI writes the code for you</li>
+            <li class="flex items-start gap-2"><span class="text-splunk-green mt-1">&#x2713;</span> Conversational back-and-forth to refine</li>
+            <li class="flex items-start gap-2"><span class="text-splunk-green mt-1">&#x2713;</span> Working results in minutes to hours</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200">
+        <p class="text-lg text-slate-700 leading-relaxed">
+          <strong>In short:</strong> Vibe coding is building software by having a conversation with an AI assistant.
+          You bring the <em>what</em> and the <em>why</em>. The AI handles the <em>how</em>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 3: What You Need ============ -->
+  <section id="s3" class="slide bg-slate-50">
+    <div class="max-w-4xl mx-auto px-8">
+      <div class="text-sm font-semibold text-cisco-blue uppercase tracking-widest mb-4">Slide 2 of 7</div>
+      <h2 class="text-4xl md:text-5xl font-black tracking-tight mb-8">What You Need to Start</h2>
+
+      <div class="space-y-6">
+        <!-- Item 1 -->
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 flex gap-6 items-start">
+          <div class="w-14 h-14 rounded-xl bg-cisco-blue/10 flex items-center justify-center flex-shrink-0">
+            <span class="text-2xl font-black text-cisco-blue">1</span>
+          </div>
+          <div>
+            <h3 class="font-bold text-lg mb-1">An AI-Powered Code Editor</h3>
+            <p class="text-slate-500 mb-3">These are free or low-cost tools with AI built in. Pick one:</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <div class="bg-slate-50 rounded-lg p-3 text-center">
+                <div class="font-bold text-sm">Windsurf</div>
+                <div class="text-xs text-slate-400 mt-1">Best for beginners</div>
+              </div>
+              <div class="bg-slate-50 rounded-lg p-3 text-center">
+                <div class="font-bold text-sm">Cursor</div>
+                <div class="text-xs text-slate-400 mt-1">Popular choice</div>
+              </div>
+              <div class="bg-slate-50 rounded-lg p-3 text-center">
+                <div class="font-bold text-sm">GitHub Copilot</div>
+                <div class="text-xs text-slate-400 mt-1">Inside VS Code</div>
+              </div>
+              <div class="bg-slate-50 rounded-lg p-3 text-center">
+                <div class="font-bold text-sm">Replit</div>
+                <div class="text-xs text-slate-400 mt-1">Browser-based</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 flex gap-6 items-start">
+          <div class="w-14 h-14 rounded-xl bg-cisco-blue/10 flex items-center justify-center flex-shrink-0">
+            <span class="text-2xl font-black text-cisco-blue">2</span>
+          </div>
+          <div>
+            <h3 class="font-bold text-lg mb-1">A Clear Idea of What You Want to Build</h3>
+            <p class="text-slate-500">Doesn't need to be perfect. Even "I want a simple website that shows our team's project status" is enough to start. The AI will ask clarifying questions.</p>
+          </div>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 flex gap-6 items-start">
+          <div class="w-14 h-14 rounded-xl bg-cisco-blue/10 flex items-center justify-center flex-shrink-0">
+            <span class="text-2xl font-black text-cisco-blue">3</span>
+          </div>
+          <div>
+            <h3 class="font-bold text-lg mb-1">Willingness to Iterate</h3>
+            <p class="text-slate-500">The first version won't be perfect — and that's the point. Vibe coding is a conversation. You say "make the header bigger" or "that color is wrong" and the AI adjusts. Just like working with a colleague.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 bg-splunk-yellow/10 rounded-2xl p-5 border border-splunk-yellow/20">
+        <p class="text-sm text-slate-700"><strong>You do NOT need:</strong> Programming experience, a computer science degree, knowledge of HTML/CSS/JavaScript, or any technical background. Seriously.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 4: Your First Session ============ -->
+  <section id="s4" class="slide bg-white">
+    <div class="max-w-4xl mx-auto px-8">
+      <div class="text-sm font-semibold text-cisco-blue uppercase tracking-widest mb-4">Slide 3 of 7</div>
+      <h2 class="text-4xl md:text-5xl font-black tracking-tight mb-8">Your First Session</h2>
+      <p class="text-lg text-slate-500 mb-10">Here's exactly what to do when you open a tool like Windsurf or Cursor for the first time.</p>
+
+      <div class="relative">
+        <!-- Timeline -->
+        <div class="absolute left-7 top-0 bottom-0 w-0.5 bg-gradient-to-b from-cisco-blue via-cisco-teal to-splunk-green"></div>
+
+        <div class="space-y-8">
+          <div class="flex gap-6 items-start">
+            <div class="w-14 h-14 rounded-full bg-cisco-blue text-white flex items-center justify-center font-bold text-lg flex-shrink-0 relative z-10">1</div>
+            <div class="pt-3">
+              <h3 class="font-bold text-lg">Open the tool and find the chat panel</h3>
+              <p class="text-slate-500 mt-1">Every AI code editor has a chat window — usually on the right side. This is where you talk to the AI.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-6 items-start">
+            <div class="w-14 h-14 rounded-full bg-cisco-blue/80 text-white flex items-center justify-center font-bold text-lg flex-shrink-0 relative z-10">2</div>
+            <div class="pt-3">
+              <h3 class="font-bold text-lg">Describe what you want in plain English</h3>
+              <p class="text-slate-500 mt-1">Example: <em>"Build me a single-page website that lists our team's 5 current projects with a status indicator for each one. Use a clean, modern design."</em></p>
+            </div>
+          </div>
+
+          <div class="flex gap-6 items-start">
+            <div class="w-14 h-14 rounded-full bg-cisco-teal text-white flex items-center justify-center font-bold text-lg flex-shrink-0 relative z-10">3</div>
+            <div class="pt-3">
+              <h3 class="font-bold text-lg">Review what the AI creates</h3>
+              <p class="text-slate-500 mt-1">The AI will generate code files. Click "Accept" to save them. Then preview in your browser (the tool usually offers a preview button or you open the file).</p>
+            </div>
+          </div>
+
+          <div class="flex gap-6 items-start">
+            <div class="w-14 h-14 rounded-full bg-splunk-green text-white flex items-center justify-center font-bold text-lg flex-shrink-0 relative z-10">4</div>
+            <div class="pt-3">
+              <h3 class="font-bold text-lg">Give feedback, naturally</h3>
+              <p class="text-slate-500 mt-1">Say things like: <em>"Make the font bigger"</em>, <em>"Change the green to Cisco blue"</em>, <em>"Add a column for project owner"</em>. Keep going until it looks right.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 5: The Conversation ============ -->
+  <section id="s5" class="slide bg-slate-50">
+    <div class="max-w-4xl mx-auto px-8">
+      <div class="text-sm font-semibold text-cisco-blue uppercase tracking-widest mb-4">Slide 4 of 7</div>
+      <h2 class="text-4xl md:text-5xl font-black tracking-tight mb-4">How to Talk to the AI</h2>
+      <p class="text-lg text-slate-500 mb-10">The quality of your results depends on how you describe what you want. Here are real examples.</p>
+
+      <div class="space-y-4">
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="bg-splunk-red/5 rounded-xl p-5 border border-splunk-red/10">
+            <div class="text-xs font-bold text-splunk-red uppercase tracking-wider mb-2">Vague (harder for AI)</div>
+            <p class="text-slate-700 italic">"Make me a website"</p>
+          </div>
+          <div class="bg-splunk-green/5 rounded-xl p-5 border border-splunk-green/10">
+            <div class="text-xs font-bold text-splunk-green uppercase tracking-wider mb-2">Specific (much better)</div>
+            <p class="text-slate-700 italic">"Build a single-page dashboard showing 8 team roles with their descriptions. Use a dark header, card layout, and Cisco brand colors."</p>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="bg-splunk-red/5 rounded-xl p-5 border border-splunk-red/10">
+            <div class="text-xs font-bold text-splunk-red uppercase tracking-wider mb-2">Vague</div>
+            <p class="text-slate-700 italic">"Fix the colors"</p>
+          </div>
+          <div class="bg-splunk-green/5 rounded-xl p-5 border border-splunk-green/10">
+            <div class="text-xs font-bold text-splunk-green uppercase tracking-wider mb-2">Specific</div>
+            <p class="text-slate-700 italic">"Change the header background from purple to Cisco blue (#049fd9) and make the subtitle text lighter."</p>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="bg-splunk-red/5 rounded-xl p-5 border border-splunk-red/10">
+            <div class="text-xs font-bold text-splunk-red uppercase tracking-wider mb-2">Vague</div>
+            <p class="text-slate-700 italic">"It's broken"</p>
+          </div>
+          <div class="bg-splunk-green/5 rounded-xl p-5 border border-splunk-green/10">
+            <div class="text-xs font-bold text-splunk-green uppercase tracking-wider mb-2">Specific</div>
+            <p class="text-slate-700 italic">"When I click on the Service Delivery Manager card, it expands but the card next to it also shows an arrow. Only the clicked card should expand."</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 bg-cisco-blue/5 rounded-2xl p-5 border border-cisco-blue/10">
+        <p class="text-sm text-slate-700"><strong>Pro tip:</strong> You can paste screenshots into the chat. Show the AI what's wrong visually — it understands images too.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 6: Tips ============ -->
+  <section id="s6" class="slide bg-white">
+    <div class="max-w-4xl mx-auto px-8">
+      <div class="text-sm font-semibold text-cisco-blue uppercase tracking-widest mb-4">Slide 5 of 7</div>
+      <h2 class="text-4xl md:text-5xl font-black tracking-tight mb-10">Five Tips for Success</h2>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-gradient-to-br from-cisco-blue/5 to-transparent rounded-2xl p-6 border border-cisco-blue/10">
+          <div class="text-3xl font-black text-cisco-blue mb-3">01</div>
+          <h3 class="font-bold text-lg mb-2">Start Small</h3>
+          <p class="text-slate-500 text-sm">Don't try to build an enterprise app on day one. Start with a simple page, a small tool, or a personal dashboard. Grow from there.</p>
+        </div>
+
+        <div class="bg-gradient-to-br from-cisco-teal/5 to-transparent rounded-2xl p-6 border border-cisco-teal/10">
+          <div class="text-3xl font-black text-cisco-teal mb-3">02</div>
+          <h3 class="font-bold text-lg mb-2">Be the Product Manager</h3>
+          <p class="text-slate-500 text-sm">Your job is to know what you want and clearly communicate it. The AI is your developer. Direct it like you would a teammate.</p>
+        </div>
+
+        <div class="bg-gradient-to-br from-splunk-teal/5 to-transparent rounded-2xl p-6 border border-splunk-teal/10">
+          <div class="text-3xl font-black text-splunk-teal mb-3">03</div>
+          <h3 class="font-bold text-lg mb-2">Iterate, Don't Restart</h3>
+          <p class="text-slate-500 text-sm">If something isn't right, tell the AI what to fix — don't start over. Each correction teaches the AI your preferences for the rest of the session.</p>
+        </div>
+
+        <div class="bg-gradient-to-br from-splunk-green/5 to-transparent rounded-2xl p-6 border border-splunk-green/10">
+          <div class="text-3xl font-black text-splunk-green mb-3">04</div>
+          <h3 class="font-bold text-lg mb-2">Ask "Why" When Unsure</h3>
+          <p class="text-slate-500 text-sm">When the AI does something you don't understand, ask it to explain. It's a learning opportunity and ensures you stay in control of your project.</p>
+        </div>
+
+        <div class="md:col-span-2 bg-gradient-to-br from-splunk-orange/5 to-transparent rounded-2xl p-6 border border-splunk-orange/10">
+          <div class="text-3xl font-black text-splunk-orange mb-3">05</div>
+          <h3 class="font-bold text-lg mb-2">Read the Approvals</h3>
+          <p class="text-slate-500 text-sm">The AI will sometimes ask to run commands or make changes. Read what it's proposing before clicking "Accept." Most actions are safe — installing packages, creating files — but always read first. If it mentions deleting files or running something unfamiliar, ask it to explain.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 7: Mindset Shifts ============ -->
+  <section id="s7" class="slide bg-slate-50">
+    <div class="max-w-4xl mx-auto px-8">
+      <div class="text-sm font-semibold text-cisco-blue uppercase tracking-widest mb-4">Slide 6 of 7</div>
+      <h2 class="text-4xl md:text-5xl font-black tracking-tight mb-10">Mindset Shifts</h2>
+
+      <div class="space-y-6">
+        <div class="bg-white rounded-2xl p-6 border border-slate-200">
+          <div class="flex items-center gap-4 mb-3">
+            <div class="bg-splunk-red/10 text-splunk-red rounded-lg px-3 py-1 text-sm font-bold">Old</div>
+            <span class="text-slate-400">&#x2192;</span>
+            <div class="bg-splunk-green/10 text-splunk-green rounded-lg px-3 py-1 text-sm font-bold">New</div>
+          </div>
+          <p class="text-slate-700"><span class="line-through text-slate-400">"I can't code, so I can't build software."</span><br><strong>"I can describe what I need, so I can build anything."</strong></p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-slate-200">
+          <div class="flex items-center gap-4 mb-3">
+            <div class="bg-splunk-red/10 text-splunk-red rounded-lg px-3 py-1 text-sm font-bold">Old</div>
+            <span class="text-slate-400">&#x2192;</span>
+            <div class="bg-splunk-green/10 text-splunk-green rounded-lg px-3 py-1 text-sm font-bold">New</div>
+          </div>
+          <p class="text-slate-700"><span class="line-through text-slate-400">"I need to submit a ticket and wait weeks for IT."</span><br><strong>"I can prototype this myself in an afternoon and show my team."</strong></p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-slate-200">
+          <div class="flex items-center gap-4 mb-3">
+            <div class="bg-splunk-red/10 text-splunk-red rounded-lg px-3 py-1 text-sm font-bold">Old</div>
+            <span class="text-slate-400">&#x2192;</span>
+            <div class="bg-splunk-green/10 text-splunk-green rounded-lg px-3 py-1 text-sm font-bold">New</div>
+          </div>
+          <p class="text-slate-700"><span class="line-through text-slate-400">"Errors mean I did something wrong."</span><br><strong>"Errors are just part of the conversation. I tell the AI what happened and it fixes it."</strong></p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-slate-200">
+          <div class="flex items-center gap-4 mb-3">
+            <div class="bg-splunk-red/10 text-splunk-red rounded-lg px-3 py-1 text-sm font-bold">Old</div>
+            <span class="text-slate-400">&#x2192;</span>
+            <div class="bg-splunk-green/10 text-splunk-green rounded-lg px-3 py-1 text-sm font-bold">New</div>
+          </div>
+          <p class="text-slate-700"><span class="line-through text-slate-400">"I need to understand the code to use it."</span><br><strong>"I need to understand the outcome. The code is the AI's job."</strong></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 8: Go Build ============ -->
+  <section id="s8" class="slide bg-gradient-to-br from-cisco-dark to-slate-900 text-white">
+    <div class="max-w-4xl mx-auto px-8 text-center">
+      <h2 class="text-4xl md:text-6xl font-black tracking-tight mb-6">Now Go Build Something</h2>
+      <p class="text-xl text-slate-400 max-w-2xl mx-auto mb-12">
+        The best way to learn vibe coding is to start. Pick one small thing you wish existed — a tracker, a dashboard, a calculator — and describe it to the AI.
+      </p>
+
+      <div class="grid md:grid-cols-3 gap-6 mb-16 text-left">
+        <div class="bg-white/5 backdrop-blur rounded-2xl p-6 border border-white/10">
+          <div class="text-sm font-bold text-cisco-teal uppercase tracking-wider mb-3">Starter Idea #1</div>
+          <p class="text-slate-300 text-sm">"Build me a personal task board with three columns: To Do, In Progress, and Done. Let me drag tasks between columns."</p>
+        </div>
+        <div class="bg-white/5 backdrop-blur rounded-2xl p-6 border border-white/10">
+          <div class="text-sm font-bold text-cisco-teal uppercase tracking-wider mb-3">Starter Idea #2</div>
+          <p class="text-slate-300 text-sm">"Create a simple meeting notes page where I can type notes, tag action items, and see them listed at the bottom."</p>
+        </div>
+        <div class="bg-white/5 backdrop-blur rounded-2xl p-6 border border-white/10">
+          <div class="text-sm font-bold text-cisco-teal uppercase tracking-wider mb-3">Starter Idea #3</div>
+          <p class="text-slate-300 text-sm">"Make a team directory page with everyone's name, role, and photo. Include a search box to filter by name."</p>
+        </div>
+      </div>
+
+      <div class="bg-white/10 backdrop-blur rounded-2xl p-8 border border-white/10 max-w-2xl mx-auto">
+        <p class="text-lg text-white font-medium mb-2">The People AI Factory started exactly this way.</p>
+        <p class="text-slate-400">One person. One idea. One conversation with an AI. The site you see at <a href="https://michabr4.github.io/ai-factory/" target="_blank" rel="noopener noreferrer" class="text-cisco-teal underline hover:text-white transition">michabr4.github.io/ai-factory</a> was built entirely through vibe coding.</p>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en" data-layout="6" data-color="7">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Asana task review</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <div class="hero" style="max-width: var(--page-max); margin: 0 auto 1.5rem;">
+      <p class="eyebrow">Local dev</p>
+      <h1>Asana task review</h1>
+      <p class="lede">
+        This page only talks to your <strong>local Python server</strong>. Your Asana token stays in <code>.env</code>.
+        Run: <code>python python/examples/asana_review_server.py</code>
+      </p>
+    </div>
+
+    <div class="cards" style="max-width: var(--page-max); margin: 0 auto;">
+      <section class="card" aria-labelledby="asana-title">
+        <h2 id="asana-title">Review</h2>
+        <p id="auth-banner" class="muted" hidden style="padding:0.65rem 0.75rem; border-radius:6px; background:var(--surface-2,#f4f4f5); margin-bottom:0.75rem;"></p>
+        <p class="muted">Paste a task URL or numeric task id, then run the checks.</p>
+        <label for="task-input" class="muted" style="display:block; margin-bottom:0.35rem;">Task URL or GID</label>
+        <input id="task-input" type="text" autocomplete="off" spellcheck="false"
+          style="width:100%; max-width:40rem; padding:0.5rem 0.65rem; font: inherit; border-radius:6px; border:1px solid var(--border, #ccc); box-sizing:border-box;"
+          placeholder="https://app.asana.com/0/…/… or 1234567890123456" />
+        <label style="display:flex; align-items:center; gap:0.5rem; margin-top:0.75rem; cursor:pointer;">
+          <input type="checkbox" id="use-llm" />
+          <span class="muted">Polish comment with local Ollama</span>
+        </label>
+        <div style="margin-top:0.75rem; display:flex; flex-wrap:wrap; gap:0.5rem;">
+          <button class="wiz-btn wiz-btn-primary" type="button" id="btn-review">Run review</button>
+          <button class="wiz-btn" type="button" id="btn-post" disabled>Post comment to Asana</button>
+        </div>
+        <p class="muted" id="asana-status" aria-live="polite" style="margin-top:0.75rem;"></p>
+        <h3 class="muted" style="margin-top:1.25rem; font-size:0.95rem;">Comment preview (edit before posting)</h3>
+        <textarea id="comment-draft" rows="12" style="width:100%; max-width:40rem; padding:0.5rem 0.65rem; font: inherit; border-radius:6px; border:1px solid var(--border, #ccc); box-sizing:border-box;" disabled></textarea>
+        <h3 class="muted" style="margin-top:1.25rem; font-size:0.95rem;">Report (markdown)</h3>
+        <pre class="panel" id="report-out" style="white-space: pre-wrap; font-size: 0.9rem; margin-top: 0.5rem; min-height:4rem;"></pre>
+      </section>
+    </div>
+
+    <script>
+      const $ = (id) => document.getElementById(id);
+
+      function setStatus(msg) {
+        $("asana-status").textContent = msg;
+      }
+
+      async function getJson(path) {
+        const res = await fetch(path, { headers: { Accept: "application/json" } });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          throw new Error(data.error || res.statusText || "Request failed");
+        }
+        return data;
+      }
+
+      let lastTaskGid = "";
+
+      async function refreshAuthBanner() {
+        try {
+          const data = await getJson("/api/asana/auth-status");
+          const banner = $("auth-banner");
+          if (data.oauth_configured && !data.authenticated) {
+            banner.hidden = false;
+            banner.innerHTML =
+              "Connect Asana first: <a href=\"/oauth/start\">Sign in with Asana (OAuth)</a>. " +
+              "Register redirect URI <code>" + (data.redirect_uri || "") + "</code> in your Asana app.";
+          } else if (data.authenticated) {
+            banner.hidden = false;
+            banner.textContent = "Asana is connected on this machine.";
+          } else {
+            banner.hidden = true;
+          }
+        } catch {
+          /* server may be starting */
+        }
+      }
+
+      refreshAuthBanner();
+
+      $("btn-review").addEventListener("click", async () => {
+        const task = $("task-input").value.trim();
+        $("comment-draft").disabled = true;
+        $("btn-post").disabled = true;
+        $("report-out").textContent = "";
+        $("comment-draft").value = "";
+        lastTaskGid = "";
+        if (!task) {
+          setStatus("Enter a task URL or GID.");
+          return;
+        }
+        setStatus("Running review…");
+        try {
+          const res = await fetch("/api/asana/review", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Accept: "application/json" },
+            body: JSON.stringify({ task, use_llm: $("use-llm").checked })
+          });
+          const data = await res.json().catch(() => ({}));
+          if (!res.ok || data.ok === false) {
+            throw new Error(data.error || res.statusText || "Review failed");
+          }
+          lastTaskGid = data.task_gid || "";
+          $("comment-draft").value = data.suggested_comment || "";
+          $("comment-draft").disabled = false;
+          $("btn-post").disabled = !lastTaskGid;
+          $("report-out").textContent = data.markdown_body || "";
+          let msg = "Saved " + (data.markdown_path || "") + " — edit the comment below, then post if you want.";
+          if (data.llm_applied) msg += " (Ollama polish applied.)";
+          if (data.llm_error) msg += " LLM: " + data.llm_error;
+          setStatus(msg);
+        } catch (e) {
+          setStatus(e.message);
+        }
+      });
+
+      $("btn-post").addEventListener("click", async () => {
+        if (!lastTaskGid) {
+          setStatus("Run a review first.");
+          return;
+        }
+        const text = $("comment-draft").value;
+        if (!text.trim()) {
+          setStatus("Comment is empty.");
+          return;
+        }
+        setStatus("Posting comment…");
+        try {
+          const res = await fetch("/api/asana/post-comment", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Accept: "application/json" },
+            body: JSON.stringify({ task_gid: lastTaskGid, text })
+          });
+          const data = await res.json().catch(() => ({}));
+          if (!res.ok || data.ok === false) {
+            throw new Error(data.error || res.statusText || "Post failed");
+          }
+          setStatus("Posted to Asana." + (data.story_gid ? " Story gid: " + data.story_gid : ""));
+        } catch (e) {
+          setStatus(e.message);
+        }
+      });
+    </script>
+  </body>
+</html>

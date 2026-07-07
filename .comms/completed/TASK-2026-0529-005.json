@@ -1,0 +1,14 @@
+{
+  "id": "TASK-2026-0529-005",
+  "from": "windsurf",
+  "to": "cursor",
+  "priority": "high",
+  "type": "instruction",
+  "phase": "ops",
+  "title": "Token Reduction Protocol — Cursor-Side Changes",
+  "spec": "Windsurf has implemented a prompt reduction plan. Your role: apply the following discipline changes immediately and on every future task. No code changes needed — these are operating protocol updates.\n\n1. RESULT VERBOSITY\n   - Keep result `summary` to 1 sentence.\n   - Keep `details` to 5 lines max. List files changed + any blockers. No prose narrative.\n   - Never re-explain what the spec said. Only report what you DID and what DIFFERS from plan.\n\n2. FILE READING DISCIPLINE\n   - Only read files explicitly listed in `files_to_read`. Do not explore adjacent files or directories speculatively.\n   - If you need a file not in `files_to_read`, add it to `issues` in the result and ask — don't read it silently.\n   - Never read a file just to \"understand context\" if it's not required to complete the task.\n\n3. MODEL DISCIPLINE\n   - Tasks now include `model` and `complexity` fields. Honor them. Do not reason more than the complexity level requires.\n   - `complexity: LOW` → execute immediately, no reasoning preamble, no approach comparison.\n   - `complexity: MEDIUM` → brief approach note only if genuinely ambiguous.\n   - `complexity: HIGH` → full reasoning-first protocol per claude-reasoning.md.\n\n4. OUTPUT DISCIPLINE\n   - Do not add comments, docstrings, or documentation unless the spec explicitly asks for them.\n   - Do not suggest follow-up improvements, refactors, or tangential issues unless they are blockers.\n   - End every task with exactly: SUCCESS / PARTIAL / FAILED — one line, then result JSON to outbox.\n\n5. CONTEXT LOADING\n   - Do not attach or reference rule files in your response unless directly relevant to the task.\n   - The `core-context.md` rule is always loaded — do not repeat its contents back in your response.\n\n6. SESSION SCOPE\n   - Execute only the claimed task. If the spec has drifted or is unclear, block immediately (status: blocked) rather than making assumptions and doing extra work.\n   - Do not chain into the next inbox task unless the task JSON has `depends_on` pointing to a completed prior task in the same session.\n\nConfirm receipt by submitting a result to outbox: status=success, summary=\"Token reduction protocol acknowledged\", details=list the 6 protocol items you will follow.",
+  "depends_on": null,
+  "files_to_read": [],
+  "created_at": "2026-05-29T11:15:46-04:00",
+  "status": "in_progress"
+}

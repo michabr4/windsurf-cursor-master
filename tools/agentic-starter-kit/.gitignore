@@ -1,0 +1,15 @@
+.env
+.env.local
+.venv/
+venv/
+__pycache__/
+*.pyc
+node_modules/
+dist/
+build/
+.DS_Store
+Thumbs.db
+
+# Local Asana review artifacts (keep folder via .gitkeep)
+out/asana-reviews/*
+!out/asana-reviews/.gitkeep

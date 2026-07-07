@@ -1,0 +1,58 @@
+# Full interactive inbox review — Cursor or CLI (after Graph is enabled)
+# Mailbox: MS_MAILBOX_UPN in .env (primary work only)
+
+name: email-inbox-review
+version: 1
+mailbox: primary  # MS_MAILBOX_UPN only; no shared mailboxes
+
+inputs:
+  - since_hours: 48
+  - max_messages: 40
+  - focus: null  # optional: subject keyword or sender
+
+outputs_dir: data/runs/email/{run_id}/
+
+steps:
+  - id: fetch
+    agent: microsoft_mail.fetch
+    note: Graph Mail.Read — skipped in --sample mode
+    out: messages.json
+
+  - id: triage
+    agent: specialists/email/triage
+    in: messages.json
+    out: triage.md
+
+  - id: summarize
+    agent: specialists/email/summarize
+    in: messages.json
+    out: digest-threads.md
+
+  - id: actions
+    agent: specialists/email/action-extractor
+    in: messages.json
+    out: actions.md
+
+  - id: follow_ups
+    agent: specialists/email/follow-up
+    in: messages.json
+    out: follow-ups.md
+
+  - id: draft_replies
+    agent: specialists/email/draft-reply
+    in: [triage.md, messages.json]
+    out: draft-replies/
+    requires_scope: Mail.ReadWrite
+    human_gate: true
+
+  - id: organize_proposal
+    agent: specialists/email/organize-proposer
+    in: [triage.md, messages.json]
+    out: organize-proposal.md
+    human_gate: true
+    note: Apply moves only after explicit user approval
+
+guards:
+  - no_send_without_user
+  - no_move_without_user
+  - redact_secrets_in_logs

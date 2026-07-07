@@ -1,0 +1,60 @@
+# Deploys the repo root as a static site on GitHub Pages.
+#
+# Setup (once): Repo → Settings → Pages → Build and deployment → Source: GitHub Actions
+# After enabling, every push to main/cursor branches deploys automatically.
+#
+# Site URLs:
+#   https://michabr4.github.io/windsurf-cursor-master/content/ai-factory/wave-planner.html
+#   https://michabr4.github.io/windsurf-cursor-master/content/ai-factory/index.html
+#   https://michabr4.github.io/windsurf-cursor-master/project-dashboard/
+
+name: Deploy static content to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+      - "cursor/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: tools/project-dashboard/package-lock.json
+      - name: Build project dashboard
+        env:
+          VITE_BASE_URL: /windsurf-cursor-master/project-dashboard/
+        run: |
+          npm ci
+          npm run build
+        working-directory: tools/project-dashboard
+      - name: Stage dashboard for GitHub Pages
+        run: |
+          rm -rf project-dashboard
+          mkdir -p project-dashboard
+          cp -r tools/project-dashboard/dist/* project-dashboard/
+          touch .nojekyll
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: "."
+      - id: deployment
+        uses: actions/deploy-pages@v4

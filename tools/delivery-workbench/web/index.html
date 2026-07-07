@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Delivery Workbench</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+
+    <header class="header">
+      <div class="header-inner">
+        <div class="header-brand">
+          <span class="eyebrow">Cisco CX &middot; Local only &middot; 127.0.0.1</span>
+          <h1>Delivery Workbench</h1>
+        </div>
+        <div class="header-right">
+          <span class="status-pill" id="status-pill">
+            <span class="status-dot" id="status-dot"></span>
+            <span id="status-label">connecting&hellip;</span>
+          </span>
+        </div>
+      </div>
+    </header>
+
+    <main class="main">
+
+      <div class="stat-bar">
+        <div class="stat-card">
+          <span class="stat-value" id="stat-projects">—</span>
+          <span class="stat-label">Projects</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value" id="stat-briefings">—</span>
+          <span class="stat-label">Briefing runs</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value" id="stat-playbooks">—</span>
+          <span class="stat-label">Playbooks</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value" id="stat-templates">3</span>
+          <span class="stat-label">Templates</span>
+        </div>
+      </div>
+
+      <div class="dashboard">
+
+        <section class="panel panel-wide">
+          <div class="panel-header">
+            <h2>Projects</h2>
+            <button class="btn btn-sm" id="btn-refresh-projects" type="button">&#8635; Refresh</button>
+          </div>
+          <div class="panel-body" id="projects-body">
+            <p class="muted">Loading&hellip;</p>
+          </div>
+          <div class="panel-footer">
+            <form class="new-project-form" id="form-new-project">
+              <input class="slug-input" id="input-new-slug" type="text" placeholder="project-slug" maxlength="64" autocomplete="off" spellcheck="false" required>
+              <button class="btn btn-primary btn-sm" type="submit">+ New project</button>
+            </form>
+            <span class="form-msg" id="msg-new-project"></span>
+          </div>
+        </section>
+
+        <div class="panel-stack">
+
+          <section class="panel">
+            <div class="panel-header">
+              <h2>Morning Briefing</h2>
+              <button class="btn btn-primary btn-sm" id="btn-run-briefing" type="button">&#9654; Run dry-run</button>
+            </div>
+            <div class="panel-body" id="briefings-body">
+              <p class="muted">Loading&hellip;</p>
+            </div>
+            <div class="run-status-bar" id="briefing-status"></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-header"><h2>Playbooks</h2></div>
+            <div class="panel-body" id="playbooks-body">
+              <p class="muted">Loading&hellip;</p>
+            </div>
+          </section>
+
+        </div>
+      </div>
+
+      <div class="bottom-row">
+
+        <section class="panel panel-inline">
+          <div class="panel-header"><h2>Templates</h2></div>
+          <ul class="ref-list">
+            <li><code>templates/status-report.md</code></li>
+            <li><code>templates/meeting-notes.md</code></li>
+            <li><code>templates/raid-entry.md</code></li>
+          </ul>
+        </section>
+
+        <section class="panel panel-inline">
+          <div class="panel-header"><h2>CLI quick reference</h2></div>
+          <ul class="ref-list">
+            <li><code>python3 -m workbench new-project --slug &lt;name&gt;</code></li>
+            <li><code>python3 -m workbench new-status-draft --project &lt;slug&gt;</code></li>
+            <li><code>python3 -m workbench new-meeting-draft --project &lt;slug&gt;</code></li>
+            <li><code>python3 -m workbench new-raid-draft --project &lt;slug&gt;</code></li>
+            <li><code>python3 scripts/morning-briefing.py --dry-run</code></li>
+          </ul>
+        </section>
+
+        <section class="panel panel-inline">
+          <div class="panel-header"><h2>Getting started</h2></div>
+          <ul class="ref-list">
+            <li><code>GETTING_STARTED.md</code></li>
+            <li><code>SECURITY.md</code></li>
+            <li><code>README.md</code></li>
+            <li><code>docs/email/OVERVIEW.md</code></li>
+          </ul>
+        </section>
+
+      </div>
+
+    </main>
+
+    <footer class="footer">
+      Bound to <code>127.0.0.1:8840</code> only. No secrets in the browser.
+    </footer>
+
+    <script>
+    'use strict';
+
+    function el(tag, cls) {
+      const e = document.createElement(tag);
+      if (cls) e.className = cls;
+      return e;
+    }
+
+    function setHealth(ok) {
+      const dot = document.getElementById('status-dot');
+      const label = document.getElementById('status-label');
+      dot.className = 'status-dot ' + (ok ? 'ok' : 'err');
+      label.textContent = ok ? 'Live' : 'Server error';
+    }
+
+    async function apiFetch(path) {
+      const r = await fetch(path, { cache: 'no-store' });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    }
+
+    async function apiPost(path) {
+      const r = await fetch(path, { method: 'POST', cache: 'no-store' });
+      return r.json();
+    }
+
+    async function apiPostJson(path, body) {
+      const r = await fetch(path, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+        cache: 'no-store'
+      });
+      return r.json();
+    }
+
+    async function checkHealth() {
+      try {
+        const d = await apiFetch('/api/health');
+        setHealth(d.ok === true);
+      } catch (_) {
+        setHealth(false);
+      }
+    }
+
+    async function loadProjects() {
+      const body = document.getElementById('projects-body');
+      try {
+        const d = await apiFetch('/api/projects');
+        document.getElementById('stat-projects').textContent = d.projects.length;
+        body.textContent = '';
+        if (d.projects.length === 0) {
+          const p = el('p', 'muted');
+          p.textContent = 'No projects yet — use the form below to create one.';
+          body.appendChild(p);
+          return;
+        }
+        const grid = el('div', 'project-grid');
+        for (const proj of d.projects) {
+          const card = el('div', 'project-card');
+          const nameEl = el('span', 'project-name');
+          nameEl.textContent = proj.slug;
+          const countEl = el('span', 'project-count');
+          countEl.textContent = proj.drafts + (proj.drafts === 1 ? ' draft' : ' drafts');
+          const btn = el('button', 'btn btn-xs');
+          btn.textContent = 'Drafts';
+          btn.setAttribute('type', 'button');
+          btn.addEventListener('click', function () { toggleDrafts(proj.slug, card); });
+          card.appendChild(nameEl);
+          card.appendChild(countEl);
+          card.appendChild(btn);
+          const actions = el('div', 'project-actions');
+          for (const [draftType, label] of [['status-report', '+ Status'], ['meeting-notes', '+ Meeting'], ['raid-entry', '+ RAID']]) {
+            const ab = el('button', 'btn btn-xs');
+            ab.textContent = label;
+            ab.setAttribute('type', 'button');
+            ab.addEventListener('click', function() { createDraft(proj.slug, draftType, ab); });
+            actions.appendChild(ab);
+          }
+          card.appendChild(actions);
+          grid.appendChild(card);
+        }
+        body.appendChild(grid);
+      } catch (_) {
+        body.textContent = '';
+        const p = el('p', 'err-text');
+        p.textContent = 'Failed to load projects.';
+        body.appendChild(p);
+      }
+    }
+
+    async function createDraft(slug, draftType, btn) {
+      const origText = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = '\u2026';
+      try {
+        const d = await apiPostJson('/api/projects/' + encodeURIComponent(slug) + '/drafts', { type: draftType });
+        if (d.ok) {
+          btn.textContent = '\u2713';
+          setTimeout(function() { btn.textContent = origText; btn.disabled = false; }, 1500);
+          await loadProjects();
+        } else {
+          btn.textContent = '\u2717';
+          setTimeout(function() { btn.textContent = origText; btn.disabled = false; }, 2000);
+        }
+      } catch (_) {
+        btn.textContent = origText;
+        btn.disabled = false;
+      }
+    }
+
+    async function toggleDrafts(slug, card) {
+      const existing = card.querySelector('.drafts-panel');
+      if (existing) { existing.remove(); return; }
+      try {
+        const d = await apiFetch('/api/projects/' + encodeURIComponent(slug) + '/drafts');
+        const panel = el('div', 'drafts-panel');
+        if (d.drafts.length === 0) {
+          const p = el('p', 'muted');
+          p.textContent = 'No drafts yet.';
+          panel.appendChild(p);
+        } else {
+          const ul = el('ul', 'drafts-list');
+          for (const draft of d.drafts) {
+            const li = el('li');
+            const code = el('code');
+            code.textContent = draft.name;
+            li.appendChild(code);
+            ul.appendChild(li);
+          }
+          panel.appendChild(ul);
+        }
+        card.appendChild(panel);
+      } catch (_) { /* silent */ }
+    }
+
+    async function loadBriefings() {
+      const body = document.getElementById('briefings-body');
+      try {
+        const d = await apiFetch('/api/briefings');
+        document.getElementById('stat-briefings').textContent = d.runs.length;
+        body.textContent = '';
+        if (d.runs.length === 0) {
+          const p = el('p', 'muted');
+          p.textContent = 'No runs yet — click "Run dry-run" to generate one.';
+          body.appendChild(p);
+          return;
+        }
+        const ul = el('ul', 'briefing-list');
+        for (const run of d.runs) {
+          const li = el('li', 'briefing-item');
+          const dateEl = el('span', 'briefing-date');
+          dateEl.textContent = run.date;
+          li.appendChild(dateEl);
+          ul.appendChild(li);
+        }
+        body.appendChild(ul);
+      } catch (_) {
+        body.textContent = '';
+        const p = el('p', 'muted');
+        p.textContent = 'No briefings available.';
+        body.appendChild(p);
+      }
+    }
+
+    document.getElementById('btn-run-briefing').addEventListener('click', async function () {
+      const btn = this;
+      const bar = document.getElementById('briefing-status');
+      btn.disabled = true;
+      btn.textContent = 'Running\u2026';
+      bar.className = 'run-status-bar';
+      bar.textContent = '';
+      try {
+        const d = await apiPost('/api/briefings/run');
+        if (d.ok) {
+          bar.className = 'run-status-bar ok';
+          bar.textContent = '\u2713 ' + (d.output || 'Briefing written to data/runs/morning-briefing/');
+          await loadBriefings();
+        } else {
+          bar.className = 'run-status-bar err';
+          bar.textContent = '\u2717 ' + (d.error || 'Unknown error');
+        }
+      } catch (_) {
+        bar.className = 'run-status-bar err';
+        bar.textContent = '\u2717 Request failed — is the server running?';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '\u25B6 Run dry-run';
+      }
+    });
+
+    document.getElementById('btn-refresh-projects').addEventListener('click', loadProjects);
+
+    async function loadPlaybooks() {
+      const body = document.getElementById('playbooks-body');
+      try {
+        const d = await apiFetch('/api/playbooks');
+        document.getElementById('stat-playbooks').textContent = d.playbooks.length;
+        body.textContent = '';
+        const ul = el('ul', 'playbook-list');
+        for (const pb of d.playbooks) {
+          const li = el('li', 'playbook-item');
+          const title = el('strong');
+          title.textContent = pb.title;
+          const path = el('code', 'playbook-path');
+          path.textContent = pb.path;
+          li.appendChild(title);
+          li.appendChild(document.createTextNode(' \u2014 '));
+          li.appendChild(path);
+          ul.appendChild(li);
+        }
+        body.appendChild(ul);
+      } catch (_) {
+        body.textContent = '';
+        const p = el('p', 'muted');
+        p.textContent = 'Could not load playbooks.';
+        body.appendChild(p);
+      }
+    }
+
+    document.getElementById('form-new-project').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const input = document.getElementById('input-new-slug');
+      const msg = document.getElementById('msg-new-project');
+      const slug = input.value.trim().toLowerCase();
+      if (!slug) return;
+      const sbtn = this.querySelector('button[type="submit"]');
+      sbtn.disabled = true;
+      msg.className = 'form-msg';
+      msg.textContent = 'Creating\u2026';
+      try {
+        const d = await apiPostJson('/api/projects', { slug: slug });
+        if (d.ok) {
+          msg.className = 'form-msg ok';
+          msg.textContent = '\u2713 Created: ' + d.slug;
+          input.value = '';
+          await loadProjects();
+        } else {
+          msg.className = 'form-msg err';
+          msg.textContent = '\u2717 ' + (d.error || 'Failed');
+        }
+      } catch (_) {
+        msg.className = 'form-msg err';
+        msg.textContent = '\u2717 Request failed';
+      } finally {
+        sbtn.disabled = false;
+      }
+    });
+
+    checkHealth();
+    loadProjects();
+    loadBriefings();
+    loadPlaybooks();
+    </script>
+  </body>
+</html>

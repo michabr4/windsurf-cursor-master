@@ -1,0 +1,1762 @@
+[
+  {
+    "id": "1214028919513522",
+    "name": "Obtain MGM SCC access and begin demo mode configuration conversions",
+    "section": "All Complete - Technical Discovery 4-10-26 Action Items",
+    "assignee": "mculp@cisco.com",
+    "status": "In Progress",
+    "startDate": "2026-04-17",
+    "dueDate": "2026-04-17",
+    "completed": false
+  },
+  {
+    "id": "1214028919513521",
+    "name": "Coordinate with Lingesh on VPN Phase 1/2 encryption algorithm compatibility",
+    "section": "All Complete - Technical Discovery 4-10-26 Action Items",
+    "assignee": "mculp@cisco.com",
+    "status": "In Progress",
+    "startDate": "2026-04-16",
+    "dueDate": "2026-04-16",
+    "completed": false
+  },
+  {
+    "id": "1214028919513520",
+    "name": "Collaborate with BU/MGM to finalize the critical application list and testing plan",
+    "section": "All Complete - Technical Discovery 4-10-26 Action Items",
+    "assignee": "mculp@cisco.com",
+    "status": "In Progress",
+    "startDate": "2026-04-22",
+    "dueDate": "2026-04-22",
+    "completed": false
+  },
+  {
+    "id": "1214028919513519",
+    "name": "Provide priority list of firewalls for site surveys to Tony Yang, if any changes to the priority list based on configuration findings",
+    "section": "All Complete - Technical Discovery 4-10-26 Action Items",
+    "assignee": "mculp@cisco.com",
+    "status": "In Progress",
+    "startDate": "2026-04-22",
+    "dueDate": "2026-04-22",
+    "completed": false
+  },
+  {
+    "id": "1214028919513518",
+    "name": "Review and provide low-level firewall diagrams",
+    "section": "All Complete - Technical Discovery 4-10-26 Action Items",
+    "assignee": "mikeculp@cisco.com",
+    "status": "In Progress",
+    "startDate": "2026-04-17",
+    "dueDate": "2026-04-17",
+    "completed": false
+  },
+  {
+    "id": "1214028919513517",
+    "name": "Coordinate with Jason and Mani for relevant project documentation",
+    "section": "All Complete - Technical Discovery 4-10-26 Action Items",
+    "assignee": "Debbie Kennedy",
+    "status": "In Progress",
+    "startDate": "2026-04-14",
+    "dueDate": "2026-04-14",
+    "completed": false
+  },
+  {
+    "id": "1214028919513516",
+    "name": "Identify/coordinate network and security team members for upcoming calls",
+    "section": "All Complete - Technical Discovery 4-10-26 Action Items",
+    "assignee": "Debbie Kennedy",
+    "status": "In Progress",
+    "startDate": "2026-04-14",
+    "dueDate": "2026-04-14",
+    "completed": false
+  },
+  {
+    "id": "1214028919513515",
+    "name": "Schedule a second recurring weekly meeting (Tue/Wed)",
+    "section": "All Complete - Technical Discovery 4-10-26 Action Items",
+    "assignee": "Debbie Kennedy",
+    "status": "In Progress",
+    "startDate": "2026-04-13",
+    "dueDate": "2026-04-13",
+    "completed": false
+  },
+  {
+    "id": "1214028919513514",
+    "name": "Organize and set up the Netscout TAPs discussion meeting for Monday 4/15/26",
+    "section": "All Complete - Technical Discovery 4-10-26 Action Items",
+    "assignee": "Debbie Kennedy",
+    "status": "In Progress",
+    "startDate": "2026-04-10",
+    "dueDate": "2026-04-10",
+    "completed": false
+  },
+  {
+    "id": "1214028919513513",
+    "name": "Coordinate with Phil Miller, BU reps, and Srikanth on TAP deployment",
+    "section": "All Complete - Technical Discovery 4-10-26 Action Items",
+    "assignee": "scottfrisby@cisco.com",
+    "status": "In Progress",
+    "startDate": "2026-04-13",
+    "dueDate": "2026-04-13",
+    "completed": false
+  },
+  {
+    "id": "1214028919513512",
+    "name": "Complete review of configuration conversions and communicate risks",
+    "section": "All Complete - Technical Discovery 4-10-26 Action Items",
+    "assignee": "scottfrisb@cisco.com",
+    "status": "In Progress",
+    "startDate": "2026-04-17",
+    "dueDate": "2026-04-17",
+    "completed": false
+  },
+  {
+    "id": "1214028919513555",
+    "name": "Schedule Basic FW training",
+    "section": "All Complete - Technical Discovery 4-10-26 Action Items",
+    "assignee": "Scott Nishimura",
+    "status": "In Progress",
+    "startDate": "2026-04-14",
+    "dueDate": "2026-04-14",
+    "completed": false
+  },
+  {
+    "id": "1214118316021067",
+    "name": "MGM is asking for any passwords they need to be prepared prior to migrations ie. AD Servers, TACACS etc...",
+    "section": "All Complete - Technical Discovery 4/17/26 Action items",
+    "assignee": "mikeculp@cisco.com",
+    "status": "In Progress",
+    "startDate": "2026-04-17",
+    "dueDate": "2026-04-17",
+    "completed": false
+  },
+  {
+    "id": "1214118316021071",
+    "name": "Pre/Post Migration Tests- Preparing scripts for session counts, latency etc... MGM needs to know if Cisco is using scripts/tool and what the steps are",
+    "section": "All Complete - Technical Discovery 4/17/26 Action items",
+    "assignee": "mikeculp@cisco.com",
+    "status": "In Progress",
+    "startDate": "2026-04-17",
+    "dueDate": "2026-04-17",
+    "completed": false
+  },
+  {
+    "id": "1214118316021073",
+    "name": "User ID accounts (VM's in Regionals and Data Centers in Las Vegas) that connect to AD's, who's logged in and where. Do we need VM's on Cisco",
+    "section": "All Complete - Technical Discovery 4/17/26 Action items",
+    "assignee": "mikeculp@cisco.com",
+    "status": "In Progress",
+    "startDate": "2026-04-17",
+    "dueDate": "2026-04-17",
+    "completed": false
+  },
+  {
+    "id": "1214118316021080",
+    "name": "Review Site Survey Results for Mandalay Bay to ensure data required is collected and provided",
+    "section": "All Complete - Technical Discovery 4/17/26 Action items",
+    "assignee": "mculp@cisco.com",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214119416780824",
+    "name": "Review Migration window schedule and confirm number of firewall migrations per week",
+    "section": "All Complete - Technical Discovery 4/17/26 Action items",
+    "assignee": "Debbie Kennedy",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214142070138615",
+    "name": "Start early configuration and integration of Active Directory user agents and radius authentication on the management center before firewall hardware is installed.",
+    "section": "All Complete - Technical Discovery 4/17/26 Action items",
+    "assignee": "mculp@cisco.com",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214142070138618",
+    "name": "Send vulnerability management integration documentation to Mo Baker for distribution to the cyber defense team.",
+    "section": "All Complete - Technical Discovery 4/17/26 Action items",
+    "assignee": "mculp@cisco.com",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214142070138621",
+    "name": "Coordinate sessions for Active Directory and radius integration discussions and identify required attendees",
+    "section": "All Complete - Technical Discovery 4/17/26 Action items",
+    "assignee": "Debbie Kennedy",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214142070138624",
+    "name": "Follow up with Ryan Palmer and security team to finalize log ingestion method for Cisco firewalls.",
+    "section": "All Complete - Technical Discovery 4/17/26 Action items",
+    "assignee": "mculp@cisco.com",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214142070138627",
+    "name": "Send procedures to pull configuration files properly. Coordinate to obtain a fresh set of XML configuration files from the firewalls for migration testing.",
+    "section": "All Complete - Technical Discovery 4/17/26 Action items",
+    "assignee": "Alberto",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214142070138629",
+    "name": "Test using existing admin SCC account for FMC integration and report on product availability/license activation.",
+    "section": "All Complete - Technical Discovery 4/17/26 Action items",
+    "assignee": "mculp@cisco.com",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214142268451625",
+    "name": "Arrange session with Jose Justiniano to review threat intelligence integration and licensing considerations.",
+    "section": "All Complete - Technical Discovery 4/17/26 Action items",
+    "assignee": "mculp@cisco.com",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214142268451627",
+    "name": "Review Palo Alto configuration files in the lab and identify nuances or issues.",
+    "section": "All Complete - Technical Discovery 4/17/26 Action items",
+    "assignee": "mikeculp@cisco.com",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214142268451630",
+    "name": "Create a prioritized list of top tasks to accomplish in parallel with configuration and migration testing.",
+    "section": "All Complete - Technical Discovery 4/17/26 Action items",
+    "assignee": "mikeculp@cisco.com",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214142268451638",
+    "name": "Create CRD",
+    "section": "All Complete - Technical Discovery 4/17/26 Action items",
+    "assignee": "Alberto",
+    "status": "In Progress",
+    "startDate": "2026-04-27",
+    "dueDate": "2026-04-27",
+    "completed": false
+  },
+  {
+    "id": "1214142268451643",
+    "name": "Daniel Molina to track and manage the FMC upgrade process and subsequent configuration tasks, including coordinating with Nexar for version 10 upgrade and baseline setup. Upgrade existing FMC to version 10",
+    "section": "All Complete - Technical Discovery 4/17/26 Action items",
+    "assignee": "mculp@cisco.com",
+    "status": "In Progress",
+    "startDate": "2026-05-13",
+    "dueDate": "2026-05-13",
+    "completed": false
+  },
+  {
+    "id": "1214142268451668",
+    "name": "Create MOP for Migrations",
+    "section": "All Complete - Technical Discovery 4/17/26 Action items",
+    "assignee": "mculp@cisco.com",
+    "status": "In Progress",
+    "startDate": "2026-05-08",
+    "dueDate": "2026-05-08",
+    "completed": false
+  },
+  {
+    "id": "1214142268451672",
+    "name": "Request IP Addresses for the existing FMC 4600's",
+    "section": "All Complete - Technical Discovery 4/17/26 Action items",
+    "assignee": "Debbie Kennedy",
+    "status": "In Progress",
+    "startDate": "2026-04-21",
+    "dueDate": "2026-04-21",
+    "completed": false
+  },
+  {
+    "id": "1214242516061221",
+    "name": "Document and maintain all relevant links and resources related to the migration and upgrade process in the OneNote set up for the project.",
+    "section": "All Complete - Technical Discovery 4/22/26 Action Items",
+    "assignee": "mculp@cisco.com",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214242516061224",
+    "name": "MGM to share chassis passwords and local admin credentials for FMC and firewalls with Mike Culp to facilitate upgrade planning",
+    "section": "All Complete - Technical Discovery 4/22/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-04-24",
+    "dueDate": "2026-04-24",
+    "completed": false
+  },
+  {
+    "id": "1214242516061226",
+    "name": "Finalize FMC upgrade compatibility checks by end of day and prepare for upgrade planning on next Wednesday call",
+    "section": "All Complete - Technical Discovery 4/22/26 Action Items",
+    "assignee": "mculp@cisco.com",
+    "status": "In Progress",
+    "startDate": "2026-04-24",
+    "dueDate": "2026-04-24",
+    "completed": false
+  },
+  {
+    "id": "1214242516061229",
+    "name": "Thoroughly review the VPN configurations to identify unsupported or partially supported tunnels and determine what requires manual conversion or scripting. Focus on the 19 active VPN tunnels.",
+    "section": "All Complete - Technical Discovery 4/22/26 Action Items",
+    "assignee": "mikeculp@cisco.com",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214242516061232",
+    "name": "Lingesh needs to verify with Alex and the Borgata team that the primary and secondary CORP firewalls are not in use before proceeding with upgrades.",
+    "section": "All Complete - Technical Discovery 4/22/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-04-24",
+    "dueDate": "2026-04-24",
+    "completed": false
+  },
+  {
+    "id": "1214242516061234",
+    "name": "Provide updated rack elevation and exact firewall location details from site surveys by next Friday to assist Nexar - MGM in creating firewall hostnames",
+    "section": "All Complete - Technical Discovery 4/22/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-01",
+    "dueDate": "2026-05-01",
+    "completed": false
+  },
+  {
+    "id": "1214242516061236",
+    "name": "Upload the VPN tunnel documents (both 420 and 421 files) to the external SharePoint for easier access by the team.",
+    "section": "All Complete - Technical Discovery 4/22/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214242516061238",
+    "name": "Daniel Molina to collaborate with Lingesh to schedule and perform the upgrades of the CORP FTD firewalls that are confirmed not in use, ensuring Mike, Alberto, and Debbie are copied on communications",
+    "section": "All Complete - Technical Discovery 4/22/26 Action Items",
+    "assignee": "Daniel Molina",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214266912330813",
+    "name": "SCC spin up cdFMC instance and run the tool",
+    "section": "All Complete - Technical Discovery 4/22/26 Action Items",
+    "assignee": "mikeculp@cisco.com",
+    "status": "In Progress",
+    "startDate": "2026-04-23",
+    "dueDate": "2026-04-23",
+    "completed": false
+  },
+  {
+    "id": "1214309083939168",
+    "name": "Mike Culp will finalize and send the CRD questionnaire to Nexar, LB and Shreekanth today",
+    "section": "All Complete - Technical Discovery 4/24/26 Action Items",
+    "assignee": "mculp@cisco.com",
+    "status": "In Progress",
+    "startDate": "2026-04-27",
+    "dueDate": "2026-04-27",
+    "completed": false
+  },
+  {
+    "id": "1214309083939170",
+    "name": "Mike Culp to contact Nexar today regarding routing table data.",
+    "section": "All Complete - Technical Discovery 4/24/26 Action Items",
+    "assignee": "mculp@cisco.com",
+    "status": "In Progress",
+    "startDate": "2026-04-24",
+    "dueDate": "2026-04-24",
+    "completed": false
+  },
+  {
+    "id": "1214309316132056",
+    "name": "Mike Culp will send threat intelligence integration documentation to Jose Justiniano by end of day.",
+    "section": "All Complete - Technical Discovery 4/24/26 Action Items",
+    "assignee": "mculp@cisco.com",
+    "status": "In Progress",
+    "startDate": "2026-04-24",
+    "dueDate": "2026-04-24",
+    "completed": false
+  },
+  {
+    "id": "1214309316132058",
+    "name": "Mike Culp to send instructions to Nexar and the Windows domain team to schedule installation of Cisco user agent on VMs running Palo Alto user agents.",
+    "section": "All Complete - Technical Discovery 4/24/26 Action Items",
+    "assignee": "mculp@cisco.com",
+    "status": "In Progress",
+    "startDate": "2026-04-27",
+    "dueDate": "2026-04-27",
+    "completed": false
+  },
+  {
+    "id": "1214309316132060",
+    "name": "Nexar to confirm and provide radius secrets and any necessary credentials for migration activities.",
+    "section": "All Complete - Technical Discovery 4/24/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-04-28",
+    "dueDate": "2026-04-28",
+    "completed": false
+  },
+  {
+    "id": "1214309316132062",
+    "name": "Coordinate with the team to start daily 30-minute sessions next week to work through the CRD questionnaire and get questions answered.",
+    "section": "All Complete - Technical Discovery 4/24/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-04-27",
+    "dueDate": "2026-04-27",
+    "completed": false
+  },
+  {
+    "id": "1214309316132064",
+    "name": "LB to identify missing VPN tunnels and determine the responsible vendors for those tunnels to engage them accordingly.",
+    "section": "All Complete - Technical Discovery 4/24/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-01",
+    "dueDate": "2026-05-01",
+    "completed": false
+  },
+  {
+    "id": "1214309316132066",
+    "name": "LB to work with the CAB team to obtain normal change approvals for pending firewall upgrades (guest and NAP7 guests and National Harbor).",
+    "section": "All Complete - Technical Discovery 4/24/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-01",
+    "dueDate": "2026-05-01",
+    "completed": false
+  },
+  {
+    "id": "1214309316132068",
+    "name": "Nexar and LB to review the CRD questionnaire once received and coordinate internally to provide feedback.",
+    "section": "All Complete - Technical Discovery 4/24/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-04-27",
+    "dueDate": "2026-04-27",
+    "completed": false
+  },
+  {
+    "id": "1214309316132081",
+    "name": "Alberto to send Nishad updated configuration files to run new audit for firewall tunnels",
+    "section": "All Complete - Technical Discovery 4/24/26 Action Items",
+    "assignee": "aariaga@cisco.com",
+    "status": "In Progress",
+    "startDate": "2026-04-24",
+    "dueDate": "2026-04-24",
+    "completed": false
+  },
+  {
+    "id": "1214499083706394",
+    "name": "Add the networking team to the existing daily 8 AM calls for site survey reviews and start using that slot for technical discussions.",
+    "section": "All Complete - Technical Discovery 5/1/26 Action Items",
+    "assignee": "Debbie Kennedy",
+    "status": "In Progress",
+    "startDate": "2026-05-01",
+    "dueDate": "2026-05-01",
+    "completed": false
+  },
+  {
+    "id": "1214499083706396",
+    "name": "Review the inventory of transceivers and cables to identify shortages and initiate procurement to avoid delays",
+    "section": "All Complete - Technical Discovery 5/1/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-04",
+    "dueDate": "2026-05-04",
+    "completed": false
+  },
+  {
+    "id": "1214499083706398",
+    "name": "MGM team needs to provide detailed information on virtual routers count and configurations for planning VRF equivalents manually",
+    "section": "All Complete - Technical Discovery 5/1/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-04",
+    "dueDate": "2026-05-04",
+    "completed": false
+  },
+  {
+    "id": "1214499083706400",
+    "name": "Schedule a session with Veroff and Steve next week to address outstanding InfoSec items.",
+    "section": "All Complete - Technical Discovery 5/1/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-04",
+    "dueDate": "2026-05-04",
+    "completed": false
+  },
+  {
+    "id": "1214499083706402",
+    "name": "MGM team to confirm SNMP version in use and assist in setting up SNMPv3 users and credentials on FMC and platform settings.",
+    "section": "All Complete - Technical Discovery 5/1/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-04",
+    "dueDate": "2026-05-04",
+    "completed": false
+  },
+  {
+    "id": "1214751166091312",
+    "name": "Mike Culp to follow up with Nexar to ensure FMC side external authentication setup is understood and completed.",
+    "section": "Technical Discovery 4/29/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214439905247705",
+    "name": "Mike Culp and the team should review and analyze the current custom intrusion prevention profiles and develop a balanced monitoring policy for initial deployment, with plans to adjust and enable blocking after analysis.",
+    "section": "Technical Discovery 4/29/26 Action Items",
+    "assignee": "mculp@cisco.com",
+    "status": "In Progress",
+    "startDate": "2026-05-01",
+    "dueDate": "2026-05-01",
+    "completed": false
+  },
+  {
+    "id": "1214439905247708",
+    "name": "Mike Culp should obtain and share official documentation on Cisco event types relevant to the migration with the team",
+    "section": "Technical Discovery 4/29/26 Action Items",
+    "assignee": "mculp@cisco.com",
+    "status": "In Progress",
+    "startDate": "2026-04-30",
+    "dueDate": "2026-04-30",
+    "completed": false
+  },
+  {
+    "id": "1214439905247711",
+    "name": "Adrian Carranza will reach out to additional infosec colleagues to identify if anyone else needs to be included in future security discussions",
+    "section": "Technical Discovery 4/29/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-04-29",
+    "dueDate": "2026-04-29",
+    "completed": false
+  },
+  {
+    "id": "1214439905247713",
+    "name": "Jose Justiniano and Mike Culp need to set up a call as soon as possible to discuss the formatting requirements for the threat intelligence feeds and work on a proof of concept",
+    "section": "Technical Discovery 4/29/26 Action Items",
+    "assignee": "mculp@cisco.com",
+    "status": "In Progress",
+    "startDate": "2026-04-30",
+    "dueDate": "2026-04-30",
+    "completed": false
+  },
+  {
+    "id": "1214439905247715",
+    "name": "Ryan Palmer needs to send the syslog configuration details discussed during the meeting to the team",
+    "section": "Technical Discovery 4/29/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-04-30",
+    "dueDate": "2026-04-30",
+    "completed": false
+  },
+  {
+    "id": "1214439905247717",
+    "name": "Ryan Palmer needs to provide the load balancer IP and port details for the dedicated syslog cluster to the team.",
+    "section": "Technical Discovery 4/29/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-04-30",
+    "dueDate": "2026-04-30",
+    "completed": false
+  },
+  {
+    "id": "1214439905247719",
+    "name": "Ryan Palmer will follow up with Mike Culp directly to clarify the current Radius authentication setup and determine if Radius logs are needed for device management auditing",
+    "section": "Technical Discovery 4/29/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-04-30",
+    "dueDate": "2026-04-30",
+    "completed": false
+  },
+  {
+    "id": "1214439905247721",
+    "name": "Ryan Palmer should gather a comprehensive list of all log sources and event types that need to be collected and coordinate with the team to determine infrastructure requirements for log collection.",
+    "section": "Technical Discovery 4/29/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-04-30",
+    "dueDate": "2026-04-30",
+    "completed": false
+  },
+  {
+    "id": "1214751166091290",
+    "name": "MGM team to provide detailed information on virtual routers count and configurations for VRF planning.",
+    "section": "Technical Discovery 5/12/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214751166091292",
+    "name": "Brandon Akuoko to confirm status of Active Directory FMC connectivity and verify connections by logging into FMC VDI.",
+    "section": "Technical Discovery 5/12/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214751166091294",
+    "name": "Mike Culp and Scott Frisby to add questions about MGM's cloud operations and automation needs (e.g., Terraform templates) to the agenda for the next call with MGM team.",
+    "section": "Technical Discovery 5/12/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214751166091296",
+    "name": "Brandon Akuoko to provide Nexar with documentation on required firewall ports for outbound connectivity and clarify strictness of rules.",
+    "section": "Technical Discovery 5/12/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214751166091298",
+    "name": "Ryan Palmer to follow up with Mike Culp to clarify current RADIUS authentication setup and determine if RADIUS logs are needed for device management and auditing.",
+    "section": "Technical Discovery 5/12/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214751166091300",
+    "name": "MGM team to confirm SNMP version and assist in setting up SNMPv3 users and credentials on FMC and platform settings, coordinated by Mike Culp and Nexar.",
+    "section": "Technical Discovery 5/12/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214751166091302",
+    "name": "Mike Culp to track and manage the FMC upgrade process and subsequent configuration tasks, including coordinating with Nexar for version 10 upgrade and baseline setup.",
+    "section": "Technical Discovery 5/12/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214751166091304",
+    "name": "Alberto Arriaga Lopez to rerun the VPN migration with the secondary device and provide updated information.",
+    "section": "Technical Discovery 5/12/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214751166091306",
+    "name": "Natambu Obleton to work with technology team to provide management IP addresses for firewalls and coordinate firewall rule updates with Jason Robinson's team.",
+    "section": "Technical Discovery 5/12/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214751166091308",
+    "name": "Mike Culp and Jose to schedule a call to discuss formatting requirements for threat intelligence feeds and work on a proof of concept after logs are delivered.",
+    "section": "Technical Discovery 5/12/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214751166091310",
+    "name": "Debbie Kennedy and Mike Culp to ensure clarity with MGM on the pre- and post-migration test plans, including application validation responsibilities and RACI assignments.",
+    "section": "Technical Discovery 5/12/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214751166091314",
+    "name": "Debbie Kennedy to send meeting notes and action items from this call to all participants and coordinate any additional follow-up calls with Nexar if needed.",
+    "section": "Technical Discovery 5/12/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214751251624325",
+    "name": "Alberto Arriaga Lopez to send details about the VPN migration issue to Nishad for further investigation.",
+    "section": "Technical Discovery 5/12/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214751251624327",
+    "name": "Brandon Akuoko to verify if port 443 is open for FMC connectivity and follow up with Nexar to expand allowed URLs as needed.",
+    "section": "Technical Discovery 5/12/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214751251624329",
+    "name": "Alberto Arriaga Lopez to follow up with Nishad regarding the error encountered on the secondary NAP4 appliance.",
+    "section": "Technical Discovery 5/12/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214751251624513",
+    "name": "Need Management IP addresses",
+    "section": "Technical Discovery 5/12/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214751251624480",
+    "name": "Mike Brown to clarify ownership and counterpart resources for Catalyst Center and Nexus site survey follow-ups to wrap up readiness for the MOP.",
+    "section": "Technical Discovery 5/8/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214751251624482",
+    "name": "Mike Culp to confirm with Natambu the expected delivery date of the MOP and communicate the timeline to Shreekanth and MGM team.",
+    "section": "Technical Discovery 5/8/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214751251624484",
+    "name": "Jason Beard to validate with Keith the availability of spares for NAP4 and NAP7 to support the Beau Rivage and data center installations and report back.",
+    "section": "Technical Discovery 5/8/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214751251624486",
+    "name": "Jason Beard to follow up with Greg regarding the status and execution of the ACI border leaf SOW and report back to Shreekanth.",
+    "section": "Technical Discovery 5/8/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214751251624488",
+    "name": "Mike Brown to schedule a MOP review call on Wednesday next week to address any last-minute changes before the Thursday CAB submission.",
+    "section": "Technical Discovery 5/8/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214751251624490",
+    "name": "Jason Beard to update the installation schedule for NAP4 and NAP7 hardware deliveries and installations to reflect the refined plan discussed.",
+    "section": "Technical Discovery 5/8/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214751251624492",
+    "name": "Nexar - MGM team to follow up with Laura to ensure requests for VDI creation and firewall change permissions for Brandon and Fabian are completed.",
+    "section": "Technical Discovery 5/8/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214751251624494",
+    "name": "Shreekanth and Mike Brown to ensure any questions or clarifications needed by the MOP authors are addressed early in the week to avoid last-minute delays.",
+    "section": "Technical Discovery 5/8/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214751251624496",
+    "name": "Shreekanth and Mike Grummitt to organize a meeting on Monday morning (8:30-9:00 AM Pacific) with ThousandEyes team, Nexar, and Cisco representatives to discuss the comprehensive firewall rule testing plan.",
+    "section": "Technical Discovery 5/8/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214751251624498",
+    "name": "Mike Culp to coordinate with networking resources to create the MOP for switch configurations based on site survey data and design inputs.",
+    "section": "Technical Discovery 5/8/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214751251624500",
+    "name": "Jason Robinson and Kruhti to continue working with Pete Mills on the ACI border leaf refresh and provide updates to the team.",
+    "section": "Technical Discovery 5/8/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214824816515802",
+    "name": "Brandon will test removing the '/32' subnet mask notation from the XML configuration files to resolve related tunnel interface errors",
+    "section": "Technical Discovery 5/8/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214824816515804",
+    "name": "Mike Culp will review the IP addressing and subnet configuration on the ten gig and one gig interfaces to determine if IP addresses can be swapped to improve management and avoid user experience issues.",
+    "section": "Technical Discovery 5/8/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214824816515806",
+    "name": "Mike Culp and Nexar team will coordinate with Jason Robinson and Navid from the network team to gather technical requirements and utilization metrics for firewall instances to properly size replacements",
+    "section": "Technical Discovery 5/8/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214824816515808",
+    "name": "Mike Culp and Nexar team will implement intrusion policies in alert mode on Cisco firewalls as part of the security monitoring setup.",
+    "section": "Technical Discovery 5/8/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214824816515810",
+    "name": "Nexar team will consolidate firewall and FMC access rules into a single manageable group to simplify policy management. (Policy Inheritance)",
+    "section": "Technical Discovery 5/8/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214824816515812",
+    "name": "Nexar team will provide utilization data by interface (e.g., SD WAN vs corporate) for the last 30 days to assist in sizing firewall replacements. What is the requirement for the VSIS",
+    "section": "Technical Discovery 5/8/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214824816515814",
+    "name": "Nexar team will reconfigure VPN tunnels to remove IKEv1 usage and ensure only IKEv2 is used, as IKEv1 is deprecated",
+    "section": "Technical Discovery 5/8/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214824816515818",
+    "name": "Nexar team will enable syslog forwarding and security intelligence monitoring on Cisco firewalls to allow the security team to analyze and normalize events.",
+    "section": "Technical Discovery 5/8/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214824816515821",
+    "name": "Debbie Kennedy to arrange a review session with Keith Vincent, Natambu Obleton, and Tony to go over low-level design and clarify repurposed and new cabling plans.",
+    "section": "Technical Discovery 5/13/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214824816515823",
+    "name": "Mike Culp to test the existing radius external authentication object with MGM team and coordinate with Nasar to ensure FMC site external authentication setup is understood and completed.",
+    "section": "Technical Discovery 5/13/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214824816515825",
+    "name": "Mike Culp to coordinate with LB and Nexar teams to set up a call to discuss formatting requirements for threat intelligence feeds and work on a proof of concept after logs are delivered.",
+    "section": "Technical Discovery 5/13/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214824816515827",
+    "name": "Debbie Kennedy to follow up with Jason Beard to confirm the updated installation schedule for NAP4 and NAP7 hardware deliveries and installations.",
+    "section": "Technical Discovery 5/13/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214824816515829",
+    "name": "Debbie Kennedy to coordinate with Shreekanth to schedule a call to discuss network storage setup for FMC backups with Brent Myers and Mike Culp.",
+    "section": "Technical Discovery 5/13/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214824816515831",
+    "name": "Debbie Kennedy to schedule sessions with Nexar and his team for Mike Culp to review and address FMC version 10 configuration and logging setup issues.",
+    "section": "Technical Discovery 5/13/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214814187445543",
+    "name": "Kevin Guillaume to confirm with Security Operations team the ownership of monitoring and assist Mike Culp in validating SNMP v3 user credentials on the FMC platform.",
+    "section": "Technical Discovery 5/13/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214814187445545",
+    "name": "LB to mitigate VTI interface IP address issues related to VPN phase half encryption algorithm compatibility.",
+    "section": "Technical Discovery 5/13/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214814187445547",
+    "name": "Brandon Akuoko to send an email requesting additional access approval for viewing site-to-site tunnels, and Kevin Guillaume to process the access change upon receiving top-down approval.",
+    "section": "Technical Discovery 5/13/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214814187445549",
+    "name": "Lingesh to check with Nexar regarding the technical information on VRF configurations for NAP4 and NAP7 firewalls and provide the details to Mike Culp.",
+    "section": "Technical Discovery 5/13/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214814187445551",
+    "name": "Shreekanth to follow up with Jason Robinson to obtain an official response regarding the ACI border leaf release and confirm if it is acceptable to proceed after migration.",
+    "section": "Technical Discovery 5/13/26 Action Items",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214824816515816",
+    "name": "Nexar team will change file policies on Cisco firewalls from detect-only to malware lookup in monitor mode to improve security event visibility.",
+    "section": "Firewall Configs Remediation Review 5/14/26 actions",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214814187445557",
+    "name": "Mike Culp needs to prepare and share the list of equivalent Palo Alto CLI commands for pre-cutover validation and post-cutover monitoring.",
+    "section": "Firewall Configs Remediation Review 5/14/26 actions",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214814187445559",
+    "name": "Mike Culp should verify and test the radius object on the FMC to ensure it works correctly for external authentication.",
+    "section": "Firewall Configs Remediation Review 5/14/26 actions",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214814187445561",
+    "name": "Nexar - MGM needs to create or update firewall rules to allow SNMP access for FMC monitoring tools like PRTG.",
+    "section": "Firewall Configs Remediation Review 5/14/26 actions",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214814187445563",
+    "name": "Mike Culp should assist in setting up role-based access control (RBAC) on FMC to emulate existing Palo Alto permissions for Cisco firewall users.",
+    "section": "Firewall Configs Remediation Review 5/14/26 actions",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214814187445565",
+    "name": "Nexar - MGM team should confirm with Patrick and their team about the centralized backup storage solution to ensure compatibility with FMC supported protocols (SMB, NFS, SCP).",
+    "section": "Firewall Configs Remediation Review 5/14/26 actions",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214814187445567",
+    "name": "Mike Culp needs to configure logging on the FMC to enable retrospective event correlation and proper ingestion of security events.",
+    "section": "Firewall Configs Remediation Review 5/14/26 actions",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214814187445569",
+    "name": "Lingesh needs to test using his AD account for CLI access to the FMC to confirm authentication functionality.",
+    "section": "Firewall Configs Remediation Review 5/14/26 actions",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214814187445571",
+    "name": "Mike Culp should update and share the rollback plan and success criteria documentation for the migration cutover process.",
+    "section": "Firewall Configs Remediation Review 5/14/26 actions",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214814187445573",
+    "name": "Debbie Kennedy to upload the Palo Alto CLI command list to the SharePoint folder created by Sreekanth for team review.",
+    "section": "Firewall Configs Remediation Review 5/14/26 actions",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1214814187445575",
+    "name": "LB and Kevin need to validate the Palo Alto CLI commands to ensure they will work correctly on the day of migration.",
+    "section": "Firewall Configs Remediation Review 5/14/26 actions",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1215064833363375",
+    "name": "Rack and stack the new FTD appliances",
+    "section": "Beau Rivage",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-23",
+    "dueDate": "2026-05-23",
+    "completed": false
+  },
+  {
+    "id": "1215064833363377",
+    "name": "Connect power and management/data interfaces",
+    "section": "Beau Rivage",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-23",
+    "dueDate": "2026-05-23",
+    "completed": false
+  },
+  {
+    "id": "1215064833363379",
+    "name": "Perform initial console configuration (IP, Gateway, DNS).",
+    "section": "Beau Rivage",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-23",
+    "dueDate": "2026-05-23",
+    "completed": false
+  },
+  {
+    "id": "1215064833363381",
+    "name": "Establish out-of-band management connectivity",
+    "section": "Beau Rivage",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-23",
+    "dueDate": "2026-05-23",
+    "completed": false
+  },
+  {
+    "id": "1215064833363383",
+    "name": "Deploy/Verify FMC (Virtual or Hardware) connectivity",
+    "section": "Beau Rivage",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-24",
+    "dueDate": "2026-05-24",
+    "completed": false
+  },
+  {
+    "id": "1215064833363385",
+    "name": "Register FTD appliances to the FMC",
+    "section": "Beau Rivage",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-24",
+    "dueDate": "2026-05-24",
+    "completed": false
+  },
+  {
+    "id": "1215064833363387",
+    "name": "Download and verify the target FTD software image",
+    "section": "Beau Rivage",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-22",
+    "dueDate": "2026-05-22",
+    "completed": false
+  },
+  {
+    "id": "1215064833363389",
+    "name": "Execute the software upgrade process via FMC",
+    "section": "Beau Rivage",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-24",
+    "dueDate": "2026-05-24",
+    "completed": false
+  },
+  {
+    "id": "1215064833363391",
+    "name": "Migrate security policies and objects (using migration tools",
+    "section": "Beau Rivage",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-24",
+    "dueDate": "2026-05-24",
+    "completed": false
+  },
+  {
+    "id": "1215064833363393",
+    "name": "Validate policy parity between Palo Alto and FTD",
+    "section": "Beau Rivage",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-26",
+    "dueDate": "2026-05-26",
+    "completed": false
+  },
+  {
+    "id": "1215064833363395",
+    "name": "New xml config file",
+    "section": "Beau Rivage",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-21",
+    "dueDate": "2026-05-21",
+    "completed": false
+  },
+  {
+    "id": "1215064865894231",
+    "name": "Go-no-go scheduled for Tuesday morning call",
+    "section": "Beau Rivage",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-26",
+    "dueDate": "2026-05-26",
+    "completed": false
+  },
+  {
+    "id": "1215064865894233",
+    "name": "Update MOPs to include Failover Pre and Post testing",
+    "section": "Beau Rivage",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-29",
+    "dueDate": "2026-05-29",
+    "completed": false
+  },
+  {
+    "id": "1215064865894235",
+    "name": "onsite support team should  with Console cable and LTE connection ( in case internet connectivity does not work) — Onsite personal task",
+    "section": "Beau Rivage",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1215064865894237",
+    "name": "Identify local admin user credentials for the switches ( TACACS might not be reachable) — MGM task",
+    "section": "Beau Rivage",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1215064865894239",
+    "name": "Check for Remote Console availability for the switches in question via raritan ( serial console server) — MGM task",
+    "section": "Beau Rivage",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1215064865894241",
+    "name": "Open Proactive TAC Case for Beau Rivage Migration",
+    "section": "Beau Rivage",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1215175140074235",
+    "name": "Request Standby IP Addresses",
+    "section": "Beau Rivage",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1215144060758918",
+    "name": "Rack and stack the new FTD appliances",
+    "section": "Luxor",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-27",
+    "dueDate": "2026-05-27",
+    "completed": false
+  },
+  {
+    "id": "1215144060758920",
+    "name": "Connect power and management/data interfaces",
+    "section": "Luxor",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-27",
+    "dueDate": "2026-05-27",
+    "completed": false
+  },
+  {
+    "id": "1215144060758922",
+    "name": "Perform initial console configuration (IP, Gateway, DNS).",
+    "section": "Luxor",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-27",
+    "dueDate": "2026-05-27",
+    "completed": false
+  },
+  {
+    "id": "1215144060758924",
+    "name": "Establish out-of-band management connectivity",
+    "section": "Luxor",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-28",
+    "dueDate": "2026-05-28",
+    "completed": false
+  },
+  {
+    "id": "1215144060758926",
+    "name": "Deploy/Verify FMC (Virtual or Hardware) connectivity",
+    "section": "Luxor",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-28",
+    "dueDate": "2026-05-28",
+    "completed": false
+  },
+  {
+    "id": "1215144060758928",
+    "name": "Register FTD appliances to the FMC",
+    "section": "Luxor",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-28",
+    "dueDate": "2026-05-28",
+    "completed": false
+  },
+  {
+    "id": "1215144060758930",
+    "name": "Download and verify the target FTD software image",
+    "section": "Luxor",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-28",
+    "dueDate": "2026-05-28",
+    "completed": false
+  },
+  {
+    "id": "1215144060758932",
+    "name": "Execute the software upgrade process via FMC",
+    "section": "Luxor",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-28",
+    "dueDate": "2026-05-28",
+    "completed": false
+  },
+  {
+    "id": "1215144060758934",
+    "name": "Migrate security policies and objects (using migration tools",
+    "section": "Luxor",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-28",
+    "dueDate": "2026-05-28",
+    "completed": false
+  },
+  {
+    "id": "1215144060758936",
+    "name": "Validate policy parity between Palo Alto and FTD",
+    "section": "Luxor",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-06-01",
+    "dueDate": "2026-06-01",
+    "completed": false
+  },
+  {
+    "id": "1215144060758938",
+    "name": "Go-no-go scheduled for Monday 6/1 morning call",
+    "section": "Luxor",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-06-01",
+    "dueDate": "2026-06-01",
+    "completed": false
+  },
+  {
+    "id": "1215144060758940",
+    "name": "Update MOPs to include Failover Pre and Post testing",
+    "section": "Luxor",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-26",
+    "dueDate": "2026-05-26",
+    "completed": false
+  },
+  {
+    "id": "1215144060758944",
+    "name": "Review MOP, LLD for Network config",
+    "section": "Luxor",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-26",
+    "dueDate": "2026-05-26",
+    "completed": false
+  },
+  {
+    "id": "1215144060758946",
+    "name": "Pull new Configuration File",
+    "section": "Luxor",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-26",
+    "dueDate": "2026-05-26",
+    "completed": false
+  },
+  {
+    "id": "1215144060758948",
+    "name": "Management IP Addresses Configured",
+    "section": "Luxor",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-28",
+    "dueDate": "2026-05-28",
+    "completed": false
+  },
+  {
+    "id": "1215144060758983",
+    "name": "Thousand Eyes Tests created",
+    "section": "Luxor",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-27",
+    "dueDate": "2026-05-27",
+    "completed": false
+  },
+  {
+    "id": "1215175140074227",
+    "name": "Perform pre-migration fail over test",
+    "section": "Luxor",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1215175140074229",
+    "name": "Migration Window",
+    "section": "Luxor",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-06-01",
+    "dueDate": "2026-06-01",
+    "completed": false
+  },
+  {
+    "id": "1215175140074231",
+    "name": "Perform post-migration failover test",
+    "section": "Luxor",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-06-01",
+    "dueDate": "2026-06-01",
+    "completed": false
+  },
+  {
+    "id": "1215175140074237",
+    "name": "Create Standby IP Addresses for Data Interfaces",
+    "section": "Luxor",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-28",
+    "dueDate": "2026-05-28",
+    "completed": false
+  },
+  {
+    "id": "1215175422572105",
+    "name": "",
+    "section": "Luxor",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  },
+  {
+    "id": "1215144060758953",
+    "name": "Rack and stack the new FTD appliances",
+    "section": "MGM Grand",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-27",
+    "dueDate": "2026-05-27",
+    "completed": false
+  },
+  {
+    "id": "1215144060758955",
+    "name": "Connect power and management/data interfaces",
+    "section": "MGM Grand",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-27",
+    "dueDate": "2026-05-27",
+    "completed": false
+  },
+  {
+    "id": "1215144060758957",
+    "name": "Perform initial console configuration (IP, Gateway, DNS).",
+    "section": "MGM Grand",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-28",
+    "dueDate": "2026-05-28",
+    "completed": false
+  },
+  {
+    "id": "1215144060758959",
+    "name": "Establish out-of-band management connectivity",
+    "section": "MGM Grand",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-28",
+    "dueDate": "2026-05-28",
+    "completed": false
+  },
+  {
+    "id": "1215144060758961",
+    "name": "Deploy/Verify FMC (Virtual or Hardware) connectivity",
+    "section": "MGM Grand",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-28",
+    "dueDate": "2026-05-28",
+    "completed": false
+  },
+  {
+    "id": "1215144060758963",
+    "name": "Register FTD appliances to the FMC",
+    "section": "MGM Grand",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-28",
+    "dueDate": "2026-05-28",
+    "completed": false
+  },
+  {
+    "id": "1215144060758965",
+    "name": "Download and verify the target FTD software image",
+    "section": "MGM Grand",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-28",
+    "dueDate": "2026-05-28",
+    "completed": false
+  },
+  {
+    "id": "1215144060758967",
+    "name": "Execute the software upgrade process via FMC",
+    "section": "MGM Grand",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-28",
+    "dueDate": "2026-05-28",
+    "completed": false
+  },
+  {
+    "id": "1215144060758969",
+    "name": "Migrate security policies and objects (using migration tools",
+    "section": "MGM Grand",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-28",
+    "dueDate": "2026-05-28",
+    "completed": false
+  },
+  {
+    "id": "1215144060758971",
+    "name": "Validate policy parity between Palo Alto and FTD",
+    "section": "MGM Grand",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-06-01",
+    "dueDate": "2026-06-01",
+    "completed": false
+  },
+  {
+    "id": "1215144060758973",
+    "name": "Go-no-go scheduled for Monday morning call",
+    "section": "MGM Grand",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-06-01",
+    "dueDate": "2026-06-01",
+    "completed": false
+  },
+  {
+    "id": "1215144060758975",
+    "name": "Update MOPs to include Failover Pre and Post testing",
+    "section": "MGM Grand",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-26",
+    "dueDate": "2026-05-26",
+    "completed": false
+  },
+  {
+    "id": "1215144060758977",
+    "name": "Review MOP, LLD for Network config",
+    "section": "MGM Grand",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-26",
+    "dueDate": "2026-05-26",
+    "completed": false
+  },
+  {
+    "id": "1215144060758979",
+    "name": "Pull new Configuration File",
+    "section": "MGM Grand",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-26",
+    "dueDate": "2026-05-26",
+    "completed": false
+  },
+  {
+    "id": "1215144060758981",
+    "name": "Management IP Addresses Configured",
+    "section": "MGM Grand",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-28",
+    "dueDate": "2026-05-28",
+    "completed": false
+  },
+  {
+    "id": "1215175422572097",
+    "name": "Create Standby IP Addresses for Data Interfaces",
+    "section": "MGM Grand",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": "2026-05-28",
+    "dueDate": "2026-05-28",
+    "completed": false
+  },
+  {
+    "id": "1215175422572102",
+    "name": "Perform pre-migration failover test",
+    "section": "MGM Grand",
+    "assignee": "Unassigned",
+    "status": "In Progress",
+    "startDate": null,
+    "dueDate": null,
+    "completed": false
+  }
+]

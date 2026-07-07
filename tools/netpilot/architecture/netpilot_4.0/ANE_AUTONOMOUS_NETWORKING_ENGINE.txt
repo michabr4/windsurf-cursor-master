@@ -1,0 +1,31 @@
+NETPILOT 4.0 — AUTONOMOUS NETWORKING ENGINE (ANE)
+
+Purpose:
+The Autonomous Networking Engine (ANE) is the core decision and reasoning layer of NetPilot 4.0. It continuously evaluates network state, intent, policy, and telemetry to drive autonomous, closed-loop actions across multi-vendor environments.
+
+Core Capabilities:
+- Real-time network reasoning
+- Policy-driven state convergence
+- Multi-vendor intent translation
+- Risk-aware decision making
+- Integration with telemetry and remediation engines
+
+Key Components:
+- Intent Interpreter
+- Policy Evaluator
+- State Evaluator
+- Decision Engine
+- Action Dispatcher
+
+Data Inputs:
+- Intent definitions (from IBNL)
+- Policies (global, tenant, app)
+- Telemetry streams (from PTE)
+- Current network state (from UNAL/TIAE)
+- Historical outcomes (for learning)
+
+Data Outputs:
+- Recommended actions
+- Approved actions
+- Policy compliance reports
+- State convergence metrics

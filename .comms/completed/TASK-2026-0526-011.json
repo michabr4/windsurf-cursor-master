@@ -1,0 +1,20 @@
+{
+  "id": "TASK-2026-0526-011",
+  "from": "windsurf",
+  "to": "cursor",
+  "priority": "high",
+  "type": "instruction",
+  "phase": "2",
+  "title": "Phase 2.2 — Bot Health Check: Verify MGM + DD status bots",
+  "spec": "PHASE 2.2: BOTS-HEALTH-CHECK\n\nVerify health of the two daily status bots that run in production via GitHub Actions.\n\nLOCATIONS (master folder paths):\n  - bots/mgm-status-bot/\n  - bots/dd-status-bot/\n\nTASK 1: For EACH bot, check:\n  a. Review .github/workflows/ for the daily report workflow YAML\n  b. Verify Python version in workflow is current (3.11+ preferred, not deprecated)\n  c. List all required secrets/env vars and whether they're documented\n  d. Check if a --dry-run or test mode exists\n  e. Review send_reports.py for any obvious errors or deprecated API usage\n  f. Check subscribers.json — is it current and well-formed?\n\nTASK 2: mgm-status-bot specific:\n  - Check if WEBEX_BOT_TOKEN usage is correct (env var, not hardcoded)\n  - Look for any error handling around 401/auth failures\n  - Verify subscribers.json has valid Webex room/person IDs\n  - Check if the recurring 401 error from May 8 has a fix or workaround\n\nTASK 3: dd-status-bot specific:\n  - Check how SpaceLift space discovery works (webex_spacelift.py)\n  - Verify WEBEX_ACCESS_TOKEN usage pattern\n  - Check if webex_recordings.py and send_email_report.py are functional\n  - Verify error handling for token expiry\n\nTASK 4: Security check\n  - grep -r \"AKIA\\|sk_live\\|ghp_\\|Y2lz\\|Bearer \" in both bot directories\n  - Verify no hardcoded tokens in source files\n  - Confirm .env files are gitignored if present\n  - Check GitHub Actions workflow for proper secrets usage (secrets.XXX not plaintext)\n\nTASK 5: Report\n  For each bot, provide:\n  - Status: HEALTHY / NEEDS-ATTENTION / BROKEN\n  - Last known working state (from workflow YAML or README)\n  - List of issues found\n  - Recommended fixes (if any)\n\nCONSTRAINTS:\n  - Read-only audit — do NOT modify working bot code\n  - Fix only documentation gaps (README, missing comments)\n  - Report all findings to Windsurf before any changes",
+  "depends_on": null,
+  "files_to_read": [
+    "ROADMAP.md",
+    "bots/mgm-status-bot/README.md",
+    "bots/mgm-status-bot/send_reports.py",
+    "bots/dd-status-bot/README.md",
+    "bots/dd-status-bot/send_reports.py"
+  ],
+  "created_at": "2026-05-26T14:35:03-04:00",
+  "status": "in_progress"
+}

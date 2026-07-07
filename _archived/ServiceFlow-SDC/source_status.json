@@ -1,0 +1,99 @@
+{
+  "generated_at": "2026-04-03T19:18:56.676770+00:00",
+  "summary": {
+    "total_sources": 5,
+    "configured_sources": 0,
+    "reachable_sources": 4
+  },
+  "sources": [
+    {
+      "source_id": "tac",
+      "source_name": "Cisco TAC Service Request API",
+      "required_env": {
+        "TAC_API_KEY": "missing",
+        "TAC_API_SECRET": "missing",
+        "TAC_BASE_URL": "missing"
+      },
+      "configured": false,
+      "connectivity_status": "reachable_http_error",
+      "http_status": 503,
+      "latency_ms": 1146.5,
+      "detail": "Missing one or more TAC env vars. HTTP 503",
+      "next_steps": [
+        "Set TAC_API_KEY and TAC_API_SECRET in your local environment.",
+        "Set TAC_BASE_URL (default is tools.cisco.com/tac/api/v2)."
+      ]
+    },
+    {
+      "source_id": "dna_center",
+      "source_name": "Cisco DNA Center / Catalyst Center",
+      "required_env": {
+        "DNA_CENTER_HOST": "missing",
+        "DNA_CENTER_PORT": "missing",
+        "DNA_CENTER_USERNAME": "missing",
+        "DNA_CENTER_PASSWORD": "missing"
+      },
+      "configured": false,
+      "connectivity_status": "unreachable",
+      "http_status": null,
+      "latency_ms": null,
+      "detail": "DNA_CENTER_HOST is not configured.",
+      "next_steps": [
+        "Set DNA_CENTER_HOST, DNA_CENTER_PORT, DNA_CENTER_USERNAME, DNA_CENTER_PASSWORD.",
+        "Confirm VPN/network route and firewall path to DNA Center."
+      ]
+    },
+    {
+      "source_id": "smart_licensing",
+      "source_name": "Cisco Smart Software Manager API",
+      "required_env": {
+        "SMART_LICENSING_CLIENT_ID": "missing",
+        "SMART_LICENSING_CLIENT_SECRET": "missing",
+        "SMART_LICENSING_TOKEN_URL": "missing",
+        "SMART_LICENSING_API_URL": "missing"
+      },
+      "configured": false,
+      "connectivity_status": "reachable_http_error",
+      "http_status": 401,
+      "latency_ms": 884.0,
+      "detail": "Missing one or more Smart Licensing env vars. HTTP 401",
+      "next_steps": [
+        "Set Smart Licensing client ID/secret and URLs.",
+        "Validate Smart Account app registration and client credentials."
+      ]
+    },
+    {
+      "source_id": "webex",
+      "source_name": "Cisco WebEx REST API",
+      "required_env": {
+        "WEBEX_BOT_TOKEN": "missing"
+      },
+      "configured": false,
+      "connectivity_status": "reachable_http_error",
+      "http_status": 401,
+      "latency_ms": 94.8,
+      "detail": "WEBEX_BOT_TOKEN missing. HTTP 401",
+      "next_steps": [
+        "Set WEBEX_BOT_TOKEN in environment.",
+        "Verify WebEx bot token validity and app scopes."
+      ]
+    },
+    {
+      "source_id": "support_enrichment",
+      "source_name": "Cisco Support APIs (Contract / EoX / Bug)",
+      "required_env": {
+        "CISCO_SUPPORT_API_KEY": "missing",
+        "CISCO_SUPPORT_API_SECRET": "missing"
+      },
+      "configured": false,
+      "connectivity_status": "reachable_http_error",
+      "http_status": 504,
+      "latency_ms": 1055.3,
+      "detail": "Support enrichment credentials not configured. HTTP 504",
+      "next_steps": [
+        "Set CISCO_SUPPORT_API_KEY and CISCO_SUPPORT_API_SECRET for EoX/Contract/Bug enrichment.",
+        "After credentials, wire EoX, warranty, contract, and bug adapters into sync jobs."
+      ]
+    }
+  ]
+}

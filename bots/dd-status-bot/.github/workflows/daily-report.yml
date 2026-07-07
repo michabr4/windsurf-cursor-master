@@ -1,0 +1,75 @@
+name: Digitized Delivery Daily Status Report
+
+on:
+  # Run Monday-Friday at 8:00 AM EST (13:00 UTC)
+  schedule:
+    - cron: '0 13 * * 1-5'
+
+  # Allow manual trigger
+  workflow_dispatch:
+    inputs:
+      send_now:
+        description: 'Send report immediately'
+        required: false
+        default: 'true'
+      days_back:
+        description: 'Days to look back for messages'
+        required: false
+        default: '7'
+
+jobs:
+  send-report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Validate tokens
+        env:
+          WEBEX_BOT_TOKEN: ${{ secrets.WEBEX_BOT_TOKEN }}
+          WEBEX_ACCESS_TOKEN: ${{ secrets.WEBEX_ACCESS_TOKEN }}
+        run: python health_check.py
+        continue-on-error: false
+
+      - name: Run SpaceLift analysis (DD spaces + personal space scan)
+        env:
+          WEBEX_ACCESS_TOKEN: ${{ secrets.WEBEX_ACCESS_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          DAYS=${{ github.event.inputs.days_back || '7' }}
+          echo "Running SpaceLift analysis (last ${DAYS} days)..."
+          python webex_spacelift.py --days "$DAYS"
+        continue-on-error: true
+
+      - name: Analyze recordings (optional)
+        env:
+          WEBEX_ACCESS_TOKEN: ${{ secrets.WEBEX_ACCESS_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
+          ASANA_PROJECT_GID: ${{ secrets.ASANA_PROJECT_GID }}
+          CREATE_ASANA_TASKS: ${{ vars.CREATE_ASANA_TASKS }}
+        run: python webex_recordings.py --days 7
+        continue-on-error: true
+
+      - name: Send status report to subscribers
+        env:
+          WEBEX_BOT_TOKEN: ${{ secrets.WEBEX_BOT_TOKEN }}
+        run: python send_reports.py
+        continue-on-error: false
+
+      - name: Log completion
+        run: |
+          echo "Digitized Delivery Status Report sent at $(date)"
+          if [ -f spacelift_analysis.json ]; then
+            echo "SpaceLift analysis file present"
+          fi

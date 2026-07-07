@@ -1,0 +1,13 @@
+---
+description: Delivery Workbench structure and working style
+alwaysApply: true
+---
+
+# Workbench basics
+
+- This repo is **Delivery Workbench**: structured playbooks, templates, and local tools for service delivery work.
+- Prefer **small, reviewable** changes. Explain planned edits before touching many files.
+- Use `playbooks/` for process, `templates/` for artifacts, `projects/<slug>/` for engagement config (no secrets in YAML).
+- Save user drafts under `data/` or `projects/<slug>/outputs/` — both are gitignored for sensitive content.
+- Do not fork or depend on other template repos unless the user asks.
+- Read `SECURITY.md` before adding network calls, MCP servers, or connectors.

@@ -1,0 +1,20 @@
+{
+  "id": "TASK-2026-0526-010",
+  "from": "cursor",
+  "to": "windsurf",
+  "type": "result",
+  "status": "success",
+  "summary": "PLATFORM-CONSOLIDATE complete: serviceflow-sdm is canonical; legacy docs ported; SDC variants archived (master + Desktop).",
+  "details": "## Tasks 1–3 — Inventory\n- **_archived/ServiceFlow-SDC:** Original HTML mockup + planning docs (CISCO_DATA_SOURCES, MVP_SCOPE_FREEZE, DATA_PREREQUISITES, PHASES_4_8, etc.).\n- **_archived/ServiceFlow-SDC-Windsurf:** Mostly `serviceflow-sdm-dev` subset — same docs at root; no unique mockup beyond canonical.\n- **platforms/serviceflow-sdm:** Full-stack canonical; mockup hub at `backend/public/mockup/` (index.html, helix-logo-variants.html already present).\n\n## Task 4 — Ported\n- `docs/legacy/from-serviceflow-sdc/` — 6 planning/reference markdown files\n- `docs/legacy/README.md` — index\n- No unique mockup HTML required (canon already has hub assets)\n\n## Task 5 — Archive\n- Master copies already in `_archived/ServiceFlow-SDC` and `ServiceFlow-SDC-Windsurf`\n- Moved `~/Desktop/SDM Files/ServiceFlow SDC` → `_archived/desktop-sdm-files-ServiceFlow-SDC`\n- Moved `~/Desktop/SDM Files/ServiceFlow SDC_Windsurf` → `_archived/desktop-sdm-files-ServiceFlow-SDC-Windsurf`\n- ARCHIVE_LOG.md updated\n\n## Task 6–8\n- serviceflow-sdm README: Consolidated From section\n- MASTER_INDEX #1: canonical path, ARCHIVED variants, overlap RESOLVED\n- Security: no credential patterns in project source; .env not modified\n\n## Note\nsdm-files/ in master folder had no ServiceFlow subfolders (already migrated).",
+  "files_changed": [
+    "platforms/serviceflow-sdm/docs/legacy/",
+    "platforms/serviceflow-sdm/README.md",
+    "_archived/",
+    "MASTER_INDEX.md",
+    "MIGRATION_LOG.md",
+    "_archived/ARCHIVE_LOG.md"
+  ],
+  "issues": [],
+  "completed_at": "2026-05-26T14:03:02-04:00",
+  "next_recommended": null
+}

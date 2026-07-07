@@ -1,0 +1,13 @@
+{
+  "name": "safe-agentic-coding-template-node",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "circuit": "node examples/circuit-demo.js",
+    "webex": "node examples/webex-demo.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7"
+  }
+}

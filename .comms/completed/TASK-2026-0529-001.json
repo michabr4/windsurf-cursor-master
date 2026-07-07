@@ -1,0 +1,28 @@
+{
+  "id": "TASK-2026-0529-001",
+  "from": "windsurf",
+  "to": "cursor",
+  "priority": "high",
+  "type": "instruction",
+  "phase": "3",
+  "title": "Build Project Progress Dashboard",
+  "spec": "Build a React/Vite/Tailwind project progress dashboard at tools/project-dashboard/. Full spec in CURSOR_TASK_PROJECT_DASHBOARD.md. Read that file first.",
+  "depends_on": null,
+  "files_to_read": [
+    "CURSOR_TASK_PROJECT_DASHBOARD.md",
+    "PROJECT_PROGRESS.md",
+    "tools/firewall-dashboard/tailwind.config.js",
+    "tools/firewall-dashboard/src/index.css"
+  ],
+  "out_of_scope": [
+    "tools/firewall-dashboard/ (read-only reference)",
+    "platforms/serviceflow-sdm/",
+    "agents/"
+  ],
+  "model": "sonnet",
+  "complexity": "HIGH",
+  "created_at": "2026-05-29T22:02:00-04:00",
+  "status": "in_progress",
+  "requires_review": true,
+  "fast_path": false
+}

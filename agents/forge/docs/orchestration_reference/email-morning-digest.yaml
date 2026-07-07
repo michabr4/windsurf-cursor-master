@@ -1,0 +1,50 @@
+# Scheduled morning run (~7:00 local) — read/analyze only
+# Same mailbox: primary UPN only
+
+name: email-morning-digest
+version: 1
+schedule:
+  time: "07:00"
+  timezone_env: DIGEST_TZ  # e.g. America/Los_Angeles
+
+mailbox: primary
+
+inputs:
+  - since_hours: 24
+  - max_messages: 30
+
+outputs_dir: data/runs/email/{run_id}/
+
+steps:
+  - id: fetch
+    agent: microsoft_mail.fetch
+    out: messages.json
+
+  - id: triage
+    agent: specialists/email/triage
+    in: messages.json
+    out: triage.md
+
+  - id: summarize
+    agent: specialists/email/summarize
+    in: messages.json
+    out: morning-digest.md
+
+  - id: actions
+    agent: specialists/email/action-extractor
+    in: messages.json
+    out: actions.md
+
+  - id: follow_ups
+    agent: specialists/email/follow-up
+    in: messages.json
+    out: follow-ups.md
+
+# Explicitly excluded from morning job:
+excluded_steps:
+  - draft_replies
+  - organize_proposal
+
+guards:
+  - no_send_without_user
+  - no_move_without_user

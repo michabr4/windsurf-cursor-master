@@ -1,0 +1,18 @@
+NetPilot 5.0 — Learning Telemetry Core
+
+Purpose:
+Captures fine-grained learner interactions to improve personalization and analytics.
+
+Telemetry Events:
+- Clickstream
+- Time on Task
+- Hint Requests
+- Error Patterns
+- Lab Behavior
+- Workflow Execution
+- Confidence Ratings
+
+Outputs:
+- telemetry_events
+- behavioral_signals
+- learning_patterns

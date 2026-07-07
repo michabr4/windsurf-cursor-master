@@ -1,0 +1,334 @@
+{
+  "lastUpdated": "2026-05-29",
+  "summary": {
+    "total": 9,
+    "onTrack": 6,
+    "blocked": 3,
+    "stable": 3,
+    "plannedAgents": 31
+  },
+  "projects": [
+    {
+      "id": "helix",
+      "name": "Helix / ServiceFlow SDM",
+      "category": "Platform",
+      "location": "platforms/serviceflow-sdm/",
+      "status": "Stable",
+      "phase": "Phase 2.1 \u2014 Complete",
+      "progressPct": 85,
+      "lastUpdated": "2026-05-26",
+      "eta": "July 2026 (GitHub Pages publish)",
+      "blockers": [],
+      "completedItems": [
+        "Production-hardened: JWT auth, rate limiting, Zod validation",
+        "5 of 7 frontend pages functional",
+        "Mobile: Expo SDK 52, API-driven screens",
+        "Docker: multi-stage production builds",
+        "Security: no hardcoded secrets"
+      ],
+      "remainingItems": [
+        "Dashboard page wiring to live KPIs",
+        "Mobile AsyncStorage persistence",
+        "Docker build CLI verification",
+        "GitHub Pages publish",
+        "Live Salesforce/ServiceNow integration"
+      ],
+      "expectedOutcome": "Full-stack SDM platform serving as data backbone for all AI Factory agents with live integrations and public demo URL.",
+      "trustTier": null,
+      "phase_number": 2
+    },
+    {
+      "id": "delivery-tracker",
+      "name": "Agent 1: Delivery Tracker",
+      "category": "AI Agent",
+      "location": "agents/delivery-tracker/",
+      "status": "In Development",
+      "phase": "Phase 1 \u2014 Week 5\u20138",
+      "progressPct": 60,
+      "lastUpdated": "2026-05-27",
+      "eta": "Week 8 (~2026-07-08)",
+      "blockers": [
+        "WEBEX_BOT_TOKEN expired \u2014 rotate at developer.webex.com"
+      ],
+      "completedItems": [
+        "Agent card written",
+        "Full scaffold: main.py, tracker.py, helix_client.py, report_formatter.py",
+        "Dockerfile and requirements defined",
+        "Tests directory created"
+      ],
+      "remainingItems": [
+        "Helix API client live wiring",
+        "Health scoring implementation",
+        "Webex card push (needs token rotation)",
+        "Cron scheduling via GitHub Actions",
+        "Live pilot: 4 consecutive weeks stable"
+      ],
+      "expectedOutcome": "Daily delivery health report covering 100% of accounts \u2014 reduces weekly check from 2\u20133 hours to 5-minute review.",
+      "trustTier": "T1",
+      "phase_number": 1
+    },
+    {
+      "id": "risk-sentinel",
+      "name": "Agent 2: Risk & Escalation Sentinel",
+      "category": "AI Agent",
+      "location": "agents/risk-escalation-sentinel/",
+      "status": "In Development",
+      "phase": "Phase 1 \u2014 Week 9 HITL",
+      "progressPct": 25,
+      "lastUpdated": "2026-05-27",
+      "eta": "Week 9 HITL opens (~2026-07-15)",
+      "blockers": [
+        "Depends on Delivery Tracker live output",
+        "WEBEX_BOT_TOKEN expired"
+      ],
+      "completedItems": [
+        "Agent card written"
+      ],
+      "remainingItems": [
+        "Core scaffold (main.py, agent.py, risk rules engine)",
+        "Risk rule implementation (P1/P2, SLA breach, health drop, milestone slip, entitlement)",
+        "LLM integration for risk summary",
+        "Webex interactive card (Escalate/Schedule/Snooze/Dismiss)",
+        "45-day HITL logging",
+        "Integration with Delivery Tracker JSON"
+      ],
+      "expectedOutcome": "Predictive risk detection 5\u201310 days ahead of issues \u2014 replaces reactive escalation with proactive intervention.",
+      "trustTier": "T2",
+      "phase_number": 1
+    },
+    {
+      "id": "business-review-generator",
+      "name": "Agent 3: Business Review Generator",
+      "category": "AI Agent",
+      "location": "agents/business-review-generator/",
+      "status": "In Development",
+      "phase": "Phase 1 \u2014 Week 10 HITL",
+      "progressPct": 50,
+      "lastUpdated": "2026-05-27",
+      "eta": "Week 10 HITL opens (~2026-07-22)",
+      "blockers": [
+        "Salesforce MCP delegated read access unconfirmed"
+      ],
+      "completedItems": [
+        "Agent card written",
+        "Full scaffold: data_collector.py, llm_writer.py, metrics_calculator.py, reviewer.py",
+        "Templates directory created",
+        "Tests structure created"
+      ],
+      "remainingItems": [
+        "Salesforce data collector integration (blocked on MCP access)",
+        "ServiceNow data integration",
+        "Four-pass LLM chain (exec summary, delivery narrative, risk, next quarter)",
+        "Output validation \u2014 no hallucinated metrics",
+        "Webex draft-ready notification",
+        "Pilot: \u2265 3 real QBRs delivered"
+      ],
+      "expectedOutcome": "QBR prep time reduced from 8\u201312 hours to 30-minute human review of AI-generated draft.",
+      "trustTier": "T2",
+      "phase_number": 1
+    },
+    {
+      "id": "mgm-status-bot",
+      "name": "MGM Status Bot",
+      "category": "Bot",
+      "location": "bots/mgm-status-bot/",
+      "status": "Blocked",
+      "phase": "Phase 2.2 \u2014 Ops Fix",
+      "progressPct": 90,
+      "lastUpdated": "2026-05-26",
+      "eta": "TBD \u2014 unblocks when token rotated",
+      "blockers": [
+        "WEBEX_BOT_TOKEN returning 401 \u2014 regenerate at developer.webex.com, update GitHub Secret"
+      ],
+      "completedItems": [
+        "Code complete and clean",
+        "GitHub Actions cron configured",
+        "subscribers.json valid"
+      ],
+      "remainingItems": [
+        "Rotate WEBEX_BOT_TOKEN in GitHub Secrets (ops \u2014 no code)",
+        "Trigger workflow_dispatch to verify",
+        "Optional: add --dry-run mode",
+        "Optional: update GHA actions to v5/v6"
+      ],
+      "expectedOutcome": "Daily automated MGM status delivery restored via GitHub Actions.",
+      "trustTier": null,
+      "phase_number": 2
+    },
+    {
+      "id": "dd-status-bot",
+      "name": "DD Status Bot",
+      "category": "Bot",
+      "location": "bots/dd-status-bot/",
+      "status": "Blocked",
+      "phase": "Phase 2.2 \u2014 Ops Fix",
+      "progressPct": 90,
+      "lastUpdated": "2026-05-28",
+      "eta": "TBD \u2014 unblocks when tokens rotated",
+      "blockers": [
+        "WEBEX_ACCESS_TOKEN expired",
+        "WEBEX_CLIENT_SECRET needs update (new secret from 2026-05-28 rotation)"
+      ],
+      "completedItems": [
+        "Code complete and clean",
+        "GitHub Actions configured",
+        "P0 token rotation performed 2026-05-28"
+      ],
+      "remainingItems": [
+        "Update WEBEX_CLIENT_SECRET in GitHub Secrets",
+        "Refresh WEBEX_ACCESS_TOKEN via oauth_refresh.py",
+        "Trigger workflow_dispatch to verify",
+        "Optional: update GHA actions from v4\u2192v5"
+      ],
+      "expectedOutcome": "Daily Digitized Delivery status delivery restored.",
+      "trustTier": null,
+      "phase_number": 2
+    },
+    {
+      "id": "forge",
+      "name": "Forge \u2014 Personal AI Assistant",
+      "category": "Agent",
+      "location": "agents/forge/",
+      "status": "Blocked",
+      "phase": "Phase 2.3 \u2014 Post-email-consolidation upgrade",
+      "progressPct": 70,
+      "lastUpdated": "2026-05-26",
+      "eta": "TBD \u2014 blocked by Azure AD registration",
+      "blockers": [
+        "Azure AD app not registered in Microsoft Entra \u2014 ops required"
+      ],
+      "completedItems": [
+        "Core email digest functionality built",
+        "Microsoft Graph device-code auth flow",
+        "HTML digest output working",
+        "Offline mail fallback mode"
+      ],
+      "remainingItems": [
+        "Register Azure AD app in Entra admin center (ops \u2014 no code)",
+        "Verify MSAL device code flow end-to-end",
+        "Web dashboard for reviewing drafts",
+        "Calendar integration"
+      ],
+      "expectedOutcome": "Fully functional personal AI assistant for morning email briefings and proactive outreach drafting.",
+      "trustTier": "T1",
+      "phase_number": 2
+    },
+    {
+      "id": "firewall-dashboard",
+      "name": "Firewall Dashboard",
+      "category": "Tool",
+      "location": "tools/firewall-dashboard/",
+      "status": "Stable",
+      "phase": "Phase 3+ \u2014 extensions on demand",
+      "progressPct": 75,
+      "lastUpdated": "2026-05-27",
+      "eta": "No active sprint \u2014 Phase 3+",
+      "blockers": [],
+      "completedItems": [
+        "React/Vite + Tailwind + Cisco brand theme",
+        "Kanban board with dnd-kit",
+        "Gantt view",
+        "KPI cards",
+        "Asana sync integration"
+      ],
+      "remainingItems": [
+        "Mimir API integration (Wave 18)",
+        "Airtable PAT rotation"
+      ],
+      "expectedOutcome": "Real-time firewall implementation tracking dashboard with Cisco CX branding.",
+      "trustTier": null,
+      "phase_number": 3
+    },
+    {
+      "id": "delivery-workbench",
+      "name": "Delivery Workbench",
+      "category": "Tool",
+      "location": "tools/delivery-workbench/",
+      "status": "Stable",
+      "phase": "Phase 3.1 \u2014 Evolution to daily driver",
+      "progressPct": 40,
+      "lastUpdated": "2026-05-26",
+      "eta": "June\u2013July 2026",
+      "blockers": [],
+      "completedItems": [
+        "Playbooks and templates",
+        "Email orchestration foundation",
+        "AGT-001 integration references"
+      ],
+      "remainingItems": [
+        "Agent orchestration layer (YAML workflows)",
+        "Morning briefing pipeline (email \u2192 triage \u2192 calendar \u2192 brief)",
+        "Webex integration (DMs + space mentions)"
+      ],
+      "expectedOutcome": "Primary SDM daily-driver: one command triggers morning briefing with email, calendar, Webex, and risk signals.",
+      "trustTier": null,
+      "phase_number": 3
+    }
+  ],
+  "opsBlockers": [
+    {
+      "id": "webex-bot-token",
+      "title": "Rotate WEBEX_BOT_TOKEN",
+      "priority": "CRITICAL",
+      "owner": "You",
+      "done": false,
+      "affectsProjects": [
+        "mgm-status-bot",
+        "dd-status-bot",
+        "delivery-tracker",
+        "risk-sentinel"
+      ]
+    },
+    {
+      "id": "webex-access-token",
+      "title": "Refresh WEBEX_ACCESS_TOKEN (dd-status-bot)",
+      "priority": "CRITICAL",
+      "owner": "You",
+      "done": false,
+      "affectsProjects": [
+        "dd-status-bot"
+      ]
+    },
+    {
+      "id": "webex-client-secret",
+      "title": "Update WEBEX_CLIENT_SECRET in GitHub Secrets (2026-05-28 rotation)",
+      "priority": "HIGH",
+      "owner": "You",
+      "done": false,
+      "affectsProjects": [
+        "dd-status-bot"
+      ]
+    },
+    {
+      "id": "azure-ad-registration",
+      "title": "Register Azure AD app in Microsoft Entra",
+      "priority": "HIGH",
+      "owner": "You",
+      "done": false,
+      "affectsProjects": [
+        "forge"
+      ]
+    },
+    {
+      "id": "salesforce-mcp",
+      "title": "Confirm Salesforce MCP delegated read access",
+      "priority": "HIGH",
+      "owner": "You",
+      "done": false,
+      "affectsProjects": [
+        "business-review-generator"
+      ]
+    },
+    {
+      "id": "servicenow-mcp",
+      "title": "Confirm ServiceNow MCP access",
+      "priority": "HIGH",
+      "owner": "You",
+      "done": false,
+      "affectsProjects": [
+        "risk-sentinel",
+        "business-review-generator"
+      ]
+    }
+  ]
+}

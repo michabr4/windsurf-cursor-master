@@ -1,0 +1,17 @@
+{
+  "id": "TASK-2026-0527-002",
+  "from": "cursor",
+  "to": "windsurf",
+  "type": "result",
+  "status": "success",
+  "summary": "Created self-contained SDM executive demo page at content/sdm-exec-demo/index.html with 4 sections, Alpine interactions, Intersection Observer nav, and SRI on pinned Alpine/Lucide CDN scripts.",
+  "details": "## Deliverable\n- `content/sdm-exec-demo/index.html` (452 lines)\n\n## Sections\n1. **Vision** — Hero with gradient, 3 animated stat cards, CTA to Live Work\n2. **Live Work** — 3 expandable Phase 1 agent cards (Delivery Tracker, Risk Sentinel, Business Review Generator)\n3. **Roadmap** — 7-phase timeline (0–6), click-to-detail, end-state callout, 4 collapsible agent chains\n4. **Governance** — T1/T2/T3 trust tiers, CSS HITL flow diagram, 4 principles, footer\n\n## Interactions\n- Sticky nav with active section (Intersection Observer)\n- Agent card expand/collapse (Alpine x-show)\n- Phase timeline selection\n- Chain accordion\n- Smooth scroll\n\n## Security\n- Static hardcoded data only; Alpine x-text bindings\n- SRI on Alpine 3.14.8 and Lucide 0.468.0\n- Tailwind play CDN (same pattern as content/ai-factory/index.html — no stable SRI for JIT compiler)\n- No localStorage/cookies/eval/innerHTML\n\n## GitHub Pages (after push)\nhttps://michabr4.github.io/windsurf-cursor-master/content/sdm-exec-demo/\n\nDeployment steps in HTML comment at bottom of file.",
+  "files_changed": [
+    "content/sdm-exec-demo/index.html"
+  ],
+  "issues": [
+    "Tailwind CDN script has no SRI (matches ai-factory reference; JIT bundle is not hash-stable)"
+  ],
+  "completed_at": "2026-05-27T11:23:10-04:00",
+  "next_recommended": null
+}

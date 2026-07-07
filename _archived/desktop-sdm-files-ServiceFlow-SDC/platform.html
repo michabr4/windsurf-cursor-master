@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Service Delivery Manager Platform Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./platform.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="cisco-wordmark">Service Delivery Manager</div>
+        <div class="sidebar-appname">Platform Hub</div>
+        <span class="sidebar-badge"><span class="dot"></span> Live</span>
+      </div>
+      <div class="sidebar-nav">
+        <div class="nav-section-label">Sections</div>
+        <a class="nav-item nav-link active" href="#overview-section"><span class="ni">▣</span> Overview</a>
+        <a class="nav-item nav-link" href="#documents-section"><span class="ni">▣</span> Documents</a>
+        <a class="nav-item nav-link" href="#search-section"><span class="ni">▣</span> Search</a>
+        <a class="nav-item nav-link" href="#insights-section"><span class="ni">▣</span> Runtime & Insights</a>
+      </div>
+      <div class="sidebar-footer">v2.0 · Senior UX build</div>
+    </aside>
+
+    <div class="app-content">
+      <header class="hero-super">
+        <div class="hero-text">
+          <div class="eyebrow">Service Delivery Intelligence Platform</div>
+          <h1 class="hero-title">Service Delivery Manager</h1>
+          <p class="hero-sub">
+            Executive-grade command surface for architecture artifacts, source readiness, backend runtime,
+            and development execution.
+          </p>
+          <div class="hero-meta">
+            <span>Theme: <strong>docs/STYLE_GUIDE.md</strong></span>
+            <span>Layout: <strong>Single-page consolidated</strong></span>
+            <span>Mode: <strong>Operational + Engineering</strong></span>
+          </div>
+        </div>
+        <div class="hero-graphic">
+          <div class="orb orb-a"></div>
+          <div class="orb orb-b"></div>
+          <div class="orb orb-c"></div>
+          <div class="graphic-grid"></div>
+          <div class="graphic-card g1"></div>
+          <div class="graphic-card g2"></div>
+          <div class="graphic-card g3"></div>
+        </div>
+      </header>
+
+      <main class="main">
+        <section id="overview-section" class="page-section">
+          <div class="sh">Platform Snapshot</div>
+          <div class="metric-strip" id="kpi-strip"></div>
+
+          <div class="grid-2">
+            <article class="card lift">
+              <div class="card-title">Execution Scope</div>
+              <div id="scope-alerts"></div>
+            </article>
+            <article class="card lift">
+              <div class="card-title">Primary Artifacts</div>
+              <table class="ht" id="file-table-overview"></table>
+            </article>
+          </div>
+
+          <div class="grid-2">
+            <article class="card visual-card">
+              <div class="card-title">Roadmap Placeholder Graphic</div>
+              <div class="placeholder-canvas">
+                <div class="lane">
+                  <span class="lane-dot"></span><span class="lane-bar"></span><span class="lane-label">Phase 1</span>
+                </div>
+                <div class="lane">
+                  <span class="lane-dot"></span><span class="lane-bar"></span><span class="lane-label">Phase 2</span>
+                </div>
+                <div class="lane">
+                  <span class="lane-dot"></span><span class="lane-bar"></span><span class="lane-label">Phase 3</span>
+                </div>
+                <div class="lane">
+                  <span class="lane-dot"></span><span class="lane-bar"></span><span class="lane-label">Phase 4</span>
+                </div>
+              </div>
+            </article>
+            <article class="card visual-card">
+              <div class="card-title">Architecture Placeholder Graphic</div>
+              <div class="arch-canvas">
+                <div class="arch-box">Client Apps</div>
+                <div class="arch-arrow"></div>
+                <div class="arch-box">API Gateway</div>
+                <div class="arch-arrow"></div>
+                <div class="arch-box">Services</div>
+                <div class="arch-arrow"></div>
+                <div class="arch-box">Data Layer</div>
+              </div>
+            </article>
+          </div>
+
+          <article class="ai-panel">
+            <div class="ai-header">AI Platform Brief</div>
+            <div class="ai-box" id="overview-brief"></div>
+          </article>
+        </section>
+
+        <section id="documents-section" class="page-section">
+          <div class="sh">Document Workspace</div>
+          <div class="grid-31">
+            <article class="card lift">
+              <div class="card-title">File Index</div>
+              <table class="ht" id="file-table-main"></table>
+            </article>
+            <article class="card lift">
+              <div class="card-title">Quick Actions</div>
+              <div class="stack-actions" id="quick-actions"></div>
+            </article>
+          </div>
+          <article class="card lift">
+            <div class="card-title" id="viewer-title">Viewer</div>
+            <div class="doc-viewer" id="doc-viewer"></div>
+          </article>
+        </section>
+
+        <section id="search-section" class="page-section">
+          <div class="sh">Cross-file Search</div>
+          <article class="card lift">
+            <div class="filter-bar">
+              <span class="fl">Query:</span>
+              <input id="search-input" class="search-input" placeholder="Try: TAC, DNA Center, SMART_LICENSING, Phase 6, incidents">
+              <button class="btn-p" id="search-btn">Search</button>
+            </div>
+            <div id="search-summary" class="search-summary"></div>
+            <div id="search-results"></div>
+          </article>
+        </section>
+
+        <section id="insights-section" class="page-section">
+          <div class="sh">Runtime & Insights</div>
+          <article class="card lift">
+            <div class="card-title">Backend Authentication & Runtime</div>
+            <div class="form-grid">
+              <div class="filter-bar">
+                <span class="fl">API:</span>
+                <input id="backend-api-url" class="search-input" value="http://localhost:3000/api/v1">
+              </div>
+              <div class="filter-bar">
+                <span class="fl">Email:</span>
+                <input id="backend-email" class="search-input" placeholder="admin@serviceflow.local">
+              </div>
+              <div class="filter-bar">
+                <span class="fl">Password:</span>
+                <input id="backend-password" type="password" class="search-input" placeholder="Enter backend password">
+              </div>
+              <div class="filter-bar">
+                <button class="btn-p" id="backend-login-btn">Connect Backend</button>
+                <button class="btn-o" id="backend-logout-btn">Disconnect</button>
+              </div>
+            </div>
+            <div id="backend-auth-meta" class="search-summary"></div>
+            <table class="ht" id="backend-runtime-table"></table>
+          </article>
+
+          <article class="card lift">
+            <div class="card-title">Live Data Source Connections</div>
+            <div class="filter-bar">
+              <span class="fl">Status Feed:</span>
+              <code>source_status.json</code>
+              <button class="btn-o" id="refresh-connections-btn">Refresh View</button>
+            </div>
+            <div id="connection-meta" class="search-summary"></div>
+            <table class="ht" id="connection-table"></table>
+          </article>
+
+          <div class="grid-2">
+            <article class="card lift">
+              <div class="card-title">Cisco Data Source Readiness</div>
+              <div id="cisco-readiness"></div>
+            </article>
+            <article class="card lift">
+              <div class="card-title">MVP Delivery Readiness</div>
+              <div id="mvp-readiness"></div>
+            </article>
+          </div>
+
+          <article class="card lift">
+            <div class="card-title">Execution Notes</div>
+            <div id="execution-notes"></div>
+          </article>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="./platform.js"></script>
+</body>
+</html>

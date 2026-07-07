@@ -1,0 +1,23 @@
+# Weekly delivery status narrative (status-report-agent)
+name: status-report
+version: 1
+description: Generate SDM/PM/PgM weekly status from Salesforce + ServiceNow (demo when unconfigured)
+
+agent:
+  path: agents/status-report-agent
+  entry: demo.generate_demo_report
+
+inputs:
+  role: SDM
+  account_name: null
+  output_format: markdown
+
+output:
+  format: markdown
+  section: "## Status snapshot"
+
+error_handling:
+  retry:
+    max_attempts: 1
+  fallback: executive_summary_only
+  notify: false

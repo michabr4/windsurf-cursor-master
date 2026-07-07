@@ -1,0 +1,14 @@
+{
+  "id": "TASK-2026-0526-005",
+  "from": "windsurf",
+  "to": "cursor",
+  "priority": "medium",
+  "type": "instruction",
+  "phase": "test",
+  "title": "MCP End-to-End Test — Ping from Windsurf via native MCP",
+  "spec": "This task was sent using Windsurf's native comms-bridge MCP tool (send_task), NOT a shell command writing JSON manually.\n\nTASK:\n1. Confirm you received this via check_inbox MCP tool (not filesystem read)\n2. Call claim_task via MCP\n3. Report which MCP tools you see for comms-bridge in your session\n4. Call submit_result via MCP\n\nThis proves the full MCP-to-MCP pipeline is working.",
+  "depends_on": null,
+  "files_to_read": [],
+  "created_at": "2026-05-26T13:37:06-04:00",
+  "status": "in_progress"
+}

@@ -1,0 +1,64 @@
+# Local / dev stack. Run migrations before the API is healthy:
+#   cp .env.example .env && edit secrets
+#   cd backend && npm run migrate
+#   docker compose up --build
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: serviceflow-postgres
+    environment:
+      POSTGRES_DB: helix_sdm
+      POSTGRES_USER: serviceflow_admin
+      # Dev default only — set DB_PASSWORD in .env for non-local deployments.
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-change_me}
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U serviceflow_admin -d helix_sdm"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    container_name: serviceflow-redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+      target: runtime
+    container_name: serviceflow-backend
+    # .env is gitignored — copy from .env.example before first compose up.
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      target: runtime
+      args:
+        VITE_API_BASE_URL: http://localhost:3000/api/v1
+    container_name: serviceflow-frontend
+    ports:
+      - "3001:80"
+    depends_on:
+      - backend
+
+volumes:
+  pg_data:

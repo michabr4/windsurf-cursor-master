@@ -1,0 +1,31 @@
+{
+  "id": "TASK-2026-0529-003",
+  "from": "cursor",
+  "to": "windsurf",
+  "type": "result",
+  "status": "success",
+  "summary": "Scaffolded Business Review Generator agent with tests",
+  "details": "Scaffolded full Business Review Generator agent (T2 HITL): config, models, data_collector (Helix HTTP + Salesforce stub + Delivery Tracker JSON), metrics_calculator with source citations, llm_writer (4 passes + template fallback), reviewer orchestrator, main CLI, QBR template, tools/brg_tools.py, tests (13 passing), README, requirements, .env.example. Saves drafts to data/runs/business-review/, optional Webex notify, [METRICS] on all exit paths.",
+  "files_changed": [
+    "agents/business-review-generator/__init__.py",
+    "agents/business-review-generator/config.py",
+    "agents/business-review-generator/models.py",
+    "agents/business-review-generator/data_collector.py",
+    "agents/business-review-generator/metrics_calculator.py",
+    "agents/business-review-generator/llm_writer.py",
+    "agents/business-review-generator/reviewer.py",
+    "agents/business-review-generator/main.py",
+    "agents/business-review-generator/templates/business-review-template.md",
+    "agents/business-review-generator/tools/brg_tools.py",
+    "agents/business-review-generator/tools/__init__.py",
+    "agents/business-review-generator/tests/conftest.py",
+    "agents/business-review-generator/tests/test_reviewer.py",
+    "agents/business-review-generator/tests/test_metrics.py",
+    "agents/business-review-generator/.env.example",
+    "agents/business-review-generator/requirements.txt",
+    "agents/business-review-generator/README.md"
+  ],
+  "issues": [],
+  "completed_at": "2026-05-29T01:39:56-04:00",
+  "next_recommended": null
+}

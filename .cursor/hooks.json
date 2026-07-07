@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "hooks": {
+    "beforeShellExecution": [
+      {
+        "command": ".cursor/hooks/before-git-push.py",
+        "matcher": "git\\b.*\\bpush\\b",
+        "failClosed": true
+      }
+    ],
+    "afterAgentResponse": [
+      {
+        "command": ".cursor/hooks/context-handoff.py"
+      }
+    ],
+    "stop": [
+      {
+        "command": ".cursor/hooks/context-handoff.py"
+      }
+    ],
+    "preCompact": [
+      {
+        "command": ".cursor/hooks/context-handoff.py"
+      }
+    ],
+    "subagentStop": [
+      {
+        "command": ".cursor/hooks/context-handoff.py"
+      }
+    ],
+    "sessionStart": [
+      {
+        "command": ".cursor/hooks/session-start-handoff.py"
+      }
+    ]
+  }
+}

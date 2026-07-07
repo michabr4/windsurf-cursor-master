@@ -1,0 +1,11 @@
+domains:
+  - code: py_auto
+    title: Python for Automation
+  - code: rest_api
+    title: REST APIs
+  - code: json_model
+    title: JSON/Data Modeling
+  - code: cisco_ctrl
+    title: Cisco Controller Concepts
+  - code: troubleshoot
+    title: Troubleshooting Workflows

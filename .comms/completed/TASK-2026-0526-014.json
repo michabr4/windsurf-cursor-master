@@ -1,0 +1,20 @@
+{
+  "id": "TASK-2026-0526-014",
+  "from": "windsurf",
+  "to": "cursor",
+  "priority": "high",
+  "type": "instruction",
+  "phase": "2",
+  "title": "Phase 2.1b — HELIX P2 Fixes: Production Docker, mobile assets, CHANGELOG",
+  "spec": "PHASE 2.1b: HELIX-HARDEN — P2 fixes\n\nApply the medium-priority production-readiness fixes identified in TASK-012 audit.\n\nLOCATION: platforms/serviceflow-sdm/\n\n---\n\nFIX 1 (P2): Production Dockerfiles\n- Current: Both backend and frontend Dockerfiles use `CMD npm run dev` (development mode)\n- Required: Add multi-stage builds for production\n- Backend Dockerfile:\n  - Stage 1 (builder): `npm ci`, `npm run build`\n  - Stage 2 (runtime): Copy built `dist/`, `node_modules`, run `npm run start` (not dev)\n  - Keep existing `node:20-alpine` base\n- Frontend Dockerfile:\n  - Stage 1 (builder): `npm ci`, `npm run build`\n  - Stage 2 (runtime): Use `nginx:alpine`, copy built `dist/` to `/usr/share/nginx/html`\n  - Add nginx.conf for SPA routing (fallback to index.html)\n- Update docker-compose.yml:\n  - Change backend `env_file: .env.example` to `env_file: .env` (with comment that .env is gitignored)\n  - Keep postgres password as `change_me` for dev (add comment: \"Change in production\")\n  - Add comment about running migrations before backend starts\n\n---\n\nFIX 2 (P2): Mobile assets\n- Current: `mobile/app.json` references `./assets/icon.png`, `./assets/splash.png`, `./assets/adaptive-icon.png` but `mobile/assets/` is empty\n- Required: Either:\n  a. Create placeholder assets (1024x1024 icon, 1284x2778 splash with Helix branding), OR\n  b. Update `app.json` to remove asset references and use Expo defaults\n- Recommendation: Option B is faster — comment out or set to null the icon/splash/adaptiveIcon fields in app.json\n- Add a note in mobile/README.md that assets need to be added before production build\n\n---\n\nFIX 3 (P2): Add CHANGELOG.md\n- Location: platforms/serviceflow-sdm/CHANGELOG.md (repo root)\n- Format: Keep-a-Changelog style\n- Content:\n  ```markdown\n  # Changelog\n  \n  All notable changes to ServiceFlow SDM / Helix will be documented in this file.\n  \n  ## [Unreleased]\n  \n  ### Added (Phase 2.1 — May 2026)\n  - JWT secret validation at startup (fail if default in production)\n  - Rate limiting on auth endpoints (10/15min) and write endpoints (100/15min)\n  - Zod validation on Salesforce case writes and Webex war-room integration\n  - Production-ready Docker multi-stage builds\n  - Mobile asset configuration cleanup\n  \n  ### Changed\n  - Docker compose now uses .env instead of .env.example\n  \n  ## [0.1.0] - 2026-05\n  \n  ### Added\n  - Initial platform with Express backend, React frontend, Expo mobile\n  - JWT authentication with SSO support\n  - PostgreSQL database with migrations\n  - Integrations: Salesforce, ServiceNow, Cisco DNA Center, TAC, Smart Licensing\n  - HTML mockup hub with 19 views\n  - Power BI analytics embedding\n  - Docker Compose development environment\n  ```\n\n---\n\nCONSTRAINTS:\n- Do NOT modify backend/frontend source code (only Dockerfiles, docker-compose.yml, app.json, docs)\n- Do NOT change database schema or migrations\n- Test Docker builds locally if possible: `docker build -t helix-backend ./backend` and `docker build -t helix-frontend ./frontend`\n- If Docker build fails, report the error but don't block on it (CI/CD will catch)\n\nVERIFICATION:\n- Verify all three files are created/updated\n- Check that app.json is valid JSON after changes\n- List all files changed in result",
+  "depends_on": "TASK-2026-0526-013",
+  "files_to_read": [
+    "platforms/serviceflow-sdm/backend/Dockerfile",
+    "platforms/serviceflow-sdm/frontend/Dockerfile",
+    "platforms/serviceflow-sdm/docker-compose.yml",
+    "platforms/serviceflow-sdm/mobile/app.json",
+    "platforms/serviceflow-sdm/README.md"
+  ],
+  "created_at": "2026-05-26T16:14:45-04:00",
+  "status": "in_progress"
+}

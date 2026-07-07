@@ -1,0 +1,18 @@
+{
+  "id": "TASK-2026-0526-017",
+  "from": "windsurf",
+  "to": "cursor",
+  "priority": "high",
+  "type": "instruction",
+  "phase": "3",
+  "title": "Phase 3.2a — NETPILOT-FIXES: P0+P1 portability and clarity fixes",
+  "spec": "PHASE 3.2a: NETPILOT-FIXES\n\nFix critical portability and documentation issues identified in TASK-016 audit.\n\nLOCATION: tools/netpilot/ccna_automation_github_app/\n\nThese are scoped, safe fixes that don't alter core functionality.\n\n---\n\nFIX 1 (P0): Remove hardcoded path in source_package.py\n- File: `backend/app/services/source_package.py`\n- Current: Hardcoded `/Users/michabr4/Downloads/CCNA-Automation-GitHub-Training-Hub.html`\n- Required:\n  - Add environment variable `SOURCE_HTML_PATH` (optional)\n  - If env var not set, return empty package with helpful message\n  - If env var set but file doesn't exist, return error with clear message\n  - Update function to use `os.getenv('SOURCE_HTML_PATH')` with graceful fallback\n- Example:\n  ```python\n  source_path = os.getenv('SOURCE_HTML_PATH')\n  if not source_path:\n      return {\"message\": \"Source package not configured. Set SOURCE_HTML_PATH env var.\"}\n  if not os.path.exists(source_path):\n      return {\"error\": f\"Source file not found: {source_path}\"}\n  # ... rest of logic\n  ```\n\n---\n\nFIX 2 (P1): Add .env.example\n- Create `backend/.env.example` with:\n  ```\n  # Optional: Path to CCNA source HTML package\n  SOURCE_HTML_PATH=/path/to/CCNA-Automation-GitHub-Training-Hub.html\n  \n  # API configuration (used by frontend)\n  VITE_API_BASE=http://localhost:8000\n  ```\n- Add comment explaining these are optional for basic study hub functionality\n\n---\n\nFIX 3 (P1): Update .gitignore\n- Add `.env` to `tools/netpilot/ccna_automation_github_app/.gitignore` if not already covered\n- Verify `.env` is ignored at app level (not just parent netpilot/)\n\n---\n\nFIX 4 (P0): Clarify scope in README\n- Update README.md to clarify:\n  - **Primary purpose:** CCNA study hub with flashcards, quiz, study planner\n  - **Current state:** Functional study tool with in-memory data\n  - **Future/aspirational:** GitHub App integration (not yet implemented)\n  - **MGM Webex script:** Separate feature (send_reports.py) unrelated to study hub\n- Fix stale reference to `.github/workflows/mgm-daily-status-report.yml` (file doesn't exist, only `ci.yml`)\n- Add Python version requirement: **Python 3.11 recommended** (3.14 has pydantic-core build issues)\n\n---\n\nFIX 5 (P2): Document setup in README\n- Add \"Quick Start\" section:\n  ```markdown\n  ## Quick Start\n  \n  ### Backend\n  ```bash\n  cd backend\n  python3.11 -m venv .venv\n  source .venv/bin/activate  # or .venv\\Scripts\\activate on Windows\n  pip install -r requirements.txt\n  uvicorn app.main:app --reload\n  ```\n  \n  ### Frontend\n  ```bash\n  cd frontend\n  npm install\n  npm run dev\n  ```\n  \n  Visit http://localhost:5173\n  ```\n\n---\n\nCONSTRAINTS:\n- Do NOT change API logic or data structures\n- Do NOT wire the data model (that's a separate task)\n- Do NOT add GitHub App integration\n- Only fix portability, config, and documentation\n\nVERIFICATION:\n- After changes, verify:\n  - `source_package.py` has no hardcoded paths\n  - `.env.example` exists\n  - README is accurate and helpful\n  - No functionality is broken\n\nREPORT BACK:\n- List all files changed\n- Confirm portability issues are resolved",
+  "depends_on": "TASK-2026-0526-016",
+  "files_to_read": [
+    "tools/netpilot/ccna_automation_github_app/backend/app/services/source_package.py",
+    "tools/netpilot/ccna_automation_github_app/README.md",
+    "tools/netpilot/ccna_automation_github_app/.gitignore"
+  ],
+  "created_at": "2026-05-26T18:34:21-04:00",
+  "status": "in_progress"
+}

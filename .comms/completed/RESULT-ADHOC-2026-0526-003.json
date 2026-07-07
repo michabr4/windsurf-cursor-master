@@ -1,0 +1,18 @@
+{
+  "id": "ADHOC-2026-0526-003",
+  "from": "cursor",
+  "to": "windsurf",
+  "type": "result",
+  "status": "success",
+  "summary": "Pending CCNA frontend refactor completed; restructure policy documented for Architect",
+  "details": "## Yes — understood\n\nCursor completed **pending refactoring** from TASK-016 follow-up and wrote **when-to-restructure** instructions for Windsurf.\n\n## Refactor completed (CCNA frontend)\n\n| Before | After |\n|--------|-------|\n| `App.jsx` ~1272 lines | ~1156 lines |\n| Bootstrap + persistence inline | `hooks/useStudyHubBootstrap.js`, `hooks/usePersistedStudyState.js` |\n| Missing import | Fixed `CCNA_AUTOMATION_RESOURCES` import |\n\n**Still in `App.jsx`:** tab UI (Mission / Flashcards / Quiz). **Do not split further** until a trigger in RESTRUCTURE_GUIDANCE is met (e.g. file >800 lines after new features, or new major tab).\n\n**Verification:** `npm run test` (3/3) and `npm run build` pass.\n\n## When Windsurf should issue restructure tasks\n\nCanonical doc: `tools/netpilot/ccna_automation_github_app/docs/RESTRUCTURE_GUIDANCE.md`\n\n### Issue restructure when ANY is true\n1. **God file** — single file **>800 lines** and growing\n2. **Duplicate logic** — same rules in **3+** places\n3. **Layer violation** — UI ↔ DB/script boundary broken\n4. **Post-audit P1+** — audit called out split and feature freeze agreed\n5. **Pre-release** — within **2 weeks** of \"production-ready\" for that app\n6. **Template/ops mix** — operational files inside shareable template (TASK-006 pattern)\n\n### Do NOT restructure when\n- Feature fits in **<200 lines** without new abstractions\n- Build/tests red (fix first)\n- No clear path — run **audit-first** instead\n- Cosmetic-only cleanup\n\n### Cadence\n- **After each phase gate** — at most **one** refactor task per app per phase\n- **Monthly (optional)** — hygiene task only if triggers fired\n- **Not weekly by default**\n\n### CCNA app — next split (if ever)\n- Extract tab panels: `MissionControl.jsx`, `FlashcardForge.jsx`, `QuizArena.jsx`\n- **Only when** adding major new tabs or `App.jsx` exceeds **800 lines** post-feature\n\n## Suggested Windsurf actions\n1. Read `docs/RESTRUCTURE_GUIDANCE.md` before scheduling Phase 3.3+ tasks\n2. Do **not** open `REFACTOR-ccna-split-app` until a trigger fires\n3. Prefer feature tasks that touch one layer (API vs UI) per inbox item\n4. Archive this result from outbox after review\n\n## Files changed (uncommitted until user commits)\n- `frontend/src/hooks/useStudyHubBootstrap.js` (new)\n- `frontend/src/hooks/usePersistedStudyState.js` (new)\n- `frontend/src/App.jsx`\n- `docs/RESTRUCTURE_GUIDANCE.md` (new)\n- `.comms/outbox/RESULT-ADHOC-2026-0526-003.json` (this file)",
+  "files_changed": [
+    "tools/netpilot/ccna_automation_github_app/frontend/src/hooks/useStudyHubBootstrap.js",
+    "tools/netpilot/ccna_automation_github_app/frontend/src/hooks/usePersistedStudyState.js",
+    "tools/netpilot/ccna_automation_github_app/frontend/src/App.jsx",
+    "tools/netpilot/ccna_automation_github_app/docs/RESTRUCTURE_GUIDANCE.md"
+  ],
+  "issues": [],
+  "completed_at": "2026-05-27T00:30:00-04:00",
+  "next_recommended": null
+}

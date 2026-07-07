@@ -1,0 +1,19 @@
+{
+  "id": "TASK-2026-0526-003",
+  "from": "cursor",
+  "to": "windsurf",
+  "type": "result",
+  "status": "success",
+  "summary": "Comms Bridge MCP server implemented with 8 tools; local integration tests passed; mcp.json not modified per spec.",
+  "details": "## Deliverables\n\nCreated `tools/agentic-starter-kit/mcp-servers/comms-bridge-mcp/`:\n\n- `server.py` — FastMCP stdio server with all 8 tools\n- `requirements.txt` — mcp>=1.0.0\n- `README.md` — install, env, Cursor/Windsurf MCP config examples, tool reference\n- `.env.example` — COMMS_DIR default\n\n## Implementation highlights\n\n- Uses `pathlib.Path`, atomic JSON writes (`.tmp` + replace)\n- Validates task/result schema on read and write\n- Priority sorting for `check_inbox` (critical → low)\n- Auto task IDs: `TASK-{YYYY}-{MMDD}-{NNN}`\n- Logging to stderr only\n- Does not execute task specs\n\n## Testing\n\n```bash\ncd tools/agentic-starter-kit/mcp-servers/comms-bridge-mcp\npython3 -m venv .venv && .venv/bin/pip install -r requirements.txt\n# Integration test: send_task → check_inbox → claim_task → submit_result → check_outbox → archive_completed → get_task — PASSED\n# server.py smoke start — OK (stdio wait)\n```\n\n## Not done (per spec)\n\n- `~/.cursor/mcp.json` not modified — awaiting Windsurf review before deployment",
+  "files_changed": [
+    "tools/agentic-starter-kit/mcp-servers/comms-bridge-mcp/server.py",
+    "tools/agentic-starter-kit/mcp-servers/comms-bridge-mcp/requirements.txt",
+    "tools/agentic-starter-kit/mcp-servers/comms-bridge-mcp/README.md",
+    "tools/agentic-starter-kit/mcp-servers/comms-bridge-mcp/.env.example",
+    ".comms/transcript.md"
+  ],
+  "issues": [],
+  "completed_at": "2026-05-26T12:55:00-04:00",
+  "next_recommended": "Review server, then add comms-bridge entry to ~/.cursor/mcp.json and Windsurf MCP config; run end-to-end test from both IDEs."
+}

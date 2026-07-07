@@ -1,0 +1,8 @@
+{
+  "type": "intent_module",
+  "name": "connectivity_intent_pack",
+  "version": "1.0.0",
+  "engine": "IBNL",
+  "author": "Your Name",
+  "tags": ["intent", "connectivity", "ibnl"]
+}
